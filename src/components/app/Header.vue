@@ -5,14 +5,12 @@
         <h1>MyOcean English-Project</h1>
       </div>
       <div class="header__right">
-        <router-link class="header-link" to="/list">Списки слов</router-link>
         <router-link class="header-link" to="/account">Профиль</router-link>
         <p class="header-link" v-if="$store.getters.isAuth" @click="logout">Выйти из аккаунта</p>
       </div>
       <div @click="openPanel" class="menu__panel"></div>
       <div class="menu" ref="menu">
         <div class="menu__content">
-          <router-link class="header-link menu-link" to="/list">Списки слов</router-link>
           <router-link class="header-link menu-link" to="/account">Профиль</router-link>
           <p class="header-link menu-link" v-if="$store.getters.isAuth" @click="logout">Выйти из аккаунта</p>
         </div>
@@ -44,6 +42,10 @@ export default {
   height: 60px;
   width: 100%;
   position: sticky;
+  background-color: #fff;
+  left: 0;
+  top: 0;
+  z-index: 1;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15),
     0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
@@ -52,7 +54,7 @@ export default {
     align-items: center;
     justify-content: space-around;
     height: 100%;
-    @media (max-width: 674px) {
+    @media (max-width: 574px) {
       justify-content: space-between;
     }
   }
@@ -66,7 +68,7 @@ export default {
       @media (max-width: 801px) {
         font-size: 18px;
       }
-      @media (max-width: 674px) {
+      @media (max-width: 574px) {
         margin-left: 20px;
       }
       @media (max-width: 337px) {
@@ -76,7 +78,7 @@ export default {
   }
   &__right {
     display: flex;
-    @media (max-width: 674px) {
+    @media (max-width: 574px) {
       display: none;
     }
   }
@@ -147,7 +149,7 @@ export default {
     width: 64px;
     height: 64px;
     background: #000;
-    @media (max-width: 674px) {
+    @media (max-width: 574px) {
       display: block;
     }
   }

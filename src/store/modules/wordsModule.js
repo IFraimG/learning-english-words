@@ -1,15 +1,15 @@
 import router from "@/router/index"
 import randomWords from "random-words"
 import firebase from '@firebase/app';
-require('firebase/auth');
 require('firebase/database');
 
 const wordsModule = {
   state: () => ({
     currentWords: [],
     executeWords: [],
-    wordData: {},
-    stateWords: "start"
+    wordData: null,
+    stateWords: "start",
+    isLoader: false
   }),
   mutations: {
     GET_WORDS(state, payload) {
@@ -18,8 +18,13 @@ const wordsModule = {
     LOAD_WORDS(state, payload) {
       state.executeWords = payload
     },
+    SET_LOADER(state, payload) {
+      state.isLoader = payload
+    },
     CHECK_STATE_WORDS(state, payload) {
-      switch (payload.query.type) {
+      let query = payload.query
+      let task = parseInt(query.task)
+      switch (query.type) {
         case "start": state.stateWords = "start"; break;
         case "russianV": state.stateWords = "russianV"; break;
         case "englishV": state.stateWords = "englishV"; break;
@@ -27,7 +32,7 @@ const wordsModule = {
         case "finish": state.stateWords = "finish"; break;
         default: state.stateWords = "excpect";
       }
-      if (payload.query.task != undefined) state.wordData = state.executeWords[parseInt(payload.query.task) + 1]
+      state.wordData = state.executeWords[task - 1]
     }
   },
   actions: {
@@ -68,6 +73,7 @@ const wordsModule = {
     },
     async loadWords({ commit }, payload) {
       try {
+        commit("SET_LOADER", true)
         let userID = payload.params.userid
         let wordsID = payload.params.wordsid
 
@@ -80,10 +86,22 @@ const wordsModule = {
             wordItem.other = randomWords(3)
             reviewWords.push(wordItem)
           }
-          console.log(reviewWords);
           commit("LOAD_WORDS", reviewWords)
           commit("CHECK_STATE_WORDS", payload)
         }
+        commit("SET_LOADER", false)
+      } catch (error) {
+        commit("SET_LOADER", false)
+        console.log(error);
+      }
+    },
+    async deleteWords({ commit }, payload) {
+      try {
+        commit("SET_LOADER", false)
+        console.log(payload);
+        await firebase.default.database().ref(`/users/${payload.userID}/words/${payload.index}`).remove()
+        let data = await firebase.default.database().ref(`/users/${payload.userID}`).once("value")
+        commit("GET_WORDS", data.words.val());
       } catch (error) {
         console.log(error);
       }
@@ -91,8 +109,10 @@ const wordsModule = {
   },
   getters: {
     currentWords: state => state.currentWords,
+    executeWords: state => state.executeWords,
     stateWords: state => state.stateWords,
-    wordData: state => state.wordData
+    wordData: state => state.wordData,
+    isLoader: state => state.isLoader
   }
 };
 

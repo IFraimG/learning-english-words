@@ -1,6 +1,6 @@
 <template>
   <ModalWords :isModal="isModal" @setModal="setModal" />
-  <div class="account">
+  <div @click="isOpenPanel = -1" class="account">
     <div class="profile">
       <div class="profile__content">
         <img src="@/assets/user.png" />
@@ -10,8 +10,15 @@
       </div>
     </div>
     <div class="list">
-      <div class="list__content" v-for="(wordsArray, index) of currentWords" :key="index">
-        <div class="list__info" @click="runWords(index)">
+      <div class="list__content" v-for="(wordsArray, index) of reverseWords" :key="index">
+        <div class="list__info" @mousedown.prevent="isOpenPanel = index" @click="runWords(index)">
+          <div v-if="isOpenPanel == index" @click.stop class="list__panel">
+            <ul class="list__panel-content">
+              <li class="list__panel-item">Изменить</li>
+              <li class="list__panel-item" @click="deleteWords(wordsArray, index)">Удалить</li>
+              <li class="list__panel-item" @click="isOpenPanel = -1">Отмена</li>
+            </ul>
+          </div>
           <div class="list__title">
             <h3>Ваши последние ENGLISH WORDS</h3>
             <button @click.stop="isModal = false" class="profile__run">Обновить</button>
@@ -37,14 +44,21 @@ export default {
   components: { ModalWords },
   data() {
     return {
-      isModal: false
+      isModal: false,
+      isOpenPanel: -1
     }
   },
   created() {
     this.$store.dispatch("getWords", this.userID)
-    console.log(this.currentWords);
   },
   computed: {
+    reverseWords() {
+      let newArray = []
+      for (let i = this.currentWords.length - 1; i >= 0; i--) {
+        newArray.push(this.currentWords[i])
+      }
+      return newArray;
+    },
     ...mapGetters(["userID", "currentWords"])
   },
   methods: {
@@ -53,6 +67,9 @@ export default {
     },
     runWords(wordsIndex) {
       this.$router.push(`/words/${this.userID}/${wordsIndex}/?type=start`)
+    },
+    deleteWords(words, index) {
+      this.$store.dispatch("deleteWords", { words, index, userID: this.userID })
     }
   }
 };
@@ -64,13 +81,13 @@ export default {
   gap: 50px;
   margin-top: 50px;
   display: flex;
-  align-items: center;
   justify-content: space-evenly;
   flex-wrap: wrap;
   font-family: "Helvetica";
 }
 .profile {
   width: 400px;
+  height: 240px;
   padding: 20px 0;
   // border: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 30px 0 #dddddd;
@@ -124,6 +141,7 @@ export default {
     margin-bottom: 50px;
     user-select: none;
     cursor: pointer;
+    position: relative;
     transition: transform 0.5s ease-in-out, background 0.2s ease-in-out;
     &:hover {
       transform: translateY(-20px);
@@ -154,6 +172,30 @@ export default {
   }
   &__english {
     color: #f05454;
+  }
+  &__panel {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    z-index: 1;
+    width: 150px;
+    min-height: 100px;
+    background-color: rgb(80, 80, 80);
+    // padding: 0 30px;
+    color: #fff;
+    &-content {
+      list-style: none;
+    }
+    &-item {
+      margin: 10px 0;
+      font-size: 18px;
+      text-align: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #fff;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
   }
 }
 </style>
