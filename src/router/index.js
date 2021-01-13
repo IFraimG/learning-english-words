@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "@/views/Home.vue";
+import Account from "@/views/Account.vue";
+import Words from "@/views/Words.vue";
+import { firebase } from "@firebase/app"
+import store from "@/store/index"
+require('firebase/auth');
 
 const routes = [
   {
@@ -8,13 +13,14 @@ const routes = [
     component: Home
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "/account",
+    name: "Account",
+    component: Account
+  },
+  {
+    path: "/words/:userid/:wordsid",
+    name: "Words",
+    component: Words
   }
 ];
 
@@ -22,5 +28,22 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+router.beforeEach((to, from, next) => {
+  firebase.default.auth().onAuthStateChanged(user => {
+    console.log(user);
+    if (user == null) {
+      store.commit("SET_AUTH", false)
+      if (to.name !== "Home") next({ name: "Home" })
+      else next()
+    }
+    if (user != null) {
+      store.commit("SET_PROFILE", { email: user.email, login: user.displayName, id: user.uid })
+      store.commit("SET_AUTH", true)
+      if (to.name === "Home") next({ name: "Account" })
+      else next();
+    }
+  })
+})
 
 export default router;

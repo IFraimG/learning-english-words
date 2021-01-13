@@ -1,0 +1,14 @@
+{
+  "users": {
+    "pushok": {
+      "email": "push@mail.ru",
+      "login": "rgefkdsa",
+      "words": [
+        { "id": 1, "english": "cat", "russian": "кот" },
+        { "id": 1, "english": "dog", "russian": "собака" },
+        { "id": 1, "english": "store", "russian": "магазин" },
+        { "id": 1, "english": "view", "russian": "вид" }
+      ]
+    }
+  }
+}
