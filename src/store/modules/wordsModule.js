@@ -1,5 +1,6 @@
 import router from "@/router/index"
 import randomWords from "random-words"
+// let Typo = require("typo-js")
 import firebase from '@firebase/app';
 require('firebase/database');
 
@@ -9,7 +10,8 @@ const wordsModule = {
     executeWords: [],
     wordData: null,
     stateWords: "start",
-    isLoader: false
+    isLoader: false,
+    incorrectWords: []
   }),
   mutations: {
     GET_WORDS(state, payload) {
@@ -33,10 +35,14 @@ const wordsModule = {
         default: state.stateWords = "excpect";
       }
       state.wordData = state.executeWords[task - 1]
+    },
+    CHECK_CORRECT_WORD(state, payload) {
+      state.incorrectWords = payload
     }
   },
   actions: {
     async createList({ commit }, payload) {
+      console.log(payload.list);
       try {
         let res = await firebase.default
           .database()
@@ -55,7 +61,7 @@ const wordsModule = {
             email: payload.profile.email,
             words: listWords,
           });
-        commit("GET_WORDS", payload.list);
+        commit("GET_WORDS", listWords);
       } catch (err) {
         console.log(err);
       }
@@ -105,14 +111,39 @@ const wordsModule = {
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    async checkCorrectWord({ commit }, payload) {
+      let isCorrect = await fetch(`http://speller.yandex.net/services/spellservice.json/checkText?text=${payload.word}`)
+      let data = await isCorrect.json()
+      let newArray = []
+      console.log(payload.word);
+      if (data.length != 0) {
+        let errWord = {
+          incorrect: payload.word,
+          correct: data[0].s[0],
+          id: payload.id
+        }
+        payload.errors.map(err => {
+          if (err.correct != errWord.correct && err.id != errWord.id) newArray.push(err)
+        })
+        newArray.push(errWord)
+        commit("CHECK_CORRECT_WORD", newArray)
+      } else {
+        payload.errors.map(err => {
+          if (payload.word != err.correct) newArray.push(err)
+        })
+        console.log(newArray);
+        commit("CHECK_CORRECT_WORD", newArray)
+      }
+    },
   },
   getters: {
     currentWords: state => state.currentWords,
     executeWords: state => state.executeWords,
     stateWords: state => state.stateWords,
     wordData: state => state.wordData,
-    isLoader: state => state.isLoader
+    isLoader: state => state.isLoader,
+    incorrectWords: state => state.incorrectWords
   }
 };
 

@@ -1,0 +1,132 @@
+.account {
+  padding: 0 20px;
+  max-width: 100%;
+  height: 100%;
+  padding-top: 50px;
+  gap: 50px;
+  // margin-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  font-family: "Helvetica";
+  &__wrapper {
+    width: 100%;
+    // min-height: 600px;
+    height: 100%;
+  }
+}
+.profile {
+  width: 400px;
+  height: 240px;
+  padding: 20px 0;
+  // border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 30px 0 #dddddd;
+  border-radius: 50px 20px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  &:hover {
+    background: #222831;
+    color: #fff;
+  }
+  &__content {
+    margin: 0 20px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      width: 86px;
+      height: 86px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      border-radius: 50%;
+    }
+    p {
+      margin: 20px 0;
+    }
+  }
+  &__run {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 3px;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    background-color: #f05454;
+    &:active {
+      background-color: #a33b3b;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+.list {
+  max-width: 600px;
+  &__content {
+  }
+  &__info {
+    box-shadow: 0 0 30px 0 #dddddd;
+    padding: 20px 50px;
+    margin-bottom: 50px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.5s ease-in-out, background 0.2s ease-in-out;
+    &:hover {
+      transform: translateY(-20px);
+    }
+    &:active {
+      background: #dadada;
+    }
+  }
+  &__words {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px 0;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    h3 {
+      margin-right: 20px;
+    }
+  }
+  &__english {
+    color: #f05454;
+  }
+  &__panel {
+    position: absolute;
+    left: 20px;
+    top: 50px;
+    z-index: 0;
+    width: 150px;
+    min-height: 100px;
+    background-color: #222831;
+    border-radius: 9px;
+    font-family: "Helvetica";
+    // padding: 0 30px;
+    color: #fff;
+    &-content {
+      list-style: none;
+    }
+    &-item {
+      margin: 10px 0;
+      font-size: 18px;
+      text-align: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #fff;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}

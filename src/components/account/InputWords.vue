@@ -3,13 +3,13 @@
     <div class="modal__left">
       <input
         class="modal__input"
-        @input="$emit('update:english', $event.target.value)"
+        @input="$emit('update:english', $event.target.value); isDone = false"
         type="text"
         placeholder="Слово на английском"
       />
       <input
         class="modal__input"
-        @input="$emit('update:russian', $event.target.value)"
+        @input="$emit('update:russian', $event.target.value); isDone = false"
         type="text"
         placeholder="Перевод слова на русском"
       />
@@ -25,7 +25,8 @@ export default {
   name: "InputWords",
   data() {
     return {
-      isDone: false
+      isDone: false,
+      isEdit: false
     }
   },
   methods: {
@@ -63,11 +64,31 @@ export default {
   }
   &__left {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
   }
   &__btn {
     margin-left: 20px;
+  }
+  &__errors {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 30px;
+    background-color: #c73636;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+    &-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+  }
+  &__message {
+    font-weight: bold;
   }
 }
 </style>

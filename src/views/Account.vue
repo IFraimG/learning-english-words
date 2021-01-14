@@ -1,35 +1,42 @@
 <template>
-  <ModalWords :isModal="isModal" @setModal="setModal" />
-  <div @click="isOpenPanel = -1" class="account">
-    <div class="profile">
-      <div class="profile__content">
-        <img src="@/assets/user.png" />
-        <h2>Pushok</h2>
-        <p>pushpush@mail.ru</p>
-        <button class="profile__run" @click="setModal(true)">Добавить новые слова</button>
+  <ModalWords :isModal="isModal" :incorrectWords="incorrectWords" @setModal="setModal" />
+  <div class="account__wrapper" v-if="!isModal"> 
+    <div @mousedown="isOpenPanel = -1" class="account">
+      <div class="profile">
+        <div class="profile__content">
+          <img src="@/assets/user.png" />
+          <h2>Pushok</h2>
+          <p>pushpush@mail.ru</p>
+          <button class="profile__run" @click="setModal(true)">Добавить новые слова</button>
+        </div>
       </div>
-    </div>
-    <div class="list">
-      <div class="list__content" v-for="(wordsArray, index) of reverseWords" :key="index">
-        <div class="list__info" @mousedown.prevent="isOpenPanel = index" @click="runWords(index)">
-          <div v-if="isOpenPanel == index" @click.stop class="list__panel">
-            <ul class="list__panel-content">
-              <li class="list__panel-item">Изменить</li>
-              <li class="list__panel-item" @click="deleteWords(wordsArray, index)">Удалить</li>
-              <li class="list__panel-item" @click="isOpenPanel = -1">Отмена</li>
-            </ul>
+      <div class="list" @click="isOpenPanel = -1" v-if="this.currentWords != null">
+        <div class="list__content" v-for="(wordsArray, index) of reverseWords" :key="index">
+          <div class="list__info" ref="listWords" @mousedown="setPanel" @contextmenu.prevent="isOpenPanel = index" @click="runWords(index)">
+            <div ref="panel" @click.stop v-if="isOpenPanel == index" class="list__panel">
+              <ul class="list__panel-content">
+                <li class="list__panel-item">Изменить</li>
+                <li class="list__panel-item" @click="deleteWords(wordsArray, index)">Удалить</li>
+                <li class="list__panel-item" @click="isOpenPanel = -1">Отмена</li>
+              </ul>
+            </div>
+            <div class="list__title">
+              <h3>Ваши последние ENGLISH WORDS</h3>
+              <button @click.stop="isModal = false" class="profile__run">Обновить</button>
+            </div>
+            <div class="list__words" v-for="(words, index) of wordsArray" :key="index">
+              <p class="list__item">
+                <span class="list__english">{{ words.english }}</span>
+                -
+                <span class="list__russian">{{ words.russian }}</span>
+              </p>
+            </div>
           </div>
-          <div class="list__title">
-            <h3>Ваши последние ENGLISH WORDS</h3>
-            <button @click.stop="isModal = false" class="profile__run">Обновить</button>
-          </div>
-          <div class="list__words" v-for="(words, index) of wordsArray" :key="index">
-            <p class="list__item">
-              <span class="list__english">{{ words.english }}</span>
-              -
-              <span class="list__russian">{{ words.russian }}</span>
-            </p>
-          </div>
+        </div>
+      </div>
+      <div v-else>
+        <div class="list__info">
+          <p>Вы еще не создали ни один список!</p>
         </div>
       </div>
     </div>
@@ -38,6 +45,7 @@
 <script>
 import ModalWords from '../components/account/ModalWords.vue';
 import { mapGetters } from "vuex"
+import "@/components/account/Account.scss";
 
 export default {
   name: "Account",
@@ -59,7 +67,7 @@ export default {
       }
       return newArray;
     },
-    ...mapGetters(["userID", "currentWords"])
+    ...mapGetters(["userID", "currentWords", "incorrectWords"])
   },
   methods: {
     setModal(isModal) {
@@ -70,132 +78,7 @@ export default {
     },
     deleteWords(words, index) {
       this.$store.dispatch("deleteWords", { words, index, userID: this.userID })
-    }
+    },
   }
 };
 </script>
-
-<style lang="scss">
-.account {
-  padding: 0 20px;
-  gap: 50px;
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  font-family: "Helvetica";
-}
-.profile {
-  width: 400px;
-  height: 240px;
-  padding: 20px 0;
-  // border: 1px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 30px 0 #dddddd;
-  border-radius: 50px 20px;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
-  &:hover {
-    background: #222831;
-    color: #fff;
-  }
-  &__content {
-    margin: 0 20px;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    img {
-      width: 86px;
-      height: 86px;
-      margin-bottom: 20px;
-      background-color: #fff;
-      border-radius: 50%;
-    }
-    p {
-      margin: 20px 0;
-    }
-  }
-  &__run {
-    cursor: pointer;
-    padding: 10px 20px;
-    border-radius: 3px;
-    border: none;
-    color: #fff;
-    font-weight: 500;
-    background-color: #f05454;
-    &:active {
-      background-color: #a33b3b;
-    }
-    &:focus {
-      outline: none;
-    }
-  }
-}
-.list {
-  max-width: 600px;
-  &__content {
-  }
-  &__info {
-    box-shadow: 0 0 30px 0 #dddddd;
-    padding: 20px 50px;
-    margin-bottom: 50px;
-    user-select: none;
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.5s ease-in-out, background 0.2s ease-in-out;
-    &:hover {
-      transform: translateY(-20px);
-    }
-    &:active {
-      background: #dadada;
-    }
-  }
-  &__words {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-  &__title {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px 0;
-    align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    h3 {
-      margin-right: 20px;
-    }
-  }
-  &__english {
-    color: #f05454;
-  }
-  &__panel {
-    position: absolute;
-    left: 50px;
-    top: 50px;
-    z-index: 1;
-    width: 150px;
-    min-height: 100px;
-    background-color: rgb(80, 80, 80);
-    // padding: 0 30px;
-    color: #fff;
-    &-content {
-      list-style: none;
-    }
-    &-item {
-      margin: 10px 0;
-      font-size: 18px;
-      text-align: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #fff;
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-  }
-}
-</style>
