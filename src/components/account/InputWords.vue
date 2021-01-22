@@ -5,12 +5,14 @@
         class="modal__input"
         @input="$emit('update:english', $event.target.value); isDone = false"
         type="text"
+        pattern="[A-Za-z]"
         placeholder="Слово на английском"
       />
       <input
         class="modal__input"
         @input="$emit('update:russian', $event.target.value); isDone = false"
         type="text"
+        pattern="[А-Яа-яЁё]"
         placeholder="Перевод слова на русском"
       />
     </div>

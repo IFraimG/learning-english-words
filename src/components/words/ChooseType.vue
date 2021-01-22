@@ -10,8 +10,8 @@
       <div @click="$emit('setCurrentType', 'englishV')" class="panel__center panel__item">
         <h2>Написать перевод русского слова на английском вручную</h2>
       </div>
-      <div @click="$emit('setCurrentType', 'russianV')" class="panel__right panel__item">
-        <h2>Написать перевод английского слова на русском вручную</h2>
+      <div @click="$emit('setCurrentType', 'accordion')" class="panel__right panel__item">
+        <h2>Задание "Гормошка"</h2>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <Header v-if="$store.getters.isAuth" />
   <router-view />
 </template>
 

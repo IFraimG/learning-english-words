@@ -1,22 +1,22 @@
 <template>
-  <ModalWords :isModal="isModal" :incorrectWords="incorrectWords" @setModal="setModal" />
-  <div class="account__wrapper" v-if="!isModal"> 
+  <ModalWords :profile="profile" :isModal="isModal" :incorrectWords="incorrectWords" @setModal="setModal" />
+  <div class="account__wrapper" v-if="!isModal && !isLoader"> 
     <div @mousedown="isOpenPanel = -1" class="account">
       <div class="profile">
         <div class="profile__content">
           <img src="@/assets/user.png" />
-          <h2>Pushok</h2>
-          <p>pushpush@mail.ru</p>
+          <h2>{{ profile.login }}</h2>
+          <p>{{ profile.email }}</p>
           <button class="profile__run" @click="setModal(true)">Добавить новые слова</button>
         </div>
       </div>
-      <div class="list" @click="isOpenPanel = -1" v-if="this.currentWords != null">
+      <div class="list" @click="isOpenPanel = -1" v-if="currentWords != null && currentWords?.length > 0">
         <div class="list__content" v-for="(wordsArray, index) of reverseWords" :key="index">
-          <div class="list__info" ref="listWords" @mousedown="setPanel" @contextmenu.prevent="isOpenPanel = index" @click="runWords(index)">
-            <div ref="panel" @click.stop v-if="isOpenPanel == index" class="list__panel">
+          <div class="list__info" ref="listWords" @mousedown="setPanel" @contextmenu.prevent="isOpenPanel = index" @click="runWords(wordsArray)">
+            <div ref="panel" @mousedown.stop @click.stop v-if="isOpenPanel == index" class="list__panel">
               <ul class="list__panel-content">
                 <li class="list__panel-item">Изменить</li>
-                <li class="list__panel-item" @click="deleteWords(wordsArray, index)">Удалить</li>
+                <li class="list__panel-item" @click.stop="deleteWords(wordsArray)">Удалить</li>
                 <li class="list__panel-item" @click="isOpenPanel = -1">Отмена</li>
               </ul>
             </div>
@@ -41,15 +41,19 @@
       </div>
     </div>
   </div>
+  <div v-if="isLoader">
+    <Loader />
+  </div>
 </template>
 <script>
+import Loader from '../components/app/Loader.vue';
 import ModalWords from '../components/account/ModalWords.vue';
 import { mapGetters } from "vuex"
 import "@/components/account/Account.scss";
 
 export default {
   name: "Account",
-  components: { ModalWords },
+  components: { ModalWords, Loader },
   data() {
     return {
       isModal: false,
@@ -67,17 +71,19 @@ export default {
       }
       return newArray;
     },
-    ...mapGetters(["userID", "currentWords", "incorrectWords"])
+    ...mapGetters(["userID", "currentWords", "incorrectWords", "isLoader", "profile"])
   },
   methods: {
     setModal(isModal) {
       this.isModal = isModal;
     },
-    runWords(wordsIndex) {
-      this.$router.push(`/words/${this.userID}/${wordsIndex}/?type=start`)
+    runWords(words) {
+      let index = this.currentWords.findIndex(wordsArray => wordsArray[0].english == words[0].english && wordsArray[0].russian == words[0].russian)
+      this.$router.push(`/words/${this.userID}/${index}/?type=start`)
     },
-    deleteWords(words, index) {
-      this.$store.dispatch("deleteWords", { words, index, userID: this.userID })
+    deleteWords(words) {
+      let index = this.currentWords.findIndex(wordList => wordList[0].english == words[0].english && wordList[0].russian == words[0].russian)
+      this.$store.dispatch("deleteWords", { words, index, wordsFull: this.currentWords, userID: this.userID, email: this.profile.email, login: this.profile.login })
     },
   }
 };

@@ -72,7 +72,7 @@ export default {
         let arrayWords = JSON.parse(window.sessionStorage.getItem("words"))
         let newSuccessWord = { translation: this.word, english: this.wordData.english }
         let newArrayWords = []
-        if (arrayWords != null) {
+        if (arrayWords.length > 0) {
           arrayWords.map(item => {
             if (item.translation != newSuccessWord.translation) newArrayWords.push(item)
           })

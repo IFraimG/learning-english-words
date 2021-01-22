@@ -17,13 +17,11 @@
       :wordData="wordData"
       v-else-if="stateWords == 'englishV'"
     />
-    <russian-v
-      @previousTask="previousTask"
-      @nextTask="nextTask"
+    <accordion
       @setFinishType="setFinishType"
       :taskNum="$route.query.task"
-      :wordData="wordData"
-      v-else-if="stateWords == 'russianV'"
+      :currentWords="currentWords"
+      v-else-if="stateWords == 'accordion'"
     />
     <ChooseType
       @setCurrentType="setCurrentType"
@@ -32,7 +30,7 @@
     <Finish :len="executeWords.length" v-else-if="stateWords == 'finish'" />
   </div>
   <div v-else>
-    Loader...
+    <Loader />
   </div>
 </template>
 
@@ -41,12 +39,13 @@ import { mapGetters } from "vuex"
 import ChooseType from '@/components/words/ChooseType.vue';
 import EnglishT from '@/components/words/EnglishT.vue';
 import EnglishV from '@/components/words/EnglishV.vue';
-import RussianV from '@/components/words/RussianV.vue';
+import Accordion from '@/components/words/Accordion.vue';
 import Finish from '../components/words/Finish.vue';
+import Loader from '../components/app/Loader.vue';
 
 export default {
   name: "Words",
-  components: { ChooseType, EnglishT, EnglishV, RussianV, Finish },
+  components: { ChooseType, EnglishT, EnglishV, Accordion, Finish, Loader },
   data() {
     return {
       currentType: null
@@ -54,6 +53,7 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch("loadWords", this.$route)
+    this.$store.dispatch("getListWords", this.$route)
   },
   updated() {
     this.$store.commit("CHECK_STATE_WORDS", this.$route)
@@ -67,7 +67,8 @@ export default {
       if (window.sessionStorage.getItem("wordsMistakes") != null) window.sessionStorage.removeItem("wordsMistakes")
       else window.sessionStorage.setItem("wordsMistakes", 0)
 
-      this.$router.push(`${this.$route.path}?type=${this.currentType}&task=${1}`)
+      if (type == "accordion") this.$router.push(`${this.$route.path}?type=${this.currentType}`)
+      else this.$router.push(`${this.$route.path}?type=${this.currentType}&task=${1}`)
     },
     previousTask() {
       let task = parseInt(this.$route.query.task)
@@ -86,7 +87,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["stateWords", "wordData", "isLoader", "executeWords"])
+    ...mapGetters(["stateWords", "wordData", "isLoader", "executeWords", "currentWords"])
   }
 }
 </script>

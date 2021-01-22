@@ -81,6 +81,7 @@ const authModule = {
     errorsList: (state) => state.errors,
     isAuth: (state) => state.isAuth,
     userID: (state) => state.profile.id,
+    profile: (state) => state.profile
   },
 };
 

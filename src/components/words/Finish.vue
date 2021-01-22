@@ -3,9 +3,9 @@
     <div class="finish">
       <div class="finish__content">
         <div class="finish__header">
-          <h1>Вы написали верно {{ complete.length }} слова из {{ len }} слов</h1>
+          <h1>Вы написали верно {{ complete.length }} слова из {{ len }} {{ wordsNum }}</h1>
           <span class="finish__error-title">
-            <p @click="isOpen = !isOpen">Было допущено {{ mistakes.length }} ошибки</p>
+            <p @click="isOpen = !isOpen">Было допущено {{ mistakes.length }} {{ errorsNum }}</p>
             <img v-show="!isOpen" @click="isOpen = true" src="@/assets/arrow-down.png" alt="">
             <img v-show="isOpen" @click="isOpen = false" src="@/assets/arrow-top.png" alt="">
           </span>
@@ -14,8 +14,7 @@
               <p>
                 <span class="finish__error-index">{{ ++index }}. </span>
                 <span class="finish__error-english">{{ err.english }}</span>
-                - 
-                <strike class="finish__error-russian">{{ err.translation }}</strike>
+                <strike class="finish__error-russian" v-if="err.translation != null"> - {{ err.translation }}</strike>
               </p>
             </div>
           </div>
@@ -38,6 +37,17 @@ export default {
   },
   props: {
     len: Number
+  },
+  computed: {
+    errorsNum() {
+      if (this.mistakes.length == 1 || this.mistakes % 10 == 1) return "ошибка";
+      else if (this.mistakes.length > 1 && this.mistakes.length < 5) return "ошибки";
+      else return "ошибок";
+    },
+    wordsNum() {
+      if (this.mistakes.length > 0 && this.mistakes.length < 5) return "слова";
+      else return "слов";
+    }
   },
   created() {
     this.complete = JSON.parse(window.sessionStorage.getItem("words"))

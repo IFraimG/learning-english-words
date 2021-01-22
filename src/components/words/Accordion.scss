@@ -1,0 +1,89 @@
+.accordion {
+  font-family: "Helvetica";
+  width: 800px;
+  margin: 20px 0;
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  &__content {
+    padding: 20px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 30px 0 #dddddd;
+    @media (max-width: 421px) {
+      padding: 20px 0;
+      margin: 0 20px;
+    }
+  }
+  &__header {
+    text-align: center;
+    h1 {
+      font-size: 48px;
+    }
+  }
+  &__form {
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  &__item {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px 0;
+    flex-wrap: wrap;
+    @media (max-width: 431px) {
+      flex-direction: column;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, .3);
+    }
+    label {
+      font-size: 18px;
+      cursor: pointer;
+      text-transform: capitalize;
+    }
+    input {
+      font-size: 18px;
+      max-width: 200px;
+      margin: 0 10px;
+      &:focus {
+        outline: none;
+      }
+      &:disabled {
+        cursor: pointer;
+        background: rgb(55, 157, 52);
+        color: #fff;
+      }
+    }
+    img {
+      user-select: none;
+    }
+    button {
+      user-select: none;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: .1s ease-in;
+      &:focus {
+        outline: none;
+      }
+      &:active {
+        background-color: rgb(55, 157, 52);
+      }
+    }
+  }
+  &__error {
+    color: #f05454;
+    margin-left: 20px;
+    font-weight: bold;
+  }
+  &__send {
+    margin: 0 20px;
+  }
+}

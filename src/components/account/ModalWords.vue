@@ -68,7 +68,8 @@ export default {
   },
   props: {
     isModal: Boolean,
-    incorrectWords: Array
+    incorrectWords: Array,
+    profile: Object
   },
   methods: {
     resetData() {
@@ -76,10 +77,7 @@ export default {
       this.editData = { id: 1, english: "", russian: "" };
     },
     sendData() {
-      this.$store.dispatch("createList", {
-        profile: this.$store.state.auth.profile,
-        list: this.wordsList,
-      });
+      this.$store.dispatch("createList", { profile: this.profile, list: this.wordsList });
       this.resetData();
       this.$emit("setModal", false);
     },
