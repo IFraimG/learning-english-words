@@ -4,8 +4,10 @@
       <div class="modal__content">
         <div class="modal__header">
           <h2>Создать список слов</h2>
-          <button @click="$emit('setModal', false)" class="profile__run">
-            Закрыть
+          <input v-model="titleWords" placeholder="Ваше название словаря..." type="text">
+          <button @click="modalClose" class="profile__run modal__btn-image">
+            <span>Закрыть</span>
+            <img src="@/assets/cancel.png" alt="">
           </button>
         </div>
         <div class="modal__form">
@@ -18,6 +20,7 @@
               :id="editData.id"
               v-model:english="editData.english"
               v-model:russian="editData.russian"
+              v-model:currentTime="editData.currentTime"
               @setNumInput="setNumInput"
             />
           </div>
@@ -32,16 +35,18 @@
           <button
             @click="sendData"
             type="submit"
-            class="profile__run modal-button__run modal__save"
+            class="profile__run modal-button__run modal__save modal__btn-image"
           >
-            Сохранить
+            <span>Сохранить</span>
+            <img src="@/assets/save.png" alt="">
           </button>
           <button
             type="submit"
-            class="profile__run modal__save"
+            class="profile__run modal__save modal__btn-image"
             @click="resetData"
           >
-            Очистить
+            <span>Очистить</span>
+            <img src="@/assets/delete.png" alt="">
           </button>
         </div>
       </div>
@@ -59,10 +64,12 @@ export default {
   data() {
     return {
       wordsList: [],
+      titleWords: "",
       editData: {
         id: 1,
         english: "",
         russian: "",
+        currentTime: null
       },
     };
   },
@@ -74,10 +81,14 @@ export default {
   methods: {
     resetData() {
       this.wordsList = [];
-      this.editData = { id: 1, english: "", russian: "" };
+      this.editData = { id: 1, english: "", russian: "", currentTime: null };
+    },
+    modalClose() {
+      this.wordsList = []
+      this.$emit('setModal', false)
     },
     sendData() {
-      this.$store.dispatch("createList", { profile: this.profile, list: this.wordsList });
+      this.$store.dispatch("createList", { profile: this.profile, list: this.wordsList, titleWords: this.titleWords });
       this.resetData();
       this.$emit("setModal", false);
     },
@@ -87,8 +98,7 @@ export default {
       this.$store.dispatch("checkCorrectWord", { errors: this.incorrectWords, word: this.editData.english, id: this.editData.id })
       if (this.incorrectWords.length == 0) {
         this.wordsList.push(this.editData);
-        // console.log(this.wordsList[this.editData.id - 1]);
-        this.editData = { id: newID, english: "", russian: "" };
+        this.editData = { id: newID, english: "", russian: "", currentTime: null };
       }
       console.log(this.incorrectWords);
     },

@@ -4,7 +4,8 @@
       <div class="nglish-form__content">
         <div class="english-form__header">
           <h2>Напишите перевод слова:</h2>
-          <p>{{ wordData.english }}</p>
+          <span>{{ wordData.english }}</span>
+          <span v-if="wordData.currentTime != null" class="english-form-time">({{ wordData.currentTime }})</span>
         </div>
         <div class="english-form__middle">
           <input v-model="word" type="text">
@@ -12,11 +13,12 @@
         </div>
         <div class="english-form__result">
           <p v-if="isDone && !isError" class="english-form__success english-form__status">Молодец! Все верно!</p>
-          <p v-else-if="isError && errorMessage.length == 0" class="english-form__danger english-form__status">
-            Ответ неверный! Возможно перевод этого слова раннее был введен неккоректно.
-          </p>
-          <p v-else-if="isError && errorMessage.length > 0" class="english-form__danger english-form__status">
-            {{ errorMessage }}
+          <p v-if="isError" class="english-form__danger">
+            <span v-for="(err, index) of errorsList" :key="index">
+              <p v-if="err.english == wordData.english" class="english-form__danger english-form__status">
+                Ответ неверный! Возможно перевод этого слова раннее был введен неккоректно.
+              </p>
+            </span>
           </p>
         </div>
         <div class="english-form__footer">
@@ -38,6 +40,7 @@ export default {
     return {
       isError: false,
       errorMessage: "",
+      errorsList: [],
       isDone: false,
       word: ""
     }
@@ -49,7 +52,7 @@ export default {
   },
   methods: {
     checkInput() {
-      let translation = this.wordData.russian.trim().toLowerCase()
+      let translation = this.wordData.russian.trimLeft().trimRight().toLowerCase()
       let word = this.word.trimLeft().trimRight().toLowerCase()
       if (translation === word) {
         this.isDone = true
@@ -61,9 +64,12 @@ export default {
           let arrayErrors = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
           let newArray = []
           let errInfo = { translation: word, english: this.wordData.english }
-          if (arrayErrors != null) arrayErrors.map(item => { if (item.english != this.wordData.english) newArray.push(item) })
+          if (arrayErrors != null && arrayErrors != 0) arrayErrors.map(item => { if (item.english != this.wordData.english) newArray.push(item) })
           newArray.push(errInfo)
           window.sessionStorage.setItem("wordsMistakes", JSON.stringify(newArray))
+
+          let updateMistakes = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
+          this.errorsList = updateMistakes
         } else this.errorMessage = "Вы не ввели слово"
       }
     },
@@ -72,7 +78,7 @@ export default {
         let arrayWords = JSON.parse(window.sessionStorage.getItem("words"))
         let newSuccessWord = { translation: this.word, english: this.wordData.english }
         let newArrayWords = []
-        if (arrayWords.length > 0) {
+        if (arrayWords?.length > 0 && arrayWords != null) {
           arrayWords.map(item => {
             if (item.translation != newSuccessWord.translation) newArrayWords.push(item)
           })

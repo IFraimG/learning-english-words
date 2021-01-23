@@ -1,5 +1,5 @@
 .modal {
-  width: 800px;
+  width: 1170px;
   min-height: 200px;
   background-color: #fff;
   border-radius: 20px;
@@ -35,6 +35,22 @@
     button {
       margin: 0 20px;
     }
+    input {
+      padding: 10px;
+      width: 300px;
+      margin: 0 20px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      &:focus {
+        outline: none;
+      }
+      @media (max-width: 461px) {
+        width: 200px;
+        font-size: 16px;
+      }
+    }
   }
   &__footer {
     border-top: 1px solid rgba(0, 0, 0, 0.3);
@@ -42,7 +58,10 @@
     width: 100%;
     position: absolute;
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
+    gap: 20px;
     bottom: 20px;
     left: 0;
     button {
@@ -53,9 +72,32 @@
     margin-bottom: 40px;
   }
   &__item {
+    padding-bottom: 5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     &:last-child {
       border-bottom: none;
+    }
+  }
+  &__select {
+    padding: 0 20px;
+    max-width: 300px;
+    height: 35px;
+    appearance: none;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    transition: .2s ease-in-out;
+    position: relative;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+    option {
+      position: absolute;
+      left: 50px;
+      top: 0;
+      background: #000;
     }
   }
 }

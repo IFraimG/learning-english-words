@@ -15,9 +15,16 @@
         pattern="[А-Яа-яЁё]"
         placeholder="Перевод слова на русском"
       />
+      <select v-model="time" @change="setTime" class="modal__select">
+        <option :value="-1" selected>Время (none)</option>
+        <option v-for="(time, index) of timesArray" :key="index" :value="index">{{ time }}</option>
+      </select>
     </div>
     <div class="modal__right">
-      <button v-if="!isDone" class="profile__run modal-button__run" @click="setNumInput">Добавить</button>
+      <button v-if="!isDone" class="profile__run modal-button__run modal__btn-image" @click="setNumInput">
+        <span>Добавить</span>
+        <img src="@/assets/plus.png" />
+      </button>
     </div>
   </div>
 </template>
@@ -28,13 +35,22 @@ export default {
   data() {
     return {
       isDone: false,
-      isEdit: false
+      isEdit: false,
+      time: -1,
+      timesArray: [
+        "Present Simple", "Present Continious", "Present Perfect",
+        "Present Perfect Continious", "Past Simple", "Past Continious",
+        "Past Perfect", "Past Perfect Continious", "Future Simple", "Future Perfect"
+      ]
     }
   },
   methods: {
     setNumInput() {
       this.$emit('setNumInput')
       this.isDone = true
+    },
+    setTime() {
+      this.$emit('update:currentTime', this.timesArray[this.time]);
     }
   }
 };
@@ -72,6 +88,20 @@ export default {
   }
   &__btn {
     margin-left: 20px;
+    &-image {
+      display: flex;
+      align-items: center;
+      span {
+        font-weight: bold;
+        font-size: 16px;
+      }
+      img {
+        width: 24px;
+        height: 24px;
+        margin-left: 10px;
+        object-fit: contain;
+      }
+    }
   }
   &__errors {
     display: flex;

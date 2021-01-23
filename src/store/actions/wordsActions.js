@@ -7,14 +7,14 @@ const wordsAction = {
   async createList({ commit }, payload) {
     try {
       let oldListWords = await firebase.default.database().ref("users/" + payload.profile.id + "/words").once("value")
+      let newListWords = { title: payload.titleWords, words: payload.list, id: "grfedsfvdssds" }
       let listWords;
-      if (oldListWords.val() == null) listWords = [payload.list];
-      else listWords = [...oldListWords.val(), payload.list];
+      if (oldListWords.val() == null) listWords = [newListWords];
+      else listWords = [...oldListWords.val(), newListWords];
       await firebase.default.database().ref("/users/" + payload.profile.id).set({
         login: payload.profile.login, email: payload.profile.email, words: listWords
       })
       commit("GET_WORDS", listWords);
-      commit("SET_LOADER", false)
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +44,7 @@ const wordsAction = {
         .ref(`/users/${userID}/words/${wordsID}`)
         .once("value");
 
-      let words = data.val();
+      let words = data.val().words;
       if (words == null) router.go(-1);
       else {
         let reviewWords = [];
@@ -65,7 +65,7 @@ const wordsAction = {
     try {
       commit("SET_LOADER", false);
       let wordsFull = payload.wordsFull.filter((wordList) => {
-        return wordList[0].english != payload.words[0].english && wordList[0].russian != payload.words[0].russian
+        return wordList.title != payload.title
       })
       await firebase.default.database().ref(`/users/${payload.userID}`).set({
         words: wordsFull, email: payload.email, login: payload.login
@@ -108,7 +108,7 @@ const wordsAction = {
         .database()
         .ref(`/users/${payload.params.userid}/words/${payload.params.wordsid}`)
         .once("value");
-      commit("GET_WORDS", data.val());
+      commit("GET_WORDS", data.val().words);
       commit("SET_LOADER", false);
     } catch (error) {
       commit("SET_LOADER", false);

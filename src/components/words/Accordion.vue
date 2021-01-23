@@ -6,7 +6,7 @@
           <h1>Гармошка</h1>
         </div>
         <div v-if="!isRotate" class="accordion__form">
-          <div class="accordion__item" v-for="(words, index) of currentWords" :key="index">
+          <div class="accordion__item" v-for="(words, index) of currentSortWords" :key="index">
             <label :for="'inputElement' + index">{{words.russian}} - </label>
             <input :ref="'inputInfo' + index" type="text" :id="'inputElement' + index" />
             <button v-if="!doneWords.includes(words.english)" @click="checkWord(words, index)">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="accordion__form" v-else>
-          <div class="accordion__item" v-for="(words, index) of currentWords" :key="index">
+          <div class="accordion__item" v-for="(words, index) of currentSortWords" :key="index">
             <label :for="'inputElement' + index">{{words.english}} - </label>
             <input :ref="'inputInfo' + index" type="text" :id="'inputElement' + index" />
             <button v-if="!doneWords.includes(words.russian)" @click="checkRussianWords(words, index)">
@@ -57,6 +57,12 @@ export default {
   },
   props: {
     currentWords: Array
+  },
+  computed: {
+    currentSortWords() {
+      let currentWords = this.currentWords
+      return currentWords.sort(() => Math.random() - 0.5).reverse()
+    }
   },
   methods: {
     checkWord(wordInfo, index) {
