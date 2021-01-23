@@ -3,21 +3,19 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-// import VueMeta from "vue-meta"
 import { firebase } from "@firebase/app";
 
 const configOptions = {
-  apiKey: "AIzaSyBla6tQ_SA6gT3Pf9JKKXDZeKEpmyuhF2Q",
-  authDomain: "myocean-english-project.firebaseapp.com",
-  projectId: "myocean-english-project",
-  storageBucket: "myocean-english-project.appspot.com",
-  messagingSenderId: "197125702152",
-  appId: "1:197125702152:web:d63a8473f3069f843d47bd",
-  measurementId: "G-XMG88ND0QY"
+  apiKey: process.env.VUE_APP_API_KEY,
+  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+  projectId: process.env.VUE_APP_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_APP_ID,
+  measurementId: process.env.VUE_APP_MEASUREMENT_ID
 };
 
 firebase.initializeApp(configOptions)
-// const db = firebaseApp.firestore()
 
 createApp(App)
   .use(store)
