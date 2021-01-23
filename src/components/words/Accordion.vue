@@ -5,7 +5,7 @@
         <div class="accordion__header">
           <h1>Гармошка</h1>
         </div>
-        <div class="accordion__form">
+        <div v-if="!isRotate" class="accordion__form">
           <div class="accordion__item" v-for="(words, index) of currentWords" :key="index">
             <label :for="'inputElement' + index">{{words.russian}} - </label>
             <input :ref="'inputInfo' + index" type="text" :id="'inputElement' + index" />
@@ -16,7 +16,27 @@
             <p v-if="errorWords.includes(words.english)" class="accordion__error">Слово введено неверно!</p>
           </div>
         </div>
-        <button @click="sendData" class="accordion__send profile__run">Посмотреть результаты</button>
+        <div class="accordion__form" v-else>
+          <div class="accordion__item" v-for="(words, index) of currentWords" :key="index">
+            <label :for="'inputElement' + index">{{words.english}} - </label>
+            <input :ref="'inputInfo' + index" type="text" :id="'inputElement' + index" />
+            <button v-if="!doneWords.includes(words.russian)" @click="checkRussianWords(words, index)">
+              <img src="@/assets/check.png" />
+            </button>
+            <img
+              v-if="doneWords.includes(words.russian)" 
+              src="@/assets/success.png" 
+            />
+            <p v-if="errorWords.includes(words.russian)" class="accordion__error">Слово введено неверно!</p>
+          </div>
+        </div>
+        <div class="accordion__footer">
+          <!-- <button @click="sendData" class="accordion__send profile__run">Посмотреть результаты</button> -->
+          <button @click="rotateWords" class="accordion__send profile__run">Перевернуть гармошку</button>
+          <router-link :to="{name: 'Account'}">
+            <button @click="rotateWords" class="accordion__send profile__run">Завершить</button>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -31,7 +51,8 @@ export default {
     return {
       currentInputWord: "",
       doneWords: [],
-      errorWords: []
+      errorWords: [],
+      isRotate: false
     }
   },
   props: {
@@ -40,8 +61,7 @@ export default {
   methods: {
     checkWord(wordInfo, index) {
       let value = this.$refs['inputInfo' + index.toString()].value;
-      console.log(this.errorWords);
-      if (wordInfo.english == value) {
+      if (wordInfo.english == value.trimLeft().trimRight().toLowerCase()) {
         this.$refs['inputInfo' + index.toString()].disabled = true
         let indexError = this.errorWords.indexOf(wordInfo.english)
         if (indexError != -1) this.errorWords.splice(indexError, 1)
@@ -50,7 +70,18 @@ export default {
         let indexError = this.errorWords.indexOf(wordInfo.english)
         if (indexError == -1) this.errorWords.push(wordInfo.english)
       }
-      console.log(this.errorWords);
+    },
+    checkRussianWords(wordInfo, index) {
+      let value = this.$refs['inputInfo' + index.toString()].value;
+      if (wordInfo.russian == value.trimLeft().trimRight().toLowerCase()) {
+        this.$refs['inputInfo' + index.toString()].disabled = true
+        let indexError = this.errorWords.indexOf(wordInfo.russian)
+        if (indexError != -1) this.errorWords.splice(indexError, 1)
+        this.doneWords.push(wordInfo.russian)
+      } else {
+        let indexError = this.errorWords.indexOf(wordInfo.russian)
+        if (indexError == -1) this.errorWords.push(wordInfo.russian)
+      }
     },
     sendData() {
       let arrayWords = JSON.parse(window.sessionStorage.getItem("words"))
@@ -74,12 +105,13 @@ export default {
       })
       window.sessionStorage.setItem("words", JSON.stringify(successWords))
       window.sessionStorage.setItem("wordsMistakes", JSON.stringify(failedWords))
-      this.$emit('setFinishType')
+      // this.$emit('setFinishType')
+    },
+    rotateWords() {
+      this.doneWords = []
+      this.errorWords = []
+      this.isRotate = !this.isRotate
     }
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -8,7 +8,9 @@
         <router-link class="header-link" to="/account">Профиль</router-link>
         <p class="header-link" @click="logout">Выйти из аккаунта</p>
       </div>
-      <div @click="openPanel" class="menu__panel"></div>
+      <div @click="openPanel" class="menu__panel">
+        <img src="@/assets/menu.png" alt="">
+      </div>
       <div class="menu" ref="menu">
         <div class="menu__content">
           <router-link class="header-link menu-link" to="/account">Профиль</router-link>
@@ -24,12 +26,19 @@ import "./Header.scss"
 
 export default {
   name: "Header",
+  data() {
+    return {
+      isHeader: false
+    }
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout");
     },
     openPanel() {
-      this.$refs.menu.classList.add("menu__active")
+      this.isHeader = !this.isHeader;
+      if (this.isHeader) this.$refs.menu.classList.add("menu__active")
+      else this.$refs.menu.classList.remove("menu__active")
     }
   },
 };
