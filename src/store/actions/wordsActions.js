@@ -114,6 +114,17 @@ const wordsAction = {
       commit("SET_LOADER", false);
     }
   },
+  async sendEditWords({ commit }, payload) {
+    try {
+      await firebase.default.database().ref(`/users/${payload.userid}/words/${payload.wordsid}`).set({
+        words: payload.editWords, title: payload.title, id: payload.id
+      })
+      let data = await firebase.default.database().ref(`/users/${payload.userid}`).once("value")
+      commit("GET_WORDS", data.val().words)
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };
 
 export default wordsAction;

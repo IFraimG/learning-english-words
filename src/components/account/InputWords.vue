@@ -15,10 +15,7 @@
         pattern="[А-Яа-яЁё]"
         placeholder="Перевод слова на русском"
       />
-      <select v-model="time" @change="setTime" class="modal__select">
-        <option :value="-1" selected>Время (none)</option>
-        <option v-for="(time, index) of timesArray" :key="index" :value="index">{{ time }}</option>
-      </select>
+      <select-time :timeEdit="null" @setTime="setTime" />
     </div>
     <div class="modal__right">
       <button v-if="!isDone" class="profile__run modal-button__run modal__btn-image" @click="setNumInput">
@@ -30,18 +27,14 @@
 </template>
 
 <script>
+import SelectTime from './SelectTime.vue';
 export default {
+  components: { SelectTime },
   name: "InputWords",
   data() {
     return {
       isDone: false,
-      isEdit: false,
-      time: -1,
-      timesArray: [
-        "Present Simple", "Present Continious", "Present Perfect",
-        "Present Perfect Continious", "Past Simple", "Past Continious",
-        "Past Perfect", "Past Perfect Continious", "Future Simple", "Future Perfect"
-      ]
+      isEdit: false
     }
   },
   methods: {
@@ -49,8 +42,8 @@ export default {
       this.$emit('setNumInput')
       this.isDone = true
     },
-    setTime() {
-      this.$emit('update:currentTime', this.timesArray[this.time]);
+    setTime(time) {
+      this.$emit('update:currentTime', time);
     }
   }
 };

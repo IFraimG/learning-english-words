@@ -2,14 +2,7 @@
   <ModalWords :profile="profile" :isModal="isModal" :incorrectWords="incorrectWords" @setModal="setModal" />
   <div class="account__wrapper" v-if="!isModal && !isLoader"> 
     <div @mousedown="isOpenPanel = -1" class="account">
-      <div class="profile">
-        <div class="profile__content">
-          <img src="@/assets/user.png" />
-          <h2>{{ profile.login }}</h2>
-          <p>{{ profile.email }}</p>
-          <button class="profile__run" @click="setModal(true)">Добавить новые слова</button>
-        </div>
-      </div>
+      <Profile @setModal="setModal" :profile="profile" />
       <div class="list" @click="isOpenPanel = -1" v-if="currentWords != null && currentWords?.length > 0">
         <div class="list__content" v-for="(wordsArray, index) of reverseWords" :key="index">
           <div class="list__info" ref="listWords" @mousedown="setPanel" @contextmenu.prevent="isOpenPanel = index" @click="runWords(wordsArray.title)">
@@ -22,15 +15,18 @@
             </div>
             <div class="list__title">
               <h3>{{ wordsArray.title }}</h3>
-              <button @click.stop="isModal = false" class="profile__run">Обновить</button>
+              <button v-if="editMode != wordsArray.title" @click.stop="editWords(wordsArray.words, wordsArray.title)" class="profile__run">Редактировать</button>
+              <button v-else @click.stop="stopEdit" class="profile__run">Отменить</button>
             </div>
             <div class="list__words" v-for="(words, index) of wordsArray.words" :key="index">
-              <p class="list__item">
+              <p v-if="editMode != wordsArray.title" class="list__item">
                 <span class="list__english">{{ words.english }}</span>
                 -
                 <span class="list__russian">{{ words.russian }}</span>
               </p>
+              <account-word v-else :wordData="editList[index]" :title="wordsArray.title" :index="index" @saveWord="saveWord" />
             </div>
+            <button v-if="editMode == wordsArray.title" @click.stop="saveEditWords(wordsArray.title, wordsArray.id)" class="profile__run">Сохранить</button>
           </div>
         </div>
       </div>
@@ -50,13 +46,17 @@ import Loader from '../components/app/Loader.vue';
 import ModalWords from '../components/account/ModalWords.vue';
 import { mapGetters } from "vuex"
 import "@/components/account/Account.scss";
+import AccountWord from '../components/account/AccountWord.vue';
+import Profile from '../components/account/Profile.vue';
 
 export default {
   name: "Account",
-  components: { ModalWords, Loader },
+  components: { ModalWords, Loader, AccountWord, Profile },
   data() {
     return {
       isModal: false,
+      editMode: false,
+      editList: [],
       isOpenPanel: -1
     }
   },
@@ -78,13 +78,32 @@ export default {
       this.isModal = isModal;
     },
     runWords(title) {
-      let index = this.currentWords.findIndex(wordsArray => title == wordsArray.title)
-      this.$router.push(`/words/${this.userID}/${index}/?type=start`)
+      if (this.editMode != title) {
+        let index = this.currentWords.findIndex(wordsArray => title == wordsArray.title)
+        this.$router.push(`/words/${this.userID}/${index}/?type=start`)
+      }
     },
     deleteWords(title) {
       let index = this.currentWords.findIndex(wordList => title == wordList.title)
       this.$store.dispatch("deleteWords", { title, index, wordsFull: this.currentWords, userID: this.userID, email: this.profile.email, login: this.profile.login })
     },
+    editWords(words, title) {
+      this.editMode = title
+      this.editList = [...words]
+    },
+    stopEdit() {
+      this.editList = []
+      this.editMode = false
+    },
+    saveWord(data) {
+      this.editList[data.index] = data.word
+    },
+    saveEditWords(title, id) {
+      let index = this.currentWords.findIndex(wordList => title == wordList.title)
+      this.$store.dispatch("sendEditWords", { title, id, editWords: this.editList, userid: this.userID, wordsid: index})
+      this.stopEdit()
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
   }
 };
 </script>

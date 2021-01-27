@@ -9,25 +9,39 @@
           <div class="accordion__item" v-for="(words, index) of currentSortWords" :key="index">
             <label :for="'inputElement' + index">{{words.russian}} - </label>
             <input :ref="'inputInfo' + index" type="text" :id="'inputElement' + index" />
-            <button v-if="!doneWords.includes(words.english)" @click="checkWord(words, index)">
+            <button v-if="!doneWords.includes(words.english)" @click="checkWord(words.english, index)">
               <img src="@/assets/check.png" />
             </button>
             <img v-if="doneWords.includes(words.english)" src="@/assets/success.png" />
-            <p v-if="errorWords.includes(words.english)" class="accordion__error">Слово введено неверно!</p>
+            <p v-if="errorWords.includes(words.english)" class="accordion__error">Неверно!</p>
+            <p
+              v-if="errorWords.includes(words.english) && !isAnswer.includes(words.english)"
+              @click="addAnswer(words.english)"
+              class="accordion__answer"
+            >ответ</p>
+            <p v-if="isAnswer.includes(words.english)" class="accordion__answer">
+              {{ words.english }}
+              <img @click="deleteAnswer(words.english)" src="@/assets/close.png" alt="">
+            </p>
           </div>
         </div>
         <div class="accordion__form" v-else>
           <div class="accordion__item" v-for="(words, index) of currentSortWords" :key="index">
             <label :for="'inputElement' + index">{{words.english}} - </label>
             <input :ref="'inputInfo' + index" type="text" :id="'inputElement' + index" />
-            <button v-if="!doneWords.includes(words.russian)" @click="checkRussianWords(words, index)">
+            <button v-if="!doneWords.includes(words.russian)" @click="checkWord(words.russian, index)">
               <img src="@/assets/check.png" />
             </button>
             <img
               v-if="doneWords.includes(words.russian)" 
               src="@/assets/success.png" 
             />
-            <p v-if="errorWords.includes(words.russian)" class="accordion__error">Слово введено неверно!</p>
+            <p v-if="errorWords.includes(words.russian)" class="accordion__error">Неверно!</p>
+            <p v-if="errorWords.includes(words.russian) && !isAnswer.includes(words.russian)" @click="addAnswer(words.russian)" class="accordion__answer">ответ</p>
+            <p v-if="isAnswer.includes(words.russian)" class="accordion__answer">
+              {{ words.russian }}
+              <img @click="deleteAnswer(words.russian)" src="@/assets/close.png" alt="">
+            </p>
           </div>
         </div>
         <div class="accordion__footer">
@@ -52,6 +66,8 @@ export default {
       currentInputWord: "",
       doneWords: [],
       errorWords: [],
+      isAnswer: [],
+      checkedAnswers: [],
       isRotate: false
     }
   },
@@ -65,28 +81,24 @@ export default {
     }
   },
   methods: {
-    checkWord(wordInfo, index) {
-      let value = this.$refs['inputInfo' + index.toString()].value;
-      if (wordInfo.english == value.trimLeft().trimRight().toLowerCase()) {
-        this.$refs['inputInfo' + index.toString()].disabled = true
-        let indexError = this.errorWords.indexOf(wordInfo.english)
-        if (indexError != -1) this.errorWords.splice(indexError, 1)
-        this.doneWords.push(wordInfo.english)
-      } else {
-        let indexError = this.errorWords.indexOf(wordInfo.english)
-        if (indexError == -1) this.errorWords.push(wordInfo.english)
-      }
+    addAnswer(words) {
+      this.isAnswer.push(words)
     },
-    checkRussianWords(wordInfo, index) {
+    deleteAnswer(words) {
+      let isIndex = this.isAnswer.findIndex(item => item == words)
+      if (isIndex != -1) this.isAnswer.splice(isIndex, 1)
+    },
+    checkWord(word, index) {
       let value = this.$refs['inputInfo' + index.toString()].value;
-      if (wordInfo.russian == value.trimLeft().trimRight().toLowerCase()) {
+      if (word == value.trimLeft().trimRight().toLowerCase()) {
         this.$refs['inputInfo' + index.toString()].disabled = true
-        let indexError = this.errorWords.indexOf(wordInfo.russian)
+        let indexError = this.errorWords.indexOf(word)
         if (indexError != -1) this.errorWords.splice(indexError, 1)
-        this.doneWords.push(wordInfo.russian)
+        this.deleteAnswer(word)
+        this.doneWords.push(word)
       } else {
-        let indexError = this.errorWords.indexOf(wordInfo.russian)
-        if (indexError == -1) this.errorWords.push(wordInfo.russian)
+        let indexError = this.errorWords.indexOf(word)
+        if (indexError == -1) this.errorWords.push(word)
       }
     },
     sendData() {
@@ -116,8 +128,9 @@ export default {
     rotateWords() {
       this.doneWords = []
       this.errorWords = []
+      this.isAnswer = []
       this.isRotate = !this.isRotate
-    }
+    },
   }
 }
 </script>
