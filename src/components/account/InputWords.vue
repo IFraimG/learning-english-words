@@ -3,6 +3,7 @@
     <div class="modal__left">
       <input
         class="modal__input"
+        :ref="'englishWord' + id"
         @input="$emit('update:english', $event.target.value); isDone = false"
         type="text"
         pattern="[A-Za-z]"
@@ -12,6 +13,7 @@
         class="modal__input"
         @input="$emit('update:russian', $event.target.value); isDone = false"
         type="text"
+        :ref="'russianWord' + id"
         pattern="[А-Яа-яЁё]"
         placeholder="Перевод слова на русском"
       />
@@ -31,6 +33,9 @@ import SelectTime from './SelectTime.vue';
 export default {
   components: { SelectTime },
   name: "InputWords",
+  props: {
+    id: Number
+  },
   data() {
     return {
       isDone: false,

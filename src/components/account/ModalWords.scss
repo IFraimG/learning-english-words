@@ -51,6 +51,12 @@
         font-size: 16px;
       }
     }
+    &-error {
+      border: 2px solid #a33b3b !important;
+      &::placeholder {
+        color: #f05454;
+      }
+    }
   }
   &__footer {
     border-top: 1px solid rgba(0, 0, 0, 0.3);

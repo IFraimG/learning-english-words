@@ -75,31 +75,20 @@ const wordsAction = {
     }
   },
   async checkCorrectWord({ commit }, payload) {
-    let isCorrect = await fetch(
-      `http://speller.yandex.net/services/spellservice.json/checkText?text=${payload.word}`
-    );
-    let data = await isCorrect.json();
     let newArray = [];
-    console.log(payload.word);
-    if (data.length != 0) {
-      let errWord = {
-        incorrect: payload.word,
-        correct: data[0].s[0],
-        id: payload.id,
-      };
-      payload.errors.map((err) => {
-        if (err.correct != errWord.correct && err.id != errWord.id)
-          newArray.push(err);
-      });
-      newArray.push(errWord);
-      commit("CHECK_CORRECT_WORD", newArray);
-    } else {
-      payload.errors.map((err) => {
-        if (payload.word != err.correct) newArray.push(err);
-      });
-      console.log(newArray);
-      commit("CHECK_CORRECT_WORD", newArray);
-    }
+    payload.words.map(async word => {
+      let isCorrect = await fetch(`http://speller.yandex.net/services/spellservice.json/checkText?text=${word.english}`);
+      let data = await isCorrect.json();
+      if (data.length != 0) {
+        let errWord = {
+          incorrect: payload.word,
+          correct: data[0].s[0],
+          id: payload.id,
+        };
+        newArray.push(errWord);
+      }
+    })
+    commit("CHECK_CORRECT_WORD", newArray);
   },
   async getListWords({ commit }, payload) {
     try {

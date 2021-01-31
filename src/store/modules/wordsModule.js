@@ -3,6 +3,7 @@ import wordsAction from "../actions/wordsActions"
 const wordsModule = {
   state: () => ({
     currentWords: [],
+    findWords: [],
     executeWords: [],
     wordData: null,
     stateWords: "start",
@@ -34,6 +35,16 @@ const wordsModule = {
     },
     CHECK_CORRECT_WORD(state, payload) {
       state.incorrectWords = payload
+    },
+    FIND_TITLE(state, payload) {
+      let title = payload
+      let wordsList = []
+      state.currentWords.map(item => {
+        console.log(item.title);
+        if (item.title.trimLeft().trimRight().toLowerCase() == title) wordsList.push(item)
+      })
+      if (wordsList.length > 0) state.findWords = wordsList
+      else state.findWords = []
     }
   },
   actions: wordsAction,
@@ -41,6 +52,7 @@ const wordsModule = {
     currentWords: state => state.currentWords,
     executeWords: state => state.executeWords,
     stateWords: state => state.stateWords,
+    findWords: state => state.findWords,
     wordData: state => state.wordData,
     isLoader: state => state.isLoader,
     incorrectWords: state => state.incorrectWords

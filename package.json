@@ -1,5 +1,6 @@
 {
   "name": "english-project",
+  "author": "IFramex",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,9 +15,7 @@
     "register-service-worker": "^1.7.1",
     "typo-js": "^1.2.0",
     "vue": "^3.0.0",
-    "vue-meta": "^2.4.0",
     "vue-router": "^4.0.0-0",
-    "vuefire": "^2.2.5",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {

@@ -4,7 +4,7 @@
       <div class="modal__content">
         <div class="modal__header">
           <h2>Создать список слов</h2>
-          <input v-model="titleWords" placeholder="Ваше название словаря..." type="text">
+          <input ref="inputTitle" v-model="titleWords" placeholder="Ваше название словаря..." type="text">
           <button @click="modalClose" class="profile__run modal__btn-image">
             <span>Закрыть</span>
             <img src="@/assets/cancel.png" alt="">
@@ -57,6 +57,7 @@
 <script>
 import InputWords from "./InputWords.vue";
 import "./ModalWords.scss"
+import { mapGetters } from "vuex"
 
 export default {
   components: { InputWords },
@@ -75,12 +76,15 @@ export default {
   },
   props: {
     isModal: Boolean,
-    incorrectWords: Array,
     profile: Object
+  },
+  computed: {
+    ...mapGetters(["incorrectWords"])
   },
   methods: {
     resetData() {
       this.wordsList = [];
+      this.titleWords = ""
       this.editData = { id: 1, english: "", russian: "", currentTime: null };
     },
     modalClose() {
@@ -88,19 +92,23 @@ export default {
       this.$emit('setModal', false)
     },
     sendData() {
-      this.$store.dispatch("createList", { profile: this.profile, list: this.wordsList, titleWords: this.titleWords });
-      this.resetData();
-      this.$emit("setModal", false);
+      if (this.titleWords.length > 0) {
+        this.$store.dispatch("createList", { profile: this.profile, list: this.wordsList, titleWords: this.titleWords });
+        this.resetData();
+        this.$emit("setModal", false);
+      } else {
+        this.$refs.inputTitle.placeholder = "Вы не ввели название !"
+        this.$refs.inputTitle.classList.add("modal__header-error")
+      }
     },
     setNumInput() {
       let newID = this.editData.id + 1;
       this.editData.id = this.wordsList.length + 1;
-      this.$store.dispatch("checkCorrectWord", { errors: this.incorrectWords, word: this.editData.english, id: this.editData.id })
+      // this.$store.dispatch("checkCorrectWord", { errors: this.incorrectWords, words: this.wordsList, id: this.editData.id })
       if (this.incorrectWords.length == 0) {
         this.wordsList.push(this.editData);
         this.editData = { id: newID, english: "", russian: "", currentTime: null };
       }
-      console.log(this.incorrectWords);
     },
   },
 };
