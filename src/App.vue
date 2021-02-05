@@ -1,6 +1,10 @@
 <template>
   <Header v-if="$store.getters.isAuth" />
-  <router-view />
+  <router-view v-slot="{ Component }">
+    <transition name="fade" :appear="true">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <style lang="scss">
@@ -18,4 +22,15 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+
+}</style>

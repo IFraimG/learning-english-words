@@ -17,8 +17,9 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin: 0 20px;
     height: 100%;
-    @media (max-width: 574px) {
+    @media (max-width: 674px) {
       justify-content: space-between;
     }
   }
@@ -42,7 +43,7 @@
   }
   &__right {
     display: flex;
-    @media (max-width: 574px) {
+    @media (max-width: 674px) {
       display: none;
     }
   }
@@ -114,7 +115,7 @@
   }
   &__panel {
     display: none;
-    @media (max-width: 574px) {
+    @media (max-width: 674px) {
       display: block;
       margin-right: 10px;
       cursor: pointer;

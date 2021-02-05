@@ -6,6 +6,7 @@
       </div>
       <div class="header__right">
         <router-link class="header-link" to="/account">Профиль</router-link>
+        <router-link class="header-link" to="/dictionary">Словарь</router-link>
         <p class="header-link" @click="logout">Выйти из аккаунта</p>
       </div>
       <div @click="openPanel" class="menu__panel">
@@ -14,6 +15,7 @@
       <div class="menu" ref="menu">
         <div class="menu__content">
           <router-link class="header-link menu-link" to="/account">Профиль</router-link>
+          <router-link class="header-link menu-link" to="/dictionary">Словарь</router-link>
           <p class="header-link menu-link" v-if="$store.getters.isAuth" @click="logout">Выйти из аккаунта</p>
         </div>
       </div>

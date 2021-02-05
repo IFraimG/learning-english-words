@@ -1,0 +1,107 @@
+table {
+  margin: 0 auto;
+  max-width: 1170px;
+  margin-top: 50px;
+  padding: 10px 20px;
+  border-spacing: none !important;
+  font-family: 'Montserrat', "Helvetica";
+  @media (max-width: 814px) {
+    max-width: 671px;
+  }
+  @media (max-width: 431px) {
+    padding: 0;
+  }
+  caption {
+    font-size: 48px;
+    padding-bottom: 20px;
+    @media (max-width: 914px) {
+      font-size: 32px;
+    }
+  }
+  tr {
+    text-align: center;
+  }
+  th {
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    font-size: 24px;
+    &:first-child {
+      border-left: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    @media (max-width: 914px) {
+      font-size: 16px;
+    }
+    @media (max-width: 814px) and (min-width: 471px) {
+      font-size: 24px;
+    }
+  }
+}
+
+.dictionary {
+  width: 100%;
+  &__header {
+    th {
+      padding: 10px 80px;
+      @media (max-width: 571px) {
+        padding: 10px 30px;
+      }
+      @media (max-width: 431px) {
+        padding: 10px;
+      }
+    }
+  }
+  &__transcription {
+    @media (max-width: 814px) {
+      display: none;
+    }
+  }
+  &__item {
+    td {
+      padding: 10px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.3);
+      border-right: 1px solid rgba(0, 0, 0, 0.3);
+      &:first-child {
+        border-left: 1px solid rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        &:hover {
+          background: rgba(0, 0, 0, 0.05);
+        }
+      }
+    }
+    &:last-child {
+      td {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+      } 
+    }
+  }
+  &__footer {
+    display: block;  
+    margin-top: 10px;
+    user-select: none;
+    tr {
+      width: 64px;
+      height: 32px;
+      font-size: 16px;
+      cursor: pointer;
+      @media (max-width: 914px) {
+        font-size: 12px;
+      }
+      @media (max-width: 431px) {
+        width: 32px;
+        height: 16px;
+      }
+    }  
+    td {
+      padding: 10px 20px;
+      transition: .2s ease-in-out;
+      color: #fff;
+      background-color: #222831;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      font-weight: bold;
+      &:hover {
+        background: #dddddd;
+        color: #000;
+      }
+    }
+  }
+}
