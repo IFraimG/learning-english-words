@@ -66,7 +66,7 @@
 
 <script>
 import { mapGetters } from "vuex"
-import "@/components/account/Account.scss";
+import "@/components/account/scss/Account.scss";
 import AccountWord from '@/components/account/AccountWord.vue';
 
 export default {

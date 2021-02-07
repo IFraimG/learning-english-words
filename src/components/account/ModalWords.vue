@@ -25,10 +25,10 @@
             />
           </div>
         </div>
-        <div class="modal__errors-wrapper" v-if="incorrectWords != undefined">
-          <div v-for="(errorWord, index) of incorrectWords" :key="index" class="modal__errors">
+        <div class="modal__errors-wrapper" v-if="incorrectWord != null">
+          <div class="modal__errors">
             <p class="modal__message">Данное слово введено неправильно!</p>
-            <p v-if="errorWord.correct != undefined">Возможно вы имели ввиду: <span>{{ errorWord.correct }}</span></p>
+            <p v-if="incorrectWord.correct != undefined">Возможно вы имели ввиду: <span>{{ incorrectWord.correct }}</span></p>
           </div>
         </div>
         <div class="modal__footer">
@@ -56,7 +56,7 @@
 
 <script>
 import InputWords from "./InputWords.vue";
-import "./ModalWords.scss"
+import "./scss/ModalWords.scss"
 import { mapGetters } from "vuex"
 
 export default {
@@ -67,7 +67,7 @@ export default {
       wordsList: [],
       titleWords: "",
       editData: {
-        id: 1,
+        id: "",
         english: "",
         russian: "",
         currentTime: null
@@ -79,7 +79,7 @@ export default {
     profile: Object
   },
   computed: {
-    ...mapGetters(["incorrectWords"])
+    ...mapGetters(["incorrectWord"])
   },
   methods: {
     resetData() {
@@ -101,14 +101,36 @@ export default {
         this.$refs.inputTitle.classList.add("modal__header-error")
       }
     },
-    setNumInput() {
-      let newID = this.editData.id + 1;
-      this.editData.id = this.wordsList.length + 1;
-      // this.$store.dispatch("checkCorrectWord", { errors: this.incorrectWords, words: this.wordsList, id: this.editData.id })
-      if (this.incorrectWords.length == 0) {
-        this.wordsList.push(this.editData);
-        this.editData = { id: newID, english: "", russian: "", currentTime: null };
+    getWordID() {
+      let text = ""
+      let words = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for (let i = 0; i < 16; i++) {
+        text += words.charAt(Math.floor(Math.random() * words.length));
       }
+      return text
+    },
+    checkValidID(id) {
+      let isValid = false;
+      this.wordsList.forEach(item => {
+        if (item.id == id) isValid = true
+      })
+      return isValid;
+    },
+    setNumInput() {
+      let isValid = true;
+      let id = ""
+      while (isValid) {
+        id = this.getWordID()
+        isValid = this.checkValidID(id)
+      }
+      this.editData.id = id
+      this.$store.dispatch("checkCorrectWord", { wordData: this.editData })
+        .then(() => {
+          if (this.incorrectWord == null) {
+            this.wordsList.push(this.editData);
+            this.editData = { id: "", english: "", russian: "", currentTime: null };
+          }
+        })
     },
   },
 };

@@ -15,7 +15,7 @@
       <div class="menu" ref="menu">
         <div class="menu__content">
           <router-link class="header-link menu-link" to="/account">Профиль</router-link>
-          <router-link class="header-link menu-link" to="/dictionary">Словарь</router-link>
+          <router-link class="header-link menu-link" to="/dictionary?column=1">Словарь</router-link>
           <p class="header-link menu-link" v-if="$store.getters.isAuth" @click="logout">Выйти из аккаунта</p>
         </div>
       </div>

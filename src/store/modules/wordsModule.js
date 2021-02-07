@@ -8,7 +8,7 @@ const wordsModule = {
     wordData: null,
     stateWords: "start",
     isLoader: false,
-    incorrectWords: []
+    incorrectWord: null
   }),
   mutations: {
     GET_WORDS(state, payload) {
@@ -34,13 +34,12 @@ const wordsModule = {
       state.wordData = state.executeWords[task - 1]
     },
     CHECK_CORRECT_WORD(state, payload) {
-      state.incorrectWords = payload
+      state.incorrectWord = payload
     },
     FIND_TITLE(state, payload) {
       let title = payload
       let wordsList = []
       state.currentWords.map(item => {
-        console.log(item.title);
         if (item.title.trimLeft().trimRight().toLowerCase() == title) wordsList.push(item)
       })
       if (wordsList.length > 0) state.findWords = wordsList
@@ -55,7 +54,7 @@ const wordsModule = {
     findWords: state => state.findWords,
     wordData: state => state.wordData,
     isLoader: state => state.isLoader,
-    incorrectWords: state => state.incorrectWords
+    incorrectWord: state => state.incorrectWord
   }
 };
 

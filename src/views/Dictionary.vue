@@ -1,6 +1,6 @@
 <template>
   <div class="dictionary">
-    <table>
+    <table v-if="!isLoader && pagesDictionary != null">
       <caption>{{ currentDictionary.title }}</caption>
       <thead class="dictionary__header">
         <tr>
@@ -12,34 +12,60 @@
       <tbody class="dictionary__content">
         <tr v-for="(wordInfo, index) of sortedWords" :key="index" class="dictionary__item">
           <td>{{wordInfo.english}}</td>
-          <td class="dictionary__transcription">Добавить транскрипцию</td>
+          <td
+            v-if="transcription != wordInfo.english"
+            @click="setTranscription(wordInfo.english, wordInfo.transcription)"
+            class="dictionary__transcription"
+          >
+            <span>Добавить транскрипцию</span>
+          </td>
+          <td class="dictionary__transcription" v-else>
+            <input type="text" v-model="newTranscription" @keydown.enter="saveTranscription(wordInfo)" />
+          </td>
           <td>{{ wordInfo.russian }}</td>
         </tr>
       </tbody>
       <tfoot class="dictionary__footer">
-        <tr>
-          <span v-for="(page, index) of pagesDictionary" :key="index">
-            <td @click="editPage(index)">
-              {{ ++index }}
+        <span v-if="pagesDictionary != null">
+          <tr>
+            <td @click="previousPage" class="dictionary__arrow">
+              <img src="@/assets/arrow-left.png" alt="назад" />
             </td>
-          </span>
-        </tr>
+            <span v-for="(page, index) of pagesDictionary" :key="index">
+              <td :class="parseInt($route.query.column) == index + 1 ? 'dictionary__active' : ''" @click="editPage(index)">
+                {{ ++index }}
+              </td>
+            </span>
+            <td @click="nextPage" class="dictionary__arrow">
+              <img src="@/assets/arrow-right.png" alt="вперед" />
+            </td>
+          </tr>
+        </span>
       </tfoot>
     </table>
+    <Loader v-if="isLoader" />
   </div>
 </template>
 
 <script>
 import "@/components/dictionary/Dictionary.scss"
 import { mapGetters } from 'vuex'
+import Loader from '../components/app/Loader.vue'
 
 export default {
+  components: { Loader },
   name: "Dictionary",
+  data() {
+    return {
+      transcription: null,
+      newTranscription: ""
+    }
+  },
   computed: {
-    ...mapGetters(["userID", "currentWords", "pagesDictionary", "currentDictionary"]),
+    ...mapGetters(["userID", "currentWords", "pagesDictionary", "currentDictionary", "isLoader"]),
     sortedWords() {
       let words = { ...this.currentDictionary }
-      if (words.words?.length > 0 && words.words != undefined) return words.words.sort((a, b) => a.english.charCodeAt(0) < b.english.charCodeAt(0))
+      if (words.words?.length > 0 && words.words != null) return words.words.sort((a, b) => a.english.charCodeAt(0) < b.english.charCodeAt(0))
       else return this.currentDictionary
     }
   },
@@ -47,17 +73,31 @@ export default {
     this.editPage(1)
     await this.$store.dispatch("getWords", this.userID)
     await this.$store.dispatch("getDictionaryWords", this.userID)
-    // this.$store.dispatch("addDictionaryWords", { id: this.userID, words: this.currentWords })
+    if (this.pagesDictionary == null) this.$store.dispatch("addDictionaryWords", { id: this.userID, words: this.currentWords })
   },
   methods: {
     editPage(page) {
       this.$router.push(`${this.$route.path}?column=${page}`)
       this.$store.dispatch("getCurrentDictionaryWords", {id: this.userID, query: parseInt(this.$route.query.column)})
+    },
+    previousPage() {
+      let column = parseInt(this.$route.query.column)
+      if (column > 1) this.editPage(--column)
+    },
+    nextPage() {
+      let column = parseInt(this.$route.query.column)
+      if (column != this.pagesDictionary) this.editPage(++column)
+    },
+    setTranscription(word, transcription) {
+      this.transcription = word
+      this.newTranscription = transcription
+    },
+    saveTranscription(wordInfo) {
+      let data = { ...wordInfo, transcription: this.newTranscription }
+      console.log(data);
+      this.newTranscription = ""
+      this.transcription = null
     }
   }
 }
 </script>
-
-<style>
-
-</style>

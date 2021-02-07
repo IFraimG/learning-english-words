@@ -22,10 +22,10 @@
 import Loader from '../components/app/Loader.vue';
 import ModalWords from '../components/account/ModalWords.vue';
 import { mapGetters } from "vuex"
-import "@/components/account/Account.scss";
 import Profile from '../components/account/Profile.vue';
 import FindWord from '../components/account/FindWord.vue';
 import WordsTable from '../components/account/WordsTable.vue';
+import "@/components/account/scss/Account.scss";
 
 export default {
   name: "Account",

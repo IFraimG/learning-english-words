@@ -67,11 +67,33 @@ table {
           background: rgba(0, 0, 0, 0.05);
         }
       }
+      input {
+        width: 250px;
+        height: 30px;
+        padding-left: 5px;
+        font-size: 18px;
+        border-radius: 0px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        &:focus {
+          outline: none;
+        }
+      }
     }
     &:last-child {
       td {
         border-bottom: 1px solid rgba(0, 0, 0, 0.3);
       } 
+    }
+  }
+  &__arrow {
+    padding: 0 10px !important;
+    background-color: #fff !important;
+    img {
+      width: 14px;
+      height: 14px;
+    }
+    &:hover {
+      background: #8a8a8a !important;
     }
   }
   &__footer {
@@ -102,6 +124,14 @@ table {
         background: #dddddd;
         color: #000;
       }
+    }
+  }
+  &__active {
+    background: #dddddd !important;
+    color: #000 !important;
+    &:hover {
+      background-color: #222831 !important;
+      color: #fff !important;
     }
   }
 }

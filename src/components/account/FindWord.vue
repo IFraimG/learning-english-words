@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import "./FindWord.scss"
+import "./scss/FindWord.scss"
 
 export default {
   name: "FindWord",

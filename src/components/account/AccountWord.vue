@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import "@/components/account/Account.scss";
+import "@/components/account/scss/Account.scss";
 import SelectTime from './SelectTime.vue';
 
 export default {
@@ -42,6 +42,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

@@ -32,7 +32,7 @@ const routes = [
   {
     path: "/dictionary",
     name: "Dictionary",
-    component: Dictionary
+    component: Dictionary,
   }
 ];
 
