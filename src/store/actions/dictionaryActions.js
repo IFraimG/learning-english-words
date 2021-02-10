@@ -3,11 +3,15 @@ require("firebase/database");
 
 const dictionaryActions = {
   async getDictionaryWords({ commit }, payload) {
-    let data = await firebase
-      .database()
-      .ref(`/users/${payload}/dictionary`)
-      .once("value");
-    commit("SET_DICTIONARY", data.val());
+    try {
+      let data = await firebase
+        .database()
+        .ref(`/users/${payload}/dictionary`)
+        .once("value");
+      commit("SET_DICTIONARY", data.val());
+    } catch (error) {
+      console.log(error);
+    }
   },
   async getCurrentDictionaryWords({ commit }, payload) {
     commit("SET_LOADER", true);

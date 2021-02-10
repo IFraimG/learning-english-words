@@ -8,6 +8,7 @@
         <div class="list__content" v-for="(wordsArray, index) of reverseWords" :key="index">
           <WordsTable :wordsArray="wordsArray" :index="index" :isOpenPanel="isOpenPanel" @setOpenPanel="setOpenPanel" />
         </div>
+        <Paginator :list="reverseWords.length" />
       </div>
       <div v-else class="list__info">
         <p>Вы еще не создали ни один список!</p>
@@ -26,10 +27,11 @@ import Profile from '../components/account/Profile.vue';
 import FindWord from '../components/account/FindWord.vue';
 import WordsTable from '../components/account/WordsTable.vue';
 import "@/components/account/scss/Account.scss";
+import Paginator from '../components/app/Paginator.vue';
 
 export default {
   name: "Account",
-  components: { ModalWords, Loader, Profile, FindWord, WordsTable },
+  components: { ModalWords, Loader, Profile, FindWord, WordsTable, Paginator },
   data() {
     return {
       isModal: false,

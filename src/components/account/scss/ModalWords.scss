@@ -76,6 +76,9 @@
   }
   &__form {
     margin-bottom: 40px;
+    @media (max-width: 471px) {
+      margin-bottom: 120px;
+    }
   }
   &__item {
     padding-bottom: 5px;

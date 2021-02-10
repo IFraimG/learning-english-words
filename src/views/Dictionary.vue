@@ -1,48 +1,40 @@
 <template>
   <div class="dictionary">
-    <table v-if="!isLoader && pagesDictionary != null">
-      <caption>{{ currentDictionary.title }}</caption>
-      <thead class="dictionary__header">
-        <tr>
-          <th>Word</th>
-          <th class="dictionary__transcription">Transcription</th>
-          <th>Перевод</th>
-        </tr>
-      </thead>
-      <tbody class="dictionary__content">
-        <tr v-for="(wordInfo, index) of sortedWords" :key="index" class="dictionary__item">
-          <td>{{wordInfo.english}}</td>
-          <td
-            v-if="transcription != wordInfo.english"
-            @click="setTranscription(wordInfo.english, wordInfo.transcription)"
-            class="dictionary__transcription"
-          >
-            <span>Добавить транскрипцию</span>
-          </td>
-          <td class="dictionary__transcription" v-else>
-            <input type="text" v-model="newTranscription" @keydown.enter="saveTranscription(wordInfo)" />
-          </td>
-          <td>{{ wordInfo.russian }}</td>
-        </tr>
-      </tbody>
-      <tfoot class="dictionary__footer">
-        <span v-if="pagesDictionary != null">
+    <div v-if="!isLoader && pagesDictionary != null">
+      <table>
+        <caption>{{ currentDictionary.title }}</caption>
+        <thead class="dictionary__header">
           <tr>
-            <td @click="previousPage" class="dictionary__arrow">
-              <img src="@/assets/arrow-left.png" alt="назад" />
-            </td>
-            <span v-for="(page, index) of pagesDictionary" :key="index">
-              <td :class="parseInt($route.query.column) == index + 1 ? 'dictionary__active' : ''" @click="editPage(index)">
-                {{ ++index }}
-              </td>
-            </span>
-            <td @click="nextPage" class="dictionary__arrow">
-              <img src="@/assets/arrow-right.png" alt="вперед" />
-            </td>
+            <th>Word</th>
+            <th class="dictionary__transcription">Transcription</th>
+            <th>Перевод</th>
           </tr>
-        </span>
-      </tfoot>
-    </table>
+        </thead>
+        <tbody class="dictionary__content">
+          <tr v-for="(wordInfo, index) of sortedWords" :key="index" class="dictionary__item">
+            <td>{{wordInfo.english}}</td>
+            <td
+              v-if="transcription != wordInfo.english"
+              @click="setTranscription(wordInfo.english, wordInfo.transcription)"
+              class="dictionary__transcription"
+            >
+              <span>Добавить транскрипцию</span>
+            </td>
+            <td class="dictionary__transcription" v-else>
+              <input type="text" v-model="newTranscription" @keydown.enter="saveTranscription(wordInfo)" />
+            </td>
+            <td>{{ wordInfo.russian }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <Paginator
+        :list="pagesDictionary"
+        :activeElement="parseInt($route.query.column)"
+        @editPage="editPage"
+        @previousPage="previousPage"
+        @nextPage="nextPage"
+      />
+    </div>
     <Loader v-if="isLoader" />
   </div>
 </template>
@@ -51,9 +43,10 @@
 import "@/components/dictionary/Dictionary.scss"
 import { mapGetters } from 'vuex'
 import Loader from '../components/app/Loader.vue'
+import Paginator from '../components/app/Paginator.vue'
 
 export default {
-  components: { Loader },
+  components: { Loader, Paginator },
   name: "Dictionary",
   data() {
     return {

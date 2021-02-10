@@ -75,16 +75,20 @@ const wordsAction = {
     }
   },
   async checkCorrectWord({ commit }, payload) {
-    let isCorrect = await fetch(`http://speller.yandex.net/services/spellservice.json/checkText?text=${payload.wordData.english}`);
-    let data = await isCorrect.json();
-    if (data.length != 0) {
-      let errWord = {
-        incorrect: payload.wordData.english,
-        correct: data[0].s[0],
-        id: payload.wordData.id
-      };
-      commit("CHECK_CORRECT_WORD", errWord);
-    } else commit("CHECK_CORRECT_WORD", null);
+    try {
+      let isCorrect = await fetch(`http://speller.yandex.net/services/spellservice.json/checkText?text=${payload.wordData.english}`);
+      let data = await isCorrect.json();
+      if (data.length != 0) {
+        let errWord = {
+          incorrect: payload.wordData.english,
+          correct: data[0].s[0],
+          id: payload.wordData.id
+        };
+        commit("CHECK_CORRECT_WORD", errWord);
+      } else commit("CHECK_CORRECT_WORD", null); 
+    } catch (error) {
+      commit("CHECK_CORRECT_WORD", null); 
+    }
   },
   async getListWords({ commit }, payload) {
     try {

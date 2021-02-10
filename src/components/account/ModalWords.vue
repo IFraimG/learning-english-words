@@ -85,7 +85,9 @@ export default {
     resetData() {
       this.wordsList = [];
       this.titleWords = ""
-      this.editData = { id: 1, english: "", russian: "", currentTime: null };
+      this.editData = { id: "", english: "", russian: "", currentTime: null };
+      this.$store.commit("CHECK_CORRECT_WORD", null)
+      console.log(this.$options);
     },
     modalClose() {
       this.wordsList = []
