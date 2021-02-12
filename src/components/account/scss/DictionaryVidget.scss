@@ -1,0 +1,22 @@
+.vidget {
+  user-select: none;
+  background: linear-gradient(#00af91, #007965);
+  color: #fff;
+  max-width: 100%;
+  padding: 10px;
+  text-align: center;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  &:active {
+    background: linear-gradient(#015f4f, #00493d);
+  }
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}

@@ -55,9 +55,9 @@
 </template>
 
 <script>
-import InputWords from "./InputWords.vue";
-import "./scss/ModalWords.scss"
 import { mapGetters } from "vuex"
+import "./scss/ModalWords.scss"
+import InputWords from "./InputWords.vue";
 
 export default {
   components: { InputWords },

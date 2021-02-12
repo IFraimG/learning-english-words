@@ -29,7 +29,7 @@
       </table>
       <Paginator
         :list="pagesDictionary"
-        :activeElement="parseInt($route.query.column)"
+        :activeElement="currentColumn"
         @editPage="editPage"
         @previousPage="previousPage"
         @nextPage="nextPage"
@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import "@/components/dictionary/Dictionary.scss"
 import { mapGetters } from 'vuex'
+import "@/components/dictionary/Dictionary.scss"
 import Loader from '../components/app/Loader.vue'
 import Paginator from '../components/app/Paginator.vue'
 
@@ -51,7 +51,8 @@ export default {
   data() {
     return {
       transcription: null,
-      newTranscription: ""
+      newTranscription: "",
+      currentColumn: 0
     }
   },
   computed: {
@@ -63,23 +64,21 @@ export default {
     }
   },
   async created() {
-    this.editPage(1)
+    this.editPage(0)
     await this.$store.dispatch("getWords", this.userID)
     await this.$store.dispatch("getDictionaryWords", this.userID)
     if (this.pagesDictionary == null) this.$store.dispatch("addDictionaryWords", { id: this.userID, words: this.currentWords })
   },
   methods: {
     editPage(page) {
-      this.$router.push(`${this.$route.path}?column=${page}`)
-      this.$store.dispatch("getCurrentDictionaryWords", {id: this.userID, query: parseInt(this.$route.query.column)})
+      this.currentColumn = page
+      this.$store.dispatch("getCurrentDictionaryWords", {id: this.userID, query: this.currentColumn})
     },
     previousPage() {
-      let column = parseInt(this.$route.query.column)
-      if (column > 1) this.editPage(--column)
+      if (this.currentColumn > 1) this.editPage(this.currentColumn - 1)
     },
     nextPage() {
-      let column = parseInt(this.$route.query.column)
-      if (column != this.pagesDictionary) this.editPage(++column)
+      if (this.currentColumn < this.pagesDictionary - 1) this.editPage(this.currentColumn + 1)
     },
     setTranscription(word, transcription) {
       this.transcription = word

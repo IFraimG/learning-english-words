@@ -17,7 +17,7 @@ const dictionaryActions = {
     commit("SET_LOADER", true);
     let data = await firebase
       .database()
-      .ref(`/users/${payload.id}/dictionary/${payload.query - 1}`)
+      .ref(`/users/${payload.id}/dictionary/${payload.query}`)
       .once("value");
     commit("SET_CURRENT_DICTIONARY", data.val());
     commit("SET_LOADER", false);

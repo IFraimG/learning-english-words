@@ -1,4 +1,5 @@
 import authActions from "../actions/authActions";
+import authMutations from "../mutations/authMutations";
 
 const authModule = {
   state: () => ({
@@ -10,19 +11,7 @@ const authModule = {
     isAuth: false,
     errors: [],
   }),
-  mutations: {
-    SET_ERRORS(state, payload) {
-      state.errors.push(payload);
-    },
-    SET_PROFILE(state, payload) {
-      state.profile.email = payload.email;
-      state.profile.login = payload.login;
-      state.profile.id = payload.id;
-    },
-    SET_AUTH(state, payload) {
-      state.isAuth = payload;
-    },
-  },
+  mutations: authMutations,
   actions: authActions,
   getters: {
     errorsList: (state) => state.errors,

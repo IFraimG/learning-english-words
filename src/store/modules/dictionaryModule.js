@@ -1,19 +1,12 @@
 import dictionaryActions from "../actions/dictionaryActions"
+import dictionaryMutations from "../mutations/dictionaryMutations"
 
 export default {
   state: () => ({
     dictionaryList: [],
     currentDictionary: []
   }),
-  mutations: {
-    SET_DICTIONARY(state, payload) {
-      state.dictionaryList = payload
-      state.currentDictionary = payload[0]
-    },
-    SET_CURRENT_DICTIONARY(state, payload) {
-      state.currentDictionary = payload
-    }
-  },
+  mutations: dictionaryMutations,
   actions: dictionaryActions,
   getters: {
     currentDictionary: state => state.currentDictionary,

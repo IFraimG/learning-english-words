@@ -2,13 +2,23 @@
   <ModalWords :profile="profile" :isModal="isModal" @setModal="setModal" />
   <div class="account__wrapper" v-if="!isModal && !isLoader">
     <div @mousedown="isOpenPanel = -1" class="account">
-      <Profile @setModal="setModal" :profile="profile" />
+      <div class="account__left">
+        <Profile @setModal="setModal" :profile="profile" />
+        <DictionaryVidget />
+      </div>
       <div class="list" @click="isOpenPanel = -1" v-if="currentWords != null && currentWords?.length > 0">
         <FindWord />
-        <div class="list__content" v-for="(wordsArray, index) of reverseWords" :key="index">
-          <WordsTable :wordsArray="wordsArray" :index="index" :isOpenPanel="isOpenPanel" @setOpenPanel="setOpenPanel" />
+        <div class="list__content">
+          <WordsTable :wordsArray="reverseWords[wordsIndex]" :index="wordsIndex" :isOpenPanel="isOpenPanel" @setOpenPanel="setOpenPanel" />
         </div>
-        <Paginator :list="reverseWords.length" />
+        <Paginator
+          v-if="reverseWords.length > 1"
+          :list="reverseWords.length"
+          @previousPage="previousPage"
+          @nextPage="nextPage"
+          :activeElement="wordsIndex"
+          @editPage="editPage"
+        />
       </div>
       <div v-else class="list__info">
         <p>Вы еще не создали ни один список!</p>
@@ -20,25 +30,28 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex"
+import "@/components/account/scss/Account.scss";
 import Loader from '../components/app/Loader.vue';
 import ModalWords from '../components/account/ModalWords.vue';
-import { mapGetters } from "vuex"
 import Profile from '../components/account/Profile.vue';
 import FindWord from '../components/account/FindWord.vue';
+import DictionaryVidget from '../components/account/DictionaryVidget.vue';
 import WordsTable from '../components/account/WordsTable.vue';
-import "@/components/account/scss/Account.scss";
 import Paginator from '../components/app/Paginator.vue';
 
 export default {
   name: "Account",
-  components: { ModalWords, Loader, Profile, FindWord, WordsTable, Paginator },
+  components: { ModalWords, Loader, Profile, FindWord, WordsTable, Paginator, DictionaryVidget },
   data() {
     return {
       isModal: false,
-      isOpenPanel: -1
+      isOpenPanel: -1,
+      wordsIndex: 0
     }
   },
-  created() {
+  mounted() {
+    this.editPage(0)
     this.$store.dispatch("getWords", this.userID)
   },
   computed: {
@@ -59,6 +72,15 @@ export default {
     },
     setOpenPanel(num) {
       this.isOpenPanel = num;
+    },
+    editPage(num) {
+      this.wordsIndex = num
+    },
+    previousPage() {
+      if (this.wordsIndex > 0) this.editPage(this.wordsIndex - 1)
+    },
+    nextPage() {
+      if (this.wordsIndex < this.reverseWords.length - 1) this.editPage(this.wordsIndex + 1)
     }
   }
 };
