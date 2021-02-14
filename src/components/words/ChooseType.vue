@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import "./ChooseType.scss";
+import "./scss/ChooseType.scss";
 
 export default {
   name: "ChooseType"

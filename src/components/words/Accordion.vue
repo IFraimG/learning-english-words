@@ -45,7 +45,6 @@
           </div>
         </div>
         <div class="accordion__footer">
-          <!-- <button @click="sendData" class="accordion__send profile__run">Посмотреть результаты</button> -->
           <button @click="rotateWords" class="accordion__send profile__run">Перевернуть гармошку</button>
           <router-link :to="{name: 'Account'}">
             <button @click="rotateWords" class="accordion__send profile__run">Завершить</button>
@@ -57,7 +56,7 @@
 </template>
 
 <script>
-import "./Accordion.scss";
+import "./scss/Accordion.scss";
 
 export default {
   name: "Accordion",

@@ -51,7 +51,7 @@
         </div>
         <section class="main__cards-list">
           <div class="main__card">
-            <img src="@/assets/free.png" alt="">
+            <img src="@/assets/free.png" alt="free">
             <div class="main__card__text">
               <h3>Личный словарь</h3>
               <p>
@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="main__card">
-            <img src="@/assets/free.png" alt="">
+            <img src="@/assets/free.png" alt="free">
             <div class="main__card__text">
               <h3>Бесплатно</h3>
               <p>
@@ -70,7 +70,7 @@
             </div>
           </div>
           <div class="main__card">
-            <img src="@/assets/free.png" alt="">
+            <img src="@/assets/free.png" alt="autochecking">
             <div class="main__card__text">
               <h3>Автопроверка</h3>
               <p>
@@ -80,7 +80,7 @@
             </div>
           </div>
           <div class="main__card">
-            <img src="@/assets/free.png" alt="">
+            <img src="@/assets/free.png" alt="free">
             <div class="main__card__text">
               <h3>Удобные тесты</h3>
               <p>
@@ -111,9 +111,14 @@ export default {
       isPassword: false
     }
   },
-  mounted() {
-    this.checkTransition()
-    window.addEventListener("scroll", this.checkTransition)
+  created() {
+    if (this.$options.name == "Home") {
+      this.checkTransition()
+      window.addEventListener("scroll", this.checkTransition)
+    }
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.checkTransition)
   },
   methods: {
     getOffset(el) {
@@ -133,13 +138,11 @@ export default {
       this.$store.commit('setLogin', isLogin)
     },
     checkTransition() {
-      console.log("RGfedswa");
       setTimeout(() => {
         let element = this.$refs.leftForm
         let elementHeight = element.offsetHeight
 
         let offsetFull = this.getOffset(element)
-        // let offsetLeft = offsetFull.left
         let offsetTop = offsetFull.top
 
         let itemPoint = window.innerHeight - elementHeight / 4

@@ -23,8 +23,19 @@
         </div>
         <div class="english-form__footer">
           <button @click="$emit('previousTask')" class="profile__run" v-if="parseInt(taskNum) > 1">Вернуться</button>
+          <button
+            v-if="!isAnswer && !isDone && isError"
+            @click="isAnswer = true"
+            class="profile__run modal-button__run"
+          >
+            Посмотреть ответ
+          </button>
           <button @click="nextTask" v-if="parseInt(taskNum) != len" class="profile__run modal-button__run">Далее</button>
           <button @click="setFinish" v-else class="profile__run modal-button__run">Завершить</button>
+          <span class="english-form__answer" v-if="!isDone && isAnswer">
+            <p>{{ wordData.russian }}</p>
+            <img @click="isAnswer = false" src="@/assets/close.png" alt="close" />
+          </span>
         </div>
       </div>
     </div>
@@ -32,7 +43,7 @@
 </template>
 
 <script>
-import "./EnglishV.scss";
+import "./scss/EnglishV.scss";
 
 export default {
   name: "EnglishV",
@@ -42,7 +53,8 @@ export default {
       errorMessage: "",
       errorsList: [],
       isDone: false,
-      word: ""
+      word: "",
+      isAnswer: false
     }
   },
   props: {

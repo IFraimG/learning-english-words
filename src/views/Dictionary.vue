@@ -58,9 +58,8 @@ export default {
   computed: {
     ...mapGetters(["userID", "currentWords", "pagesDictionary", "currentDictionary", "isLoader"]),
     sortedWords() {
-      let words = { ...this.currentDictionary }
-      if (words.words?.length > 0 && words.words != null) return words.words.sort((a, b) => a.english.charCodeAt(0) < b.english.charCodeAt(0))
-      else return this.currentDictionary
+      let words = [...this.currentDictionary.words].sort((a, b) => a.english.charCodeAt(0) - b.english.charCodeAt(0))
+      return words
     }
   },
   async created() {

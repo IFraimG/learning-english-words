@@ -42,7 +42,8 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
   gap: 40px 10px;
-  margin: 30px 20px;
+  margin: 20px;
+  margin-top: 30px;
   font-family: 'Montserrat', "Helvetica";
   &__arrow {
     padding: 0 20px;

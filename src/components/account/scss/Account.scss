@@ -2,7 +2,7 @@
   --size: 0;
 }
 .account {
-  padding: 50px 20px;
+  padding: 40px;
   display: flex;
   gap: 50px;
   justify-content: space-evenly;
@@ -111,9 +111,6 @@
     &:hover {
       transform: translateY(-20px);
     }
-    // &:active {
-    //   background: #dadada;
-    // }
   }
   &__words {
     display: flex;
