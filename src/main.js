@@ -15,7 +15,7 @@ const configOptions = {
   measurementId: process.env.VUE_APP_MEASUREMENT_ID
 };
 
-firebase.initializeApp(configOptions)
+firebase.initializeApp(configOptions);
 
 createApp(App)
   .use(store)

@@ -1,8 +1,8 @@
 {
   "name": "english-project",
-  "author": "IFramex",
   "version": "0.1.0",
   "private": true,
+  "author": "IFramex",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -15,7 +15,6 @@
     "register-service-worker": "^1.7.1",
     "typo-js": "^1.2.0",
     "vue": "^3.0.0",
-    "vue-good-table": "^2.21.3",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },

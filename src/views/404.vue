@@ -3,7 +3,7 @@
     <div class="not-found">
       <div class="not-found__content">
         <h1>Данной страницы не существует!</h1>
-        <img src="@/assets/404.jpg" alt="">
+        <img src="@/assets/404.jpg" alt="" />
         <p>Совсем скоро вы перенаправитесь на главную страницу {{ time }}</p>
       </div>
     </div>
@@ -16,15 +16,15 @@ export default {
   data() {
     return {
       time: 5
-    }
+    };
   },
   created() {
     setInterval(() => {
       if (this.time > 0) this.time--;
-      else this.$router.push("/")
-    }, 1000)
+      else this.$router.push("/");
+    }, 1000);
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,12 @@
 <template>
+  <Modal
+    v-if="deleteModal"
+    title="Удаление раздела MODULE 6E" 
+    text="Вы уверены, что хотите его удалить?"
+    acceptButton="Удалить"
+    commitTitle="HANDLER_MODAL_DELETE"
+    @onsuccess="successDelete"
+  />
   <div
     class="list__info"
     ref="listWords"
@@ -14,17 +22,28 @@
       class="list__panel"
     >
       <ul class="list__panel-content">
-        <li class="list__panel-item" @click.stop="editWords(wordsArray.words, wordsArray.title)">
+        <li
+          class="list__panel-item"
+          @click.stop="editWords(wordsArray.words, wordsArray.title)"
+        >
           Изменить
         </li>
-        <li class="list__panel-item" @click.stop="deleteWords(wordsArray.title)">
+        <li
+          class="list__panel-item"
+          @click.stop="$store.commit('HANDLER_MODAL_DELETE', true)"
+        >
           Удалить
         </li>
-        <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">Отмена</li>
+        <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">
+          Отмена
+        </li>
       </ul>
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
+      <button class="profile__run" @click.stop="$store.commit('HANDLER_MODAL_DELETE', true)">
+        Удалить
+      </button>
       <button
         v-if="editMode != wordsArray.title"
         @click.stop="editWords(wordsArray.words, wordsArray.title)"
@@ -65,13 +84,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters } from "vuex";
 import "@/components/account/scss/Account.scss";
-import AccountWord from '@/components/account/AccountWord.vue';
+import AccountWord from "@/components/account/AccountWord.vue";
+import Modal from '../app/Modal.vue';
 
 export default {
   name: "WordsTable",
-  components: { AccountWord },
+  components: { AccountWord, Modal },
   props: {
     wordsArray: Object,
     index: Number,
@@ -80,46 +100,62 @@ export default {
   data() {
     return {
       editMode: false,
-      editList: [],
-    }
+      editList: []
+    };
   },
   computed: {
     reverseWords() {
-      let newArray = []
+      let newArray = [];
       for (let i = this.currentWords.length - 1; i >= 0; i--) {
-        newArray.push(this.currentWords[i])
+        newArray.push(this.currentWords[i]);
       }
       return newArray;
     },
-    ...mapGetters(["userID", "currentWords", "isLoader", "profile"])
+    ...mapGetters(["userID", "currentWords", "isLoader", "profile", "deleteModal"])
   },
   methods: {
     runWords(title) {
       if (this.editMode != title) {
-        let index = this.currentWords.findIndex(wordsArray => title == wordsArray.title)
-        this.$router.push(`/words/${this.userID}/${index}/?type=start`)
+        let index = this.currentWords.findIndex(
+          wordsArray => title == wordsArray.title
+        );
+        this.$router.push(`/words/${this.userID}/${index}/?type=start`);
       }
     },
     deleteWords(title) {
-      let index = this.currentWords.findIndex(wordList => title == wordList.title)
-      this.$store.dispatch("deleteWords", { title, index, wordsFull: this.currentWords, userID: this.userID, email: this.profile.email, login: this.profile.login })
+      let index = this.currentWords.findIndex(wordList => title == wordList.title);
+      this.$store.dispatch("deleteWords", {
+        title,
+        index,
+        wordsFull: this.currentWords,
+        userID: this.userID,
+        email: this.profile.email,
+        login: this.profile.login
+      });
+      window.location.reload()
     },
     editWords(words, title) {
-      this.editMode = title
-      this.editList = [...words]
+      this.editMode = title;
+      this.editList = [...words];
     },
     stopEdit() {
-      this.editList = []
-      this.editMode = false
+      this.editList = [];
+      this.editMode = false;
     },
     saveWord(data) {
-      this.editList[data.index] = data.word
+      this.editList[data.index] = data.word;
     },
     saveEditWords(title, id) {
-      let index = this.currentWords.findIndex(wordList => title == wordList.title)
-      this.$store.dispatch("sendEditWords", { title, id, editWords: this.editList, userid: this.userID, wordsid: index})
-      this.stopEdit()
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      let index = this.currentWords.findIndex(
+        wordList => title == wordList.title
+      );
+      this.$store.dispatch("sendEditWords", { title, id, editWords: this.editList, userid: this.userID, wordsid: index });
+      this.stopEdit();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    successDelete(isTrue) {
+      this.$store.commit("HANDLER_MODAL_DELETE", false)
+      if (isTrue) this.deleteWords(this.wordsArray.title)
     }
   }
 };

@@ -22,10 +22,10 @@ export default {
   },
   methods: {
     deleteAnswer(word) {
-      this.$emit("deleteAnswer", word)
+      this.$emit("deleteAnswer", word);
     },
     addAnswer(word) {
-      this.$emit("addAnswer", word)
+      this.$emit("addAnswer", word);
     }
   }
 };

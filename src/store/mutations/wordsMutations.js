@@ -38,7 +38,7 @@ const wordsMutations = {
   FIND_TITLE(state, payload) {
     let title = payload;
     let wordsList = [];
-    state.currentWords.map((item) => {
+    state.currentWords.map(item => {
       if (
         item.title
           .trimLeft()
@@ -49,7 +49,7 @@ const wordsMutations = {
     });
     if (wordsList.length > 0) state.findWords = wordsList;
     else state.findWords = [];
-  },
+  }
 };
 
 export default wordsMutations;

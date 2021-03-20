@@ -5,8 +5,8 @@ import wordsModule from "./modules/wordsModule";
 import dictionaryModule from "./modules/dictionaryModule";
 
 const vuexPlugin = store => {
-  store.subscribe(() => {})
-}
+  store.subscribe(() => {});
+};
 
 const store = createStore({
   modules: {

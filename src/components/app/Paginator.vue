@@ -4,7 +4,14 @@
       <img src="@/assets/arrow-left.png" alt="назад" />
     </span>
     <div v-for="(page, index) of list" :key="index">
-      <span :class="activeElement == index ? 'paginator__active' + ' paginator__element' : 'paginator__element'" @click="editPage(index)">
+      <span
+        :class="
+          activeElement == index
+            ? 'paginator__active' + ' paginator__element'
+            : 'paginator__element'
+        "
+        @click="editPage(index)"
+      >
         {{ index + 1 }}
       </span>
     </div>
@@ -23,15 +30,24 @@ export default {
   },
   methods: {
     previousPage() {
-      this.$emit("previousPage")
+      this.$emit("previousPage");
     },
     editPage(num) {
-      this.$emit("editPage", num)
+      this.$emit("editPage", num);
     },
     nextPage() {
-      this.$emit("nextPage")
+      this.$emit("nextPage");
     }
-  }
+  },
+  // computed: {
+  //   paginatedData() {
+  //     const start = this.activeElement * this.list
+  //     const end = start + this.list;
+  //     console.log(end);
+  //     let arr = new Array(this.list).fill(1).map((item, index) => item = index + 1)
+  //     return arr.slice(start, end)
+  //   }
+  // },
 };
 </script>
 
@@ -44,7 +60,7 @@ export default {
   gap: 40px 10px;
   margin: 20px;
   margin-top: 30px;
-  font-family: 'Montserrat', "Helvetica";
+  font-family: "Montserrat", "Helvetica";
   &__arrow {
     padding: 0 20px;
     vertical-align: middle;
@@ -57,7 +73,7 @@ export default {
   &__element {
     padding: 10px 20px;
     cursor: pointer;
-    transition: .2s ease-in-out;
+    transition: 0.2s ease-in-out;
     color: #fff;
     background-color: #222831;
     border: 1px solid rgba(0, 0, 0, 0.3);

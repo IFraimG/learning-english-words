@@ -1,7 +1,7 @@
-import router from "@/router/index"
-import firebase from '@firebase/app';
-require('firebase/auth');
-require('firebase/database');
+import router from "@/router/index";
+import firebase from "@firebase/app";
+require("firebase/auth");
+require("firebase/database");
 
 const authActions = {
   async login({ commit }, payload) {
@@ -12,7 +12,7 @@ const authActions = {
       commit("SET_PROFILE", {
         email: data.user.email,
         login: data.user.displayName,
-        id: data.user.uid,
+        id: data.user.uid
       });
       router.push("/account");
     } catch (error) {
@@ -31,12 +31,12 @@ const authActions = {
   },
   checkUser({ commit }) {
     try {
-      firebase.default.auth().onAuthStateChanged((user) => {
+      firebase.default.auth().onAuthStateChanged(user => {
         if (user == null) commit("SET_AUTH", false);
         else {
           commit("SET_PROFILE", {
             email: user.email,
-            login: user.displayName,
+            login: user.displayName
           });
           commit("SET_AUTH", true);
         }
@@ -52,7 +52,7 @@ const authActions = {
     } catch (error) {
       commit("SET_ERRORS", error.message);
     }
-  },
-}
+  }
+};
 
 export default authActions;

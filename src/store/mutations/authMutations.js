@@ -10,6 +10,6 @@ const authMutations = {
   SET_AUTH(state, payload) {
     state.isAuth = payload;
   }
-}
+};
 
 export default authMutations;

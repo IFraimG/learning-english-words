@@ -4,14 +4,20 @@
       <input
         class="modal__input"
         :ref="'englishWord' + id"
-        @input="$emit('update:english', $event.target.value); isDone = false"
+        @input="
+          $emit('update:english', $event.target.value);
+          isDone = false;
+        "
         type="text"
         pattern="[A-Za-z]"
         placeholder="Слово на английском"
       />
       <input
         class="modal__input"
-        @input="$emit('update:russian', $event.target.value); isDone = false"
+        @input="
+          $emit('update:russian', $event.target.value);
+          isDone = false;
+        "
         type="text"
         :ref="'russianWord' + id"
         pattern="[А-Яа-яЁё]"
@@ -20,7 +26,11 @@
       <select-time :timeEdit="null" @setTime="setTime" />
     </div>
     <div class="modal__right">
-      <button v-if="!isDone" class="profile__run modal-button__run modal__btn-image" @click="setNumInput">
+      <button
+        v-if="!isDone"
+        class="profile__run modal-button__run modal__btn-image"
+        @click="setNumInput"
+      >
         <span>Добавить</span>
         <img src="@/assets/plus.png" />
       </button>
@@ -30,7 +40,7 @@
 
 <script>
 import "./scss/InputWords.scss";
-import SelectTime from './SelectTime.vue';
+import SelectTime from "./SelectTime.vue";
 
 export default {
   components: { SelectTime },
@@ -42,15 +52,15 @@ export default {
     return {
       isDone: false,
       isEdit: false
-    }
+    };
   },
   methods: {
     setNumInput() {
-      this.$emit('setNumInput')
-      this.isDone = true
+      this.$emit("setNumInput");
+      this.isDone = true;
     },
     setTime(time) {
-      this.$emit('update:currentTime', time);
+      this.$emit("update:currentTime", time);
     }
   }
 };

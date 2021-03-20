@@ -1,4 +1,4 @@
-import wordsAction from "../actions/wordsActions"
+import wordsAction from "../actions/wordsActions";
 import wordsMutations from "../mutations/wordsMutations";
 
 const wordsModule = {
@@ -24,4 +24,4 @@ const wordsModule = {
   }
 };
 
-export default wordsModule
+export default wordsModule;

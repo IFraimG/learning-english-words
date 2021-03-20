@@ -3,19 +3,16 @@
   <router-view />
 </template>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
 
 <script>
-import Header from "@/components/app/Header.vue"
-
+import Header from "@/components/app/Header.vue";
 export default {
   components: { Header },
   beforeCreate() {
-    this.$store.dispatch("checkUser")
-  },
-}
+    this.$store.dispatch("checkUser");
+  }
+};
 </script>
 
 <style lang="scss">
@@ -24,9 +21,8 @@ export default {
   transition: opacity 0.5s ease;
 }
 
-
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-
-}</style>
+}
+</style>

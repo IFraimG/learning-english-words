@@ -1,5 +1,5 @@
-import dictionaryActions from "../actions/dictionaryActions"
-import dictionaryMutations from "../mutations/dictionaryMutations"
+import dictionaryActions from "../actions/dictionaryActions";
+import dictionaryMutations from "../mutations/dictionaryMutations";
 
 export default {
   state: () => ({
@@ -13,4 +13,4 @@ export default {
     dictionaryList: state => state.dictionaryList,
     pagesDictionary: state => state.dictionaryList?.length
   }
-}
+};

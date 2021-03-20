@@ -3,7 +3,7 @@
   <input :ref="'inputInfo' + index" type="text" :id="'inputElement' + index" />
   <button
     v-if="!doneWords.includes(words.english)"
-    @click="$emit('checkWord', {wordInfo: words, index:index})"
+    @click="$emit('checkWord', { wordInfo: words, index: index })"
   >
     <img src="@/assets/check.png" />
   </button>

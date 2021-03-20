@@ -4,9 +4,9 @@ import Account from "@/views/Account.vue";
 import Words from "@/views/Words.vue";
 import NotFound from "@/views/404.vue";
 import Dictionary from "@/views/Dictionary.vue";
-import { firebase } from "@firebase/app"
-import store from "@/store/index"
-require('firebase/auth');
+import { firebase } from "@firebase/app";
+import store from "@/store/index";
+require("firebase/auth");
 
 const routes = [
   {
@@ -32,7 +32,7 @@ const routes = [
   {
     path: "/dictionary",
     name: "Dictionary",
-    component: Dictionary,
+    component: Dictionary
   }
 ];
 
@@ -44,17 +44,21 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   firebase.default.auth().onAuthStateChanged(user => {
     if (user == null) {
-      store.commit("SET_AUTH", false)
-      if (to.name !== "Home") next({ name: "Home" })
-      else next()
-    }
-    if (user != null) {
-      store.commit("SET_PROFILE", { email: user.email, login: user.displayName, id: user.uid })
-      store.commit("SET_AUTH", true)
-      if (to.name === "Home") next({ name: "Account" })
+      store.commit("SET_AUTH", false);
+      if (to.name !== "Home") next({ name: "Home" });
       else next();
     }
-  })
-})
+    if (user != null) {
+      store.commit("SET_PROFILE", {
+        email: user.email,
+        login: user.displayName,
+        id: user.uid
+      });
+      store.commit("SET_AUTH", true);
+      if (to.name === "Home") next({ name: "Account" });
+      else next();
+    }
+  });
+});
 
 export default router;

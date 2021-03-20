@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import "./scss/DictionaryVidget.scss"
+import "./scss/DictionaryVidget.scss";
 
 export default {
   name: "DictionaryVidget"
-}
+};
 </script>

@@ -6,19 +6,19 @@ const authModule = {
     profile: {
       email: "",
       login: "",
-      id: "",
+      id: ""
     },
     isAuth: false,
-    errors: [],
+    errors: []
   }),
   mutations: authMutations,
   actions: authActions,
   getters: {
-    errorsList: (state) => state.errors,
-    isAuth: (state) => state.isAuth,
-    userID: (state) => state.profile.id,
-    profile: (state) => state.profile
-  },
+    errorsList: state => state.errors,
+    isAuth: state => state.isAuth,
+    userID: state => state.profile.id,
+    profile: state => state.profile
+  }
 };
 
-export default authModule
+export default authModule;

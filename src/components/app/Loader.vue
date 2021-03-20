@@ -8,7 +8,7 @@
 <script>
 export default {
   name: "Loader"
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -64,7 +64,8 @@ export default {
 }
 
 @keyframes spinner {
-  from {}
+  from {
+  }
   to {
     transform: rotate(360deg);
   }
