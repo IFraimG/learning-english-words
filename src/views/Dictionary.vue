@@ -42,12 +42,13 @@
           </tr>
         </tbody>
       </table>
-      <Paginator
-        :list="pagesDictionary"
-        :activeElement="currentColumn"
-        @editPage="editPage"
-        @previousPage="previousPage"
-        @nextPage="nextPage"
+      <v-pagination
+        v-model="currentColumn"
+        :pages="pagesDictionary - 2"
+        :range-size="1"
+        active-color="#dddddd"
+        @update:modelValue="editPage"
+        style="margin-left: 20px"
       />
     </div>
     <Loader v-if="isLoader" />
@@ -55,19 +56,20 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import VPagination from "vue3-pagination";
+import "vue3-pagination/dist/vue3-pagination.css";
 import "@/components/dictionary/Dictionary.scss";
+import { mapGetters } from "vuex";
 import Loader from "../components/app/Loader.vue";
-import Paginator from "../components/app/Paginator.vue";
 
 export default {
-  components: { Loader, Paginator },
+  components: { Loader, VPagination },
   name: "Dictionary",
   data() {
     return {
       transcription: null,
       newTranscription: "",
-      currentColumn: 0
+      currentColumn: 1
     };
   },
   computed: {
@@ -76,6 +78,7 @@ export default {
       "currentWords",
       "pagesDictionary",
       "currentDictionary",
+      "dictionaryList",
       "isLoader"
     ]),
     sortedWords() {
@@ -86,9 +89,9 @@ export default {
     }
   },
   async created() {
-    this.editPage(0);
+    this.editPage(1);
+    console.log(this.dictionaryList);
     await this.$store.dispatch("getDictionaryWords", this.userID);
-    console.log(this.pagesDictionary);
     if (this.pagesDictionary == null) this.$store.dispatch("addDictionaryWords", { id: this.userID, words: this.currentWords });
   },
   methods: {

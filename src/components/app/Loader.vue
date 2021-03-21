@@ -13,8 +13,8 @@ export default {
 
 <style lang="scss" scoped>
 .spinner {
-  width: 300px;
-  height: 300px;
+  width: 280px;
+  height: 280px;
   background: #000;
   border-radius: 50%;
   animation: spinner 5s linear infinite;
@@ -38,8 +38,8 @@ export default {
     position: absolute;
     z-index: 4;
     background-color: #fff;
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     text-align: center;
     overflow: hidden;
     border-radius: 50%;

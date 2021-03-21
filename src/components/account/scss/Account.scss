@@ -77,7 +77,9 @@
   }
 }
 .list {
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &__item {
     input {
       padding: 5px 10px;
@@ -96,7 +98,17 @@
       }
     }
   }
+  &__content {
+    width: 600px;
+    @media (max-width: 685px) {
+      width: 400px;
+    }
+    @media (max-width: 465px) {
+      width: 280px;
+    }
+  }
   &__info {
+    max-width: 100%;
     box-shadow: 0 0 30px 0 #dddddd;
     padding: 20px 50px;
     margin-bottom: 50px;
@@ -156,4 +168,14 @@
       }
     }
   }
+}
+
+.Control {
+  width: 48px;
+  height: 48px;
+  font-size: 32px;
+}
+
+.Page {
+  font-size: 18px;
 }

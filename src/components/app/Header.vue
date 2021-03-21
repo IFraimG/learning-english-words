@@ -17,7 +17,7 @@
           <router-link class="header-link menu-link" to="/account"
             >Профиль</router-link
           >
-          <router-link class="header-link menu-link" to="/dictionary?column=1"
+          <router-link class="header-link menu-link" to="/dictionary"
             >Словарь</router-link
           >
           <p

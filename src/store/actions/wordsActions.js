@@ -21,7 +21,7 @@ const wordsAction = {
         email: profile.val().email,
         id: payload.profile.id,
         listWords: listWords,
-        dictionary: [...profile.val()?.dictionary, payload.list]
+        dictionary: [...profile.val()?.dictionary, { title: payload.titleWords, words: payload.list }]
       }
       await wordsAPI.setWords(saveData)
 
@@ -69,7 +69,6 @@ const wordsAction = {
     try {
       commit("SET_LOADER", false);
       let profile = await wordsAPI.getProfile(payload.userID)
-      console.log(profile.val().dictionary);
       let wordsFull = payload.wordsFull.filter(wordList => {
         return wordList.title != payload.title;
       });
@@ -104,6 +103,7 @@ const wordsAction = {
         commit("CHECK_CORRECT_WORD", errWord);
       } else commit("CHECK_CORRECT_WORD", null);
     } catch (error) {
+      console.log(error);
       commit("CHECK_CORRECT_WORD", null);
     }
   },

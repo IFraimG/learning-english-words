@@ -122,9 +122,9 @@ export default {
         this.$router.push(`/words/${this.userID}/${index}/?type=start`);
       }
     },
-    deleteWords(title) {
+    async deleteWords(title) {
       let index = this.currentWords.findIndex(wordList => title == wordList.title);
-      this.$store.dispatch("deleteWords", {
+      await this.$store.dispatch("deleteWords", {
         title,
         index,
         wordsFull: this.currentWords,

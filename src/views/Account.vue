@@ -20,13 +20,12 @@
             @setOpenPanel="setOpenPanel"
           />
         </div>
-        <Paginator
-          v-if="reverseWords.length > 1"
-          :list="reverseWords.length"
-          @previousPage="previousPage"
-          @nextPage="nextPage"
-          :activeElement="wordsIndex"
-          @editPage="editPage"
+        <v-pagination
+          v-model="wordsIndex"
+          :pages="reverseWords.length - 1"
+          :range-size="1"
+          active-color="#dddddd"
+          @update:modelValue="editPage"
         />
       </div>
       <div v-else class="list__info">
@@ -39,15 +38,17 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import VPagination from "vue3-pagination";
+import "vue3-pagination/dist/vue3-pagination.css";
 import "@/components/account/scss/Account.scss";
+import { mapGetters } from "vuex";
+
 import Loader from "../components/app/Loader.vue";
 import ModalWords from "../components/account/ModalWords.vue";
 import Profile from "../components/account/Profile.vue";
 import FindWord from "../components/account/FindWord.vue";
 import DictionaryVidget from "../components/account/DictionaryVidget.vue";
 import WordsTable from "../components/account/WordsTable.vue";
-import Paginator from "../components/app/Paginator.vue";
 
 export default {
   name: "Account",
@@ -57,18 +58,18 @@ export default {
     Profile,
     FindWord,
     WordsTable,
-    Paginator,
     DictionaryVidget,
+    VPagination
   },
   data() {
     return {
       isModal: false,
       isOpenPanel: -1,
-      wordsIndex: 0
+      wordsIndex: 1
     };
   },
   mounted() {
-    this.editPage(0);
+    this.editPage(1);
     this.$store.dispatch("getWords", this.userID);
   },
   computed: {
@@ -79,6 +80,7 @@ export default {
       for (let i = currentWords.length - 1; i >= 0; i--) {
         newArray.push(currentWords[i]);
       }
+      newArray.unshift({});
       return newArray;
     },
     ...mapGetters([
@@ -97,6 +99,7 @@ export default {
       this.isOpenPanel = num;
     },
     editPage(num) {
+      console.log(num);
       this.wordsIndex = num;
     },
     previousPage() {
