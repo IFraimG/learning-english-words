@@ -91,7 +91,7 @@ const wordsAction = {
   async checkCorrectWord({ commit }, payload) {
     try {
       let isCorrect = await fetch(
-        `http://speller.yandex.net/services/spellservice.json/checkText?text=${payload.wordData.english}`
+        `https://speller.yandex.net/services/spellservice.json/checkText?text=${payload.wordData.english}`
       );
       let data = await isCorrect.json();
       if (data.length != 0) {
