@@ -23,7 +23,7 @@ export default {
   components: { SelectTime },
   name: "AccountWord",
   props: {
-    wordsTitle: String,
+    wordsTitle: Number,
     wordData: Object,
     index: Number
   },
@@ -45,7 +45,9 @@ export default {
   },
   methods: {
     setTime(time) {
+      console.log(time);
       this.wordEdit.currentTime = time;
+      this.$emit("saveWord", { index: this.index, word: this.wordEdit });
     }
   }
 };

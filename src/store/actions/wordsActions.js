@@ -1,9 +1,6 @@
 import router from "@/router/index";
 import randomWords from "random-words";
-import firebase from "@firebase/app";
 import wordsAPI from "../api/wordsAPI";
-
-require("firebase/database");
 
 const wordsAction = {
   async createList({ commit }, payload) {
@@ -72,18 +69,8 @@ const wordsAction = {
       let wordsFull = payload.wordsFull.filter(wordList => {
         return wordList.title != payload.title;
       });
-      let dictionaryFull = profile.val().dictionary.filter(dictionaryList => {
-        return dictionaryList.title != payload.title;
-      });
-      await firebase.default
-        .database()
-        .ref(`/users/${payload.userID}`)
-        .set({
-          words: wordsFull,
-          email: payload.email,
-          login: payload.login,
-          dictionary: dictionaryFull
-        });
+      let dictionaryFull = profile.val().dictionary.filter(dictionaryList => dictionaryList.title != payload.title);
+      await wordsAPI.deleteWords(payload.userID, wordsFull, payload.email, payload.login, dictionaryFull)
     } catch (error) {
       console.log(error);
     }
@@ -110,10 +97,7 @@ const wordsAction = {
   async getListWords({ commit }, payload) {
     try {
       commit("SET_LOADER", true);
-      let data = await firebase.default
-        .database()
-        .ref(`/users/${payload.params.userid}/words/${payload.params.wordsid}`)
-        .once("value");
+      let data = await wordsAPI.getWords(payload.params.userid, payload.params.wordsid)
       commit("GET_WORDS", data.val().words);
       commit("SET_LOADER", false);
     } catch (error) {
@@ -122,18 +106,8 @@ const wordsAction = {
   },
   async sendEditWords({ commit }, payload) {
     try {
-      await firebase.default
-        .database()
-        .ref(`/users/${payload.userid}/words/${payload.wordsid}`)
-        .set({
-          words: payload.editWords,
-          title: payload.title,
-          id: payload.id
-        });
-      let data = await firebase.default
-        .database()
-        .ref(`/users/${payload.userid}`)
-        .once("value");
+      await wordsAPI.setEditWords(payload.userid, payload.wordsid, payload.editWords, payload.title)
+      let data = await wordsAPI.getProfile(payload.userid)
       commit("GET_WORDS", data.val().words);
     } catch (error) {
       console.log(error);

@@ -1,10 +1,10 @@
 <template>
   <select v-model="time" @change="setTime" class="modal__select">
-    <option v-if="timeEdit == null" :value="-1" selected>Время (none)</option>
-    <option v-else :value="-1" selected>{{ timeEdit }}</option>
-    <option v-for="(time, index) of timesList" :key="index" :value="index">{{
-      time
-    }}</option>
+    <option :value="-1" selected>
+      <span v-if="timeEdit == null">Время (none)</span>
+      <span v-else>{{ timeEdit }}</span>
+    </option>
+    <option v-for="(time, index) of timesList" :key="index" :value="index">{{ time }}</option>
   </select>
 </template>
 
@@ -32,6 +32,12 @@ export default {
         "Gerund"
       ]
     };
+  },
+  mounted() {
+    if (this.timeEdit != null) {
+      let index = this.timesArray.findIndex(item => item == this.timeEdit)
+      if (index != -1) this.time = index
+    }
   },
   computed: {
     timesList() {

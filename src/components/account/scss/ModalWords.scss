@@ -76,7 +76,7 @@
   }
   &__form {
     margin-bottom: 40px;
-    @media (max-width: 471px) {
+    @media (max-width: 491px) {
       margin-bottom: 120px;
     }
   }
@@ -107,6 +107,12 @@
       left: 50px;
       top: 0;
       background: #000;
+    }
+  }
+  &__errors {
+    text-align: center;
+    @media (max-width: 501px) {
+      margin-bottom: 70px;
     }
   }
 }

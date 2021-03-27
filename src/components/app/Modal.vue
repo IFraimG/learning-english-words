@@ -45,7 +45,8 @@ export default {
       required: true
     }
   },
-  created() {
+  mounted() {
+    window.scrollTo({ top: 0 })
     document.documentElement.style.overflow = "hidden"
   },
   methods: {

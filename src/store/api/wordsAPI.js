@@ -27,12 +27,29 @@ const wordsAPI = {
         dictionary: profileData.dictionary
       });
   },
-  getProfile: async (id) => {
+  getProfile: async (userID) => {
     let profile = await firebase.default
       .database()
-      .ref("/users/" + id)
+      .ref("/users/" + userID)
       .once("value");
     return profile
+  },
+  setEditWords: async (userID, wordsID, editWords, title) => {
+    return await firebase.default
+      .database()
+      .ref(`/users/${userID}/words/${wordsID}`)
+      .set({words: editWords, title: title});
+  },
+  deleteWords: async (userID, words, email, login, dictionary) => {
+    return await firebase.default
+      .database()
+      .ref(`/users/${userID}`)
+      .set({
+        words: words,
+        email: email,
+        login: login,
+        dictionary: dictionary
+      });
   }
 }
 

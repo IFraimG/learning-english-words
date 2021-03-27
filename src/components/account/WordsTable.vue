@@ -143,13 +143,12 @@ export default {
       this.editMode = false;
     },
     saveWord(data) {
+      console.log(data);
       this.editList[data.index] = data.word;
     },
-    saveEditWords(title, id) {
-      let index = this.currentWords.findIndex(
-        wordList => title == wordList.title
-      );
-      this.$store.dispatch("sendEditWords", { title, id, editWords: this.editList, userid: this.userID, wordsid: index });
+    async saveEditWords(title, id) {
+      let index = this.currentWords.findIndex(wordList => title == wordList.title);
+      await this.$store.dispatch("sendEditWords", { title, id, editWords: this.editList, userid: this.userID, wordsid: index });
       this.stopEdit();
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
