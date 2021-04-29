@@ -21,3 +21,12 @@ createApp(App)
   .use(store)
   .use(router)
   .mount("#app");
+
+// app.config.globalProperties.$firebase = firebase
+
+declare module '@vue/runtime-core' {
+  export interface ComponentCustomProperties {
+    // $firebase: typeof firebase
+    $validate: (data: object, rule: object) => boolean
+  }
+}

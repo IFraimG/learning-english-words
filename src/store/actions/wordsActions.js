@@ -5,8 +5,8 @@ import wordsAPI from "../api/wordsAPI";
 const wordsAction = {
   async createList({ commit }, payload) {
     try {
-      let profile = await wordsAPI.getProfile(payload.profile.id)
-      let oldListWords = await wordsAPI.getListWords(payload.profile.id)
+      let profile = await wordsAPI.getProfile(payload.profile.id);
+      let oldListWords = await wordsAPI.getListWords(payload.profile.id);
       let newListWords = { title: payload.titleWords, words: payload.list };
       let listWords = null;
 
@@ -18,9 +18,12 @@ const wordsAction = {
         email: profile.val().email,
         id: payload.profile.id,
         listWords: listWords,
-        dictionary: [...profile.val()?.dictionary, { title: payload.titleWords, words: payload.list }]
-      }
-      await wordsAPI.setWords(saveData)
+        dictionary: [
+          ...profile.val()?.dictionary,
+          { title: payload.titleWords, words: payload.list }
+        ]
+      };
+      await wordsAPI.setWords(saveData);
 
       commit("GET_WORDS", listWords);
     } catch (err) {
@@ -30,7 +33,7 @@ const wordsAction = {
   async getWords({ commit }, payload) {
     try {
       commit("SET_LOADER", true);
-      let data = await wordsAPI.getProfile(payload)
+      let data = await wordsAPI.getProfile(payload);
       if (data.val()?.words != null) commit("GET_WORDS", data.val().words);
       commit("SET_LOADER", false);
     } catch (error) {
@@ -43,7 +46,7 @@ const wordsAction = {
       commit("SET_LOADER", true);
       let userID = payload.params.userid;
       let wordsID = payload.params.wordsid;
-      let data = await wordsAPI.getWords(userID, wordsID)
+      let data = await wordsAPI.getWords(userID, wordsID);
 
       let words = data.val().words;
       if (words == null) router.go(-1);
@@ -65,12 +68,22 @@ const wordsAction = {
   async deleteWords({ commit }, payload) {
     try {
       commit("SET_LOADER", false);
-      let profile = await wordsAPI.getProfile(payload.userID)
+      let profile = await wordsAPI.getProfile(payload.userID);
       let wordsFull = payload.wordsFull.filter(wordList => {
         return wordList.title != payload.title;
       });
-      let dictionaryFull = profile.val().dictionary.filter(dictionaryList => dictionaryList.title != payload.title);
-      await wordsAPI.deleteWords(payload.userID, wordsFull, payload.email, payload.login, dictionaryFull)
+      let dictionaryFull = profile
+        .val()
+        .dictionary.filter(
+          dictionaryList => dictionaryList.title != payload.title
+        );
+      await wordsAPI.deleteWords(
+        payload.userID,
+        wordsFull,
+        payload.email,
+        payload.login,
+        dictionaryFull
+      );
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +110,10 @@ const wordsAction = {
   async getListWords({ commit }, payload) {
     try {
       commit("SET_LOADER", true);
-      let data = await wordsAPI.getWords(payload.params.userid, payload.params.wordsid)
+      let data = await wordsAPI.getWords(
+        payload.params.userid,
+        payload.params.wordsid
+      );
       commit("GET_WORDS", data.val().words);
       commit("SET_LOADER", false);
     } catch (error) {
@@ -106,8 +122,13 @@ const wordsAction = {
   },
   async sendEditWords({ commit }, payload) {
     try {
-      await wordsAPI.setEditWords(payload.userid, payload.wordsid, payload.editWords, payload.title)
-      let data = await wordsAPI.getProfile(payload.userid)
+      await wordsAPI.setEditWords(
+        payload.userid,
+        payload.wordsid,
+        payload.editWords,
+        payload.title
+      );
+      let data = await wordsAPI.getProfile(payload.userid);
       commit("GET_WORDS", data.val().words);
     } catch (error) {
       console.log(error);

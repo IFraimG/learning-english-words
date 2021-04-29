@@ -2,19 +2,19 @@ import firebase from "@firebase/app";
 require("firebase/database");
 
 const wordsAPI = {
-  getListWords: async (id) => {
+  getListWords: async id => {
     let list = await firebase.default
       .database()
       .ref(`users/${id}/words`)
       .once("value");
-    return list
+    return list;
   },
   getWords: async (userID, wordsID) => {
     let data = await firebase.default
       .database()
       .ref(`/users/${userID}/words/${wordsID}`)
       .once("value");
-    return data
+    return data;
   },
   setWords: async profileData => {
     await firebase.default
@@ -27,18 +27,18 @@ const wordsAPI = {
         dictionary: profileData.dictionary
       });
   },
-  getProfile: async (userID) => {
+  getProfile: async userID => {
     let profile = await firebase.default
       .database()
       .ref("/users/" + userID)
       .once("value");
-    return profile
+    return profile;
   },
   setEditWords: async (userID, wordsID, editWords, title) => {
     return await firebase.default
       .database()
       .ref(`/users/${userID}/words/${wordsID}`)
-      .set({words: editWords, title: title});
+      .set({ words: editWords, title: title });
   },
   deleteWords: async (userID, words, email, login, dictionary) => {
     return await firebase.default
@@ -51,6 +51,6 @@ const wordsAPI = {
         dictionary: dictionary
       });
   }
-}
+};
 
-export default wordsAPI
+export default wordsAPI;

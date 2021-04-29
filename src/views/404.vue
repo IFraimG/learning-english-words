@@ -10,8 +10,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+const Component = defineComponent({
   name: "NotFound",
   data() {
     return {
@@ -24,7 +26,9 @@ export default {
       else this.$router.push("/");
     }, 1000);
   }
-};
+})
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>

@@ -28,7 +28,11 @@
               "
               class="dictionary__transcription"
             >
-              <span class="dictionary__add-transcription" v-if="wordInfo?.transcription == null">Добавить транскрипцию</span>
+              <span
+                class="dictionary__add-transcription"
+                v-if="wordInfo?.transcription == null"
+                >Добавить транскрипцию</span
+              >
               <span v-else>{{ wordInfo.transcription }}</span>
             </td>
             <td class="dictionary__transcription" v-else>
@@ -55,21 +59,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import VPagination from "vue3-pagination";
 import "vue3-pagination/dist/vue3-pagination.css";
 import "@/components/dictionary/Dictionary.scss";
 import { mapGetters } from "vuex";
 import Loader from "../components/app/Loader.vue";
+import { defineComponent } from "vue";
 
-export default {
+const Component = defineComponent({
   components: { Loader, VPagination },
   name: "Dictionary",
   data() {
     return {
-      transcription: null,
-      newTranscription: "",
-      currentColumn: 1
+      transcription: null as string | null,
+      newTranscription: "" as string,
+      currentColumn: 1 as number
     };
   },
   computed: {
@@ -81,7 +86,7 @@ export default {
       "dictionaryList",
       "isLoader"
     ]),
-    sortedWords() {
+    sortedWords(): Array<any> {
       let words = [...this.currentDictionary.words].sort(
         (a, b) => a.english.charCodeAt(0) - b.english.charCodeAt(0)
       );
@@ -92,10 +97,14 @@ export default {
     this.editPage(1);
     console.log(this.dictionaryList);
     await this.$store.dispatch("getDictionaryWords", this.userID);
-    if (this.pagesDictionary == null) this.$store.dispatch("addDictionaryWords", { id: this.userID, words: this.currentWords });
+    if (this.pagesDictionary == null)
+      this.$store.dispatch("addDictionaryWords", {
+        id: this.userID,
+        words: this.currentWords
+      });
   },
   methods: {
-    editPage(page) {
+    editPage(page: number) {
       this.currentColumn = page;
       this.$store.dispatch("getCurrentDictionaryWords", {
         id: this.userID,
@@ -109,18 +118,23 @@ export default {
       if (this.currentColumn < this.pagesDictionary - 1)
         this.editPage(this.currentColumn + 1);
     },
-    setTranscription(word, transcription) {
+    setTranscription(word: string, transcription: string) {
       this.transcription = word;
       this.newTranscription = transcription;
     },
-    async saveTranscription(wordInfo) {
+    async saveTranscription(wordInfo: any) {
       let data = { ...wordInfo, transcription: this.newTranscription };
       await this.$store.dispatch("saveDitionaryTranscription", {
-        userID: this.userID, wordData: data, wordIndex: wordInfo.id - 1, query: this.currentColumn
-      })
+        userID: this.userID,
+        wordData: data,
+        wordIndex: wordInfo.id - 1,
+        query: this.currentColumn
+      });
       this.newTranscription = "";
       this.transcription = null;
     }
   }
-};
+})
+
+export default Component;
 </script>

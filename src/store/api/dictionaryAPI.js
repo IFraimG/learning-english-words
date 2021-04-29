@@ -8,7 +8,7 @@ const dictionaryAPI = {
         .database()
         .ref(`/users/${userID}/dictionary`)
         .once("value");
-      return data.val()
+      return data.val();
     } catch (error) {
       console.log(error);
     }
@@ -18,7 +18,7 @@ const dictionaryAPI = {
       .database()
       .ref(`/users/${userID}/dictionary/${indexWords}`)
       .once("value");
-    return data.val()
+    return data.val();
   },
   updateWords: async (userID, words) => {
     await firebase
@@ -31,11 +31,11 @@ const dictionaryAPI = {
       await firebase
         .database()
         .ref(`/users/${userID}/dictionary/${indexWords}/words/${wordsIndex}`)
-        .set(wordsData)
+        .set(wordsData);
     } catch (error) {
       console.log(error);
     }
   }
-}
+};
 
-export default dictionaryAPI
+export default dictionaryAPI;

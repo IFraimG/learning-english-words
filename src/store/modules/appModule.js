@@ -14,7 +14,7 @@ const appModule = {
   actions: {},
   getters: {
     loginInfo: state => state.isLogin,
-    deleteModal: state => state.isModalDelete,
+    deleteModal: state => state.isModalDelete
   }
 };
 

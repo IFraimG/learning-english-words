@@ -38,7 +38,7 @@ export default {
     nextPage() {
       this.$emit("nextPage");
     }
-  },
+  }
   // computed: {
   //   paginatedData() {
   //     const start = this.activeElement * this.list

@@ -4,17 +4,29 @@
       <div class="modal__content popup__content">
         <div class="popup__header">
           <p>{{ title }}</p>
-          <img @click="closeModal" class="popup__close" src="@/assets/close.png" alt="">
+          <img
+            @click="closeModal"
+            class="popup__close"
+            src="@/assets/close.png"
+            alt=""
+          />
         </div>
         <div class="popup__info">
           <h2>{{ text }}</h2>
         </div>
         <div class="popup__footer">
-          <button class="profile__run" @click="$emit('onsuccess', true)">{{ acceptButton }}</button>
+          <button class="profile__run" @click="$emit('onsuccess', true)">
+            {{ acceptButton }}
+          </button>
           <button
-            class="profile__run modal-button__run" 
-            @click="$emit('onsuccess', false); closeModal()"
-          >Отмена</button>
+            class="profile__run modal-button__run"
+            @click="
+              $emit('onsuccess', false);
+              closeModal();
+            "
+          >
+            Отмена
+          </button>
         </div>
       </div>
     </div>
@@ -46,16 +58,16 @@ export default {
     }
   },
   mounted() {
-    window.scrollTo({ top: 0 })
-    document.documentElement.style.overflow = "hidden"
+    window.scrollTo({ top: 0 });
+    document.documentElement.style.overflow = "hidden";
   },
   methods: {
     closeModal() {
-      document.documentElement.style.overflow = "visible"
-      this.$store.commit(this.commitTitle, false)
+      document.documentElement.style.overflow = "visible";
+      this.$store.commit(this.commitTitle, false);
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -68,7 +80,7 @@ export default {
   }
   &__wrapper {
     background: rgba(0, 0, 0, 0.5);
-    font-family: 'Montserrat', "Helvetica";
+    font-family: "Montserrat", "Helvetica";
   }
   &__header {
     margin-bottom: 20px;

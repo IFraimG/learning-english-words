@@ -4,7 +4,7 @@ import appModule from "./modules/appModule";
 import wordsModule from "./modules/wordsModule";
 import dictionaryModule from "./modules/dictionaryModule";
 
-const vuexPlugin = store => {
+const vuexPlugin = (store: any) => {
   store.subscribe(() => {});
 };
 

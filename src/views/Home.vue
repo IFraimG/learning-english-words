@@ -132,7 +132,6 @@
 <script>
 import { mapGetters } from "vuex";
 import "@/components/app/Main.scss";
-
 export default {
   name: "Home",
   data() {
@@ -161,7 +160,6 @@ export default {
         window.pageXOffset || document.documentElement.scrollLeft;
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
-
       return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
     },
     sendData() {
@@ -177,10 +175,8 @@ export default {
       setTimeout(() => {
         let element = this.$refs.leftForm;
         let elementHeight = element.offsetHeight;
-
         let offsetFull = this.getOffset(element);
         let offsetTop = offsetFull.top;
-
         let itemPoint = window.innerHeight - elementHeight / 4;
         if (elementHeight > window.innerHeight) {
           itemPoint = window.innerHeight - window.innerHeight / 4;

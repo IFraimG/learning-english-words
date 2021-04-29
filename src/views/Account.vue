@@ -37,7 +37,7 @@
     <Loader />
   </div>
 </template>
-<script>
+<script lang="ts">
 import VPagination from "vue3-pagination";
 import "vue3-pagination/dist/vue3-pagination.css";
 import "@/components/account/scss/Account.scss";
@@ -49,8 +49,9 @@ import Profile from "../components/account/Profile.vue";
 import FindWord from "../components/account/FindWord.vue";
 import DictionaryVidget from "../components/account/DictionaryVidget.vue";
 import WordsTable from "../components/account/WordsTable.vue";
+import { defineComponent } from "vue";
 
-export default {
+const Component = defineComponent({
   name: "Account",
   components: {
     ModalWords,
@@ -74,7 +75,7 @@ export default {
   },
   computed: {
     reverseWords() {
-      let newArray = [];
+      let newArray: Array<any> = [];
       let currentWords = this.currentWords;
       if (this.findWords.length > 0) currentWords = this.findWords;
       for (let i = currentWords.length - 1; i >= 0; i--) {
@@ -92,13 +93,13 @@ export default {
     ])
   },
   methods: {
-    setModal(isModal) {
+    setModal(isModal: boolean) {
       this.isModal = isModal;
     },
-    setOpenPanel(num) {
+    setOpenPanel(num: number) {
       this.isOpenPanel = num;
     },
-    editPage(num) {
+    editPage(num: number) {
       console.log(num);
       this.wordsIndex = num;
     },
@@ -110,5 +111,7 @@ export default {
         this.editPage(this.wordsIndex + 1);
     }
   }
-};
+})
+
+export default Component
 </script>

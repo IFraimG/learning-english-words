@@ -3,8 +3,6 @@
   <router-view />
 </template>
 
-<style lang="scss"></style>
-
 <script>
 import Header from "@/components/app/Header.vue";
 export default {

@@ -1,7 +1,7 @@
 <template>
   <Modal
     v-if="deleteModal"
-    title="Удаление раздела MODULE 6E" 
+    title="Удаление раздела MODULE 6E"
     text="Вы уверены, что хотите его удалить?"
     acceptButton="Удалить"
     commitTitle="HANDLER_MODAL_DELETE"
@@ -41,7 +41,10 @@
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
-      <button class="profile__run" @click.stop="$store.commit('HANDLER_MODAL_DELETE', true)">
+      <button
+        class="profile__run"
+        @click.stop="$store.commit('HANDLER_MODAL_DELETE', true)"
+      >
         Удалить
       </button>
       <button
@@ -87,7 +90,7 @@
 import { mapGetters } from "vuex";
 import "@/components/account/scss/Account.scss";
 import AccountWord from "@/components/account/AccountWord.vue";
-import Modal from '../app/Modal.vue';
+import Modal from "../app/Modal.vue";
 
 export default {
   name: "WordsTable",
@@ -111,7 +114,13 @@ export default {
       }
       return newArray;
     },
-    ...mapGetters(["userID", "currentWords", "isLoader", "profile", "deleteModal"])
+    ...mapGetters([
+      "userID",
+      "currentWords",
+      "isLoader",
+      "profile",
+      "deleteModal"
+    ])
   },
   methods: {
     runWords(title) {
@@ -123,7 +132,9 @@ export default {
       }
     },
     async deleteWords(title) {
-      let index = this.currentWords.findIndex(wordList => title == wordList.title);
+      let index = this.currentWords.findIndex(
+        wordList => title == wordList.title
+      );
       await this.$store.dispatch("deleteWords", {
         title,
         index,
@@ -132,7 +143,7 @@ export default {
         email: this.profile.email,
         login: this.profile.login
       });
-      window.location.reload()
+      window.location.reload();
     },
     editWords(words, title) {
       this.editMode = title;
@@ -147,14 +158,22 @@ export default {
       this.editList[data.index] = data.word;
     },
     async saveEditWords(title, id) {
-      let index = this.currentWords.findIndex(wordList => title == wordList.title);
-      await this.$store.dispatch("sendEditWords", { title, id, editWords: this.editList, userid: this.userID, wordsid: index });
+      let index = this.currentWords.findIndex(
+        wordList => title == wordList.title
+      );
+      await this.$store.dispatch("sendEditWords", {
+        title,
+        id,
+        editWords: this.editList,
+        userid: this.userID,
+        wordsid: index
+      });
       this.stopEdit();
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
     successDelete(isTrue) {
-      this.$store.commit("HANDLER_MODAL_DELETE", false)
-      if (isTrue) this.deleteWords(this.wordsArray.title)
+      this.$store.commit("HANDLER_MODAL_DELETE", false);
+      if (isTrue) this.deleteWords(this.wordsArray.title);
     }
   }
 };

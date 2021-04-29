@@ -4,7 +4,9 @@
       <span v-if="timeEdit == null">Время (none)</span>
       <span v-else>{{ timeEdit }}</span>
     </option>
-    <option v-for="(time, index) of timesList" :key="index" :value="index">{{ time }}</option>
+    <option v-for="(time, index) of timesList" :key="index" :value="index">{{
+      time
+    }}</option>
   </select>
 </template>
 
@@ -35,8 +37,8 @@ export default {
   },
   mounted() {
     if (this.timeEdit != null) {
-      let index = this.timesArray.findIndex(item => item == this.timeEdit)
-      if (index != -1) this.time = index
+      let index = this.timesArray.findIndex(item => item == this.timeEdit);
+      if (index != -1) this.time = index;
     }
   },
   computed: {
