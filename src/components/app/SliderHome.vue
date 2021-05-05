@@ -27,7 +27,7 @@ import { Swiper, SwiperSlide } from "swiper/vue"
 import SwiperCore, { Pagination } from 'swiper/core';
 import People1 from "@/assets/people1.png"
 import People2 from "@/assets/people2.png"
-import "@/components/app/Home.scss"
+import "@/components/app/scss/Home.scss"
 
 import "swiper/components/pagination/pagination.min.css"
 import 'swiper/swiper.scss';

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import "@/components/app/Home.scss"
+import "@/components/app/scss/Home.scss"
 
 export default {
   name: "AuthSection",

@@ -1,0 +1,70 @@
+.home {
+  &__cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+  &-cards {
+    &__item {
+      cursor: pointer;
+      width: 23%;
+      min-width: 200px;
+      margin: 20px 40px;
+      padding: 20px;
+      user-select: none;
+      @media (max-width: 370px) {
+        margin: 20px 20px;
+      }
+      &:hover {
+        box-shadow: 15px 25px 56px 6px rgba(0, 0, 0, 0.06);
+      }
+      img {
+        padding: 20px;
+        border-radius: 16px;
+      }
+      &:first-child {
+        img {
+          width: 24px;
+          height: 24px;
+          object-fit: contain;
+          background: rgba(242, 88, 34, 0.25);
+        }
+      }
+      &:nth-child(2) {
+        img {
+          width: 24px;
+          height: 24px;
+          object-fit: contain;
+          background: rgba(20, 146, 17, 0.28);
+        }
+      }
+      &:last-child {
+        img {
+          width: 24px;
+          height: 24px;
+          object-fit: contain;
+          background: rgba(255, 205, 29, 0.24);
+        }
+      }
+    }
+    &__text {
+      h3, span {
+        font-family: "Gilroy-SemiBold";
+      }
+      h3 {
+        margin: 20px 0;
+      }
+      p {
+        font-family: "Gilroy";
+        margin-bottom: 20px;
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
+      span {
+        color: #000;
+      }
+    }
+  }
+}

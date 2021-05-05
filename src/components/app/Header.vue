@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import "./Header.scss";
+import "./scss/Header.scss";
 
 export default {
   name: "Header",

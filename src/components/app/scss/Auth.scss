@@ -57,6 +57,10 @@
     h3 {
       margin: 0 40px;
       font-family: "Gilroy-SemiBold";
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
     }
     h3, span {
       font-size: 48px;
@@ -95,5 +99,5 @@
 }
 
 .home-auth {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }

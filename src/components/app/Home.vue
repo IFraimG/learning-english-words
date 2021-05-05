@@ -5,7 +5,7 @@
         <header class="home__header home-header">
           <div class="home-header__item home-header__logo">
             <img src="@/assets/logofone.png" />
-            <h3>Grow<span>Be</span></h3>
+            <h3>MyOcean<span>English</span></h3>
           </div>
           <ul class="home-header__list">
             <li class="home-header__item" @click="scrollAuth">
@@ -71,16 +71,30 @@
           <img src="@/assets/fone9.png" alt="">
         </div>
       </div>
+      <section class="home-cards home__cards">
+        <div class="home-cards__item" v-for="(item, index) of cardsList" :key="index">
+          <img :src="item.img" alt="free" />
+          <div class="home-cards__text">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.text }}</p>
+            <router-link :to="item.link">
+              <span>Read more....</span>
+            </router-link>
+          </div>
+        </div>
+      </section>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core"
-import "@/components/app/Home.scss"
+import "@/components/app/scss/Home.scss"
 import { mapGetters } from 'vuex';
 import SliderHome from "./SliderHome.vue"
 import AuthSection from "./Auth.vue"
+import Footer from "./Footer.vue"
 // @ts-ignore
 import logo1 from "@/assets/logo1.png"
 // @ts-ignore
@@ -93,13 +107,24 @@ import logo4 from "@/assets/logo4.png"
 import logo5 from "@/assets/logo5.png"
 // @ts-ignore
 import logo6 from "@/assets/logo6.png"
+// @ts-ignore
+import vector1 from "@/assets/Vector.png"
+// @ts-ignore
+import vector2 from "@/assets/Vector(1).png"
+// @ts-ignore
+import vector3 from "@/assets/Vector(2).png"
 
 let Component = defineComponent({
   name: "HomeContent",
-  components: { SliderHome, AuthSection },
+  components: { SliderHome, AuthSection, Footer },
   data() {
     return {
       logoList: [logo1, logo2, logo3, logo4, logo5, logo6],
+      cardsList: [
+        { title: "Личный словарь", link: "/", img: vector1, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+        { title: "Личный словарь2", link: "/", img: vector2, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+        { title: "Личный словарь3", link: "/", img: vector3, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" }
+      ]
     }
   },
   methods: {
