@@ -13,6 +13,7 @@
     "firebase": "^8.2.2",
     "random-words": "^1.1.1",
     "register-service-worker": "^1.7.1",
+    "swiper": "^6.5.9",
     "typo-js": "^1.2.0",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",

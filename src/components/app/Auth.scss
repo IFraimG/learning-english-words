@@ -1,0 +1,99 @@
+.auth {
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 50px 0;
+  @media (max-width: 1171px) {
+    justify-content: center;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-btn {
+    margin-top: 20px;
+    width: 100%;
+    font-size: 18px;
+    @media (max-width: 651px) {
+      max-width: 300px;
+    }
+  }
+  &__registration {
+    margin-top: 50px;
+    input {
+      border: 1px solid rgba(238, 238, 238, 1);
+      background-color: rgba(238, 238, 238, 1);
+      padding: 20px;
+      &:focus {
+        outline: none;
+      }
+      &:first-child {
+        border-radius: 26px 0 0 26px;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+      }
+      &:last-child {
+        border-radius: 0 26px 26px 0;
+        border-left: 1px solid rgba(0, 0, 0, 0.2);
+      }
+      @media (max-width: 651px) {
+        border-radius: 0 !important;
+        width: 100%;
+        margin: 20px;
+        border: none !important;
+      }
+    }
+    @media (max-width: 651px) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+  &__tabs {
+    display: flex;
+    justify-content: center;
+    h3 {
+      margin: 0 40px;
+      font-family: "Gilroy-SemiBold";
+    }
+    h3, span {
+      font-size: 48px;
+      @media (max-width: 651px) {
+        font-size: 24px;
+      }
+      @media (max-width: 421px) {
+        font-size: 18px;
+      }
+    }
+  }
+  &__left {}
+  &__right {
+    img {
+      max-width: 500px;
+      @media (max-width: 651px) {
+        max-width: 400px;
+      }
+      @media (max-width: 421px) {
+        max-width: 300px;
+      }
+    }
+  }
+  &__errors {
+    margin-top: 20px;
+    color: rgb(168, 50, 11);
+    font-weight: bold;
+    font-family: "Gilroy-SemiBold";
+    text-align: center;
+    font-size: 18px;
+    text-decoration: underline;
+    @media (max-width: 421px) {
+      font-size: 16px;
+    }
+  }
+}
+
+.home-auth {
+  margin-bottom: 100px;
+}
