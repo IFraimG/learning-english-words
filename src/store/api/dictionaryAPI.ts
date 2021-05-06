@@ -1,4 +1,5 @@
 import { DictionaryListInterface } from "@/models/dictionary";
+import { WordInterface } from "@/models/words";
 import firebase from "firebase/app";
 import "firebase/database"
 
@@ -9,8 +10,6 @@ const dictionaryAPI = {
         .database()
         .ref(`/users/${userID}/dictionary`)
         .once("value");
-        console.log(data.val());
-        
       return data.val();
     } catch (error) {
       console.log(error);
@@ -23,13 +22,13 @@ const dictionaryAPI = {
       .once("value");
     return data.val();
   },
-  updateWords: async (userID: string, words: Array<any>) => {
+  updateWords: async (userID: string, words: Array<DictionaryListInterface>) => {
     await firebase
       .database()
       .ref(`/users/${userID}/dictionary`)
       .set(words);
   },
-  saveTranscripton: async (userID: string, indexWords: number, wordsIndex: number, wordsData: any) => {
+  saveTranscripton: async (userID: string, indexWords: number, wordsIndex: number, wordsData: WordInterface) => {
     try {
       await firebase
         .database()

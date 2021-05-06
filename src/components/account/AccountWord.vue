@@ -27,6 +27,7 @@ export default {
     wordData: Object,
     index: Number
   },
+  emits: ["saveWord"],
   data() {
     return {
       wordEdit: {

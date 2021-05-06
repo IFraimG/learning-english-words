@@ -35,6 +35,7 @@ export default {
       ]
     };
   },
+  emits: ["setTime"],
   mounted() {
     if (this.timeEdit != null) {
       let index = this.timesArray.findIndex(item => item == this.timeEdit);

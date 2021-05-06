@@ -47,13 +47,8 @@ router.beforeEach((to, from, next) => {
       store.commit("SET_AUTH", false);
       if (to.name !== "Home") next({ name: "Home" });
       else next();
-    }
-    if (user != null) {
-      store.commit("SET_PROFILE", {
-        email: user.email,
-        login: user.displayName,
-        id: user.uid
-      });
+    } else {
+      store.commit("SET_PROFILE", { email: user.email, login: user.displayName, id: user.uid });
       store.commit("SET_AUTH", true);
       if (to.name === "Home") next({ name: "Account" });
       else next();

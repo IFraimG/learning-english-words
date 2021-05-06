@@ -106,6 +106,7 @@ export default {
       editList: []
     };
   },
+  emits: ["setOpenPanel"],
   computed: {
     reverseWords() {
       let newArray = [];

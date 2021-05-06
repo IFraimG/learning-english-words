@@ -4,21 +4,17 @@
       <input
         class="modal__input"
         :ref="'englishWord' + id"
-        @input="
-          $emit('update:english', $event.target.value);
-          isDone = false;
-        "
+        v-model="newWord.english"
+        @input="isDone = false"
         type="text"
         pattern="[A-Za-z]"
         placeholder="Слово на английском"
       />
       <input
         class="modal__input"
-        @input="
-          $emit('update:russian', $event.target.value);
-          isDone = false;
-        "
+        v-model="newWord.russian"
         type="text"
+        @input="isDone = false"
         :ref="'russianWord' + id"
         pattern="[А-Яа-яЁё]"
         placeholder="Перевод слова на русском"
@@ -46,21 +42,33 @@ export default {
   components: { SelectTime },
   name: "InputWords",
   props: {
-    id: String
+    editData: Object,
+    wordIndex: Number
   },
+  emits: ["setNumInput", "currentTime"],
   data() {
     return {
       isDone: false,
-      isEdit: false
+      isEdit: false,
+      newWord: {
+        english: "",
+        russian: "",
+        id: "",
+        currentTime: ""
+      }
     };
+  },
+  updated() {
+    console.log(this.newWord);
   },
   methods: {
     setNumInput() {
-      this.$emit("setNumInput");
+      this.$emit("setNumInput", { word: this.newWord, index: this.wordIndex });
       this.isDone = true;
     },
     setTime(time) {
-      this.$emit("update:currentTime", time);
+      this.isDone = false
+      this.newWord.currentTime = time
     }
   }
 };

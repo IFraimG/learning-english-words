@@ -1,6 +1,11 @@
 <template>
   <Header v-if="$store.getters.isAuth" />
   <router-view />
+  <!-- <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in" appear>
+      <component :is="Component" />
+    </transition>
+  </router-view> -->
 </template>
 
 <script>
@@ -9,7 +14,7 @@ export default {
   components: { Header },
   beforeCreate() {
     this.$store.dispatch("checkUser");
-  }
+  },
 };
 </script>
 

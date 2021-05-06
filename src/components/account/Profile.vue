@@ -14,6 +14,7 @@
 <script>
 export default {
   name: "Profile",
+  emits: ["setModal"],
   props: {
     profile: Object
   }

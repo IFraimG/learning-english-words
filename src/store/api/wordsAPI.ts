@@ -1,3 +1,4 @@
+import { WordInterface } from "@/models/words";
 import firebase from "firebase/app";
 import "firebase/database" 
 
@@ -34,13 +35,13 @@ const wordsAPI = {
       .once("value");
     return profile;
   },
-  setEditWords: async (userID: string, wordsID: string, editWords: Array<any>, title: string) => {
+  setEditWords: async (userID: string, wordsID: string, editWords: Array<WordInterface>, title: string) => {
     return await firebase
       .database()
       .ref(`/users/${userID}/words/${wordsID}`)
       .set({ words: editWords, title: title });
   },
-  deleteWords: async (userID: string, words: Array<any>, email: string, login: string, dictionary: Array<any>) => {
+  deleteWords: async (userID: string, words: Array<WordInterface>, email: string, login: string, dictionary: Array<any>) => {
     return await firebase
       .database()
       .ref(`/users/${userID}`)

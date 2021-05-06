@@ -12,5 +12,6 @@ export interface WordInterface {
   english: string
   russian: string
   id: number
-  transcription: string
+  transcription?: string
+  currentTime?: string
 }

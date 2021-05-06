@@ -21,13 +21,7 @@
             v-for="(num, index) of wordsList.length + 1"
             :key="index"
           >
-            <input-words
-              :id="editData.id"
-              v-model:english="editData.english"
-              v-model:russian="editData.russian"
-              v-model:currentTime="editData.currentTime"
-              @setNumInput="setNumInput"
-            />
+            <input-words :wordIndex="index" @setNumInput="setNumInput" />
           </div>
         </div>
         <div class="modal__errors-wrapper" v-if="incorrectWord != null">
@@ -73,14 +67,10 @@ export default {
     return {
       wordsList: [],
       titleWords: "",
-      editData: {
-        id: "",
-        english: "",
-        russian: "",
-        currentTime: null
-      }
+      editData: null
     };
   },
+  emits: ["setModal"],
   props: {
     isModal: Boolean,
     profile: Object
@@ -92,7 +82,7 @@ export default {
     resetData() {
       this.wordsList = [];
       this.titleWords = "";
-      this.editData = { id: "", english: "", russian: "", currentTime: null };
+      this.editData = null
       this.$store.commit("CHECK_CORRECT_WORD", null);
     },
     modalClose() {
@@ -134,27 +124,23 @@ export default {
       });
       return isValid;
     },
-    setNumInput() {
+    setNumInput(data) {
+      this.editData = data.word
       let isValid = true;
       let id = "";
+
       while (isValid) {
         id = this.getWordID();
         isValid = this.checkValidID(id);
       }
+
       this.editData.id = id;
-      this.$store
-        .dispatch("checkCorrectWord", { wordData: this.editData })
-        .then(() => {
-          if (this.incorrectWord == null) {
-            this.wordsList.push(this.editData);
-            this.editData = {
-              id: "",
-              english: "",
-              russian: "",
-              currentTime: null
-            };
-          }
-        });
+      this.$store.dispatch("checkCorrectWord", { wordData: this.editData }).then(() => {
+        if (this.incorrectWord == null) {
+          this.wordsList[data.index] = this.editData
+          this.editData = null
+        }
+      });
     }
   }
 };
