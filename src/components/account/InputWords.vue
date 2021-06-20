@@ -35,41 +35,39 @@
 </template>
 
 <script>
+import { reactive, ref } from "vue"
 import "./scss/InputWords.scss";
 import SelectTime from "./SelectTime.vue";
 
 export default {
-  components: { SelectTime },
   name: "InputWords",
+  components: { SelectTime },
   props: {
     editData: Object,
     wordIndex: Number
   },
   emits: ["setNumInput", "currentTime"],
-  data() {
-    return {
-      isDone: false,
-      isEdit: false,
-      newWord: {
-        english: "",
-        russian: "",
-        id: "",
-        currentTime: ""
-      }
-    };
-  },
-  updated() {
-    console.log(this.newWord);
-  },
-  methods: {
-    setNumInput() {
-      this.$emit("setNumInput", { word: this.newWord, index: this.wordIndex });
-      this.isDone = true;
-    },
-    setTime(time) {
-      this.isDone = false
-      this.newWord.currentTime = time
+  setup(props, { emit }) {
+    let isDone = reactive(false)
+    let isEdit = reactive(false)
+    let newWord = ref({
+      english: "",
+      russian: "",
+      id: "",
+      currentTime: ""
+    })
+
+    const setNumInput = () => {
+      emit("setNumInput", { word: newWord.value, index: props.wordIndex });
+      isDone = true;
     }
+
+    const setTime = (time) => {
+      isDone = false
+      newWord.value.currentTime = time
+    }
+
+    return { setNumInput, setTime, isEdit, isDone, newWord }
   }
 };
 </script>

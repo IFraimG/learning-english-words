@@ -4,59 +4,56 @@
       <span v-if="timeEdit == null">Время (none)</span>
       <span v-else>{{ timeEdit }}</span>
     </option>
-    <option v-for="(time, index) of timesList" :key="index" :value="index">{{
-      time
-    }}</option>
+    <option v-for="(timeItem, index) of timesList" :key="index" :value="index">
+      {{ timeItem }}
+    </option>
   </select>
 </template>
 
 <script>
+import { reactive, ref, onMounted, computed } from 'vue';
+
 export default {
   name: "SelectTime",
   props: {
     timeEdit: String
   },
-  data() {
-    return {
-      time: -1,
-      timesArray: [
-        "Present Simple",
-        "Present Continious",
-        "Present Perfect",
-        "Present Perfect Continious",
-        "Past Simple",
-        "Past Continious",
-        "Past Perfect",
-        "Past Perfect Continious",
-        "Future Simple",
-        "Future Perfect",
-        "Infinitive",
-        "Gerund"
-      ]
-    };
-  },
   emits: ["setTime"],
-  mounted() {
-    if (this.timeEdit != null) {
-      let index = this.timesArray.findIndex(item => item == this.timeEdit);
-      if (index != -1) this.time = index;
-    }
-  },
-  computed: {
-    timesList() {
+  setup(props, { emit }) {
+    let time = ref(-1)
+    let timesArray = reactive([
+      "Present Simple",
+      "Present Continious",
+      "Present Perfect",
+      "Present Perfect Continious",
+      "Past Simple",
+      "Past Continious",
+      "Past Perfect",
+      "Past Perfect Continious",
+      "Future Simple",
+      "Future Perfect",
+      "Infinitive",
+      "Gerund"
+    ])
+
+    onMounted(() => {
+      if (props.timeEdit != null) {
+        let index = timesArray.findIndex(item => item == props.timeEdit);
+        if (index != -1) time.value = index;
+      }
+    })
+
+    const setTime = () => emit("setTime", timesArray[time.value]);
+
+    const timesList = computed(() => {
       let list = [];
-      this.timesArray.forEach(item => {
-        if (item != this.timeEdit) list.push(item);
+      timesArray.forEach(item => {
+        if (item != props.timeEdit) list.push(item);
       });
       return list;
-    }
-  },
-  methods: {
-    setTime() {
-      this.$emit("setTime", this.timesArray[this.time]);
-    }
+    })
+
+    return { time, setTime, timesArray, timesList }
   }
 };
 </script>
-
-<style></style>

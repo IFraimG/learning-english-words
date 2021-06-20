@@ -1,5 +1,5 @@
 <template>
-  <div @click="$emit('setModal', false)" v-if="isModal" class="modal__wrapper">
+  <div @click="modalClose" v-if="isModal" class="modal__wrapper">
     <div @click.stop v-if="isModal" class="modal">
       <div class="modal__content">
         <div class="modal__header">
@@ -56,91 +56,104 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { useStore } from "vuex";
 import "./scss/ModalWords.scss";
 import InputWords from "./InputWords.vue";
+import { computed, reactive, ref } from 'vue';
 
 export default {
-  components: { InputWords },
   name: "ModalWords",
-  data() {
-    return {
-      wordsList: [],
-      titleWords: "",
-      editData: null
-    };
-  },
+  components: { InputWords },
   emits: ["setModal"],
   props: {
     isModal: Boolean,
     profile: Object
   },
-  computed: {
-    ...mapGetters(["incorrectWord"])
-  },
-  methods: {
-    resetData() {
-      this.wordsList = [];
-      this.titleWords = "";
-      this.editData = null
-      this.$store.commit("CHECK_CORRECT_WORD", null);
-    },
-    modalClose() {
-      this.wordsList = [];
-      this.$emit("setModal", false);
-    },
-    sendData() {
-      if (this.wordsList.length == 0) {
-        this.$refs.modalTitle.innerHTML = "Вы не заполнили словарь!";
-        this.$refs.modalTitle.style.color = "red";
+  setup(props, { emit }) {
+    const store = useStore()
+    let incorrectWord = computed(() => store.getters.incorrectWord)
+
+    let wordsList = reactive([])
+    let editData = reactive(null)
+
+    let titleWords = ref("")
+    let modalTitle = ref(null)
+    let inputTitle = ref(null)
+
+    const resetData = () => {
+      wordsList = [];
+      titleWords.value = "";
+      editData = null
+      store.commit("CHECK_CORRECT_WORD", null);
+    }
+
+    const modalClose = () => {
+      wordsList = [];
+      emit("setModal", false);
+    }
+
+    const sendData = () => {
+      if (wordsList.length == 0) {
+        modalTitle.value.innerHTML = "Вы не заполнили словарь!";
+        modalTitle.value.style.color = "red";
       } else {
-        if (this.titleWords.length > 0) {
-          this.$store.dispatch("createList", {
-            profile: this.profile,
-            list: this.wordsList,
-            titleWords: this.titleWords
+        console.log(titleWords.value);
+        if (titleWords.value.length > 0) {
+          store.dispatch("createList", {
+            profile: props.profile,
+            list: wordsList,
+            titleWords: titleWords.value
           });
-          this.resetData();
-          this.$emit("setModal", false);
+          resetData();
+          emit("setModal", false);
         } else {
-          this.$refs.inputTitle.placeholder = "Вы не ввели название !";
-          this.$refs.inputTitle.classList.add("modal__header-error");
+          inputTitle.value.placeholder = "Вы не ввели название !";
+          inputTitle.value.classList.add("modal__header-error");
         }
       }
-    },
-    getWordID() {
+    }
+
+    const getWordID = () => {
       let text = "";
-      let words =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let words = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       for (let i = 0; i < 16; i++) {
         text += words.charAt(Math.floor(Math.random() * words.length));
       }
       return text;
-    },
-    checkValidID(id) {
+    }
+
+    const checkValidID = (id) => {
       let isValid = false;
-      this.wordsList.forEach(item => {
+      wordsList.forEach(item => {
         if (item.id == id) isValid = true;
       });
       return isValid;
-    },
-    setNumInput(data) {
-      this.editData = data.word
+    }
+
+    const setNumInput = (data) => {
+      editData = data.word
       let isValid = true;
       let id = "";
 
       while (isValid) {
-        id = this.getWordID();
-        isValid = this.checkValidID(id);
+        id = getWordID();
+        isValid = checkValidID(id);
       }
 
-      this.editData.id = id;
-      this.$store.dispatch("checkCorrectWord", { wordData: this.editData }).then(() => {
-        if (this.incorrectWord == null) {
-          this.wordsList[data.index] = this.editData
-          this.editData = null
+      editData.id = id;
+      store.dispatch("checkCorrectWord", { wordData: editData }).then(() => {
+        if (incorrectWord.value == null) {
+          wordsList[data.index] = editData
+          editData = null
         }
       });
+    }
+
+    return { 
+      wordsList, titleWords, editData,
+      setNumInput, getWordID, checkValidID,
+      resetData, modalClose, sendData, incorrectWord,
+      modalTitle, inputTitle
     }
   }
 };

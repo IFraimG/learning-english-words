@@ -30,28 +30,26 @@
 
 <script>
 import "@/components/app/scss/Home.scss"
+import { useStore } from 'vuex';
+import { ref } from 'vue';
 
 export default {
   name: "AuthSection",
-  data() {
-    return {
-      formData: {
-        email: "",
-        password: "",
-        login: ""
-      },
-      isPassword: false
-    };
-  },
   props: {
     isLogin: Boolean,
     errorsList: Array
   },
-  methods: {
-    sendData() {
-      if (!this.isLogin) this.$store.dispatch("registration", this.formData);
-      else this.$store.dispatch("login", this.formData);
+  setup(props) {
+    const store = useStore()
+    let formData = ref({ email: "", password: "", login: "" })
+    // let isPassword = reactive(false)
+
+    const sendData = () => {
+      if (!props.isLogin) store.dispatch("registration", formData.value);
+      else store.dispatch("login", formData.value);
     }
+
+    return { sendData, formData }
   }
 };
 </script>
