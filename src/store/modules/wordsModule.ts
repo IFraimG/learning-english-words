@@ -11,7 +11,7 @@ const wordsModule = {
       wordData: null,
       stateWords: "start",
       isLoader: false,
-      incorrectWord: null,
+      incorrectWord: null
     } as WordsInterface),
   mutations: wordsMutations,
   actions: wordsAction,

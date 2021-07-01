@@ -3,9 +3,9 @@
     <div class="modal__left">
       <input
         class="modal__input"
-        :ref="'englishWord' + id"
+        ref="englishWord"
         v-model="newWord.english"
-        @input="isDone = false"
+        @input="editDone(false)"
         type="text"
         pattern="[A-Za-z]"
         placeholder="Слово на английском"
@@ -14,8 +14,8 @@
         class="modal__input"
         v-model="newWord.russian"
         type="text"
-        @input="isDone = false"
-        :ref="'russianWord' + id"
+        @input="editDone(false)"
+        ref="russianWord"
         pattern="[А-Яа-яЁё]"
         placeholder="Перевод слова на русском"
       />
@@ -43,13 +43,11 @@ export default {
   name: "InputWords",
   components: { SelectTime },
   props: {
-    editData: Object,
     wordIndex: Number
   },
   emits: ["setNumInput", "currentTime"],
   setup(props, { emit }) {
     let isDone = reactive(false)
-    let isEdit = reactive(false)
     let newWord = ref({
       english: "",
       russian: "",
@@ -59,15 +57,17 @@ export default {
 
     const setNumInput = () => {
       emit("setNumInput", { word: newWord.value, index: props.wordIndex });
-      isDone = true;
+      editDone(true)
     }
 
     const setTime = (time) => {
-      isDone = false
+      editDone(false)
       newWord.value.currentTime = time
     }
 
-    return { setNumInput, setTime, isEdit, isDone, newWord }
+    const editDone = (done) => isDone = done
+
+    return { setNumInput, setTime, editDone, isDone, newWord }
   }
 };
 </script>

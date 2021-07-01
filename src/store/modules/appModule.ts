@@ -1,22 +1,18 @@
 import AppState from "@/models/store";
+import appMutations from "../mutations/appMutations";
 
 const appModule = {
-  state: () => ({
+  state: () => (<AppState>{
     isLogin: false,
-    isModalDelete: false
-  } as AppState),
-  mutations: {
-    setLogin(state: AppState, payload: boolean) {
-      state.isLogin = payload;
-    },
-    HANDLER_MODAL_DELETE(state: AppState, payload: boolean) {
-      state.isModalDelete = payload;
-    }
-  },
+    isModalDelete: false,
+    isModalWords: false
+  }),
+  mutations: appMutations,
   actions: {},
   getters: {
     loginInfo: (state: AppState): boolean => state.isLogin,
-    deleteModal: (state: AppState): boolean => state.isModalDelete
+    deleteModal: (state: AppState): boolean => state.isModalDelete,
+    isModalWords: (state: AppState): boolean => state.isModalWords
   }
 };
 

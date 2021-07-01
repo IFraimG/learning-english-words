@@ -1,7 +1,7 @@
 <template>
   <select v-model="time" @change="setTime" class="modal__select">
     <option :value="-1" selected>
-      <span v-if="timeEdit == null">Время (none)</span>
+      <span v-if="timeEdit == '' || timeEdit == null">Время (none)</span>
       <span v-else>{{ timeEdit }}</span>
     </option>
     <option v-for="(timeItem, index) of timesList" :key="index" :value="index">

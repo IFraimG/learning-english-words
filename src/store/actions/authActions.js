@@ -1,12 +1,12 @@
 import router from "@/router/index";
-import firebase from "@firebase/app";
-require("firebase/auth");
-require("firebase/database");
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 const authActions = {
   async login({ commit }, payload) {
     try {
-      let data = await firebase.default
+      let data = await firebase
         .auth()
         .signInWithEmailAndPassword(payload.email, payload.password);
       commit("SET_PROFILE", {
@@ -21,7 +21,7 @@ const authActions = {
   },
   async registration({ commit }, payload) {
     try {
-      let data = await firebase.default
+      let data = await firebase
         .auth()
         .createUserWithEmailAndPassword(payload.email, payload.password);
       await data.user.updateProfile({ displayName: payload.login });
@@ -31,7 +31,7 @@ const authActions = {
   },
   checkUser({ commit }) {
     try {
-      firebase.default.auth().onAuthStateChanged(user => {
+      firebase.auth().onAuthStateChanged(user => {
         if (user == null) commit("SET_AUTH", false);
         else {
           commit("SET_PROFILE", {
@@ -47,7 +47,7 @@ const authActions = {
   },
   async logout({ commit }) {
     try {
-      await firebase.default.auth().signOut();
+      await firebase.auth().signOut();
       router.push("/");
     } catch (error) {
       commit("SET_ERRORS", error.message);

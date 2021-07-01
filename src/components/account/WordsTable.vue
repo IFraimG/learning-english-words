@@ -22,21 +22,9 @@
       class="list__panel"
     >
       <ul class="list__panel-content">
-        <li
-          class="list__panel-item"
-          @click.stop="editWords(wordsArray.words, wordsArray.title)"
-        >
-          Изменить
-        </li>
-        <li
-          class="list__panel-item"
-          @click.stop="$store.commit('HANDLER_MODAL_DELETE', true)"
-        >
-          Удалить
-        </li>
-        <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">
-          Отмена
-        </li>
+        <li class="list__panel-item" @click.stop="editWords(wordsArray.words, wordsArray.title)">Изменить</li>
+        <li class="list__panel-item" @click.stop="$store.commit('HANDLER_MODAL_DELETE', true)">Удалить</li>
+        <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">Отмена</li>
       </ul>
     </div>
     <div class="list__title">
@@ -54,9 +42,7 @@
       >
         Редактировать
       </button>
-      <button v-else @click.stop="stopEdit" class="profile__run">
-        Отменить
-      </button>
+      <button v-else @click.stop="stopEdit" class="profile__run">Отменить</button>
     </div>
     <div
       class="list__words"

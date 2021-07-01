@@ -4,9 +4,9 @@ import Account from "@/views/Account.vue";
 import Words from "@/views/Words.vue";
 import NotFound from "@/views/404.vue";
 import Dictionary from "@/views/Dictionary.vue";
-import { firebase } from "@firebase/app";
 import store from "@/store/index";
-require("firebase/auth");
+import firebase from "firebase/app";
+import "firebase/auth"
 
 const routes = [
   {
@@ -42,7 +42,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  firebase.default.auth().onAuthStateChanged(user => {
+  firebase.auth().onAuthStateChanged((user: any) => {
     if (user == null) {
       store.commit("SET_AUTH", false);
       if (to.name !== "Home") next({ name: "Home" });

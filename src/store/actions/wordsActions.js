@@ -3,10 +3,10 @@ import randomWords from "random-words";
 import wordsAPI from "../api/wordsAPI";
 
 const wordsAction = {
-  async createList({ commit }, payload) {
+  async createList({ commit, rootState }, payload) {
     try {
-      let profile = await wordsAPI.getProfile(payload.profile.id);
-      let oldListWords = await wordsAPI.getListWords(payload.profile.id);
+      let profile = await wordsAPI.getProfile(rootState.auth.profile.id);
+      let oldListWords = await wordsAPI.getListWords(rootState.auth.profile.id);
       let newListWords = { title: payload.titleWords, words: payload.list };
       let listWords = null;
 
@@ -16,7 +16,7 @@ const wordsAction = {
       const saveData = {
         login: profile.val().login,
         email: profile.val().email,
-        id: payload.profile.id,
+        id: profile.val().id,
         listWords: listWords,
         dictionary: [
           ...profile.val()?.dictionary,

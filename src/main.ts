@@ -26,7 +26,13 @@ createApp(App)
 
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
-    // $firebase: typeof firebase
     $validate: (data: object, rule: object) => boolean
+  }
+}
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    isAdmin?: boolean
+    requiresAuth: boolean
   }
 }

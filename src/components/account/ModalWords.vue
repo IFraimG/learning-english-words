@@ -64,17 +64,12 @@ import { computed, reactive, ref } from 'vue';
 export default {
   name: "ModalWords",
   components: { InputWords },
-  emits: ["setModal"],
-  props: {
-    isModal: Boolean,
-    profile: Object
-  },
-  setup(props, { emit }) {
+  setup() {
     const store = useStore()
     let incorrectWord = computed(() => store.getters.incorrectWord)
 
     let wordsList = reactive([])
-    let editData = reactive(null)
+    let editData = reactive({ currentTime: "", english: "", russian: "", id: "" })
 
     let titleWords = ref("")
     let modalTitle = ref(null)
@@ -89,7 +84,7 @@ export default {
 
     const modalClose = () => {
       wordsList = [];
-      emit("setModal", false);
+      store.commit("SET_MODAL_WORDS", false);
     }
 
     const sendData = () => {
@@ -100,12 +95,11 @@ export default {
         console.log(titleWords.value);
         if (titleWords.value.length > 0) {
           store.dispatch("createList", {
-            profile: props.profile,
             list: wordsList,
             titleWords: titleWords.value
           });
           resetData();
-          emit("setModal", false);
+          modalClose()
         } else {
           inputTitle.value.placeholder = "Вы не ввели название !";
           inputTitle.value.classList.add("modal__header-error");
@@ -153,7 +147,7 @@ export default {
       wordsList, titleWords, editData,
       setNumInput, getWordID, checkValidID,
       resetData, modalClose, sendData, incorrectWord,
-      modalTitle, inputTitle
+      modalTitle, inputTitle, isModal: computed(() => store.getters.isModalWords)
     }
   }
 };

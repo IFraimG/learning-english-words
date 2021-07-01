@@ -1,6 +1,6 @@
 <template>
-  <ModalWords :profile="profile" :isModal="isModal" @setModal="setModal" />
-  <div class="account__wrapper" v-if="!isModal && !isLoader">
+  <ModalWords />
+  <div class="account__wrapper" v-if="!isLoader">
     <div @mousedown="isOpenPanel = -1" class="account">
       <div class="account__left">
         <Profile @setModal="setModal" :profile="profile" />
@@ -33,9 +33,7 @@
       </div>
     </div>
   </div>
-  <div v-if="isLoader">
-    <Loader />
-  </div>
+  <Loader v-else />
 </template>
 <script lang="ts">
 import VPagination from "vue3-pagination";
@@ -64,7 +62,6 @@ const Component = defineComponent({
   },
   data() {
     return {
-      isModal: false,
       isOpenPanel: -1,
       wordsIndex: 1
     };
@@ -94,7 +91,7 @@ const Component = defineComponent({
   },
   methods: {
     setModal(isModal: boolean) {
-      this.isModal = isModal;
+      this.$store.commit("SET_MODAL_WORDS", isModal)
     },
     setOpenPanel(num: number) {
       this.isOpenPanel = num;
