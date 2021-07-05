@@ -60,8 +60,8 @@
 </template>
 
 <script lang="ts">
-import VPagination from "vue3-pagination";
-import "vue3-pagination/dist/vue3-pagination.css";
+import VPagination from "@hennge/vue3-pagination";
+import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import "@/components/dictionary/Dictionary.scss";
 import { mapGetters } from "vuex";
 import Loader from "../components/app/Loader.vue";

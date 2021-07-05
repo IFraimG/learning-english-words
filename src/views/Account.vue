@@ -36,8 +36,8 @@
   <Loader v-else />
 </template>
 <script lang="ts">
-import VPagination from "vue3-pagination";
-import "vue3-pagination/dist/vue3-pagination.css";
+import VPagination from "@hennge/vue3-pagination";
+import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import "@/components/account/scss/Account.scss";
 import { mapGetters } from "vuex";
 

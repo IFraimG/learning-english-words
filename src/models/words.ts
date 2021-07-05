@@ -4,14 +4,14 @@ export interface IncorrectWordInterface {
   incorrect: string
 }
 
-export default interface WordsInterface {
-  incorrectWord: IncorrectWordInterface | null
-}
-
 export interface WordInterface {
   english: string
   russian: string
   id: number
   transcription?: string
   currentTime?: string
+}
+
+export default interface WordsInterface {
+  incorrectWord: IncorrectWordInterface | null
 }

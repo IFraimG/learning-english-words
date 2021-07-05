@@ -5,17 +5,18 @@
         <div class="accordion__header">
           <h1>Гармошка</h1>
         </div>
-        <div v-if="!isRotate" class="accordion__form">
+        <div class="accordion__form">
           <div
             class="accordion__item"
             v-for="(words, index) of currentSortWords"
-            :key="index"
+            :key="words.english"
           >
             <label :for="'inputElement' + index">{{ words.russian }} - </label>
             <input
               :ref="'inputInfo' + index"
               type="text"
               :id="'inputElement' + index"
+              @keyup.enter="checkWord(words.english, index)"
             />
             <button
               v-if="!doneWords.includes(words.english)"
@@ -23,21 +24,11 @@
             >
               <img src="@/assets/check.png" />
             </button>
-            <img
-              v-if="doneWords.includes(words.english)"
-              src="@/assets/success.png"
-            />
-            <p
-              v-if="errorWords.includes(words.english)"
-              class="accordion__error"
-            >
+            <img v-if="doneWords.includes(words.english)" src="@/assets/success.png" />
+            <p v-if="errorWords.includes(words.english)" class="accordion__error">
               Неверно!
             </p>
-            <p
-              v-if="
-                errorWords.includes(words.english) &&
-                  !isAnswer.includes(words.english)
-              "
+            <p v-if="errorWords.includes(words.english) && !isAnswer.includes(words.english)"
               @click="addAnswer(words.english)"
               class="accordion__answer"
             >
@@ -50,57 +41,6 @@
               {{ words.english }}
               <img
                 @click="deleteAnswer(words.english)"
-                src="@/assets/close.png"
-                alt=""
-              />
-            </p>
-          </div>
-        </div>
-        <div class="accordion__form" v-else>
-          <div
-            class="accordion__item"
-            v-for="(words, index) of currentSortWords"
-            :key="index"
-          >
-            <label :for="'inputElement' + index">{{ words.english }} - </label>
-            <input
-              :ref="'inputInfo' + index"
-              type="text"
-              :id="'inputElement' + index"
-            />
-            <button
-              v-if="!doneWords.includes(words.russian)"
-              @click="checkWord(words.russian, index)"
-            >
-              <img src="@/assets/check.png" />
-            </button>
-            <img
-              v-if="doneWords.includes(words.russian)"
-              src="@/assets/success.png"
-            />
-            <p
-              v-if="errorWords.includes(words.russian)"
-              class="accordion__error"
-            >
-              Неверно!
-            </p>
-            <p
-              v-if="
-                errorWords.includes(words.russian) &&
-                  !isAnswer.includes(words.russian)
-              "
-              @click="addAnswer(words.russian)"
-              class="accordion__answer"
-            >
-              ответ
-            </p>
-            <p
-              v-if="isAnswer.includes(words.russian)"
-              class="accordion__answer"
-            >
-              {{ words.russian }}
-              <img
-                @click="deleteAnswer(words.russian)"
                 src="@/assets/close.png"
                 alt=""
               />
@@ -142,7 +82,20 @@ export default {
   },
   computed: {
     currentSortWords() {
-      let currentWords = this.currentWords;
+      let currentWords = [...this.currentWords];
+      if (!this.isRotate) {
+        currentWords.map(word => {
+          let tempRus = word.russian
+          word.russian = word.english
+          word.english = tempRus
+        })
+      } else {
+        currentWords.map(word => {
+          let tempEn = word.english
+          word.english = word.russian
+          word.russian = tempEn
+        })
+      }
       return currentWords.sort(() => Math.random() - 0.5).reverse();
     }
   },
@@ -177,9 +130,7 @@ export default {
       let arrayWords = JSON.parse(window.sessionStorage.getItem("words"));
       if (arrayWords != null) window.sessionStorage.removeItem("words");
 
-      let errorWords = JSON.parse(
-        window.sessionStorage.getItem("wordsMistakes")
-      );
+      let errorWords = JSON.parse(window.sessionStorage.getItem("wordsMistakes"));
       if (errorWords != null) window.sessionStorage.removeItem("wordsMistakes");
 
       let successWords = [];
@@ -198,11 +149,7 @@ export default {
         });
       });
       window.sessionStorage.setItem("words", JSON.stringify(successWords));
-      window.sessionStorage.setItem(
-        "wordsMistakes",
-        JSON.stringify(failedWords)
-      );
-      // this.$emit('setFinishType')
+      window.sessionStorage.setItem("wordsMistakes", JSON.stringify(failedWords));
     },
     rotateWords() {
       this.doneWords = [];

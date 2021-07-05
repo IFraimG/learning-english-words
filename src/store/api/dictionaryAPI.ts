@@ -8,7 +8,7 @@ const dictionaryAPI = {
     try {
       let data = await firebase
         .database()
-        .ref(`/users/${userID}/dictionary`)
+        .ref(`/users/${userID}/words`)
         .once("value");
       return data.val();
     } catch (error) {
@@ -18,21 +18,21 @@ const dictionaryAPI = {
   getCurrentWords: async (userID: string, indexWords: number) => {
     let data = await firebase
       .database()
-      .ref(`/users/${userID}/dictionary/${indexWords}`)
+      .ref(`/users/${userID}/words/${indexWords}`)
       .once("value");
     return data.val();
   },
   updateWords: async (userID: string, words: Array<DictionaryListInterface>) => {
     await firebase
       .database()
-      .ref(`/users/${userID}/dictionary`)
+      .ref(`/users/${userID}/words`)
       .set(words);
   },
-  saveTranscripton: async (userID: string, indexWords: number, wordsIndex: number, wordsData: WordInterface) => {
+  saveTranscripton: async (userID: string, indexWord: number, wordIndex: number, wordsData: WordInterface) => {
     try {
       await firebase
         .database()
-        .ref(`/users/${userID}/dictionary/${indexWords}/words/${wordsIndex}`)
+        .ref(`/users/${userID}/words/${indexWord}/words/${wordIndex}`)
         .set(wordsData);
     } catch (error) {
       console.log(error);

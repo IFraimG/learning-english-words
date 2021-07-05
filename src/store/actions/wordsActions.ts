@@ -1,27 +1,25 @@
+import { WordInterface } from '@/models/words';
+import WordsInterface from "@/models/words";
 import router from "@/router/index";
 import randomWords from "random-words";
 import wordsAPI from "../api/wordsAPI";
 
 const wordsAction = {
-  async createList({ commit, rootState }, payload) {
+  async createList({ commit, rootState }: any, payload: {titleWords: string, list: WordsInterface[]}) {
     try {
       let profile = await wordsAPI.getProfile(rootState.auth.profile.id);
       let oldListWords = await wordsAPI.getListWords(rootState.auth.profile.id);
       let newListWords = { title: payload.titleWords, words: payload.list };
       let listWords = null;
 
-      if (oldListWords.val() == null) listWords = [newListWords];
-      else listWords = [...oldListWords.val(), newListWords];
+      if (oldListWords == null) listWords = [newListWords];
+      else listWords = [...oldListWords, newListWords];
 
       const saveData = {
-        login: profile.val().login,
-        email: profile.val().email,
-        id: profile.val().id,
-        listWords: listWords,
-        dictionary: [
-          ...profile.val()?.dictionary,
-          { title: payload.titleWords, words: payload.list }
-        ]
+        login: profile.login,
+        email: profile.email,
+        id: rootState.auth.profile.id,
+        listWords: listWords
       };
       await wordsAPI.setWords(saveData);
 
@@ -30,25 +28,25 @@ const wordsAction = {
       console.log(err);
     }
   },
-  async getWords({ commit }, payload) {
+  async getWords({ commit }: any, payload: string) {
     try {
       commit("SET_LOADER", true);
       let data = await wordsAPI.getProfile(payload);
-      if (data.val()?.words != null) commit("GET_WORDS", data.val().words);
+      if (data?.words != null) commit("GET_WORDS", data.words);
       commit("SET_LOADER", false);
     } catch (error) {
       commit("SET_LOADER", false);
       console.log(error);
     }
   },
-  async loadWords({ commit }, payload) {
+  async loadWords({ commit }: any, payload: any) {
     try {
       commit("SET_LOADER", true);
       let userID = payload.params.userid;
       let wordsID = payload.params.wordsid;
       let data = await wordsAPI.getWords(userID, wordsID);
 
-      let words = data.val().words;
+      let words = data.words;
       if (words == null) router.go(-1);
       else {
         let reviewWords = [];
@@ -65,30 +63,24 @@ const wordsAction = {
       console.log(error);
     }
   },
-  async deleteWords({ commit }, payload) {
+  async deleteWords({ commit, rootState }: any, payload: any) {
+    console.log(payload);
     try {
       commit("SET_LOADER", false);
-      let profile = await wordsAPI.getProfile(payload.userID);
-      let wordsFull = payload.wordsFull.filter(wordList => {
+      let wordsFull = payload.wordsFull.filter((wordList: any) => {
         return wordList.title != payload.title;
       });
-      let dictionaryFull = profile
-        .val()
-        .dictionary.filter(
-          dictionaryList => dictionaryList.title != payload.title
-        );
       await wordsAPI.deleteWords(
         payload.userID,
         wordsFull,
-        payload.email,
-        payload.login,
-        dictionaryFull
+        rootState.auth.profile.email,
+        rootState.auth.profile.login
       );
     } catch (error) {
       console.log(error);
     }
   },
-  async checkCorrectWord({ commit }, payload) {
+  async checkCorrectWord({ commit }: any, payload: { wordData: WordInterface }) {
     try {
       let isCorrect = await fetch(
         `https://speller.yandex.net/services/spellservice.json/checkText?text=${payload.wordData.english}`
@@ -107,20 +99,17 @@ const wordsAction = {
       commit("CHECK_CORRECT_WORD", null);
     }
   },
-  async getListWords({ commit }, payload) {
+  async getListWords({ commit }: any, payload: {params: {userid: string, wordsid: string}}) {
     try {
       commit("SET_LOADER", true);
-      let data = await wordsAPI.getWords(
-        payload.params.userid,
-        payload.params.wordsid
-      );
-      commit("GET_WORDS", data.val().words);
+      let data = await wordsAPI.getWords(payload.params.userid, payload.params.wordsid);
+      commit("GET_WORDS", data.words);
       commit("SET_LOADER", false);
     } catch (error) {
       commit("SET_LOADER", false);
     }
   },
-  async sendEditWords({ commit }, payload) {
+  async sendEditWords({ commit }: any, payload: {userid: string, wordsid: string, editWords: WordInterface[], title: string}) {
     try {
       await wordsAPI.setEditWords(
         payload.userid,
@@ -129,7 +118,7 @@ const wordsAction = {
         payload.title
       );
       let data = await wordsAPI.getProfile(payload.userid);
-      commit("GET_WORDS", data.val().words);
+      commit("GET_WORDS", data.words);
     } catch (error) {
       console.log(error);
     }

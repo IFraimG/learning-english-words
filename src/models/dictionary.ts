@@ -5,6 +5,23 @@ export interface DictionaryState {
     currentDictionary: Array<any>
 }
 
+export interface CurrentDictionaryPayload {
+    query: number
+    id: string
+}
+
+export interface UpdateDictionaryIT {
+    id: string
+    words: Array<DictionaryListInterface>
+}
+
+export interface SaveTranscriptionIT {
+    userID: string
+    query: number
+    wordIndex: number
+    wordData: WordInterface
+}
+
 export interface DictionaryListInterface {
     id: string
     title: string

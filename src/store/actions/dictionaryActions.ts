@@ -1,7 +1,8 @@
+import { CurrentDictionaryPayload, UpdateDictionaryIT, SaveTranscriptionIT } from '@/models/dictionary';
 import dictionaryAPI from "../api/dictionaryAPI";
 
 const dictionaryActions = {
-  async getDictionaryWords({ commit }, payload) {
+  async getDictionaryWords({ commit }: any, payload: string) {
     try {
       let data = await dictionaryAPI.getWords(payload);
       commit("SET_DICTIONARY", data);
@@ -9,17 +10,19 @@ const dictionaryActions = {
       console.log(error);
     }
   },
-  async getCurrentDictionaryWords({ commit }, payload) {
+  async getCurrentDictionaryWords({ commit }: any, payload: CurrentDictionaryPayload) {
     commit("SET_LOADER", true);
+
     let data = await dictionaryAPI.getCurrentWords(payload.id, payload.query);
     commit("SET_CURRENT_DICTIONARY", data);
+
     commit("SET_LOADER", false);
   },
-  async addDictionaryWords({ dispatch }, payload) {
+  async addDictionaryWords({ dispatch }: any, payload: UpdateDictionaryIT) {
     await dictionaryAPI.updateWords(payload.id, payload.words);
     dispatch("getDictionaryWords", payload.id);
   },
-  async saveDitionaryTranscription({ dispatch }, payload) {
+  async saveDitionaryTranscription({ dispatch }: any, payload: SaveTranscriptionIT) {
     await dictionaryAPI.saveTranscripton(
       payload.userID,
       payload.query,
