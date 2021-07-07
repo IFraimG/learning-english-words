@@ -5,6 +5,7 @@
       <div class="account__left">
         <Profile @setModal="setModal" :profile="profile" />
         <DictionaryVidget />
+        <CreateFolder />
       </div>
       <div
         class="list"
@@ -47,6 +48,7 @@ import Profile from "../components/account/Profile.vue";
 import FindWord from "../components/account/FindWord.vue";
 import DictionaryVidget from "../components/account/DictionaryVidget.vue";
 import WordsTable from "../components/account/WordsTable.vue";
+import CreateFolder from "../components/account/CreateFolder.vue";
 import { defineComponent } from "vue";
 
 const Component = defineComponent({
@@ -58,7 +60,8 @@ const Component = defineComponent({
     FindWord,
     WordsTable,
     DictionaryVidget,
-    VPagination
+    VPagination,
+    CreateFolder
   },
   data() {
     return {

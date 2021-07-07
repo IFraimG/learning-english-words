@@ -10,6 +10,7 @@
 
 <script>
 import Header from "@/components/app/Header.vue";
+
 export default {
   components: { Header },
   beforeCreate() {

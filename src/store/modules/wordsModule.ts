@@ -4,7 +4,7 @@ import wordsMutations from "../mutations/wordsMutations";
 
 const wordsModule = {
   state: () =>
-    ({
+    (<WordsInterface>{
       currentWords: [],
       findWords: [],
       executeWords: [],
@@ -12,7 +12,7 @@ const wordsModule = {
       stateWords: "start",
       isLoader: false,
       incorrectWord: null
-    } as WordsInterface),
+    }),
   mutations: wordsMutations,
   actions: wordsAction,
   getters: {
