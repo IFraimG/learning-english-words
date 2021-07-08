@@ -22,6 +22,7 @@ export interface SaveTranscriptionIT {
     wordData: WordInterface
 }
 
+// words
 export interface DictionaryListInterface {
     id: string
     title: string

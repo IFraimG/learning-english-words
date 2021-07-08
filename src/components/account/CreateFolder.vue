@@ -16,16 +16,21 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue"
+import { useRouter } from "vue-router"
 import { useStore } from "vuex"
 
 export default defineComponent({
   name: "CreateFolder",
   setup() {
     const store = useStore()
+    const router = useRouter()
     let titleFolder: any = ref(null)
     let isInput = reactive({value: false})
 
-    const create = () => store.dispatch("createFolder", titleFolder.value.value)
+    const create = async () => {
+      await store.dispatch("createFolder", titleFolder.value.value)
+      router.push({name: "FolderPage", params: { id: store.getters.folderAfterCreate }})
+    }
     const editInput = (isTrue: boolean) => isInput.value = isTrue
 
     return { titleFolder, create, isInput, editInput }

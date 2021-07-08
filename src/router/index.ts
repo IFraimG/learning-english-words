@@ -4,6 +4,9 @@ import Account from "@/views/Account.vue";
 import Words from "@/views/Words.vue";
 import NotFound from "@/views/404.vue";
 import Dictionary from "@/views/Dictionary.vue";
+import Folders from "@/views/Folders.vue";
+import FolderPage from "@/views/FolderPage.vue";
+
 import store from "@/store/index";
 import firebase from "firebase/app";
 import "firebase/auth"
@@ -33,6 +36,16 @@ const routes = [
     path: "/dictionary",
     name: "Dictionary",
     component: Dictionary
+  },
+  {
+    path: "/folders",
+    name: "Folders",
+    component: Folders
+  },
+  {
+    path: "/folders/:id",
+    name: "FolderPage",
+    component: FolderPage
   }
 ];
 

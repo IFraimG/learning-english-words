@@ -1,5 +1,5 @@
 <template>
-  <header v-if="$store.getters.isAuth" class="header">
+  <header v-if="isAuth" class="header">
     <div class="header__content">
       <div class="header__left">
         <h1>MyOcean English-Project</h1>
@@ -7,6 +7,7 @@
       <div class="header__right">
         <router-link class="header-link" to="/account">Профиль</router-link>
         <router-link class="header-link" to="/dictionary">Словарь</router-link>
+        <router-link class="header-link" to="/folders">Разделы</router-link>
         <p class="header-link" @click="logout">Выйти из аккаунта</p>
       </div>
       <div @click="openPanel" class="menu__panel">
@@ -14,17 +15,16 @@
       </div>
       <div class="menu" ref="menu">
         <div class="menu__content">
-          <router-link class="header-link menu-link" to="/account"
-            >Профиль</router-link
-          >
-          <router-link class="header-link menu-link" to="/dictionary"
-            >Словарь</router-link
-          >
-          <p
-            class="header-link menu-link"
-            v-if="$store.getters.isAuth"
-            @click="logout"
-          >
+          <router-link class="header-link menu-link" to="/account">
+            Профиль
+          </router-link>
+          <router-link class="header-link menu-link" to="/dictionary">
+            Словарь
+          </router-link>
+          <router-link class="header-link menu-link" to="/folders">
+            Разделы
+          </router-link>
+          <p class="header-link menu-link" v-if="isAuth" @click="logout">
             Выйти из аккаунта
           </p>
         </div>
@@ -33,25 +33,26 @@
   </header>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, reactive, ref } from 'vue';
+import { useStore } from 'vuex';
 import "./scss/Header.scss";
 
-export default {
+export default defineComponent({
   name: "Header",
-  data() {
-    return {
-      isHeader: false
-    };
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch("logout");
-    },
-    openPanel() {
-      this.isHeader = !this.isHeader;
-      if (this.isHeader) this.$refs.menu.classList.add("menu__active");
-      else this.$refs.menu.classList.remove("menu__active");
+  setup() {
+    const store = useStore()
+    let isHeader = reactive<any>(false)
+    let menu = ref<any>(null)
+
+    const logout = () => store.dispatch("logout");
+    const openPanel = () => {
+      isHeader = !isHeader;
+      if (isHeader) menu.value.classList.add("menu__active");
+      else menu.value.classList.remove("menu__active");
     }
+
+    return { logout, openPanel, menu, isHeader, isAuth: computed(() => store.getters.isAuth) }
   }
-};
+})
 </script>

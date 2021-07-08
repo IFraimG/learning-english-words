@@ -1,3 +1,5 @@
+$menu: 724px;
+
 * {
   margin: 0;
   padding: 0;
@@ -27,10 +29,10 @@
     h1 {
       font-family: "Verdana";
       font-weight: normal;
-      @media (max-width: 1034px) {
+      @media (max-width: 1091px) {
         font-size: 24px;
       }
-      @media (max-width: 801px) {
+      @media (max-width: 971px) {
         font-size: 18px;
       }
       @media (max-width: 574px) {
@@ -43,7 +45,7 @@
   }
   &__right {
     display: flex;
-    @media (max-width: 674px) {
+    @media (max-width: $menu) {
       display: none;
     }
   }
@@ -74,7 +76,7 @@
         width: 100%;
       }
     }
-    @media (max-width: 851px) {
+    @media (max-width: 881px) {
       font-size: 14px;
       margin-left: 20px;
     }
@@ -87,7 +89,7 @@
   right: -300px;
   top: 61px;
   transition: .5s ease-in-out;
-  @media (max-width: 674px) {
+  @media (max-width: $menu) {
     display: block;
   }
   &__content {
@@ -110,7 +112,7 @@
   }
   &__panel {
     display: none;
-    @media (max-width: 674px) {
+    @media (max-width: $menu) {
       display: block;
       margin-right: 10px;
       cursor: pointer;

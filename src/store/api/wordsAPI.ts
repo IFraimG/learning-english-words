@@ -44,7 +44,7 @@ const wordsAPI = {
       .database()
       .ref(`/users/${userID}`)
       .set({ words: words, email: email, login: login });
-  }
+  },
 };
 
 export default wordsAPI;
