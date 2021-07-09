@@ -40,22 +40,6 @@ const authActions = {
       commit("SET_ERRORS", error.message);
     }
   },
-  checkUser({ commit }: any) {
-    try {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user == null) commit("SET_AUTH", false);
-        else {
-          commit("SET_PROFILE", {
-            email: user.email,
-            login: user.displayName
-          });
-          commit("SET_AUTH", true);
-        }
-      });
-    } catch (error) {
-      commit("SET_ERRORS", error.message);
-    }
-  },
   async logout({ commit }: any) {
     try {
       await firebase.auth().signOut();

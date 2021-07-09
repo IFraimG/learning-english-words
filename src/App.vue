@@ -1,28 +1,24 @@
 <template>
   <Header v-if="$store.getters.isAuth" />
-  <router-view />
-  <!-- <router-view v-slot="{ Component }">
-    <transition name="fade" mode="out-in" appear>
-      <component :is="Component" />
+  <router-view v-slot="{ Component, route }">
+    <transition name="fade" appear>
+      <component :is="Component" :key="route.path" />
     </transition>
-  </router-view> -->
+  </router-view>
 </template>
 
 <script>
 import Header from "@/components/app/Header.vue";
 
 export default {
-  components: { Header },
-  beforeCreate() {
-    this.$store.dispatch("checkUser");
-  },
+  components: { Header }
 };
 </script>
 
 <style lang="scss">
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease-out;
 }
 
 .fade-enter-from,

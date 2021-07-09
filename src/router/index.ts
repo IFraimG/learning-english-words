@@ -40,7 +40,7 @@ const routes = [
   {
     path: "/folders",
     name: "Folders",
-    component: Folders
+    component: Folders,
   },
   {
     path: "/folders/:id",
@@ -58,14 +58,13 @@ router.beforeEach((to, from, next) => {
   firebase.auth().onAuthStateChanged((user: any) => {
     if (user == null) {
       store.commit("SET_AUTH", false);
-      if (to.name !== "Home") next({ name: "Home" });
-      else next();
+      if (to.name !== "Home") return next({ name: "Home" });
     } else {
       store.commit("SET_PROFILE", { email: user.email, login: user.displayName, id: user.uid });
       store.commit("SET_AUTH", true);
-      if (to.name === "Home") next({ name: "Account" });
-      else next();
+      if (to.name === "Home") return next({ name: "Account" });
     }
+    next();
   });
 });
 
