@@ -6,14 +6,16 @@ const foldersModule = {
   state: () => (<FoldersState>{
     routeFolder: "",
     folder: null,
-    isLoaderItem: false
+    isLoaderItem: false,
+    foldersList: null
   }),
   mutations: foldersMutations,
   actions: foldersActions,
   getters: {
     folderAfterCreate: (state: FoldersState) => state.routeFolder,
     folder: (state: FoldersState) => state.folder,
-    isLoaderItem: (state: FoldersState) => state.isLoaderItem
+    isLoaderItem: (state: FoldersState) => state.isLoaderItem,
+    folders: (state: FoldersState) => state.foldersList
   },
 };
 

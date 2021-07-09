@@ -5,6 +5,7 @@ const foldersAPI = {
   create: async (userID: string, title: string, id: string | null) => {
     let listRef = firebase.database().ref(`users/${userID}/folders`).push()
     await listRef.set({ title, id })
+
     return listRef.key
   },
   receiveAll: async (userID: string) => {
@@ -20,6 +21,7 @@ const foldersAPI = {
       .database()
       .ref(`users/${userID}/folders/${folderID}`)
       .once("value")
+      
     if (!res.exists()) return null
     return res.val()
   }

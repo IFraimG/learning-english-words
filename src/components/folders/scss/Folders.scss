@@ -1,0 +1,43 @@
+.folders {
+  margin-top: 50px;
+  &__wrapper {
+
+  }
+  &__content {
+    margin-top: 50px;
+  }
+  h1 {
+    text-align: center;
+  }
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    user-select: none;
+  }
+  &__item {
+    margin: 40px;
+    text-align: center;
+    width: 23%;
+    min-width: 180px;
+    min-height: 200px;
+    padding: 30px;
+    border-radius: 50px;
+    background: #f2f2f2;
+    box-shadow:  20px 20px 60px #cbcbcb, -20px -20px 60px #ffffff;
+    cursor: pointer;
+    h2, p {
+      color: rgb(20, 20, 20);
+    }
+    &:active {
+      border-radius: 50px;
+      background: #fafafa;
+      box-shadow:  20px 20px 60px #d2d2d2,
+      -20px -20px 60px #ffffff;
+    }
+  }
+  &__list {
+    &-nowords {
+      margin-top: 30px;
+    }
+  }
+}
