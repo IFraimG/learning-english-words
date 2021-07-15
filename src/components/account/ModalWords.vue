@@ -55,25 +55,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useStore } from "vuex";
 import "./scss/ModalWords.scss";
 import InputWords from "./InputWords.vue";
-import { computed, reactive, ref } from 'vue';
+import { computed, defineComponent, reactive, ref } from 'vue';
 
-export default {
+export default defineComponent({
   name: "ModalWords",
   components: { InputWords },
   setup() {
     const store = useStore()
     let incorrectWord = computed(() => store.getters.incorrectWord)
+    // const startWords = computed(() => store.getters.startModalWords)
 
-    let wordsList = reactive([])
-    let editData = reactive({ currentTime: "", english: "", russian: "", id: "" })
+    let wordsList: any = reactive([])
+    let editData: any = reactive({ currentTime: "", english: "", russian: "", id: "" })
 
     let titleWords = ref("")
-    let modalTitle = ref(null)
-    let inputTitle = ref(null)
+    let modalTitle: any = ref(null)
+    let inputTitle: any = ref(null)
 
     const resetData = () => {
       wordsList = [];
@@ -84,7 +85,7 @@ export default {
 
     const modalClose = () => {
       wordsList = [];
-      store.commit("SET_MODAL_WORDS", false);
+      store.commit("SET_MODAL_WORDS", { isModal: false });
     }
 
     const sendData = () => {
@@ -116,15 +117,21 @@ export default {
       return text;
     }
 
-    const checkValidID = (id) => {
+    const isStart = computed(() => {
+      let startWords = store.getters.startModalWords
+      if (startWords != null && wordsList.length == 0) return true
+      return false
+    })
+
+    const checkValidID = (id: any) => {
       let isValid = false;
-      wordsList.forEach(item => {
+      wordsList.forEach((item: any) => {
         if (item.id == id) isValid = true;
       });
       return isValid;
     }
 
-    const setNumInput = (data) => {
+    const setNumInput = (data: any) => {
       editData = data.word
       let isValid = true;
       let id = "";
@@ -145,10 +152,10 @@ export default {
 
     return { 
       wordsList, titleWords, editData,
-      setNumInput, getWordID, checkValidID,
+      setNumInput, getWordID, checkValidID, isStart,
       resetData, modalClose, sendData, incorrectWord,
       modalTitle, inputTitle, isModal: computed(() => store.getters.isModalWords)
     }
   }
-};
+})
 </script>

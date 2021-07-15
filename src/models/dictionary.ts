@@ -1,8 +1,8 @@
-import { WordInterface } from "./words";
+import { WordInterface } from '@/models/words';
 
 export interface DictionaryState {
-    dictionaryList: Array<any>
-    currentDictionary: Array<any>
+    dictionaryList: any[]
+    currentDictionary: WordInterface[]
 }
 
 export interface CurrentDictionaryPayload {

@@ -14,6 +14,9 @@
         <div class="popup__info">
           <h2>{{ text }}</h2>
         </div>
+        <div class="popup__content">
+          <slot name="content"></slot>
+        </div>
         <div class="popup__footer">
           <button class="profile__run" @click="$emit('onsuccess', true)">
             {{ acceptButton }}

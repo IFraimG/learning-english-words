@@ -1,14 +1,18 @@
+import { IncorrectWordInterface } from './../../models/words';
+import WordsInterface, { WordInterface } from "@/models/words";
+import { DictionaryListInterface } from '@/models/dictionary';
+
 const wordsMutations = {
-  GET_WORDS(state, payload) {
+  GET_WORDS(state: WordsInterface, payload: DictionaryListInterface[]) {
     state.currentWords = payload;
   },
-  LOAD_WORDS(state, payload) {
+  LOAD_WORDS(state: WordsInterface, payload: WordInterface[]) {
     state.executeWords = payload;
   },
-  SET_LOADER(state, payload) {
+  SET_LOADER(state: WordsInterface, payload: boolean) {
     state.isLoader = payload;
   },
-  CHECK_STATE_WORDS(state, payload) {
+  CHECK_STATE_WORDS(state: WordsInterface, payload: { query: { task: string, type: string }}) {
     let query = payload.query;
     let task = parseInt(query.task);
     switch (query.type) {
@@ -32,20 +36,14 @@ const wordsMutations = {
     }
     state.wordData = state.executeWords[task - 1];
   },
-  CHECK_CORRECT_WORD(state, payload) {
+  CHECK_CORRECT_WORD(state: WordsInterface, payload: IncorrectWordInterface) {
     state.incorrectWord = payload;
   },
-  FIND_TITLE(state, payload) {
+  FIND_TITLE(state: WordsInterface, payload: string) {
     let title = payload;
-    let wordsList = [];
+    let wordsList: any[] = [];
     state.currentWords.map(item => {
-      if (
-        item.title
-          .trimLeft()
-          .trimRight()
-          .toLowerCase() == title
-      )
-        wordsList.push(item);
+      if (item.title.trimLeft().trimRight().toLowerCase() == title) wordsList.push(item);
     });
     if (wordsList.length > 0) state.findWords = wordsList;
     else state.findWords = [];

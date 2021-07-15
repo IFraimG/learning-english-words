@@ -26,7 +26,7 @@ const foldersAction = {
       console.log(error);
     }
   },
-  async getFoldersList({ commit, rootState} : any) {
+  async getFoldersList({ commit, rootState}: any) {
     commit("SET_LOADER_ITEM", true)
 
     let folders = await foldersAPI.receiveAll(rootState.auth.profile.id)

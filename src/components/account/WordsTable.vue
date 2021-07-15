@@ -23,16 +23,13 @@
     >
       <ul class="list__panel-content">
         <li class="list__panel-item" @click.stop="editWords(wordsArray.words, wordsArray.title)">Изменить</li>
-        <li class="list__panel-item" @click.stop="$store.commit('HANDLER_MODAL_DELETE', true)">Удалить</li>
+        <li class="list__panel-item" @click.stop="modalDelete(true)">Удалить</li>
         <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">Отмена</li>
       </ul>
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
-      <button
-        class="profile__run"
-        @click.stop="$store.commit('HANDLER_MODAL_DELETE', true)"
-      >
+      <button v-if="editMode" class="profile__run" @click.stop="modalDelete(true)">
         Удалить
       </button>
       <button
@@ -62,14 +59,30 @@
         @saveWord="saveWord"
       />
     </div>
-    <button
-      v-if="editMode == wordsArray.title"
-      @click.stop="saveEditWords(wordsArray.title, wordsArray.id)"
-      class="profile__run"
-    >
-      Сохранить
-    </button>
+    <div @click.stop class="list__footer" v-if="editMode == wordsArray.title">
+      <button
+        @click="saveEditWords(wordsArray.title, wordsArray.id)"
+        class="profile__run"
+      >
+        Сохранить
+      </button>
+      <button @click="openModal" class="profile__run">Новые слова</button>
+      <button @click="setModalSection" class="profile__run">Добавить в раздел</button>
+    </div>
   </div>
+  <Modal
+    v-if="modalSections"
+    title="Добавление слов"
+    text="Выберите нужный вам раздел"
+    acceptButton="Добавить"
+    commitTitle="SET_MODAL_SECTIONS"
+    @onsuccess="saveSection"
+  >
+    <template v-slot:content>
+      <DropList v-if="shortFolders != null" :list="shortFolders" />
+      <div v-else>Вы еще не создали ни один раздел</div> 
+    </template>
+  </Modal>
 </template>
 
 <script>
@@ -77,10 +90,11 @@ import { mapGetters } from "vuex";
 import "@/components/account/scss/Account.scss";
 import AccountWord from "@/components/account/AccountWord.vue";
 import Modal from "../app/Modal.vue";
+import DropList from '../app/DropList.vue';
 
 export default {
   name: "WordsTable",
-  components: { AccountWord, Modal },
+  components: { AccountWord, Modal, DropList },
   props: {
     wordsArray: Object,
     index: Number,
@@ -106,7 +120,10 @@ export default {
       "currentWords",
       "isLoader",
       "profile",
-      "deleteModal"
+      "deleteModal",
+      "modalSections",
+      "folders",
+      "shortFolders"
     ])
   },
   methods: {
@@ -141,7 +158,6 @@ export default {
       this.editMode = false;
     },
     saveWord(data) {
-      console.log(data);
       this.editList[data.index] = data.word;
     },
     async saveEditWords(title, id) {
@@ -161,6 +177,19 @@ export default {
     successDelete(isTrue) {
       this.$store.commit("HANDLER_MODAL_DELETE", false);
       if (isTrue) this.deleteWords(this.wordsArray.title);
+    },
+    openModal() {
+      this.$store.commit("SET_MODAL_WORDS", { isModal: true, list: this.editList })
+    },
+    modalDelete(isTrue) {
+      this.$store.commit('HANDLER_MODAL_DELETE', isTrue)
+    },
+    async setModalSection() {
+      await this.$store.dispatch("getFoldersList")
+      this.$store.commit("SET_MODAL_SECTIONS", true)
+    },
+    saveSection(isTrue) {
+      console.log(isTrue);
     }
   }
 };

@@ -4,7 +4,7 @@ export default interface FoldersState {
   routeFolder: string
   folder: FolderItfc | null
   isLoaderItem: boolean
-  foldersList: FolderItfc[] | null
+  foldersList: FolderItfc[] | null | any
 }
 
 export interface FolderItfc {

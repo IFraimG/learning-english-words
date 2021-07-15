@@ -1,6 +1,6 @@
 <template>
   <ModalWords />
-  <div class="account__wrapper" v-if="!isLoader">
+  <div class="account__wrapper" v-if="!isLoader && !isModalWords">
     <div @mousedown="isOpenPanel = -1" class="account">
       <div class="account__left">
         <Profile @setModal="setModal" :profile="profile" />
@@ -48,7 +48,7 @@ import Profile from "../components/account/Profile.vue";
 import FindWord from "../components/account/FindWord.vue";
 import DictionaryVidget from "../components/account/DictionaryVidget.vue";
 import WordsTable from "../components/account/WordsTable.vue";
-import CreateFolder from "../components/account/CreateFolder.vue";
+import CreateFolder from "../components/folders/CreateFolder.vue";
 import { defineComponent } from "vue";
 
 const Component = defineComponent({
@@ -89,6 +89,7 @@ const Component = defineComponent({
       "currentWords",
       "isLoader",
       "profile",
+      "isModalWords",
       "findWords"
     ])
   },

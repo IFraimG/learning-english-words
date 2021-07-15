@@ -4,7 +4,7 @@
       <img src="@/assets/user.png" />
       <h2>{{ profile.login }}</h2>
       <p>{{ profile.email }}</p>
-      <button class="profile__run" @click="$emit('setModal', true)">
+      <button class="profile__run" @click="$emit('setModal', { isModal: true })">
         Добавить новые слова
       </button>
     </div>

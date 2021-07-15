@@ -1,8 +1,8 @@
 <template>
   <Header v-if="$store.getters.isAuth" />
-  <router-view v-slot="{ Component, route }">
-    <transition name="fade" appear>
-      <component :is="Component" :key="route.path" />
+  <router-view v-slot="{ Component }">
+    <transition name="fade">
+      <component :is="Component"  />
     </transition>
   </router-view>
 </template>
@@ -11,6 +11,7 @@
 import Header from "@/components/app/Header.vue";
 
 export default {
+  name: "App",
   components: { Header }
 };
 </script>

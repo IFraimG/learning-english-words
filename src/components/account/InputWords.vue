@@ -43,7 +43,9 @@ export default {
   name: "InputWords",
   components: { SelectTime },
   props: {
-    wordIndex: Number
+    wordIndex: Number,
+    isStartValue: Boolean,
+    startValue: Object || null
   },
   emits: ["setNumInput", "currentTime"],
   setup(props, { emit }) {
@@ -54,6 +56,8 @@ export default {
       id: "",
       currentTime: ""
     })
+
+    // if (props.isStartValue) newWord.value = { ...props.startValue }
 
     const setNumInput = () => {
       emit("setNumInput", { word: newWord.value, index: props.wordIndex });

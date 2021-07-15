@@ -1,3 +1,5 @@
+import { DictionaryListInterface } from "./dictionary";
+
 export interface IncorrectWordInterface {
   correct: string
   id: string
@@ -14,4 +16,10 @@ export interface WordInterface {
 
 export default interface WordsInterface {
   incorrectWord: IncorrectWordInterface | null
+  stateWords: string
+  isLoader: boolean
+  wordData: WordInterface | null
+  currentWords: DictionaryListInterface[]
+  findWords: DictionaryListInterface[]
+  executeWords: WordInterface[]
 }

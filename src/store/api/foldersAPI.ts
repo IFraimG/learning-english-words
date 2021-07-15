@@ -13,6 +13,8 @@ const foldersAPI = {
       .database()
       .ref(`users/${userID}/folders`)
       .once("value")
+    console.log(res.val());
+    
     if (!res.exists()) return null
     return res.val()
   },

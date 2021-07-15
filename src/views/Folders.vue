@@ -2,7 +2,7 @@
   <div v-if="!isLoader" class="folders__wrapper">
     <div class="folders">
       <h1>Полный список разделов</h1>
-      <div class="folders__content">
+      <div v-if="foldersList.length > 0" class="folders__content">
         <div class="folders__item" v-for="(item, index) in foldersList" :key="index">
           <router-link :to="{ name: 'FolderPage', params: { id: item.key }}">
             <h2>{{ item.title }}</h2>
@@ -21,6 +21,9 @@
           </router-link>
         </div>
       </div>
+      <div class="folders__create" v-else>
+        <CreateFolder />
+      </div>
     </div>
   </div>
   <Loader v-else />
@@ -32,10 +35,11 @@ import { computed, defineComponent, onMounted } from "vue";
 import { useStore } from "vuex";
 import "@/components/account/scss/Account.scss";
 import "@/components/folders/scss/Folders.scss"
+import CreateFolder from "@/components/folders/CreateFolder.vue";
 
 export default defineComponent({
   name: "Folders",
-  components: { Loader },
+  components: { Loader, CreateFolder },
   setup() {
     const store = useStore()
     const folders = computed(() => store.getters.folders)
