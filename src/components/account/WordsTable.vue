@@ -1,12 +1,13 @@
 <template>
-  <Modal
-    v-if="deleteModal"
-    title="Удаление раздела MODULE 6E"
-    text="Вы уверены, что хотите его удалить?"
-    acceptButton="Удалить"
-    commitTitle="HANDLER_MODAL_DELETE"
-    @onsuccess="successDelete"
-  />
+  <Modal v-if="deleteModal" @onsuccess="successDelete">
+    <template #title>
+      <p>Удаление раздела MODULE 6E</p>
+    </template>
+    <template #content>
+      <h2>Вы уверены, что хотите его удалить?</h2>
+    </template>
+    <template #acceptButton>Удалить</template>
+  </Modal>
   <div
     class="list__info"
     ref="listWords"
@@ -70,18 +71,15 @@
       <button @click="setModalSection" class="profile__run">Добавить в раздел</button>
     </div>
   </div>
-  <Modal
-    v-if="modalSections"
-    title="Добавление слов"
-    text="Выберите нужный вам раздел"
-    acceptButton="Добавить"
-    commitTitle="SET_MODAL_SECTIONS"
-    @onsuccess="saveSection"
-  >
-    <template v-slot:content>
-      <DropList v-if="shortFolders != null" :list="shortFolders" />
+  <Modal v-if="modalSections" @onsuccess="sendSection">
+    <template #title>
+      <p>Добавление слов</p>
+    </template>
+    <template #content>
+      <DropList @setItem="saveSection" v-if="shortFolders != null" :list="shortFolders" />
       <div v-else>Вы еще не создали ни один раздел</div> 
     </template>
+    <template #acceptButton>Добавить</template>
   </Modal>
 </template>
 
@@ -103,7 +101,8 @@ export default {
   data() {
     return {
       editMode: false,
-      editList: []
+      editList: [],
+      section: null
     };
   },
   emits: ["setOpenPanel"],
@@ -188,8 +187,13 @@ export default {
       await this.$store.dispatch("getFoldersList")
       this.$store.commit("SET_MODAL_SECTIONS", true)
     },
-    saveSection(isTrue) {
-      console.log(isTrue);
+    saveSection(item) {
+      this.section = item
+    },
+    sendSection(isTrue) {
+      if (!isTrue) this.section = null
+      if (isTrue && this.section != null) this.$store.dispatch("addWordsToSection", {section: this.section, title: this.wordsArray.title})
+      this.$store.commit("SET_MODAL_SECTIONS", false)
     }
   }
 };

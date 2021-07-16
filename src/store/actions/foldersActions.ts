@@ -1,4 +1,4 @@
-import { FolderItfc } from './../../models/folders';
+import { FolderItfc, FolderShortItfc } from './../../models/folders';
 import generateID from "@/utils/generateID"
 import foldersAPI from "../api/foldersAPI"
 
@@ -33,6 +33,15 @@ const foldersAction = {
     commit("SET_FOLDERS", folders)
 
     commit("SET_LOADER_ITEM", false)
+  },
+  async addWordsToSection({ commit, rootState }: any, payload: {section: FolderShortItfc, title: string}) {
+    try {
+      console.log(payload);
+      await foldersAPI.addWordsToFolder(rootState.auth.profile.id, payload.section, payload.title)
+    } catch (error) {
+      console.log(error);
+      
+    }
   }
 }
 

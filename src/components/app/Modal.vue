@@ -3,31 +3,22 @@
     <div @click.stop class="modal popup">
       <div class="modal__content popup__content">
         <div class="popup__header">
-          <p>{{ title }}</p>
+          <slot name="title"></slot>
           <img
             @click="closeModal"
             class="popup__close"
             src="@/assets/close.png"
-            alt=""
+            alt="close"
           />
-        </div>
-        <div class="popup__info">
-          <h2>{{ text }}</h2>
         </div>
         <div class="popup__content">
           <slot name="content"></slot>
         </div>
         <div class="popup__footer">
-          <button class="profile__run" @click="$emit('onsuccess', true)">
-            {{ acceptButton }}
+          <button class="profile__run" @click="sendSuccess(true)">
+            <slot name="acceptButton">Готово</slot>
           </button>
-          <button
-            class="profile__run modal-button__run"
-            @click="
-              $emit('onsuccess', false);
-              closeModal();
-            "
-          >
+          <button class="profile__run modal-button__run" @click="closeModal">
             Отмена
           </button>
         </div>
@@ -38,78 +29,26 @@
 
 <script>
 import "../account/scss/ModalWords.scss";
+import "./scss/Popup.scss";
 
 export default {
   name: "Popup",
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    text: {
-      type: String,
-      required: false,
-      default: "Выполните действие"
-    },
-    acceptButton: {
-      type: String,
-      required: true
-    },
-    commitTitle: {
-      type: String,
-      required: true
-    }
-  },
+  emits: ["onsuccess"],
   mounted() {
     window.scrollTo({ top: 0 });
     document.documentElement.style.overflow = "hidden";
   },
+  beforeUnmount() {
+    this.closeModal()
+  },
   methods: {
     closeModal() {
-      document.documentElement.style.overflow = "visible";
-      this.$store.commit(this.commitTitle, false);
+      document.documentElement.style.overflow = "auto";
+      this.sendSuccess(false)
+    },
+    sendSuccess(isTrue) {
+      this.$emit('onsuccess', isTrue)
     }
   }
 };
 </script>
-
-<style lang="scss">
-.popup {
-  max-width: 800px;
-  min-height: 150px;
-  &__content {
-    padding: 20px;
-    position: relative;
-  }
-  &__wrapper {
-    background: rgba(0, 0, 0, 0.5);
-    font-family: "Montserrat", "Helvetica";
-  }
-  &__header {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-  &__close {
-    min-width: 16px;
-    min-height: 16px;
-    max-width: 16px;
-    max-height: 16px;
-    cursor: pointer;
-  }
-  &__info {
-    text-align: center;
-    margin-bottom: 20px;
-    h2 {
-      @media (max-width: 370px) {
-        font-size: 24px;
-      }
-    }
-  }
-  &__footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-}
-</style>
