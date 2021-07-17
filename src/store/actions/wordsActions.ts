@@ -14,6 +14,7 @@ const wordsAction = {
       let folders = await foldersAPI.receiveAll(rootState.auth.profile.id);
       let newListWords = { title: payload.titleWords, words: payload.list };
       let listWords = null;
+      let startList = rootState.app.startModalWords
 
       if (oldListWords == null) listWords = [newListWords];
       else listWords = [...oldListWords, newListWords];
@@ -28,6 +29,7 @@ const wordsAction = {
       await wordsAPI.setWords(saveData);
 
       commit("GET_WORDS", listWords);
+      commit("SET_MODAL_WORDS", { isModal: false, list: null })
     } catch (err) {
       console.log(err);
     }

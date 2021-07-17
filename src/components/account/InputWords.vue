@@ -24,7 +24,7 @@
     <div class="modal__right">
       <button
         v-if="!isDone"
-        class="profile__run modal-button__run modal__btn-image"
+        class="profile__run modal-button__run modal__btn-image modal-button__save "
         @click="setNumInput"
       >
         Добавить
@@ -55,8 +55,6 @@ export default {
       id: "",
       currentTime: ""
     })
-
-    // if (props.isStartValue) newWord.value = { ...props.startValue }
 
     const setNumInput = () => {
       emit("setNumInput", { word: newWord.value, index: props.wordIndex });

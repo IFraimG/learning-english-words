@@ -71,11 +71,11 @@ export default defineComponent({
       currentType = type;
       if (window.sessionStorage.getItem("words") != null)
         window.sessionStorage.removeItem("words");
-      else window.sessionStorage.setItem("words", 0);
+      else window.sessionStorage.setItem("words", String(0));
 
       if (window.sessionStorage.getItem("wordsMistakes") != null)
         window.sessionStorage.removeItem("wordsMistakes");
-      else window.sessionStorage.setItem("wordsMistakes", 0);
+      else window.sessionStorage.setItem("wordsMistakes", String(0));
 
       if (type == "accordion" || type == "sentences") router.push(`${route.path}?type=${currentType}`);
       else router.push(`${route.path}?type=${currentType}&task=${1}`);
