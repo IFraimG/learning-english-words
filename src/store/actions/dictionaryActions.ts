@@ -29,10 +29,7 @@ const dictionaryActions = {
       payload.wordIndex,
       payload.wordData
     );
-    dispatch("getCurrentDictionaryWords", {
-      id: payload.userID,
-      query: payload.query
-    });
+    dispatch("getCurrentDictionaryWords", {id: payload.userID, query: payload.query});
   }
 };
 

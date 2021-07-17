@@ -10,20 +10,20 @@
           >
         </div>
         <div class="english-form__middle">
-          <input v-model="word" type="text" />
+          <input v-model="word.value" type="text" />
           <button class="profile__run modal-button__run" @click="checkInput">
             Проверить
           </button>
         </div>
         <div class="english-form__result">
           <p
-            v-if="isDone && !isError"
+            v-if="isDone.value && !isError.value"
             class="english-form__success english-form__status"
           >
             Молодец! Все верно!
           </p>
-          <p v-if="isError" class="english-form__danger">
-            <span v-for="(err, index) of errorsList" :key="index">
+          <p v-if="isError.value" class="english-form__danger">
+            <span v-for="(err, index) of errorsList.value" :key="index">
               <p
                 v-if="err.english == wordData.english"
                 class="english-form__danger english-form__status"
@@ -43,8 +43,8 @@
             Вернуться
           </button>
           <button
-            v-if="!isAnswer && !isDone && isError"
-            @click="isAnswer = true"
+            v-if="!isAnswer.value && !isDone.value && isError.value"
+            @click="setAnswer(true)"
             class="profile__run modal-button__run"
           >
             Посмотреть ответ
@@ -63,10 +63,10 @@
           >
             Завершить
           </button>
-          <span class="english-form__answer" v-if="!isDone && isAnswer">
+          <span class="english-form__answer" v-if="!isDone.value && isAnswer.value">
             <p>{{ wordData.russian }}</p>
             <img
-              @click="isAnswer = false"
+              @click="setAnswer(false)"
               src="@/assets/close.png"
               alt="close"
             />
@@ -78,70 +78,64 @@
 </template>
 
 <script>
+import { inject, reactive } from 'vue';
 import "./scss/EnglishV.scss";
 
 export default {
   name: "EnglishV",
-  data() {
-    return {
-      isError: false,
-      errorMessage: "",
-      errorsList: [],
-      isDone: false,
-      word: "",
-      isAnswer: false
-    };
-  },
   props: {
-    wordData: Object,
     taskNum: String,
     len: Number
   },
-  methods: {
-    checkInput() {
-      let translation = this.wordData.russian
-        .trimLeft()
-        .trimRight()
-        .toLowerCase();
-      let word = this.word
-        .trimLeft()
-        .trimRight()
-        .toLowerCase();
-      if (translation === word) {
-        this.isDone = true;
-        this.isError = false;
-        this.errorMessage = "";
-      } else {
-        this.isError = true;
-        if (word.length > 0) {
-          let arrayErrors = JSON.parse(
-            window.sessionStorage.getItem("wordsMistakes")
-          );
-          let newArray = [];
-          let errInfo = { translation: word, english: this.wordData.english };
-          if (arrayErrors != null && arrayErrors != 0)
-            arrayErrors.map(item => {
-              if (item.english != this.wordData.english) newArray.push(item);
-            });
-          newArray.push(errInfo);
-          window.sessionStorage.setItem(
-            "wordsMistakes",
-            JSON.stringify(newArray)
-          );
+  emits: ["setFinishType", "nextTask", "previousTask"],
+  setup(_, { emit }) {
+    let wordData = inject("wordData")
+    let isDone = reactive({ value: false })
+    let isError = reactive({ value: false })
+    let errorMessage = reactive({ value: "" })
+    let errorsList = reactive({ value: [] })
+    let word = reactive({ value: "" })
+    let isAnswer = reactive({ value: false })
 
-          let updateMistakes = JSON.parse(
-            window.sessionStorage.getItem("wordsMistakes")
-          );
-          this.errorsList = updateMistakes;
-        } else this.errorMessage = "Вы не ввели слово";
+    const checkInput = () => {
+      let translation = wordData.value.russian
+        .trimLeft()
+        .trimRight()
+        .toLowerCase();
+      let word2 = word.value
+        .trimLeft()
+        .trimRight()
+        .toLowerCase();
+      if (translation == word2) {
+        isDone.value = true;
+        isError.value = false;
+        errorMessage.value = "";
+      } else {
+        isError.value = true;
+        if (word2.length > 0) {
+          let arrayErrors = JSON.parse(window.sessionStorage.getItem("wordsMistakes"));
+          let newArray = [];
+          let errInfo = { translation: word.value, english: wordData.english };
+          if (arrayErrors != null && arrayErrors != 0) {
+            arrayErrors.map(item => {
+              if (item.english != wordData.english) newArray.push(item);
+            });
+          }
+          newArray.push(errInfo);
+          window.sessionStorage.setItem("wordsMistakes", JSON.stringify(newArray));
+
+          let updateMistakes = JSON.parse(window.sessionStorage.getItem("wordsMistakes"));
+          errorsList.value = updateMistakes;
+        } else errorMessage.value = "Вы не ввели слово";
       }
-    },
-    addSuccessWord() {
-      if (this.isDone) {
+    }
+
+    const addSuccessWord = () => {
+      if (isDone.value) {
         let arrayWords = JSON.parse(window.sessionStorage.getItem("words"));
         let newSuccessWord = {
-          translation: this.word,
-          english: this.wordData.english
+          translation: word.value,
+          english: wordData.english
         };
         let newArrayWords = [];
         if (arrayWords?.length > 0 && arrayWords != null) {
@@ -153,16 +147,25 @@ export default {
         newArrayWords.push(newSuccessWord);
         window.sessionStorage.setItem("words", JSON.stringify(newArrayWords));
       }
-      this.word = "";
-      this.isDone = false;
-    },
-    nextTask() {
-      this.addSuccessWord();
-      this.$emit("nextTask");
-    },
-    setFinish() {
-      this.addSuccessWord();
-      this.$emit("setFinishType");
+      word.value = "";
+      isDone.value = false;
+    }
+
+    const setAnswer = (isTrue) => isAnswer.value = isTrue
+
+    const nextTask = () => {
+      addSuccessWord();
+      emit("nextTask");
+    }
+
+    const setFinish = () => {
+      addSuccessWord();
+      emit("setFinishType");
+    }
+
+    return {
+      wordData, setFinish, nextTask, addSuccessWord, checkInput, setAnswer,
+      isDone, isError, errorMessage, errorsList, word, isAnswer
     }
   }
 };

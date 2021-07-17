@@ -1,10 +1,11 @@
 <template>
   <select v-model="time" @change="setTime" class="modal__select">
     <option :value="-1" selected>
-      <span v-if="timeEdit == '' || timeEdit == null">Время (none)</span>
-      <span v-else>{{ timeEdit }}</span>
+      <!-- <span v-if="timeEdit == '' || timeEdit == null || timeEdit == -1">Время (none)</span> -->
+      <span>Время (none)</span>
+      <!-- <span v-else>{{ timeEdit }}</span> -->
     </option>
-    <option v-for="(timeItem, index) of timesList" :key="index" :value="index">
+    <option v-for="(timeItem, index) of timesList" :key="index" :value="index + 1">
       {{ timeItem }}
     </option>
   </select>
@@ -43,12 +44,16 @@ export default {
       }
     })
 
-    const setTime = () => emit("setTime", timesArray[time.value]);
+    const setTime = () => {
+      if (time.value == -1) emit("setTime", "Time: None")
+      else emit("setTime", timesArray[time.value]);
+    }
 
     const timesList = computed(() => {
       let list = [];
       timesArray.forEach(item => {
-        if (item != props.timeEdit) list.push(item);
+        // if (item != props.timeEdit) list.push(item);
+        list.push(item);
       });
       return list;
     })

@@ -27,8 +27,7 @@
         class="profile__run modal-button__run modal__btn-image"
         @click="setNumInput"
       >
-        <span>Добавить</span>
-        <img src="@/assets/plus.png" />
+        Добавить
       </button>
     </div>
   </div>

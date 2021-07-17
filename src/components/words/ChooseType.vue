@@ -24,6 +24,12 @@
       >
         <h2>Задание "Гормошка"</h2>
       </div>
+      <div
+        @click="$emit('setCurrentType', 'sentences')"
+        class="panel__postright panel__item"
+      >
+        <h2>Составить предложения со словами</h2>
+      </div>
     </div>
   </div>
 </template>

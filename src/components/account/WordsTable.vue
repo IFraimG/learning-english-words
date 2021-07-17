@@ -24,6 +24,8 @@
     >
       <ul class="list__panel-content">
         <li class="list__panel-item" @click.stop="editWords(wordsArray.words, wordsArray.title)">Изменить</li>
+        <li class="list__panel-item" @click="setModalSection">Добавить в раздел</li>
+        <li class="list__panel-item" @click="openModal">Новые слова</li>
         <li class="list__panel-item" @click.stop="modalDelete(true)">Удалить</li>
         <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">Отмена</li>
       </ul>
@@ -77,7 +79,10 @@
     </template>
     <template #content>
       <DropList @setItem="saveSection" v-if="shortFolders != null" :list="shortFolders" />
-      <div v-else>Вы еще не создали ни один раздел</div> 
+      <div class="profile__nosections" v-else>
+        <p>Вы еще не создали ни один раздел</p>
+        <CreateFolder class="profile__nosections-create" />
+      </div>
     </template>
     <template #acceptButton>Добавить</template>
   </Modal>
@@ -89,10 +94,11 @@ import "@/components/account/scss/Account.scss";
 import AccountWord from "@/components/account/AccountWord.vue";
 import Modal from "../app/Modal.vue";
 import DropList from '../app/DropList.vue';
+import CreateFolder from '../folders/CreateFolder.vue';
 
 export default {
   name: "WordsTable",
-  components: { AccountWord, Modal, DropList },
+  components: { AccountWord, Modal, DropList, CreateFolder },
   props: {
     wordsArray: Object,
     index: Number,

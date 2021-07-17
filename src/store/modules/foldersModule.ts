@@ -18,6 +18,8 @@ const foldersModule = {
     isLoaderItem: (state: FoldersState) => state.isLoaderItem,
     folders: (state: FoldersState) => state.foldersList,
     shortFolders: (state: FoldersState): any => {
+      if (state.foldersList == null) return null
+
       let list: any = []
       Object.keys(state.foldersList).map(item => list.push({
         title: state.foldersList[item].title,

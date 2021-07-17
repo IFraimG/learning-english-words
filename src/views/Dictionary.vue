@@ -2,11 +2,7 @@
   <div class="dictionary">
     <div v-if="!isLoader && pagesDictionary != null">
       <table>
-        <caption>
-          {{
-            currentDictionary.title
-          }}
-        </caption>
+        <caption>{{ currentDictionary.title }}</caption>
         <thead class="dictionary__header">
           <tr>
             <th>Word</th>
@@ -49,7 +45,7 @@
       <v-pagination
         v-model="currentColumn"
         :pages="pagesDictionary - 2"
-        :range-size="1"
+        :range-size="0"
         active-color="#dddddd"
         @update:modelValue="editPage"
         style="margin-left: 20px"

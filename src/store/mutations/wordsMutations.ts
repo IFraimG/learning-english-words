@@ -28,6 +28,9 @@ const wordsMutations = {
       case "englishT":
         state.stateWords = "englishT";
         break;
+      case "sentences":
+        state.stateWords = "sentences";
+        break;
       case "finish":
         state.stateWords = "finish";
         break;
@@ -47,6 +50,9 @@ const wordsMutations = {
     });
     if (wordsList.length > 0) state.findWords = wordsList;
     else state.findWords = [];
+  },
+  CHECK_TITLE(state: WordsInterface, payload: boolean) {
+    state.isRepeatingTitle = payload
   }
 };
 

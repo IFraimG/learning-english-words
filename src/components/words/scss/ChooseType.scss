@@ -64,4 +64,10 @@
       background-color: #4d6e91;
     }
   }
+  &__postright {
+    background: #50CB93;
+    &:active {
+      background: #71EFA3;
+    }
+  }
 }

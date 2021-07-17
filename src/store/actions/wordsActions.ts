@@ -1,14 +1,17 @@
+import { DictionaryListInterface } from './../../models/dictionary';
 import { WordInterface } from '@/models/words';
 import WordsInterface from "@/models/words";
 import router from "@/router/index";
 import randomWords from "random-words";
 import wordsAPI from "../api/wordsAPI";
+import foldersAPI from '../api/foldersAPI';
 
 const wordsAction = {
   async createList({ commit, rootState }: any, payload: {titleWords: string, list: WordsInterface[]}) {
     try {
       let profile = await wordsAPI.getProfile(rootState.auth.profile.id);
       let oldListWords = await wordsAPI.getListWords(rootState.auth.profile.id);
+      let folders = await foldersAPI.receiveAll(rootState.auth.profile.id);
       let newListWords = { title: payload.titleWords, words: payload.list };
       let listWords = null;
 
@@ -19,7 +22,8 @@ const wordsAction = {
         login: profile.login,
         email: profile.email,
         id: rootState.auth.profile.id,
-        listWords: listWords
+        listWords: listWords,
+        folders
       };
       await wordsAPI.setWords(saveData);
 
@@ -64,17 +68,17 @@ const wordsAction = {
     }
   },
   async deleteWords({ commit, rootState }: any, payload: any) {
-    console.log(payload);
     try {
       commit("SET_LOADER", false);
-      let wordsFull = payload.wordsFull.filter((wordList: any) => {
-        return wordList.title != payload.title;
-      });
+      let wordsFull = payload.wordsFull.filter((wordList: any) => wordList.title != payload.title);
+      let folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
+
       await wordsAPI.deleteWords(
         payload.userID,
         wordsFull,
         rootState.auth.profile.email,
-        rootState.auth.profile.login
+        rootState.auth.profile.login,
+        folders
       );
     } catch (error) {
       console.log(error);
@@ -122,6 +126,13 @@ const wordsAction = {
     } catch (error) {
       console.log(error);
     }
+  },
+  async checkTitles({ commit, rootState }: any, payload: string) {
+    let isRepeat = false
+    rootState.words.currentWords.forEach((item: DictionaryListInterface) => {
+      if (item.title.trimStart().trimEnd().toLowerCase() == payload.trimStart().trimEnd().toLowerCase()) isRepeat = true
+    })
+    commit("CHECK_TITLE", isRepeat)
   }
 };
 

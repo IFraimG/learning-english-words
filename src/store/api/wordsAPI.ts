@@ -1,3 +1,4 @@
+import { FolderItfc } from '@/models/folders';
 import { WordInterface } from "@/models/words";
 import firebase from "firebase/app";
 import "firebase/database"
@@ -26,7 +27,8 @@ const wordsAPI = {
       .set({
         login: profileData.login,
         email: profileData.email,
-        words: profileData.listWords
+        words: profileData.listWords,
+        folders: profileData.folders
       });
   },
   getProfile: async (userID: string) => {
@@ -39,12 +41,12 @@ const wordsAPI = {
       .ref(`/users/${userID}/words/${wordsID}`)
       .set({ words: editWords, title: title });
   },
-  deleteWords: async (userID: string, words: Array<WordInterface>, email: string, login: string) => {
+  deleteWords: async (userID: string, words: Array<WordInterface>, email: string, login: string, folders: FolderItfc[]) => {
     return await firebase
       .database()
       .ref(`/users/${userID}`)
-      .set({ words: words, email: email, login: login });
-  },
+      .set({ words: words, email: email, login: login, folders });
+  }
 };
 
 export default wordsAPI;

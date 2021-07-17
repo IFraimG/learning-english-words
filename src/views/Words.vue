@@ -4,7 +4,7 @@
       @previousTask="previousTask"
       @nextTask="nextTask"
       @setFinishType="setFinishType"
-      :taskNum="$route.query.task"
+      :taskNum="route.query.task"
       :wordData="wordData"
       v-if="stateWords == 'englishT'"
     />
@@ -13,16 +13,15 @@
       @previousTask="previousTask"
       @nextTask="nextTask"
       @setFinishType="setFinishType"
-      :taskNum="$route.query.task"
-      :wordData="wordData"
+      :taskNum="route.query.task"
       v-else-if="stateWords == 'englishV'"
     />
     <accordion
       @setFinishType="setFinishType"
-      :taskNum="$route.query.task"
       :currentWords="currentWords"
       v-else-if="stateWords == 'accordion'"
     />
+    <Sentences v-else-if="stateWords == 'sentences'" />
     <ChooseType
       @setCurrentType="setCurrentType"
       v-else-if="stateWords == 'start'"
@@ -34,33 +33,42 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
+<script lang="ts">
+import { useStore } from "vuex";
 import ChooseType from "@/components/words/ChooseType.vue";
 import EnglishT from "@/components/words/EnglishT.vue";
 import EnglishV from "@/components/words/EnglishV.vue";
 import Accordion from "@/components/words/Accordion.vue";
 import Finish from "../components/words/Finish.vue";
 import Loader from "../components/app/Loader.vue";
+import Sentences from '@/components/words/Sentences.vue';
+import { computed, defineComponent, onBeforeMount, onUpdated, provide, reactive } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
-export default {
+export default defineComponent({
   name: "Words",
-  components: { ChooseType, EnglishT, EnglishV, Accordion, Finish, Loader },
-  data() {
-    return {
-      currentType: null
-    };
-  },
-  beforeCreate() {
-    this.$store.dispatch("loadWords", this.$route);
-    this.$store.dispatch("getListWords", this.$route);
-  },
-  updated() {
-    this.$store.commit("CHECK_STATE_WORDS", this.$route);
-  },
-  methods: {
-    setCurrentType(type) {
-      this.currentType = type;
+  components: { ChooseType, EnglishT, EnglishV, Accordion, Finish, Loader, Sentences },
+  setup() {
+    const route: any = useRoute()
+    const router = useRouter()
+    const store = useStore()
+
+    let currentType = reactive<any>(null)
+
+    let wordData = computed(() => store.getters.wordData)
+    let currentWords = computed(() => store.getters.currentWords)
+
+    onBeforeMount(() => {
+      store.dispatch("loadWords", route);
+      store.dispatch("getListWords", route);
+    })
+
+    provide("wordData", wordData)
+    provide("currentWords", currentWords)
+    onUpdated(() => store.commit("CHECK_STATE_WORDS", route))
+
+    const setCurrentType = (type: string) => {
+      currentType = type;
       if (window.sessionStorage.getItem("words") != null)
         window.sessionStorage.removeItem("words");
       else window.sessionStorage.setItem("words", 0);
@@ -69,37 +77,33 @@ export default {
         window.sessionStorage.removeItem("wordsMistakes");
       else window.sessionStorage.setItem("wordsMistakes", 0);
 
-      if (type == "accordion")
-        this.$router.push(`${this.$route.path}?type=${this.currentType}`);
-      else
-        this.$router.push(
-          `${this.$route.path}?type=${this.currentType}&task=${1}`
-        );
-    },
-    previousTask() {
-      let task = parseInt(this.$route.query.task);
-      let type = this.$route.query.type;
-      let path = this.$route.path;
-      this.$router.push(`${path}?type=${type}&task=${task - 1}`);
-    },
-    nextTask() {
-      let task = parseInt(this.$route.query.task);
-      let type = this.$route.query.type;
-      let path = this.$route.path;
-      this.$router.push(`${path}?type=${type}&task=${task + 1}`);
-    },
-    setFinishType() {
-      this.$router.push(`${this.$route.path}?type=finish`);
+      if (type == "accordion" || type == "sentences") router.push(`${route.path}?type=${currentType}`);
+      else router.push(`${route.path}?type=${currentType}&task=${1}`);
     }
-  },
-  computed: {
-    ...mapGetters([
-      "stateWords",
-      "wordData",
-      "isLoader",
-      "executeWords",
-      "currentWords"
-    ])
+
+    const previousTask = () => {
+      let task = parseInt(route.query.task);
+      let type = route.query.type;
+      let path = route.path;
+      router.push(`${path}?type=${type}&task=${task - 1}`);
+    }
+
+    const nextTask = () => {
+      let task = parseInt(route.query.task);
+      let type = route.query.type;
+      let path = route.path;
+      router.push(`${path}?type=${type}&task=${task + 1}`);
+    }
+
+    const setFinishType = () => router.push(`${route.path}?type=finish`);
+
+    return {
+      setCurrentType, setFinishType, nextTask, 
+      previousTask, currentType, route, wordData, currentWords,
+      stateWords: computed(() => store.getters.stateWords),
+      isLoader: computed(() => store.getters.isLoader),
+      executeWords: computed(() => store.getters.executeWords),
+    }
   }
-};
+})
 </script>

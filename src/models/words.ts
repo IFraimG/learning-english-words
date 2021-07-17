@@ -18,6 +18,7 @@ export default interface WordsInterface {
   incorrectWord: IncorrectWordInterface | null
   stateWords: string
   isLoader: boolean
+  isRepeatingTitle: boolean
   wordData: WordInterface | null
   currentWords: DictionaryListInterface[]
   findWords: DictionaryListInterface[]

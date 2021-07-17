@@ -3,7 +3,6 @@
     <div class="folder-page">
       <div class="folder-page__header">
         <h1>{{ folderItem.title }}</h1>
-        <button>Добавить модуль</button>
       </div>
       <div class="folder-page__content">
         <div v-if="folderItem?.listModules != null"></div>

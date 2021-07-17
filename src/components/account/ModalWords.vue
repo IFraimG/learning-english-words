@@ -38,8 +38,7 @@
             type="submit"
             class="profile__run modal-button__run modal__save modal__btn-image"
           >
-            <span>Сохранить</span>
-            <img src="@/assets/save.png" alt="" />
+            Сохранить
           </button>
           <button
             type="submit"
@@ -67,7 +66,6 @@ export default defineComponent({
   setup() {
     const store = useStore()
     let incorrectWord = computed(() => store.getters.incorrectWord)
-    // const startWords = computed(() => store.getters.startModalWords)
 
     let wordsList: any = reactive([])
     let editData: any = reactive({ currentTime: "", english: "", russian: "", id: "" })
@@ -93,18 +91,20 @@ export default defineComponent({
         modalTitle.value.innerHTML = "Вы не заполнили словарь!";
         modalTitle.value.style.color = "red";
       } else {
-        console.log(titleWords.value);
-        if (titleWords.value.length > 0) {
-          store.dispatch("createList", {
-            list: wordsList,
-            titleWords: titleWords.value
-          });
-          resetData();
-          modalClose()
-        } else {
-          inputTitle.value.placeholder = "Вы не ввели название !";
-          inputTitle.value.classList.add("modal__header-error");
-        }
+        store.dispatch("checkTitles", titleWords.value).then(() => {
+          if (titleWords.value.length == 0) {
+            inputTitle.value.placeholder = "Вы не ввели название !";
+            inputTitle.value.classList.add("modal__header-error");
+          }
+          if (store.getters.isRepeatingTitle) {
+            modalTitle.value.innerHTML = "Такое название уже существует !";
+            modalTitle.value.style.color = "red";
+          } else {
+            store.dispatch("createList", { list: wordsList, titleWords: titleWords.value });
+            resetData();
+            modalClose()
+          }
+        })
       }
     }
 
@@ -116,12 +116,6 @@ export default defineComponent({
       }
       return text;
     }
-
-    const isStart = computed(() => {
-      let startWords = store.getters.startModalWords
-      if (startWords != null && wordsList.length == 0) return true
-      return false
-    })
 
     const checkValidID = (id: any) => {
       let isValid = false;
@@ -152,7 +146,7 @@ export default defineComponent({
 
     return { 
       wordsList, titleWords, editData,
-      setNumInput, getWordID, checkValidID, isStart,
+      setNumInput, getWordID, checkValidID,
       resetData, modalClose, sendData, incorrectWord,
       modalTitle, inputTitle, isModal: computed(() => store.getters.isModalWords)
     }

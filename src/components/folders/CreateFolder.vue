@@ -5,7 +5,7 @@
         <button data-btn="create" v-if="!isInput.value" class="profile__run create-folder-active" @click="editInput(true)">
           Создать раздел
         </button>
-        <button data-btn="cancel" class="profile__run" v-else @click="editInput(false)">
+        <button data-btn="cancel" class="profile__run create-folder-cancel" v-else @click="editInput(false)">
           Отмена
         </button>
       </div>
@@ -68,21 +68,45 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
   }
+  &-cancel {
+    padding: 10px 40px;
+    font-size: 18px;
+  }
 }
 
 button[data-btn='create'] {
+  position: relative;
   &::after {
-    content: url("../../assets/plus.png");
-    width: 32px;
-    height: 32px;
+    content: "";
+    position: absolute;
+    right: 80px;
+    top: 25px;
+    height: 1px;
+    width: 20px;
+    background-color: #fff;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    right: 80px;
+    top: 25px;
+    height: 1px;
+    width: 20px;
+    background-color: #fff;
+    transform: rotate(90deg);
   }
 }
 
 button[data-btn='cancel'] {
-  font-size: 16px;
+  position: relative;
   &::after {
-    content: url("../../assets/close.png");
-    padding: 10px;
+    content: "";
+    height: 1px;
+    width: 20px;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    background-color: #fff;
   }
 }
 </style>
