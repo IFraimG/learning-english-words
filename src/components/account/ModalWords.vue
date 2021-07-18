@@ -3,8 +3,10 @@
     <div @click.stop v-if="isModal" class="modal">
       <div class="modal__content">
         <div class="modal__header">
-          <h2 ref="modalTitle">Создать список слов</h2>
+          <h2 v-if="startWords.title == null" ref="modalTitle">Создать список слов</h2>
+          <h2 v-else ref="modalTitle">Добавить новые слова</h2>
           <input
+            v-if="startWords.title == null"
             ref="inputTitle"
             v-model="titleWords"
             placeholder="Ваше название словаря..."
@@ -66,6 +68,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     let incorrectWord = computed(() => store.getters.incorrectWord)
+    let startWords = computed(() => store.getters.startModalWords)
 
     let wordsList: any = reactive([])
     let editData: any = reactive({ currentTime: "", english: "", russian: "", id: "" })
@@ -83,28 +86,29 @@ export default defineComponent({
 
     const modalClose = () => {
       wordsList = [];
-      store.commit("SET_MODAL_WORDS", { isModal: false });
+      store.commit("SET_MODAL_WORDS", { isModal: false, list: null, title: null });
     }
 
-    const sendData = () => {
+    const sendData = async () => {
       if (wordsList.length == 0) {
         modalTitle.value.innerHTML = "Вы не заполнили словарь!";
         modalTitle.value.style.color = "red";
       } else {
-        store.dispatch("checkTitles", titleWords.value).then(() => {
-          if (titleWords.value.length == 0) {
-            inputTitle.value.placeholder = "Вы не ввели название !";
-            inputTitle.value.classList.add("modal__header-error");
-          }
+        if (startWords.value.title != null) titleWords.value = startWords.value.title
+        if (titleWords.value.length == 0) {
+          inputTitle.value.placeholder = "Вы не ввели название !";
+          inputTitle.value.classList.add("modal__header-error");
+        } else {
+          if (startWords.value.title == null) await store.dispatch("checkTitles", titleWords.value)
           if (store.getters.isRepeatingTitle) {
             modalTitle.value.innerHTML = "Такое название уже существует !";
             modalTitle.value.style.color = "red";
           } else {
-            store.dispatch("createList", { list: wordsList, titleWords: titleWords.value });
+            await store.dispatch("createList", { list: wordsList, titleWords: titleWords.value });
             resetData();
             modalClose()
           }
-        })
+        }
       }
     }
 
@@ -148,7 +152,8 @@ export default defineComponent({
       wordsList, titleWords, editData,
       setNumInput, getWordID, checkValidID,
       resetData, modalClose, sendData, incorrectWord,
-      modalTitle, inputTitle, isModal: computed(() => store.getters.isModalWords)
+      modalTitle, inputTitle, startWords,
+      isModal: computed(() => store.getters.isModalWords)
     }
   }
 })

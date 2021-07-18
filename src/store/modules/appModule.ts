@@ -7,7 +7,7 @@ const appModule = {
     isModalDelete: false,
     isModalWords: false,
     isModalSections: false,
-    startModalWords: null
+    startModalWords: { title: null, words: null }
   }),
   mutations: appMutations,
   actions: {},

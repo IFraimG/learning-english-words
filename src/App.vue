@@ -2,7 +2,7 @@
   <Header v-if="$store.getters.isAuth" />
   <router-view v-slot="{ Component }">
     <transition name="fade">
-      <component :is="Component" />
+      <component :is="Component"></component>
     </transition>
   </router-view>
 </template>
@@ -11,12 +11,11 @@
 import Header from "@/components/app/Header.vue";
 
 export default {
-  name: "App",
   components: { Header }
 };
 </script>
 
-<style lang="scss">
+<style>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease-out;

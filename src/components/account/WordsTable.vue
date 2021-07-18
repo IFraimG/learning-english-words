@@ -184,7 +184,8 @@ export default {
       if (isTrue) this.deleteWords(this.wordsArray.title);
     },
     openModal() {
-      this.$store.commit("SET_MODAL_WORDS", { isModal: true, list: this.editList })
+      console.log(this.wordsArray);
+      this.$store.commit("SET_MODAL_WORDS", { isModal: true, title: this.wordsArray.title, list: this.wordsArray.words })
     },
     modalDelete(isTrue) {
       this.$store.commit('HANDLER_MODAL_DELETE', isTrue)

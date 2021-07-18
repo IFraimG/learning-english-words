@@ -12,12 +12,23 @@ const wordsAction = {
       let profile = await wordsAPI.getProfile(rootState.auth.profile.id);
       let oldListWords = await wordsAPI.getListWords(rootState.auth.profile.id);
       let folders = await foldersAPI.receiveAll(rootState.auth.profile.id);
-      let newListWords = { title: payload.titleWords, words: payload.list };
       let listWords = null;
       let startList = rootState.app.startModalWords
+      let newListWords = { title: payload.titleWords, words: payload.list };
+
+      if (startList?.title != null && startList?.words != null) {
+        newListWords.title = startList.title
+        newListWords.words = [...startList.words, ...newListWords.words]
+      }
 
       if (oldListWords == null) listWords = [newListWords];
-      else listWords = [...oldListWords, newListWords];
+      else {
+        if (startList?.title != null && startList?.words != null) {
+          let index = oldListWords.findIndex((item: any) => item.title == startList.title)
+          if (index != -1) oldListWords[index].words = [...newListWords.words]
+          listWords = [...oldListWords]
+        } else listWords = [...oldListWords, newListWords];
+      }
 
       const saveData = {
         login: profile.login,
@@ -25,11 +36,12 @@ const wordsAction = {
         id: rootState.auth.profile.id,
         listWords: listWords,
         folders
-      };
+      }
+
       await wordsAPI.setWords(saveData);
 
       commit("GET_WORDS", listWords);
-      commit("SET_MODAL_WORDS", { isModal: false, list: null })
+      commit("SET_MODAL_WORDS", { isModal: false, list: null, title: null })
     } catch (err) {
       console.log(err);
     }

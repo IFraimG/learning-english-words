@@ -1,3 +1,4 @@
+import { DictionaryListInterface } from './../../models/dictionary';
 import { FolderItfc } from '@/models/folders';
 import { WordInterface } from "@/models/words";
 import firebase from "firebase/app";

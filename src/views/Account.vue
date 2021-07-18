@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <Loader v-else />
+  <Loader v-if="isLoader && !isModalWords" />
 </template>
 <script lang="ts">
 import VPagination from "@hennge/vue3-pagination";

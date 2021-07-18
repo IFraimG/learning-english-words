@@ -3,6 +3,6 @@ export default interface AppState {
     isLogin: boolean
     isModalDelete: boolean
     isModalWords: boolean
-    startModalWords: WordInterface[] | null
+    startModalWords: { words: WordInterface[] | null, title: string | null }
     isModalSections: boolean
 }
