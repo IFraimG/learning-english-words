@@ -1,15 +1,17 @@
-FROM node:12-alpine
+FROM node:14
 
-RUN npm install
-RUN npm install -g http-server
-RUN npm install --save node-sass sass-loader
-
-WORKDIR /english-project
+WORKDIR /app
 
 COPY package*.json ./
+COPY tsconfig.json ./
+COPY .env ./
 
+RUN npm install
 COPY . .
+COPY ./dist .
+
 RUN npm run build
 
 EXPOSE 8080
-CMD ["http-server", "dist"]
+
+CMD ["npm", "run", "serve"]
