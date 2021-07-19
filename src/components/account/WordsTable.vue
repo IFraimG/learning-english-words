@@ -1,7 +1,7 @@
 <template>
   <Modal v-if="deleteModal" @onsuccess="successDelete">
     <template #title>
-      <p>Удаление раздела MODULE 6E</p>
+      <p>Удаление {{ wordsArray.title }}</p>
     </template>
     <template #content>
       <h2>Вы уверены, что хотите его удалить?</h2>

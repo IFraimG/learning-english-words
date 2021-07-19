@@ -11,9 +11,6 @@
     width: 200px;
     height: 30px;
     padding: 0 10px;
-    &:focus {
-      outline: none;
-    }
   }
   &__left {
     display: flex;
@@ -31,43 +28,6 @@
       padding: 12px 50px;
       img {
         margin-left: 10px;
-      }
-      // @media (max-width: 563px) {
-      //   padding: 10px 30px;
-      // }
-      // @media (max-width: 491px) {
-      //   font-size: 12px;
-      //   padding: 10px 10px;
-      // }
-    }
-  }
-  &-button {
-    &__save {
-      position: relative;
-      &::after {
-        content: "";
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        height: 1px;
-        width: 18px;
-        background-color: #fff;
-        @media (max-width: 563px) {
-          display: none;
-        }
-      }
-      &::before {
-        content: "";
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        height: 1px;
-        width: 18px;
-        background-color: #fff;
-        transform: rotate(90deg);
-        @media (max-width: 563px) {
-          display: none;
-        }
       }
     }
   }
@@ -89,5 +49,26 @@
   }
   &__message {
     font-weight: bold;
+  }
+}
+
+.btn-add {
+  &::after {
+    content: "";
+    right: 20px;
+    top: 20px;
+    @media (max-width: 563px) {
+      display: none;
+    }
+  }
+  &::before {
+    content: "";
+    right: 20px;
+    top: 20px;
+    height: 1px;
+    width: 18px;
+    @media (max-width: 563px) {
+      display: none;
+    }
   }
 }

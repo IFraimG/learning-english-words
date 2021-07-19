@@ -4,27 +4,29 @@
       <div class="not-found__content">
         <h1>Данной страницы не существует!</h1>
         <img src="@/assets/404.jpg" alt="" />
-        <p>Совсем скоро вы перенаправитесь на главную страницу {{ time }}</p>
+        <p>Совсем скоро вы перенаправитесь на главную страницу {{ time.value }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, reactive } from "vue";
+import { useRouter } from "vue-router";
 
 const Component = defineComponent({
   name: "NotFound",
-  data() {
-    return {
-      time: 5
-    };
-  },
-  created() {
-    setInterval(() => {
-      if (this.time > 0) this.time--;
-      else this.$router.push("/");
-    }, 1000);
+  setup() {
+    const router = useRouter()
+    let time = reactive({ value: 5 })
+
+    onMounted(() => {
+      setInterval(() => {
+        if (time.value > 0) time.value--;
+        else router.push("/");
+      }, 1000);
+    })
+    return { time }
   }
 })
 

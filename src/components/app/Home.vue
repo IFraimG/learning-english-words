@@ -13,7 +13,7 @@
             </li>
             <li class="home-header__item">
               <router-link to="#">
-                <p>About us</p>
+                <p>Null Link</p>
               </router-link>
             </li>
             <li class="home-header__item">
@@ -38,8 +38,8 @@
             <img src="@/assets/Polygon3.png" alt="">
           </div>
           <div class="home-main__left">
-            <h1>SEO & Digital <span>Marketing</span> For Your Website.</h1>
-            <p>Provide all kind of seo services and help to improve seo ranking. Globally incubate standards.</p>
+            <h1>Не обращай & внимания <span>внимания</span> на текст.</h1>
+            <p>Он здесь для красоты... И логотипы тоже......</p>
             <div class="home-main__down">
               <button class="home-btn" @click="scrollAuth">Get started</button>
               <p>Watch video</p>

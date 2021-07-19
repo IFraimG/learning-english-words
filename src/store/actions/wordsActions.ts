@@ -46,10 +46,10 @@ const wordsAction = {
       console.log(err);
     }
   },
-  async getWords({ commit }: any, payload: string) {
+  async getWords({ commit, rootState }: any) {
     try {
       commit("SET_LOADER", true);
-      let data = await wordsAPI.getProfile(payload);
+      let data = await wordsAPI.getProfile(rootState.auth.profile.id);
       if (data?.words != null) commit("GET_WORDS", data.words);
       commit("SET_LOADER", false);
     } catch (error) {

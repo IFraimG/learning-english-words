@@ -1,0 +1,57 @@
+@import "@/configs/root.scss";
+
+.folder {
+  &__wrapper {
+    background: rgb(241, 241, 241);
+    height: 100%;
+  }
+  &-page {
+    padding-top: 30px;
+    &__header {
+      margin-left: 80px;
+      display: flex;
+      p, span {
+        font-size: 24px;
+        margin-bottom: 60px;
+      }
+      span {
+        margin: 0 10px;
+      }
+    }
+    &__link {
+      color: $defaultbtn;
+      &:hover {
+        color: $defaultbtnactive;
+      }
+    }
+  }
+  &-list {
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 80px 50px;
+    &__item {
+      &-wrapper {
+        background-color: #fff;
+        max-width: 300px;
+        // border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
+        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px #fff;
+        padding: 20px;
+        transition: .5s linear;
+        &:hover {
+          transform: translateY(-30px);
+        }
+      }
+      cursor: pointer;
+    }
+    &__title {
+      h3 {
+        font-size: 24px;
+      }
+    }
+    &__text {
+      span {}
+    }
+  }
+}

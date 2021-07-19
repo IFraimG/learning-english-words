@@ -60,21 +60,6 @@
       margin: 20px 0;
     }
   }
-  &__run {
-    cursor: pointer;
-    padding: 10px 20px;
-    border-radius: 3px;
-    border: none;
-    color: #fff;
-    font-weight: 500;
-    background-color: #f05454;
-    &:active {
-      background-color: #a33b3b;
-    }
-    &:focus {
-      outline: none;
-    }
-  }
   &__nosections {
     display: flex;
     flex-direction: column;

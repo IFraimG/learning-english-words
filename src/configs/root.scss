@@ -1,0 +1,108 @@
+$defaultbtn: #f05454;
+$defaultbtnactive: #a33b3b;
+$dbluebtn: #30475e;
+$dbluebtnact: #4a6c8d;
+$greenbtn: linear-gradient(#00af91, #007965);
+$greenbtnact: linear-gradient(#015f4f, #00493d);
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+input, button, textarea, select {
+  &:focus {
+    outline: none;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  user-select: none;
+}
+
+.profile {
+  &__run {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 3px;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    background-color: $defaultbtn;
+    &:active {
+      background-color: $defaultbtnactive;
+    }
+  }
+}
+
+.modal {
+  &-button__run {
+    background-color: $dbluebtn !important;
+    &:active {
+      background-color: $dbluebtnact !important;
+    }
+  }
+}
+
+.btn-add {
+  padding: 12px 50px;
+  font-size: 18px;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    width: 18px;
+    background-color: #fff;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    height: 1px;
+    width: 18px;
+    background-color: #fff;
+    transform: rotate(90deg);
+  }
+}
+
+.header {
+  &-link {
+    padding-bottom: 5px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Helvetica";
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      transition: all 0.5s;
+    }
+    &:hover {
+      &:after {
+        width: 100%;
+      }
+    }
+  }
+}

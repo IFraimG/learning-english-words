@@ -43,7 +43,7 @@ const authActions = {
   async logout({ commit }: any) {
     try {
       await firebase.auth().signOut();
-      router.push("/");
+      window.location.reload()
     } catch (error) {
       commit("SET_ERRORS", error.message);
     }

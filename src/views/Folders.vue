@@ -3,20 +3,18 @@
     <div class="folders">
       <h1>Полный список разделов</h1>
       <div v-if="foldersList.length > 0" class="folders__content">
-        <div class="folders__item" v-for="(item, index) in foldersList" :key="index">
+        <div class="folders__item-wrapper" v-for="(item, index) in foldersList" :key="index">
           <router-link :to="{ name: 'FolderPage', params: { id: item.key }}">
-            <h2>{{ item.title }}</h2>
-            <div class="folders__list-words" v-if="item.firstModule != null">
-              <div v-for="(words, index) of item.firstModule" :key="index">
-                <p class="list__item">
-                  <span class="list__english">{{ words.english }}</span>
-                  -
-                  <span class="list__russian">{{ words.russian }}</span>
-                </p>
+            <div class="folders__item">
+              <h2>{{ item.title }}</h2>
+              <div v-if="item.listModules != null">
+                <div class="folders__title" v-for="title of item.listModules" :key="title">
+                  <p>{{ title }}</p>
+                </div>
               </div>
-            </div>
-            <div class="folders__list-nowords" v-else>
-              <p>Вы сюда ничего не добавили</p>
+              <div class="folders__list-nowords" v-else>
+                <p>Вы сюда ничего не добавили</p>
+              </div>
             </div>
           </router-link>
         </div>
@@ -50,13 +48,13 @@ export default defineComponent({
       let arr: any[] = []
       if (folders.value != null) {
         let keysArr: string[] = Object.keys(folders.value)
-        let firstModule = folders.value?.listModules == null ? null : folders.value.listModules[0]
 
         keysArr.map((key: string, index: number) => arr[index] = { 
           title: folders.value[key].title, id: folders.value[key].id,
-          firstModule: firstModule, key
+          listModules: folders.value[key]?.listModules, key
         })
       }
+      
       return arr
     })
     

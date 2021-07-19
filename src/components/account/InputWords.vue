@@ -23,8 +23,8 @@
     </div>
     <div class="modal__right">
       <button
-        v-if="!isDone"
-        class="profile__run modal-button__run modal__btn-image modal-button__save "
+        v-if="!isDone.value"
+        class="profile__run modal-button__run  btn-add"
         @click="setNumInput"
       >
         Добавить
@@ -35,7 +35,7 @@
 
 <script>
 import { reactive, ref } from "vue"
-import "./scss/InputWords.scss";
+import "./scss/ModalWords.scss";
 import SelectTime from "./SelectTime.vue";
 
 export default {
@@ -48,7 +48,7 @@ export default {
   },
   emits: ["setNumInput", "currentTime"],
   setup(props, { emit }) {
-    let isDone = reactive(false)
+    let isDone = reactive({ value: false })
     let newWord = ref({
       english: "",
       russian: "",
@@ -57,6 +57,7 @@ export default {
     })
 
     const setNumInput = () => {
+      console.log(newWord.value);
       emit("setNumInput", { word: newWord.value, index: props.wordIndex });
       editDone(true)
     }
@@ -66,20 +67,9 @@ export default {
       newWord.value.currentTime = time
     }
 
-    const editDone = (done) => isDone = done
+    const editDone = (done) => isDone.value = done
 
     return { setNumInput, setTime, editDone, isDone, newWord }
   }
 };
 </script>
-
-<style lang="scss">
-.modal {
-  &-button__run {
-    background-color: #30475e !important;
-    &:active {
-      background-color: #4a6c8d !important;
-    }
-  }
-}
-</style>

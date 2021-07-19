@@ -1,7 +1,7 @@
 <template>
   <div class="home-slider__wrapper">
     <h1>Our Clients Say</h1>
-    <p>Our in - house search engine experts deliver profitable Google, Bing, Yahoo Ranking.</p>
+    <p>У нас нет клиентов !!! Снизу есть реальная авторизация.</p>
     <swiper
       effect="fade"
       class="home-slider home__slider"

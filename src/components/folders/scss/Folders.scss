@@ -1,35 +1,34 @@
 .folders {
   margin-top: 50px;
-  &__wrapper {
-
-  }
-  &__content {
-    margin-top: 50px;
-  }
+  &__wrapper {}
   h1 {
     text-align: center;
   }
   &__content {
+    margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
     user-select: none;
+    justify-content: center;
+    margin-right: 50px;
   }
   &__item {
-    margin: 40px;
     text-align: center;
-    width: 23%;
-    min-width: 180px;
-    min-height: 200px;
     padding: 30px;
+    min-height: 200px;
     border-radius: 50px;
     background: #f2f2f2;
     box-shadow:  20px 20px 60px #cbcbcb, -20px -20px 60px #ffffff;
     cursor: pointer;
+    &-wrapper {
+      min-width: 280px;
+      max-width: 23%;
+      margin: 60px;
+    }
     h2, p {
       color: rgb(20, 20, 20);
     }
     &:active {
-      border-radius: 50px;
       background: #fafafa;
       box-shadow:  20px 20px 60px #d2d2d2,
       -20px -20px 60px #ffffff;
@@ -44,5 +43,8 @@
     margin: 50px auto;
     padding-right: 20px;
     max-width: 800px;
+  }
+  &__title {
+    margin: 30px 0;
   }
 }

@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, reactive, ref } from 'vue'
+import { defineComponent, inject, nextTick, onMounted, reactive, ref } from 'vue'
 import "./scss/Sentences.scss"
 
 export default defineComponent({
@@ -42,7 +42,9 @@ export default defineComponent({
 
     currentWords.value.map((item: any) => doneList.value.push({ english: item.english, isDone: -1 }))
 
-    onMounted(() => window.scrollTo({ top: 0 }))
+    onMounted(() => {
+      nextTick(() => window.scrollTo({ top: 0 }))
+    })
 
     const checkItem = (index: number) => {
       let value = sentences.value[index].value

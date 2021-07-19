@@ -38,9 +38,6 @@
       width: 400px;
       font-size: 18px;
       padding: 10px;
-      &:focus {
-        outline: none;
-      }
       &:disabled {
         background: rgb(42, 139, 50);
         color: #fff;

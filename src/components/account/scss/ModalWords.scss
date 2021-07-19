@@ -1,3 +1,5 @@
+@import "./InputWords.scss";
+
 .modal {
   width: 1170px;
   min-height: 200px;
@@ -44,9 +46,6 @@
       border-radius: 16px;
       font-size: 18px;
       font-weight: bold;
-      &:focus {
-        outline: none;
-      }
       @media (max-width: 461px) {
         width: 200px;
         font-size: 16px;
@@ -75,10 +74,6 @@
     button {
       margin: 0 10px;
     }
-    // @media (max-width: 563px) {
-    //   bottom: -50px;
-    //   padding-bottom: 20px;
-    // }
   }
   &__form {
     margin-bottom: 40px;
@@ -102,9 +97,6 @@
     border: 1px solid rgba(0, 0, 0, 0.3);
     transition: .2s ease-in-out;
     position: relative;
-    &:focus {
-      outline: none;
-    }
     &:hover {
       background: rgba(0, 0, 0, 0.1);
     }

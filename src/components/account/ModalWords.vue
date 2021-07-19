@@ -20,7 +20,7 @@
         <div class="modal__form">
           <div
             class="modal__item"
-            v-for="(num, index) of wordsList.length + 1"
+            v-for="(num, index) of wordsList.value.length + 1"
             :key="index"
           >
             <input-words :wordIndex="index" @setNumInput="setNumInput" />
@@ -70,7 +70,7 @@ export default defineComponent({
     let incorrectWord = computed(() => store.getters.incorrectWord)
     let startWords = computed(() => store.getters.startModalWords)
 
-    let wordsList: any = reactive([])
+    let wordsList: any = reactive({ value: [] })
     let editData: any = reactive({ currentTime: "", english: "", russian: "", id: "" })
 
     let titleWords = ref("")
@@ -78,19 +78,19 @@ export default defineComponent({
     let inputTitle: any = ref(null)
 
     const resetData = () => {
-      wordsList = [];
+      wordsList.value = [];
       titleWords.value = "";
       editData = null
       store.commit("CHECK_CORRECT_WORD", null);
     }
 
     const modalClose = () => {
-      wordsList = [];
+      wordsList.value = [];
       store.commit("SET_MODAL_WORDS", { isModal: false, list: null, title: null });
     }
 
     const sendData = async () => {
-      if (wordsList.length == 0) {
+      if (wordsList.value.length == 0) {
         modalTitle.value.innerHTML = "Вы не заполнили словарь!";
         modalTitle.value.style.color = "red";
       } else {
@@ -104,7 +104,7 @@ export default defineComponent({
             modalTitle.value.innerHTML = "Такое название уже существует !";
             modalTitle.value.style.color = "red";
           } else {
-            await store.dispatch("createList", { list: wordsList, titleWords: titleWords.value });
+            await store.dispatch("createList", { list: wordsList.value, titleWords: titleWords.value });
             resetData();
             modalClose()
           }
@@ -122,19 +122,19 @@ export default defineComponent({
     }
 
     const checkValidID = (id: any) => {
-      let isValid = false;
-      wordsList.forEach((item: any) => {
-        if (item.id == id) isValid = true;
+      let isValid = true;
+      wordsList.value.forEach((item: any) => {
+        if (item.id == id) isValid = false;
       });
       return isValid;
     }
 
     const setNumInput = (data: any) => {
       editData = data.word
-      let isValid = true;
+      let isValid = false;
       let id = "";
 
-      while (isValid) {
+      while (!isValid) {
         id = getWordID();
         isValid = checkValidID(id);
       }
@@ -142,7 +142,7 @@ export default defineComponent({
       editData.id = id;
       store.dispatch("checkCorrectWord", { wordData: editData }).then(() => {
         if (incorrectWord.value == null) {
-          wordsList[data.index] = editData
+          wordsList.value[data.index] = editData
           editData = null
         }
       });

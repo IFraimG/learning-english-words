@@ -4,6 +4,7 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import { firebase } from "@firebase/app";
+import "./configs/root.scss"
 
 const configOptions = {
   apiKey: process.env.VUE_APP_API_KEY,

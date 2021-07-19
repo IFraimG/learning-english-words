@@ -21,13 +21,17 @@
             @setOpenPanel="setOpenPanel"
           />
         </div>
-        <v-pagination
-          v-model="wordsIndex"
-          :pages="reverseWords.length - 1"
-          :range-size="1"
-          active-color="#dddddd"
-          @update:modelValue="editPage"
-        />
+        <Paginator @nextPage="nextPage" @previousPage="previousPage">
+          <template #default>
+            <v-pagination
+              v-model="wordsIndex"
+              :pages="reverseWords.length - 1"
+              :range-size="1"
+              active-color="#dddddd"
+              @update:modelValue="editPage"
+            />
+          </template>
+        </Paginator>
       </div>
       <div v-else class="list__info">
         <p>Вы еще не создали ни один список!</p>
@@ -50,8 +54,9 @@ import DictionaryVidget from "../components/account/DictionaryVidget.vue";
 import WordsTable from "../components/account/WordsTable.vue";
 import CreateFolder from "../components/folders/CreateFolder.vue";
 import { defineComponent } from "vue";
+import Paginator from "@/components/app/Paginator.vue";
 
-const Component = defineComponent({
+export default defineComponent({
   name: "Account",
   components: {
     ModalWords,
@@ -61,7 +66,8 @@ const Component = defineComponent({
     WordsTable,
     DictionaryVidget,
     VPagination,
-    CreateFolder
+    CreateFolder,
+    Paginator
   },
   data() {
     return {
@@ -101,18 +107,14 @@ const Component = defineComponent({
       this.isOpenPanel = num;
     },
     editPage(num: number) {
-      console.log(num);
       this.wordsIndex = num;
     },
     previousPage() {
-      if (this.wordsIndex > 0) this.editPage(this.wordsIndex - 1);
+      if (this.wordsIndex > 1) this.editPage(this.wordsIndex - 1);
     },
     nextPage() {
-      if (this.wordsIndex < this.reverseWords.length - 1)
-        this.editPage(this.wordsIndex + 1);
+      if (this.wordsIndex < this.reverseWords.length - 1) this.editPage(this.wordsIndex + 1);
     }
   }
 })
-
-export default Component
 </script>

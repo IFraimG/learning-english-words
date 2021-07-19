@@ -10,7 +10,7 @@ export default interface FoldersState {
 export interface FolderItfc {
   title: string
   id: string
-  listModules?: DictionaryListInterface[]
+  listModules?: string[] | DictionaryListInterface[]
 }
 
 export interface FolderShortItfc {

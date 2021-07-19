@@ -2,7 +2,7 @@
   <header v-if="isAuth" class="header">
     <div class="header__content">
       <div class="header__left">
-        <h1>MyOcean English-Project</h1>
+        <h1>MyOcean English project</h1>
       </div>
       <div class="header__right">
         <router-link class="header-link" to="/account">Профиль</router-link>

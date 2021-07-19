@@ -1,11 +1,38 @@
 <template>
-  <div class="folder-page__wrapper" v-if="!isLoader">
+  <div class="folder__wrapper" v-if="!isLoader">
     <div class="folder-page">
       <div class="folder-page__header">
-        <h1>{{ folderItem.title }}</h1>
+        <router-link to="/folders">
+          <p class="folder-page__link">Разделы</p>
+        </router-link>
+        <span>/</span>
+        <p>{{ folderItem.title }}</p>
       </div>
       <div class="folder-page__content">
-        <div v-if="folderItem?.listModules != null"></div>
+        <di class="folder-list" v-if="folderItem?.listModules != null">
+          <div 
+            class="folder-list__item-wrapper"
+            v-for="(item, index) of folderItem.listModules"
+            :key="index"
+            @click="redirectWords(item.title)">
+            <div class="folder-list__item" >
+              <div class="list__title folder-list__title">
+                <h3>{{ item.title }}</h3>
+              </div>
+              <div
+                class="list__words folder-list__item"
+                v-for="(words, index) of item.words"
+                :key="index"
+              >
+                <p class="list__item folder folder-list__text">
+                  <span class="list__english">{{ words.english }}</span>
+                  -
+                  <span class="list__russian">{{ words.russian }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </di>
         <div v-else>
           <h2>Вы сюда ничего не добавили</h2>
         </div>
@@ -17,21 +44,31 @@
 
 <script lang="ts">
 import Loader from "@/components/app/Loader.vue";
-import { computed, defineComponent, onBeforeMount } from "vue";
-import { useRoute } from "vue-router";
+import { computed, defineComponent, onBeforeMount, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
+import "@/components/folders/scss/FolderPage.scss"
 
 export default defineComponent({
   components: { Loader },
   name: "FolderPage",
   setup() {
     const store = useStore()
+    const router = useRouter()
     const route = useRoute()
     const folderItem = computed(() => store.getters.folder)
     const isLoader = computed(() => store.getters.isLoaderItem)
+    const userID = computed(() => store.getters.userID)
+    const currentWords = computed(() => store.getters.currentWords)
 
     onBeforeMount(() => store.dispatch("getFolder", route.params.id))
-    return { folderItem, isLoader }
+    onMounted(() => store.dispatch("getWords"))
+
+    const redirectWords = (title: string) => {
+      let index = currentWords.value.findIndex((words: any) => words.title == title)
+      if (index != -1) router.push(`/words/${userID.value}/${index}/?type=start`)
+    }
+    return { folderItem, isLoader, redirectWords }
   }
 })
 </script>

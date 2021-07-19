@@ -1,6 +1,8 @@
+@import "@/configs/root.scss";
+
 .vidget {
   user-select: none;
-  background: linear-gradient(#00af91, #007965);
+  background: $greenbtn;
   color: #fff;
   max-width: 100%;
   padding: 10px;
@@ -12,10 +14,9 @@
     justify-content: center;
   }
   &:active {
-    background: linear-gradient(#015f4f, #00493d);
+    background: $greenbtnact;
   }
 }
 a {
-  text-decoration: none;
   color: #fff;
 }

@@ -1,6 +1,7 @@
 import { FolderItfc, FolderShortItfc } from './../../models/folders';
 import generateID from "@/utils/generateID"
 import foldersAPI from "../api/foldersAPI"
+import wordsAPI from '../api/wordsAPI';
 
 const foldersAction = {
   async createFolder({ commit, rootState }: any, payload: string) {
@@ -17,8 +18,20 @@ const foldersAction = {
   async getFolder({ commit, rootState }: any, payload: string) {
     try {
       commit("SET_LOADER_ITEM", true)
+      let list = []
 
       let folderItem: FolderItfc = await foldersAPI.receiveItem(rootState.auth.profile.id, payload)
+      if (folderItem?.listModules != null) {
+        let words = await wordsAPI.getListWords(rootState.auth.profile.id)
+        let len =  folderItem.listModules.length
+        for (let i = 0; i < len; i++) {
+          for (let j = 0; j < words.length; j++) {
+            if (folderItem.listModules[i] == words[j].title) list.push(words[j])
+          }
+        }
+      }
+
+      folderItem.listModules = list
       commit("SET_FOLDER", folderItem)
 
       commit("SET_LOADER_ITEM", false)
@@ -36,7 +49,6 @@ const foldersAction = {
   },
   async addWordsToSection({ commit, rootState }: any, payload: {section: FolderShortItfc, title: string}) {
     try {
-      console.log(payload);
       await foldersAPI.addWordsToFolder(rootState.auth.profile.id, payload.section, payload.title)
     } catch (error) {
       console.log(error);
