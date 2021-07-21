@@ -4,6 +4,11 @@ import Account from "@/views/Account.vue";
 import ModalDeleteWords from "@/components/account/ModalDeleteWords.vue";
 import ModalToFolders from "@/components/account/ModalToFolders.vue";
 import ModalWords from "@/components/account/ModalWords.vue";
+import Words from "@/views/Words.vue";
+import NotFound from "@/views/404.vue";
+import Dictionary from "@/views/Dictionary.vue";
+import Folders from "@/views/Folders.vue";
+import FolderPage from "@/views/FolderPage.vue";
 
 import store from "@/store/index";
 import firebase from "firebase/app";
@@ -37,27 +42,27 @@ const routes = [
   {
     path: "/words/:userid/:wordsid",
     name: "Words",
-    component: import(/* webpackChunkName: "group-user" */ "@/views/Words.vue")
+    component: Words
   },
   {
     path: "/:catchAll(.*)",
     name: "NotFound",
-    component: import(/* webpackChunkName: "group-user" */ "@/views/404.vue")
+    component: NotFound
   },
   {
     path: "/dictionary",
     name: "Dictionary",
-    component: import(/* webpackChunkName: "group-user" */ "@/views/Dictionary.vue")
+    component: Dictionary
   },
   {
     path: "/folders",
     name: "Folders",
-    component: import(/* webpackChunkName: "group-user" */ "@/views/Folders.vue")
+    component: Folders,
   },
   {
     path: "/folders/:id",
     name: "FolderPage",
-    component: import(/* webpackChunkName: "group-user" */ "@/views/FolderPage.vue")
+    component: FolderPage
   }
 ];
 
