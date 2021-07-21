@@ -1,5 +1,5 @@
 <template>
-  <div @click="closeModal" class="modal__wrapper popup__wrapper">
+  <div class="modal__wrapper popup__wrapper">
     <div @click.stop class="modal popup">
       <div class="modal__content popup__content">
         <div class="popup__header">
@@ -38,13 +38,11 @@ export default {
     window.scrollTo({ top: 0 });
     document.documentElement.style.overflow = "hidden";
   },
-  beforeUnmount() {
-    this.closeModal()
-  },
   methods: {
     closeModal() {
       document.documentElement.style.overflow = "auto";
       this.sendSuccess(false)
+      history.back()
     },
     sendSuccess(isTrue) {
       this.$emit('onsuccess', isTrue)

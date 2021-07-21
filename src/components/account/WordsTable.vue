@@ -1,13 +1,4 @@
 <template>
-  <Modal v-if="deleteModal" @onsuccess="successDelete">
-    <template #title>
-      <p>Удаление {{ wordsArray.title }}</p>
-    </template>
-    <template #content>
-      <h2>Вы уверены, что хотите его удалить?</h2>
-    </template>
-    <template #acceptButton>Удалить</template>
-  </Modal>
   <div
     class="list__info"
     ref="listWords"
@@ -24,16 +15,24 @@
     >
       <ul class="list__panel-content">
         <li class="list__panel-item" @click.stop="editWords(wordsArray.words, wordsArray.title)">Изменить</li>
-        <li class="list__panel-item" @click="setModalSection">Добавить в раздел</li>
+        <li class="list__panel-item">
+          <router-link :to="'/account/setupfolder?title=' + wordsArray.title">
+            Добавить в раздел
+          </router-link>
+        </li>
         <li class="list__panel-item" @click="openModal">Новые слова</li>
-        <li class="list__panel-item" @click.stop="modalDelete(true)">Удалить</li>
+        <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">
+          <router-link :to="'/account/delete?title=' + wordsArray.title">
+            Удалить
+          </router-link>
+        </li>
         <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">Отмена</li>
       </ul>
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
-      <button v-if="editMode" class="profile__run" @click.stop="modalDelete(true)">
-        Удалить
+      <button v-if="editMode" class="profile__run">
+        <router-link :to="'/account/delete?title=' + wordsArray.title">Удалить</router-link>
       </button>
       <button
         v-if="editMode != wordsArray.title"
@@ -69,41 +68,33 @@
       >
         Сохранить
       </button>
-      <button @click="openModal" class="profile__run">Новые слова</button>
-      <button @click="setModalSection" class="profile__run">Добавить в раздел</button>
+      <button @click="openModal" class="profile__run">
+        Новые слова
+      </button>
+      <button class="profile__run">
+        <router-link :to="'/account/setupfolder?title=' + wordsArray.title">
+          Добавить в раздел
+        </router-link>
+      </button>
     </div>
   </div>
-  <Modal v-if="modalSections" @onsuccess="sendSection">
-    <template #title>
-      <p>Добавление слов</p>
-    </template>
-    <template #content>
-      <DropList @setItem="saveSection" v-if="shortFolders != null" :list="shortFolders" />
-      <div class="profile__nosections" v-else>
-        <p>Вы еще не создали ни один раздел</p>
-        <CreateFolder class="profile__nosections-create" />
-      </div>
-    </template>
-    <template #acceptButton>Добавить</template>
-  </Modal>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import "@/components/account/scss/Account.scss";
 import AccountWord from "@/components/account/AccountWord.vue";
-import Modal from "../app/Modal.vue";
-import DropList from '../app/DropList.vue';
-import CreateFolder from '../folders/CreateFolder.vue';
+import { nextTick } from 'vue';
 
 export default {
   name: "WordsTable",
-  components: { AccountWord, Modal, DropList, CreateFolder },
+  components: { AccountWord },
   props: {
     wordsArray: Object,
     index: Number,
     isOpenPanel: Number
   },
+  emits: ["setOpenPanel"],
   data() {
     return {
       editMode: false,
@@ -111,7 +102,6 @@ export default {
       section: null
     };
   },
-  emits: ["setOpenPanel"],
   computed: {
     reverseWords() {
       let newArray = [];
@@ -120,16 +110,7 @@ export default {
       }
       return newArray;
     },
-    ...mapGetters([
-      "userID",
-      "currentWords",
-      "isLoader",
-      "profile",
-      "deleteModal",
-      "modalSections",
-      "folders",
-      "shortFolders"
-    ])
+    ...mapGetters(["userID", "currentWords", "isLoader", "profile"])
   },
   methods: {
     runWords(title) {
@@ -139,20 +120,6 @@ export default {
         );
         this.$router.push(`/words/${this.userID}/${index}/?type=start`);
       }
-    },
-    async deleteWords(title) {
-      let index = this.currentWords.findIndex(
-        wordList => title == wordList.title
-      );
-      await this.$store.dispatch("deleteWords", {
-        title,
-        index,
-        wordsFull: this.currentWords,
-        userID: this.userID,
-        email: this.profile.email,
-        login: this.profile.login
-      });
-      window.location.reload();
     },
     editWords(words, title) {
       this.editMode = title;
@@ -177,30 +144,11 @@ export default {
         wordsid: index
       });
       this.stopEdit();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    },
-    successDelete(isTrue) {
-      this.$store.commit("HANDLER_MODAL_DELETE", false);
-      if (isTrue) this.deleteWords(this.wordsArray.title);
+      nextTick(() => window.scrollTo({ top: 0, behavior: "smooth" }))
     },
     openModal() {
-      console.log(this.wordsArray);
-      this.$store.commit("SET_MODAL_WORDS", { isModal: true, title: this.wordsArray.title, list: this.wordsArray.words })
-    },
-    modalDelete(isTrue) {
-      this.$store.commit('HANDLER_MODAL_DELETE', isTrue)
-    },
-    async setModalSection() {
-      await this.$store.dispatch("getFoldersList")
-      this.$store.commit("SET_MODAL_SECTIONS", true)
-    },
-    saveSection(item) {
-      this.section = item
-    },
-    sendSection(isTrue) {
-      if (!isTrue) this.section = null
-      if (isTrue && this.section != null) this.$store.dispatch("addWordsToSection", {section: this.section, title: this.wordsArray.title})
-      this.$store.commit("SET_MODAL_SECTIONS", false)
+      this.$store.commit("SET_MODAL_WORDS", { title: this.wordsArray.title, list: this.wordsArray.words })
+      this.$router.push("/account/words")
     }
   }
 };

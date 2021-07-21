@@ -1,9 +1,8 @@
 <template>
-  <ModalWords />
-  <div class="account__wrapper" v-if="!isLoader && !isModalWords">
+  <div class="account__wrapper" v-if="!isLoader">
     <div @mousedown="isOpenPanel = -1" class="account">
       <div class="account__left">
-        <Profile @setModal="setModal" :profile="profile" />
+        <Profile :profile="profile" />
         <DictionaryVidget />
         <CreateFolder />
       </div>
@@ -38,7 +37,8 @@
       </div>
     </div>
   </div>
-  <Loader v-if="isLoader && !isModalWords" />
+  <router-view v-if="!isLoader"></router-view>
+  <Loader v-else />
 </template>
 <script lang="ts">
 import VPagination from "@hennge/vue3-pagination";
@@ -47,7 +47,6 @@ import "@/components/account/scss/Account.scss";
 import { mapGetters } from "vuex";
 
 import Loader from "../components/app/Loader.vue";
-import ModalWords from "../components/account/ModalWords.vue";
 import Profile from "../components/account/Profile.vue";
 import FindWord from "../components/account/FindWord.vue";
 import DictionaryVidget from "../components/account/DictionaryVidget.vue";
@@ -59,7 +58,6 @@ import Paginator from "@/components/app/Paginator.vue";
 export default defineComponent({
   name: "Account",
   components: {
-    ModalWords,
     Loader,
     Profile,
     FindWord,
@@ -77,7 +75,7 @@ export default defineComponent({
   },
   mounted() {
     this.editPage(1);
-    this.$store.dispatch("getWords", this.userID);
+    this.$store.dispatch("getWords");
   },
   computed: {
     reverseWords() {
@@ -90,19 +88,9 @@ export default defineComponent({
       newArray.unshift({});
       return newArray;
     },
-    ...mapGetters([
-      "userID",
-      "currentWords",
-      "isLoader",
-      "profile",
-      "isModalWords",
-      "findWords"
-    ])
+    ...mapGetters(["currentWords", "isLoader", "profile", "findWords"])
   },
   methods: {
-    setModal(isModal: boolean) {
-      this.$store.commit("SET_MODAL_WORDS", isModal)
-    },
     setOpenPanel(num: number) {
       this.isOpenPanel = num;
     },

@@ -52,7 +52,6 @@ const foldersAction = {
       await foldersAPI.addWordsToFolder(rootState.auth.profile.id, payload.section, payload.title)
     } catch (error) {
       console.log(error);
-      
     }
   }
 }

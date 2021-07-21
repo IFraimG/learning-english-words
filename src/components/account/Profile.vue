@@ -4,9 +4,11 @@
       <img src="@/assets/user.png" />
       <h2>{{ profile.login }}</h2>
       <p>{{ profile.email }}</p>
-      <button class="profile__run" @click="$emit('setModal', { isModal: true })">
-        Добавить новые слова
-      </button>
+      <router-link to="/account/words">
+        <button class="profile__run">
+          Добавить новые слова
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -14,7 +16,6 @@
 <script>
 export default {
   name: "Profile",
-  emits: ["setModal"],
   props: {
     profile: Object
   }

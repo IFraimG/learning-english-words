@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Account from "@/views/Account.vue";
-import Words from "@/views/Words.vue";
-import NotFound from "@/views/404.vue";
-import Dictionary from "@/views/Dictionary.vue";
-import Folders from "@/views/Folders.vue";
-import FolderPage from "@/views/FolderPage.vue";
+import ModalDeleteWords from "@/components/account/ModalDeleteWords.vue";
+import ModalToFolders from "@/components/account/ModalToFolders.vue";
+import ModalWords from "@/components/account/ModalWords.vue";
 
 import store from "@/store/index";
 import firebase from "firebase/app";
@@ -20,32 +18,46 @@ const routes = [
   {
     path: "/account",
     name: "Account",
-    component: Account
+    component: Account,
+    children: [
+      {
+        path: "delete",
+        component: ModalDeleteWords
+      },
+      {
+        path: "setupfolder",
+        component: ModalToFolders
+      },
+      {
+        path: "words",
+        component: ModalWords
+      }
+    ]
   },
   {
     path: "/words/:userid/:wordsid",
     name: "Words",
-    component: Words
+    component: import(/* webpackChunkName: "group-user" */ "@/views/Words.vue")
   },
   {
     path: "/:catchAll(.*)",
     name: "NotFound",
-    component: NotFound
+    component: import(/* webpackChunkName: "group-user" */ "@/views/404.vue")
   },
   {
     path: "/dictionary",
     name: "Dictionary",
-    component: Dictionary
+    component: import(/* webpackChunkName: "group-user" */ "@/views/Dictionary.vue")
   },
   {
     path: "/folders",
     name: "Folders",
-    component: Folders,
+    component: import(/* webpackChunkName: "group-user" */ "@/views/Folders.vue")
   },
   {
     path: "/folders/:id",
     name: "FolderPage",
-    component: FolderPage
+    component: import(/* webpackChunkName: "group-user" */ "@/views/FolderPage.vue")
   }
 ];
 

@@ -1,6 +1,6 @@
 <template>
-  <div @click="modalClose" v-if="isModal" class="modal__wrapper">
-    <div @click.stop v-if="isModal" class="modal">
+  <div @click="modalClose" class="modal__wrapper">
+    <div @click.stop class="modal">
       <div class="modal__content">
         <div class="modal__header">
           <h2 v-if="startWords.title == null" ref="modalTitle">Создать список слов</h2>
@@ -86,7 +86,8 @@ export default defineComponent({
 
     const modalClose = () => {
       wordsList.value = [];
-      store.commit("SET_MODAL_WORDS", { isModal: false, list: null, title: null });
+      store.commit("SET_MODAL_WORDS", { list: null, title: null });
+      history.back()
     }
 
     const sendData = async () => {
@@ -152,8 +153,7 @@ export default defineComponent({
       wordsList, titleWords, editData,
       setNumInput, getWordID, checkValidID,
       resetData, modalClose, sendData, incorrectWord,
-      modalTitle, inputTitle, startWords,
-      isModal: computed(() => store.getters.isModalWords)
+      modalTitle, inputTitle, startWords
     }
   }
 })

@@ -83,17 +83,17 @@ const wordsAction = {
   },
   async deleteWords({ commit, rootState }: any, payload: any) {
     try {
-      commit("SET_LOADER", false);
       let wordsFull = payload.wordsFull.filter((wordList: any) => wordList.title != payload.title);
       let folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
 
       await wordsAPI.deleteWords(
-        payload.userID,
+        rootState.auth.profile.id,
         wordsFull,
         rootState.auth.profile.email,
         rootState.auth.profile.login,
         folders
       );
+      commit("GET_WORDS", wordsFull)
     } catch (error) {
       console.log(error);
     }
