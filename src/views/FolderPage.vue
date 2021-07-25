@@ -2,11 +2,16 @@
   <div class="folder__wrapper" v-if="!isLoader">
     <div class="folder-page">
       <div class="folder-page__header">
+        <div class="folder-page__header-left">
         <router-link to="/folders">
           <p class="folder-page__link">Разделы</p>
         </router-link>
         <span>/</span>
         <p>{{ folderItem.title }}</p>
+        </div>
+        <router-link :to="'/folders/' + $route.params.id + '/delete?title=' + folderItem.title">
+          <p class="folder-page__header-delete">Удалить</p>
+        </router-link>
       </div>
       <div class="folder-page__content">
         <di class="folder-list" v-if="folderItem?.listModules != null">
@@ -39,6 +44,7 @@
       </div>
     </div>
   </div>
+  <router-view v-if="!isLoader"></router-view>
   <Loader v-else />
 </template>
 

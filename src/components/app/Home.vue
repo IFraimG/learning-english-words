@@ -89,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core"
+import { defineComponent } from "vue"
 import "@/components/app/scss/Home.scss"
 import { mapGetters } from 'vuex';
 import SliderHome from "./SliderHome.vue"

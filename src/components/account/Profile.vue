@@ -1,7 +1,7 @@
 <template>
-  <div class="profile">
+  <div v-if="profile != null" class="profile">
     <div class="profile__content">
-      <img src="@/assets/user.png" />
+      <img src="@/assets/user.webp" />
       <h2>{{ profile.login }}</h2>
       <p>{{ profile.email }}</p>
       <router-link to="/account/words">

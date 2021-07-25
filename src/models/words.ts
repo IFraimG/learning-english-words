@@ -23,4 +23,5 @@ export default interface WordsInterface {
   currentWords: DictionaryListInterface[]
   findWords: DictionaryListInterface[]
   executeWords: WordInterface[]
+  wordsLength: number
 }

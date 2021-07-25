@@ -53,6 +53,13 @@ const foldersAction = {
     } catch (error) {
       console.log(error);
     }
+  },
+  async deleteFolder({ commit, rootState }: any, payload: { key: string }) {
+    try {
+      await foldersAPI.deleteFolder(rootState.auth.profile.id, payload.key)
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 }
 

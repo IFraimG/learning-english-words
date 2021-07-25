@@ -11,19 +11,21 @@ const wordsModule = {
       stateWords: "start",
       isLoader: false,
       incorrectWord: null,
-      isRepeatingTitle: false
+      isRepeatingTitle: false,
+      wordsLength: 0
     }),
   mutations: wordsMutations,
   actions: wordsAction,
   getters: {
-    currentWords: (state: any) => state.currentWords,
-    executeWords: (state: any) => state.executeWords,
-    stateWords: (state: any) => state.stateWords,
-    findWords: (state: any) => state.findWords,
-    wordData: (state: any) => state.wordData,
-    isLoader: (state: any): boolean => state.isLoader,
-    incorrectWord: (state: any) => state.incorrectWord,
-    isRepeatingTitle: (state: any) => state.isRepeatingTitle,
+    currentWords: (state: WordsInterface) => state.currentWords,
+    executeWords: (state: WordsInterface) => state.executeWords,
+    stateWords: (state: WordsInterface) => state.stateWords,
+    findWords: (state: WordsInterface) => state.findWords,
+    wordData: (state: WordsInterface) => state.wordData,
+    isLoader: (state: WordsInterface): boolean => state.isLoader,
+    incorrectWord: (state: WordsInterface) => state.incorrectWord,
+    isRepeatingTitle: (state: WordsInterface) => state.isRepeatingTitle,
+    wordsLength: (state: WordsInterface) => state.wordsLength
   },
 };
 

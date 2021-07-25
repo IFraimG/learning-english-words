@@ -46,15 +46,12 @@ export default {
 
     const setTime = () => {
       if (time.value == -1) emit("setTime", "Time: None")
-      else emit("setTime", timesArray[time.value]);
+      else emit("setTime", timesArray[time.value - 1]);
     }
 
     const timesList = computed(() => {
       let list = [];
-      timesArray.forEach(item => {
-        // if (item != props.timeEdit) list.push(item);
-        list.push(item);
-      });
+      timesArray.forEach(item => list.push(item))
       return list;
     })
 

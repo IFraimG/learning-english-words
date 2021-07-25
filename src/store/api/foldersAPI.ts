@@ -37,6 +37,9 @@ const foldersAPI = {
         id: folder.id,
         listModules: item.listModules != null ? [...item.listModules, titleWords] : [titleWords]
       })
+  },
+  async deleteFolder(userID: string, key: string) {
+    return await firebase.database().ref(`users/${userID}/folders/${key}`).remove()
   }
 };
 

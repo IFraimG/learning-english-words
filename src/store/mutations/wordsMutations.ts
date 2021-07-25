@@ -5,6 +5,10 @@ import { DictionaryListInterface } from '@/models/dictionary';
 const wordsMutations = {
   GET_WORDS(state: WordsInterface, payload: DictionaryListInterface[]) {
     state.currentWords = payload;
+    let len = 0
+
+    state.currentWords.map(wordsItem => wordsItem.words.map(() => len++))
+    state.wordsLength = len
   },
   LOAD_WORDS(state: WordsInterface, payload: WordInterface[]) {
     state.executeWords = payload;

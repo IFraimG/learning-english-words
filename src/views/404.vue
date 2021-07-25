@@ -3,7 +3,7 @@
     <div class="not-found">
       <div class="not-found__content">
         <h1>Данной страницы не существует!</h1>
-        <img src="@/assets/404.jpg" alt="" />
+        <img src="@/assets/404.webp" alt="" />
         <p>Совсем скоро вы перенаправитесь на главную страницу {{ time.value }}</p>
       </div>
     </div>

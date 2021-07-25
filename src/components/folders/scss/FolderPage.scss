@@ -8,14 +8,27 @@
   &-page {
     padding-top: 30px;
     &__header {
-      margin-left: 80px;
       display: flex;
-      p, span {
-        font-size: 24px;
-        margin-bottom: 60px;
+      justify-content: space-between;
+      &-left {
+        margin-left: 80px;
+        display: flex;
+        p, span {
+          font-size: 24px;
+          margin-bottom: 60px;
+        }
+        span {
+          margin: 0 10px;
+        }
       }
-      span {
-        margin: 0 10px;
+      &-delete {
+        margin-right: 80px;
+        font-size: 24px;
+        color: $defaultbtn;
+        cursor: pointer;
+        &:active {
+          color: $defaultbtnactive;
+        }
       }
     }
     &__link {
@@ -49,9 +62,6 @@
       h3 {
         font-size: 24px;
       }
-    }
-    &__text {
-      span {}
     }
   }
 }

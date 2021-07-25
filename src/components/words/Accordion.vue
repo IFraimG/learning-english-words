@@ -16,15 +16,18 @@
               :ref="'inputInfo' + index"
               type="text"
               :id="'inputElement' + index"
-              @keyup.enter="checkWord(words.english, index)"
+              @keyup.enter="checkWord(words, index)"
             />
             <button
-              v-if="!doneWords.includes(words.english)"
-              @click="checkWord(words.english, index)"
+              v-if="!doneWords.some(wordItem => wordItem.translated === words.english && wordItem.original == words.russian)"
+              @click="checkWord(words, index)"
             >
               <img src="@/assets/check.png" />
             </button>
-            <img v-if="doneWords.includes(words.english)" src="@/assets/success.png" />
+            <img
+              v-if="doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" 
+              src="@/assets/success.png"
+            />
             <p v-if="errorWords.includes(words.english)" class="accordion__error">
               Неверно!
             </p>
@@ -74,7 +77,7 @@ export default {
       errorWords: [],
       isAnswer: [],
       checkedAnswers: [],
-      isRotate: false
+      isRotate: false,
     };
   },
   props: {
@@ -109,21 +112,15 @@ export default {
     },
     checkWord(word, index) {
       let value = this.$refs["inputInfo" + index.toString()].value;
-      if (
-        word ==
-        value
-          .trimLeft()
-          .trimRight()
-          .toLowerCase()
-      ) {
+      if (word.english.trimStart().trimEnd().toLowerCase() == value.trimStart().trimEnd().toLowerCase()) {
         this.$refs["inputInfo" + index.toString()].disabled = true;
-        let indexError = this.errorWords.indexOf(word);
+        let indexError = this.errorWords.indexOf(word.english);
         if (indexError != -1) this.errorWords.splice(indexError, 1);
-        this.deleteAnswer(word);
-        this.doneWords.push(word);
+        this.deleteAnswer(word.english);
+        this.doneWords.push({ translated: word.english, original: word.russian });
       } else {
-        let indexError = this.errorWords.indexOf(word);
-        if (indexError == -1) this.errorWords.push(word);
+        let indexError = this.errorWords.indexOf(word.english);
+        if (indexError == -1) this.errorWords.push(word.english);
       }
     },
     sendData() {
@@ -138,7 +135,7 @@ export default {
 
       this.doneWords.map(item => {
         this.currentWords.map(wordInfo => {
-          if (wordInfo.english == item)
+          if (wordInfo.english == item.translated)
             successWords.push({ english: wordInfo.russian, id: wordInfo.id });
         });
       });

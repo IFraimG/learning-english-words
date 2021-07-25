@@ -15,6 +15,13 @@
     gap: 50px;
     display: flex;
     flex-wrap: wrap;
+    &-words {
+      font-size: 24px;
+      margin-left: 20px;
+      font-weight: normal;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    }
   }
 }
 .profile {
