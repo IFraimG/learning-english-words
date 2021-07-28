@@ -15,19 +15,22 @@
 <script>
 import { ref } from 'vue';
 import "./scss/FindWord.scss";
+import { useStore } from 'vuex';
 
 export default {
   name: "FindWord",
-  emits: ["findItem"],
-  setup(_, { emit }) {
+  setup() {
+    const store = useStore()
     let moduleWords = ref("")
 
     const getWord = () => {
       let word = moduleWords.value.trimLeft().trimRight().toLowerCase();
-      emit("findItem", word)
+      store.commit("FIND_TITLE", word);
     }
 
-    return { moduleWords, getWord };
+    return {
+      moduleWords, getWord
+    };
   }
 };
 </script>

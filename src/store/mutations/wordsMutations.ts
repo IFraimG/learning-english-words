@@ -48,7 +48,7 @@ const wordsMutations = {
   },
   FIND_TITLE(state: WordsInterface, payload: string) {
     let title = payload;
-    let wordsList: any[] = [];
+    let wordsList: any = [];
     state.currentWords.map(item => {
       if (item.title.trimLeft().trimRight().toLowerCase() == title) wordsList.push(item);
     });

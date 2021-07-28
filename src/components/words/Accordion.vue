@@ -19,7 +19,7 @@
               @keyup.enter="checkWord(words, index)"
             />
             <button
-              v-if="!doneWords.some(wordItem => wordItem.translated === words.english && wordItem.original == words.russian)"
+              v-if="!doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)"
               @click="checkWord(words, index)"
             >
               <img src="@/assets/check.png" />
@@ -28,10 +28,10 @@
               v-if="doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" 
               src="@/assets/success.png"
             />
-            <p v-if="errorWords.includes(words.english)" class="accordion__error">
+            <p v-if="errorWords.includes(words.id)" class="accordion__error">
               Неверно!
             </p>
-            <p v-if="errorWords.includes(words.english) && !isAnswer.includes(words.english)"
+            <p v-if="errorWords.includes(words.id) && !isAnswer.includes(words.english)"
               @click="addAnswer(words.english)"
               class="accordion__answer"
             >
@@ -113,14 +113,16 @@ export default {
     checkWord(word, index) {
       let value = this.$refs["inputInfo" + index.toString()].value;
       if (word.english.trimStart().trimEnd().toLowerCase() == value.trimStart().trimEnd().toLowerCase()) {
+
         this.$refs["inputInfo" + index.toString()].disabled = true;
-        let indexError = this.errorWords.indexOf(word.english);
+        let indexError = this.errorWords.indexOf(word.id);
         if (indexError != -1) this.errorWords.splice(indexError, 1);
+
         this.deleteAnswer(word.english);
         this.doneWords.push({ translated: word.english, original: word.russian });
       } else {
-        let indexError = this.errorWords.indexOf(word.english);
-        if (indexError == -1) this.errorWords.push(word.english);
+        let indexError = this.errorWords.indexOf(word.id);
+        if (indexError == -1) this.errorWords.push(word.id);
       }
     },
     sendData() {
@@ -135,14 +137,12 @@ export default {
 
       this.doneWords.map(item => {
         this.currentWords.map(wordInfo => {
-          if (wordInfo.english == item.translated)
-            successWords.push({ english: wordInfo.russian, id: wordInfo.id });
+          if (wordInfo.english == item.translated) successWords.push({ english: wordInfo.russian, id: wordInfo.id });
         });
       });
       this.errorWords.map(item => {
         this.currentWords.map(wordInfo => {
-          if (wordInfo.english == item)
-            failedWords.push({ english: item, id: wordInfo.id });
+          if (wordInfo.english == item) failedWords.push({ english: item, id: wordInfo.id });
         });
       });
       window.sessionStorage.setItem("words", JSON.stringify(successWords));

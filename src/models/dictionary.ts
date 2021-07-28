@@ -1,8 +1,8 @@
 import { WordInterface } from "@/models/words";
 
 export interface DictionaryState {
-  dictionaryList: any[];
-  currentDictionary: WordInterface[];
+  dictionaryList: WordInterface[];
+  currentDictionary: DictionaryListInterface | null;
 }
 
 export interface CurrentDictionaryPayload {

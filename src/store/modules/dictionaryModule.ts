@@ -5,7 +5,7 @@ import dictionaryMutations from "../mutations/dictionaryMutations";
 export default {
   state: () => (<DictionaryState>{
     dictionaryList: [],
-    currentDictionary: []
+    currentDictionary: null
   }),
   mutations: dictionaryMutations,
   actions: dictionaryActions,

@@ -1,6 +1,6 @@
 <template>
   <div @click="modalClose" class="modal__wrapper">
-    <div @click.stop class="modal">
+    <div @click.stop ref="modalContent" class="modal">
       <div class="modal__content">
         <div class="modal__header">
           <h2 v-if="startWords.title == null" ref="modalTitle">Создать список слов</h2>
@@ -60,13 +60,18 @@
 import { useStore } from "vuex";
 import "./scss/ModalWords.scss";
 import InputWords from "./InputWords.vue";
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, nextTick, onMounted, onUnmounted, reactive, ref } from 'vue';
 
 export default defineComponent({
   name: "ModalWords",
   components: { InputWords },
   setup() {
     const store = useStore()
+    const modalContent: any = ref(null)
+
+    onMounted(() => nextTick(() => document.documentElement.style.overflow = "hidden"))
+    onUnmounted(() => document.documentElement.style.overflow = "auto")
+
     let incorrectWord = computed(() => store.getters.incorrectWord)
     let startWords = computed(() => store.getters.startModalWords)
 
@@ -105,6 +110,7 @@ export default defineComponent({
             modalTitle.value.innerHTML = "Такое название уже существует !";
             modalTitle.value.style.color = "red";
           } else {
+            document.documentElement.style.overflow = "auto"
             await store.dispatch("createList", { list: wordsList.value, titleWords: titleWords.value });
             resetData();
             modalClose()
@@ -145,6 +151,7 @@ export default defineComponent({
         if (incorrectWord.value == null) {
           wordsList.value[data.index] = editData
           editData = null
+          nextTick(() =>  modalContent.value.style.marginBottom = `${20 * wordsList.value.length}px`)
         }
       });
     }
@@ -153,7 +160,7 @@ export default defineComponent({
       wordsList, titleWords, editData,
       setNumInput, getWordID, checkValidID,
       resetData, modalClose, sendData, incorrectWord,
-      modalTitle, inputTitle, startWords
+      modalTitle, inputTitle, startWords, modalContent
     }
   }
 })

@@ -1,6 +1,7 @@
 <template>
   <div class="dictionary">
     <div v-if="!isLoader && pagesDictionary != null">
+      <FindWord @findItem="findModule" style="margin-top: 50px" />
       <table>
         <caption>{{ currentDictionary.title }}</caption>
         <thead class="dictionary__header">
@@ -33,6 +34,7 @@
               <input
                 type="text"
                 v-model="newTranscription"
+                @keydown.esc="setTranscription(null, '')"
                 @keydown.enter="saveTranscription(wordInfo)"
               />
             </td>
@@ -66,10 +68,11 @@ import "@/components/dictionary/Dictionary.scss";
 import { mapGetters } from "vuex";
 import Loader from "../components/app/Loader.vue";
 import Paginator from "../components/app/Paginator.vue";
+import FindWord from "../components/account/FindWord.vue";
 import { defineComponent } from "vue";
 
 const Component = defineComponent({
-  components: { Loader, VPagination, Paginator },
+  components: { Loader, VPagination, Paginator, FindWord },
   name: "Dictionary",
   data() {
     return {
@@ -118,14 +121,19 @@ const Component = defineComponent({
     async saveTranscription(wordInfo: any) {
       let data = { ...wordInfo, transcription: this.newTranscription };
       let index = this.currentDictionary.words.findIndex((item: any) => item.id == wordInfo.id)
+
       await this.$store.dispatch("saveDitionaryTranscription", {
         userID: this.userID,
         wordData: data,
         wordIndex: index,
         query: this.currentColumn - 1
       });
+
       this.newTranscription = "";
       this.transcription = null;
+    },
+    findModule(title: string) {
+      this.$store.commit("FIND_DICTIONARY_TITLE", title)
     }
   }
 })

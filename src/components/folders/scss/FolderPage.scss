@@ -4,9 +4,11 @@
   &__wrapper {
     background: rgb(241, 241, 241);
     height: 100%;
+    padding-bottom: 30px;
   }
   &-page {
     padding-top: 30px;
+    margin-bottom: 30px;
     &__header {
       display: flex;
       justify-content: space-between;

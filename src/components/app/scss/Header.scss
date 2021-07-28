@@ -67,8 +67,12 @@ $menu: 724px;
   position: fixed;
   right: -300px;
   top: 61px;
-  max-width: 300px;
+  width: 300px;
   transition: .5s ease-in-out;
+  @media (max-width: 501px) {
+    width: 100%;
+    right: -700px;
+  }
   @media (max-width: $menu) {
     display: block;
   }
@@ -83,6 +87,12 @@ $menu: 724px;
     color: #dddddd;
     margin: 40px 20px;
     font-size: 24px;
+    @media (max-width: 501px) {
+      font-size: 32px;
+    }
+    @media (max-width: 361px) {
+      font-size: 26px;
+    }
     &::after {
       content: "";
       background: #fff;

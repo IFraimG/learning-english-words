@@ -12,7 +12,7 @@
         @click="setOpenPanel(-1)"
         v-if="currentWords != null && currentWords?.length > 0"
       >
-        <FindWord />
+        <FindWord @findItem="findWord" />
         <div class="list__content">
           <WordsTable
             :wordsArray="reverseWords[wordsIndex]"
@@ -85,8 +85,8 @@ export default defineComponent({
     })
 
     const setOpenPanel = (num: number) => isOpenPanel.value = num
-
     const editPage = (num: number) =>  wordsIndex.value = num
+    const findWord = (word: string) => store.commit("FIND_TITLE", word);
 
     const previousPage = () => {
       if (wordsIndex.value > 1) editPage(wordsIndex.value - 1);
@@ -110,7 +110,7 @@ export default defineComponent({
     return {
       setOpenPanel, editPage, previousPage, nextPage, reverseWords,
       isOpenPanel, currentWords, isLoader, profile, findWords, 
-      wordsLength, wordsIndex
+      wordsLength, wordsIndex, findWord
     }
   }
 })

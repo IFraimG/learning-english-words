@@ -133,9 +133,7 @@ export default {
       this.editList[data.index] = data.word;
     },
     async saveEditWords(title, id) {
-      let index = this.currentWords.findIndex(
-        wordList => title == wordList.title
-      );
+      let index = this.currentWords.findIndex(wordList => title == wordList.title);
       await this.$store.dispatch("sendEditWords", {
         title,
         id,

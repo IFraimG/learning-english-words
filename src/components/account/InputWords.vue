@@ -49,6 +49,9 @@ export default {
   emits: ["setNumInput", "currentTime"],
   setup(props, { emit }) {
     let isDone = reactive({ value: false })
+    let englishWord = ref(null)
+    let russianWord = ref(null)
+
     let newWord = ref({
       english: "",
       russian: "",
@@ -57,9 +60,19 @@ export default {
     })
 
     const setNumInput = () => {
-      console.log(newWord.value);
-      emit("setNumInput", { word: newWord.value, index: props.wordIndex });
-      editDone(true)
+      if (newWord.value.english.trim() == "") {
+        englishWord.value.style.border = "2px solid #f05454"
+        russianWord.value.style.border = "1px solid rgb(118, 118, 118)"
+      } else if (newWord.value.russian.trim() == "") {
+        russianWord.value.style.border = "2px solid #f05454"
+        englishWord.value.style.border = "1px solid rgb(118, 118, 118)"
+      } else {
+        englishWord.value.style.border = "1px solid rgb(118, 118, 118)"
+        russianWord.value.style.border = "1px solid rgb(118, 118, 118)"
+
+        emit("setNumInput", { word: newWord.value, index: props.wordIndex });
+        editDone(true)
+      }
     }
 
     const setTime = (time) => {
@@ -69,7 +82,10 @@ export default {
 
     const editDone = (done) => isDone.value = done
 
-    return { setNumInput, setTime, editDone, isDone, newWord }
+    return {
+      setNumInput, setTime, editDone,
+      isDone, newWord, englishWord, russianWord
+    }
   }
 };
 </script>
