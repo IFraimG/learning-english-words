@@ -134,7 +134,7 @@ let Component = defineComponent({
     scrollAuth() {
       // @ts-ignore
       let info: any = this.$refs.authContent.offsetTop
-      window.scrollBy({ top: info, behavior: "smooth" })
+      window.scroll({ top: info, behavior: "smooth" })
     }
   },
   computed: {

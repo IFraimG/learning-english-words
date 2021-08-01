@@ -50,7 +50,8 @@ export default defineComponent({
         let keysArr: string[] = Object.keys(folders.value)
 
         keysArr.map((key: string, index: number) => arr[index] = { 
-          title: folders.value[key].title, id: folders.value[key].id,
+          title: folders.value[key].title,
+          id: folders.value[key].id,
           listModules: folders.value[key]?.listModules, key
         })
       }

@@ -23,6 +23,7 @@ const foldersModule = {
       let list: any = []
       Object.keys(state.foldersList).map(item => list.push({
         title: state.foldersList[item].title,
+        listModules: state.foldersList[item]?.listModules,
         id: state.foldersList[item].id, key: item
       }))
       return list

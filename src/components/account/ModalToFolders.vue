@@ -5,9 +5,9 @@
     </template>
     <template #content>
       <div v-if="!isLoaderItem">
-        <DropList @setItem="saveSection" v-if="shortFolders != null" :list="shortFolders" />
+        <DropList @setItem="saveSection" v-if="foldersList != null" :list="foldersList" />
         <div class="profile__nosections" v-else>
-          <p>Вы еще не создали ни один раздел</p>
+          <p>Вы еще не создали ни один раздел, или ваши слова уже есть во всех ваших разделах</p>
           <CreateFolder class="profile__nosections-create" />
         </div>
       </div>
@@ -40,6 +40,11 @@ export default defineComponent({
 
     onMounted(() => store.dispatch("getFoldersList"))
 
+    const foldersList = computed(() => {
+      if (shortFolders.value == null) return null
+      return shortFolders.value.filter((folder: any) => !folder.listModules.includes(title.value))
+    })
+
     const saveSection = (item: any) => section.value = item
 
     const sendSection = (isTrue: boolean) => {
@@ -51,7 +56,11 @@ export default defineComponent({
       }
     }
 
-    return { sendSection, saveSection, section, shortFolders, isLoaderItem }
+    return {
+      sendSection, saveSection,
+      section, shortFolders, isLoaderItem,
+      foldersList
+    }
   }
 })
 </script>

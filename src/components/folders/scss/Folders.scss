@@ -1,6 +1,5 @@
 .folders {
   margin-top: 50px;
-  &__wrapper {}
   h1 {
     text-align: center;
   }
@@ -14,24 +13,24 @@
   }
   &__item {
     text-align: center;
-    padding: 30px;
+    padding: 30px 15px;
     min-height: 200px;
-    border-radius: 50px;
-    background: #f2f2f2;
-    box-shadow:  20px 20px 60px #cbcbcb, -20px -20px 60px #ffffff;
+    border-radius: 3px;
+    background: #e0e0e0;
+    box-shadow:  23px 23px 0px #bebebe, -23px -23px 0px #ffffff;
     cursor: pointer;
     &-wrapper {
-      min-width: 280px;
+      min-width: 300px;
       max-width: 23%;
-      margin: 60px;
+      margin: 30px 50px;
     }
     h2, p {
       color: rgb(20, 20, 20);
     }
     &:active {
-      background: #fafafa;
-      box-shadow:  20px 20px 60px #d2d2d2,
-      -20px -20px 60px #ffffff;
+      border-radius: 3px;
+      background: #cacaca;
+      box-shadow:  23px 23px 0px #707070, -23px -23px 0px #ffffff;
     }
   }
   &__list {

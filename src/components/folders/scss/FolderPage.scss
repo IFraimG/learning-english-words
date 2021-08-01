@@ -48,10 +48,10 @@
     gap: 80px 50px;
     &__item {
       &-wrapper {
-        background-color: #fff;
         max-width: 300px;
-        // border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
-        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px #fff;
+        border-radius: 3px;
+        background: #ffffff;
+        box-shadow:  25px 25px 50px #cccccc, -25px -25px 50px #ffffff;
         padding: 20px;
         transition: .5s linear;
         &:hover {

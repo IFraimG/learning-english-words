@@ -38,8 +38,8 @@ $menu: 724px;
       @media (max-width: 574px) {
         margin-left: 20px;
       }
-      @media (max-width: 337px) {
-        margin-left: 20px;
+      @media (max-width: 347px) {
+        margin-left: 0px;
       }
     }
   }
@@ -60,6 +60,15 @@ $menu: 724px;
       margin-left: 20px;
     }
   }
+}
+
+@mixin MenuLogo {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transition: all .3s ease-in-out;
+  background: #000;
 }
 
 .menu {
@@ -105,8 +114,42 @@ $menu: 724px;
     display: none;
     @media (max-width: $menu) {
       display: block;
+      position: relative;
       margin-right: 10px;
       cursor: pointer;
+      height: 18px;
+      width: 30px;
+    }
+    &-icon {
+      @include MenuLogo;
+    }
+    &-icon::before {
+      content: "";
+      top: 10px;
+      @include MenuLogo;
+    }
+    &-icon::after {
+      content: "";
+      @include MenuLogo;
+      top: 20px;
+    }
+    &::before {
+      top: 0;
+    }
+    &::after {
+      bottom: 0;
+    }
+    &-active {
+      span{
+        background: transparent;
+        &::before {
+          transform: rotate(45deg);
+        }
+        &::after {
+          transform: rotate(-45deg);
+          top: 10px;
+        }
+      }
     }
   }
   &__active {

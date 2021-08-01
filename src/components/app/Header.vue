@@ -10,8 +10,8 @@
         <router-link class="header-link" to="/folders">Разделы</router-link>
         <p class="header-link" @click="logout">Выйти из аккаунта</p>
       </div>
-      <div @click="openPanel" class="menu__panel">
-        <img src="@/assets/menu.png" alt="" />
+      <div ref="panelLogo" @click="openPanel" class="menu__panel">
+        <span class="menu__panel-icon"></span>
       </div>
       <div class="menu" ref="menu">
         <div class="menu__content">
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import "./scss/Header.scss";
 
@@ -42,17 +42,19 @@ export default defineComponent({
   name: "Header",
   setup() {
     const store = useStore()
-    let isHeader = reactive<any>(false)
     let menu = ref<any>(null)
+    let panelLogo = ref<any>(null)
 
     const logout = () => store.dispatch("logout");
     const openPanel = () => {
-      isHeader = !isHeader;
-      if (isHeader) menu.value.classList.add("menu__active");
-      else menu.value.classList.remove("menu__active");
+      menu.value.classList.toggle("menu__active");
+      panelLogo.value.classList.toggle("menu__panel-active")
     }
 
-    return { logout, openPanel, menu, isHeader, isAuth: computed(() => store.getters.isAuth) }
+    return {
+      logout, openPanel, menu, panelLogo,
+      isAuth: computed(() => store.getters.isAuth)
+    }
   }
 })
 </script>

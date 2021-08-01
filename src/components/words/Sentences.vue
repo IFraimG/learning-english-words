@@ -51,30 +51,31 @@ export default defineComponent({
       if (value != "") {
         let wordsList = value.trimStart().trimEnd().split(" ")
         let len = wordsList.length
-        let original = currentWords.value[index].english.split("")
+        let original = currentWords.value[index].english.split(" ")
+
         let indexOrigin = 0
         let buildWord = []
         let isWord = 0
+
         for (let i = 0; i < len; i++) {
-          if (isWord == 1) break
-          for (let j = 0; j < wordsList[i].length; j++) {
-            if (wordsList[i][j] == original[indexOrigin]) {
-              buildWord.push(wordsList[i][j])
-              indexOrigin++
-            } else {
-              buildWord = []
-              indexOrigin = 0
-            }
-            if (buildWord.join('') == currentWords.value[index].english) {
-              isWord = 1;
-              break;
-            }
+          if (wordsList[i] == original[indexOrigin]) {
+            buildWord.push(wordsList[i])
+            indexOrigin++
+          } else {
+            buildWord = []
+            indexOrigin = 0
+          }
+
+          if (buildWord.join(' ') == currentWords.value[index].english) {
+            isWord = 1;
+            break;
           }
         }
+
         if (wordsList.length < 4) doneList.value[index].isDone = 2
         else {
           doneList.value[index].isDone = isWord
-          sentences.value[index].disabled = true
+          if (doneList.value[index].isDone == 1) sentences.value[index].disabled = true
         }
       } else doneList.value[index].isDone = 2
     }
