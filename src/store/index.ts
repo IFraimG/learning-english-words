@@ -5,9 +5,9 @@ import wordsModule from "./modules/wordsModule";
 import dictionaryModule from "./modules/dictionaryModule";
 import foldersModule from "./modules/foldersModule";
 
-const vuexPlugin = (store: any) => {
-  store.subscribe(() => {});
-};
+// const vuexPlugin = (store: any) => {
+//   store.subscribe(() => {});
+// };
 
 const store = createStore({
   modules: {
@@ -16,8 +16,7 @@ const store = createStore({
     words: wordsModule,
     dictionary: dictionaryModule,
     folders: foldersModule
-  },
-  plugins: [vuexPlugin]
+  }
 });
 
 export default store;

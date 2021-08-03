@@ -1,4 +1,4 @@
-import { FolderItfc, FolderShortItfc } from './../../models/folders';
+import { FolderShortItfc } from './../../models/folders';
 import firebase from "firebase/app";
 import "firebase/database"
 

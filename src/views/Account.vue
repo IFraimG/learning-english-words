@@ -5,7 +5,9 @@
         <Profile :profile="profile" />
         <DictionaryVidget />
         <CreateFolder />
-        <h3 class="account__left-words" v-if="wordsLength > 0">Всего слов: {{ wordsLength }}</h3>
+        <h3 class="account__left-words" v-if="wordsLength > 0">
+          Всего слов: {{ wordsLength }}
+        </h3>
       </div>
       <div
         class="list"
@@ -42,76 +44,87 @@
   <Loader v-else />
 </template>
 <script lang="ts">
-import VPagination from "@hennge/vue3-pagination";
-import "@hennge/vue3-pagination/dist/vue3-pagination.css";
-import "@/components/account/scss/Account.scss";
-import { computed, defineComponent, onMounted, reactive, ref } from "vue";
-import { useStore } from "vuex";
+  import VPagination from "@hennge/vue3-pagination";
+  import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+  import "@/components/account/scss/Account.scss";
+  import { computed, defineComponent, onMounted, reactive, ref } from "vue";
+  import { useStore } from "vuex";
 
-import Loader from "../components/app/Loader.vue";
-import Profile from "../components/account/Profile.vue";
-import FindWord from "../components/account/FindWord.vue";
-import DictionaryVidget from "../components/account/DictionaryVidget.vue";
-import WordsTable from "../components/account/WordsTable.vue";
-import CreateFolder from "../components/folders/CreateFolder.vue";
-import Paginator from "@/components/app/Paginator.vue";
+  import Loader from "../components/app/Loader.vue";
+  import Profile from "../components/account/Profile.vue";
+  import FindWord from "../components/account/FindWord.vue";
+  import DictionaryVidget from "../components/account/DictionaryVidget.vue";
+  import WordsTable from "../components/account/WordsTable.vue";
+  import CreateFolder from "../components/folders/CreateFolder.vue";
+  import Paginator from "@/components/app/Paginator.vue";
 
-export default defineComponent({
-  name: "Account",
-  components: {
-    Loader,
-    Profile,
-    FindWord,
-    WordsTable,
-    DictionaryVidget,
-    VPagination,
-    CreateFolder,
-    Paginator
-  },
-  setup() {
-    const store = useStore()
-    let isOpenPanel = reactive({ value: -1 })
-    let wordsIndex = ref(1)
+  export default defineComponent({
+    name: "Account",
+    components: {
+      Loader,
+      Profile,
+      FindWord,
+      WordsTable,
+      DictionaryVidget,
+      VPagination,
+      CreateFolder,
+      Paginator,
+    },
+    setup() {
+      const store = useStore();
+      let isOpenPanel = reactive({ value: -1 });
+      let wordsIndex = ref(1);
 
-    let currentWords = computed(() => store.getters.currentWords)
-    let isLoader = computed(() => store.getters.isLoader)
-    let profile = computed(() => store.getters.profile)
-    let findWords = computed(() => store.getters.findWords)
-    let wordsLength = computed(() => store.getters.wordsLength)
+      let currentWords = computed(() => store.getters.currentWords);
+      let isLoader = computed(() => store.getters.isLoader);
+      let profile = computed(() => store.getters.profile);
+      let findWords = computed(() => store.getters.findWords);
+      let wordsLength = computed(() => store.getters.wordsLength);
 
-    onMounted(() => {
-      editPage(1);
-      store.dispatch("getWords");
-    })
+      onMounted(() => {
+        editPage(1);
+        store.dispatch("getWords");
+      });
 
-    const setOpenPanel = (num: number) => isOpenPanel.value = num
-    const editPage = (num: number) =>  wordsIndex.value = num
-    const findWord = (word: string) => store.commit("FIND_TITLE", word);
+      const setOpenPanel = (num: number) => (isOpenPanel.value = num);
+      const editPage = (num: number) => (wordsIndex.value = num);
+      const findWord = (word: string) => store.commit("FIND_TITLE", word);
 
-    const previousPage = () => {
-      if (wordsIndex.value > 1) editPage(wordsIndex.value - 1);
-    }
+      const previousPage = () => {
+        if (wordsIndex.value > 1) editPage(wordsIndex.value - 1);
+      };
 
-    const nextPage = () => {
-      if (wordsIndex.value < reverseWords.value.length - 1) editPage(wordsIndex.value + 1);
-    }
+      const nextPage = () => {
+        if (wordsIndex.value < reverseWords.value.length - 1)
+          editPage(wordsIndex.value + 1);
+      };
 
-    const reverseWords = computed(() => {
-      let newArray: Array<any> = [];
-      let currentWordsCopy = currentWords.value;
-      if (findWords.value.length > 0) currentWordsCopy = findWords.value;
-      for (let i = currentWordsCopy.length - 1; i >= 0; i--) {
-        newArray.push(currentWordsCopy[i]);
-      }
-      newArray.unshift({});
-      return newArray;
-    })
+      const reverseWords = computed(() => {
+        let newArray: Array<any> = [];
+        let currentWordsCopy = currentWords.value;
+        if (findWords.value.length > 0) currentWordsCopy = findWords.value;
+        for (let i = currentWordsCopy.length - 1; i >= 0; i--) {
+          newArray.push(currentWordsCopy[i]);
+        }
+        newArray.unshift({});
+        return newArray;
+      });
 
-    return {
-      setOpenPanel, editPage, previousPage, nextPage, reverseWords,
-      isOpenPanel, currentWords, isLoader, profile, findWords, 
-      wordsLength, wordsIndex, findWord
-    }
-  }
-})
+      return {
+        setOpenPanel,
+        editPage,
+        previousPage,
+        nextPage,
+        reverseWords,
+        isOpenPanel,
+        currentWords,
+        isLoader,
+        profile,
+        findWords,
+        wordsLength,
+        wordsIndex,
+        findWord,
+      };
+    },
+  });
 </script>

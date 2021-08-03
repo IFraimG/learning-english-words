@@ -13,24 +13,28 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import "./scss/FindWord.scss";
-import { useStore } from 'vuex';
+  import { ref } from "vue"
+  import "./scss/FindWord.scss"
+  import { useStore } from "vuex"
 
-export default {
-  name: "FindWord",
-  setup() {
-    const store = useStore()
-    let moduleWords = ref("")
+  export default {
+    name: "FindWord",
+    setup() {
+      const store = useStore()
+      let moduleWords = ref("")
 
-    const getWord = () => {
-      let word = moduleWords.value.trimLeft().trimRight().toLowerCase();
-      store.commit("FIND_TITLE", word);
-    }
+      const getWord = () => {
+        let word = moduleWords.value
+          .trimLeft()
+          .trimRight()
+          .toLowerCase()
+        store.commit("FIND_TITLE", word)
+      }
 
-    return {
-      moduleWords, getWord
-    };
+      return {
+        moduleWords,
+        getWord,
+      }
+    },
   }
-};
 </script>

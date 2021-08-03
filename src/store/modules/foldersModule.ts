@@ -1,15 +1,14 @@
-import { FolderItfc } from './../../models/folders';
 import FoldersState from '@/models/folders';
 import foldersActions from "../actions/foldersActions";
 import foldersMutations from "../mutations/foldersMutations";
 
 const foldersModule = {
-  state: () => (<FoldersState>{
+  state: () => ({
     routeFolder: "",
     folder: null,
     isLoaderItem: false,
     foldersList: null
-  }),
+  } as FoldersState),
   mutations: foldersMutations,
   actions: foldersActions,
   getters: {

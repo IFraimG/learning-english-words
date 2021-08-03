@@ -4,7 +4,7 @@ import authMutations from "../mutations/authMutations";
 
 const authModule = {
   state: () =>
-    (<AuthInterface>{
+    ({
       profile: {
         email: "",
         login: "",
@@ -12,7 +12,7 @@ const authModule = {
       },
       isAuth: false,
       errors: []
-    }),
+    } as AuthInterface),
   mutations: authMutations,
   actions: authActions,
   getters: {

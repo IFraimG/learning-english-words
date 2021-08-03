@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import Header from "@/components/app/Header.vue";
+  import Header from "@/components/app/Header.vue";
 
-export default {
-  components: { Header }
-};
+  export default {
+    components: { Header }
+  };
 </script>

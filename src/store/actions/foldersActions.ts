@@ -47,14 +47,14 @@ const foldersAction = {
 
     commit("SET_LOADER_ITEM", false)
   },
-  async addWordsToSection({ commit, rootState }: any, payload: {section: FolderShortItfc, title: string}) {
+  async addWordsToSection({ rootState }: any, payload: {section: FolderShortItfc, title: string}) {
     try {
       await foldersAPI.addWordsToFolder(rootState.auth.profile.id, payload.section, payload.title)
     } catch (error) {
       console.log(error);
     }
   },
-  async deleteFolder({ commit, rootState }: any, payload: { key: string }) {
+  async deleteFolder({ rootState }: any, payload: { key: string }) {
     try {
       await foldersAPI.deleteFolder(rootState.auth.profile.id, payload.key)
     } catch (error) {

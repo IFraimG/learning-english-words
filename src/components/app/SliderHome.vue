@@ -10,10 +10,14 @@
       navigation
       :pagination="{ clickable: true }"
     >
-      <swiper-slide class="home-slider__item" v-for="(item, index) of sliderInfo" :key="index">
+      <swiper-slide
+        class="home-slider__item"
+        v-for="(item, index) of sliderInfo"
+        :key="index"
+      >
         <p>{{ item.text }}</p>
         <div class="home-slider__content">
-          <img :src="item.logo" alt="logo">
+          <img :src="item.logo" alt="logo" />
           <h3>{{ item.author }}</h3>
           <p>{{ item.role }}</p>
         </div>
@@ -23,31 +27,73 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from "swiper/vue"
-import SwiperCore, { Pagination } from 'swiper/core';
-import People1 from "@/assets/people1.png"
-import People2 from "@/assets/people2.png"
-import "@/components/app/scss/Home.scss"
+  import { Swiper, SwiperSlide } from "swiper/vue"
+  import SwiperCore, { Pagination } from "swiper/core"
+  import People1 from "@/assets/people1.png"
+  import People2 from "@/assets/people2.png"
+  import "@/components/app/scss/Home.scss"
 
-import "swiper/components/pagination/pagination.min.css"
-import 'swiper/swiper.scss';
+  import "swiper/components/pagination/pagination.min.css"
+  import "swiper/swiper.scss"
 
-SwiperCore.use([Pagination]);
-export default {
-  name: "SliderHome",
-  components: { Swiper, SwiperSlide },
-  data() {
-    return {
-      sliderInfo: [
-        { logo: People1, role: "Web design", author: "Rabith Halson",  text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor." },
-        { logo: People1, role: "Web design", author: "Rabith Halson", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor." },
-        { logo: People1, role: "Web design", author: "Rabith Halson", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor." },
-        { logo: People2, role: "UI Designer", author: "Selena Roy", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor." },
-        { logo: People2, role: "UI Designer", author: "Selena Roy", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor." },
-        { logo: People2, role: "UI Designer", author: "Selena Roy", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor." },
-        { logo: People1, role: "Web design", author: "Rabith Halson",  text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor." },
-      ]
-    }
+  SwiperCore.use([Pagination])
+  export default {
+    name: "SliderHome",
+    components: { Swiper, SwiperSlide },
+    data() {
+      return {
+        sliderInfo: [
+          {
+            logo: People1,
+            role: "Web design",
+            author: "Rabith Halson",
+            text:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor.",
+          },
+          {
+            logo: People1,
+            role: "Web design",
+            author: "Rabith Halson",
+            text:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor.",
+          },
+          {
+            logo: People1,
+            role: "Web design",
+            author: "Rabith Halson",
+            text:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor.",
+          },
+          {
+            logo: People2,
+            role: "UI Designer",
+            author: "Selena Roy",
+            text:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor.",
+          },
+          {
+            logo: People2,
+            role: "UI Designer",
+            author: "Selena Roy",
+            text:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor.",
+          },
+          {
+            logo: People2,
+            role: "UI Designer",
+            author: "Selena Roy",
+            text:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor.",
+          },
+          {
+            logo: People1,
+            role: "Web design",
+            author: "Rabith Halson",
+            text:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae itaque atque, id non iusto amet officiis saepe voluptatibus laborum obcaecati eveniet ex nam voluptates libero minima cupiditate magni exercitationem dolor.",
+          },
+        ],
+      }
+    },
   }
-}
 </script>

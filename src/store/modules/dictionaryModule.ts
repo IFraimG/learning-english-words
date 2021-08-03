@@ -3,10 +3,10 @@ import dictionaryActions from "../actions/dictionaryActions";
 import dictionaryMutations from "../mutations/dictionaryMutations";
 
 export default {
-  state: () => (<DictionaryState>{
+  state: () => ({
     dictionaryList: [],
     currentDictionary: null
-  }),
+  } as DictionaryState),
   mutations: dictionaryMutations,
   actions: dictionaryActions,
   getters: {

@@ -3,7 +3,7 @@ export default (list: { id: string }[] | any | null): string => {
 
   const words = "abcdefghijklmnopqrstuvwxyz";
   for (;;) {
-    let id: string = ""
+    let id: string | null = ""
     let randomIterative: number = Math.floor(Math.random() * (20 - 6)) + 6
 
     for (let i = 0; i <= randomIterative; i++) {

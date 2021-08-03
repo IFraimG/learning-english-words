@@ -49,32 +49,32 @@
 </template>
 
 <script lang="ts">
-import Loader from "@/components/app/Loader.vue";
-import { computed, defineComponent, onBeforeMount, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useStore } from "vuex";
-import "@/components/folders/scss/FolderPage.scss"
+  import Loader from "@/components/app/Loader.vue";
+  import { computed, defineComponent, onBeforeMount, onMounted } from "vue";
+  import { useRoute, useRouter } from "vue-router";
+  import { useStore } from "vuex";
+  import "@/components/folders/scss/FolderPage.scss"
 
-export default defineComponent({
-  components: { Loader },
-  name: "FolderPage",
-  setup() {
-    const store = useStore()
-    const router = useRouter()
-    const route = useRoute()
-    const folderItem = computed(() => store.getters.folder)
-    const isLoader = computed(() => store.getters.isLoaderItem)
-    const userID = computed(() => store.getters.userID)
-    const currentWords = computed(() => store.getters.currentWords)
+  export default defineComponent({
+    name: "FolderPage",
+    components: { Loader },
+    setup() {
+      const store = useStore()
+      const router = useRouter()
+      const route = useRoute()
+      const folderItem = computed(() => store.getters.folder)
+      const isLoader = computed(() => store.getters.isLoaderItem)
+      const userID = computed(() => store.getters.userID)
+      const currentWords = computed(() => store.getters.currentWords)
 
-    onBeforeMount(() => store.dispatch("getFolder", route.params.id))
-    onMounted(() => store.dispatch("getWords"))
+      onBeforeMount(() => store.dispatch("getFolder", route.params.id))
+      onMounted(() => store.dispatch("getWords"))
 
-    const redirectWords = (title: string) => {
-      let index = currentWords.value.findIndex((words: any) => words.title == title)
-      if (index != -1) router.push(`/words/${userID.value}/${index}/?type=start`)
+      const redirectWords = (title: string) => {
+        const index = currentWords.value.findIndex((words: any) => words.title == title)
+        if (index != -1) router.push(`/words/${userID.value}/${index}/?type=start`)
+      }
+      return { folderItem, isLoader, redirectWords }
     }
-    return { folderItem, isLoader, redirectWords }
-  }
-})
+  })
 </script>
