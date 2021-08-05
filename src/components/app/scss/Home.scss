@@ -207,3 +207,11 @@
     }
   }
 }
+
+body[data-theme="dark"] {
+  @import "./HomeDark.scss";
+}
+
+@media (prefers-color-scheme: dark) {
+  @import "./HomeDark.scss";
+}

@@ -1,0 +1,61 @@
+.home {
+  &__wrapper {
+    background: rgb(53, 53, 53);
+    color: #fff;
+  }
+  &-header {
+    &__item {
+      p {
+        background: rgb(53, 53, 53);
+        color: #fff;
+        &:hover {
+          color: #F25822;
+        }
+      }
+    }
+  }
+  &-slider {
+    &__item {
+      &:hover {
+        box-shadow: none;
+        border-color: #fff;
+      }
+    }
+  }
+  &__pictures {
+    background: rgb(53, 53, 53);
+  }
+  &-main {
+    &__down {
+      p {
+        color: #fff;
+      }
+    }
+  }
+  &-cards {
+    &__text {
+      span {
+        color: #fff;
+      }
+    }
+  }
+  &__footer {
+    background: rgb(53, 53, 53);
+  }
+  &-footer {
+    &__content {
+      border-bottom: 1px solid #fff;
+    }
+  }
+}
+
+.auth {
+  &__registration {
+    input {
+      background-color: #fff;
+    }
+  }
+  &__errors {
+    color: rgb(206, 69, 23);
+  }
+}

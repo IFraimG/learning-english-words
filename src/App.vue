@@ -9,8 +9,19 @@
 
 <script>
   import Header from "@/components/app/Header.vue";
+  import { onBeforeMount } from 'vue';
+  import { useStore } from 'vuex';
 
   export default {
-    components: { Header }
+    components: { Header },
+    setup() {
+      onBeforeMount(() => {
+        const store = useStore()
+
+        let theme = "light"
+        if (window.localStorage.getItem("theme") != null) theme = window.localStorage.getItem("theme")
+        store.dispatch("setTheme", theme)
+      })
+    }
   };
 </script>

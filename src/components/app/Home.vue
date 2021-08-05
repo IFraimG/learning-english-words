@@ -11,23 +11,8 @@
             <li class="home-header__item" @click="scrollAuth">
               <p>Авторизоваться</p>
             </li>
-            <li class="home-header__item">
-              <router-link to="#">
-                <p>Null Link</p>
-              </router-link>
-            </li>
-            <li class="home-header__item">
-              <router-link to="#">
-                <p>Services</p>
-              </router-link>
-            </li>
-            <li class="home-header__item">
-              <router-link to="#">
-                <p>Blog</p>
-              </router-link>
-            </li>
-            <li class="home-header__item">
-              <button class="home-btn" @click="scrollAuth">Get started</button>
+            <li class="home-header__item home-header__switch">
+              <ThemeSwitcher />
             </li>
           </ul>
         </header>
@@ -89,58 +74,59 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
-import "@/components/app/scss/Home.scss"
-import { mapGetters } from 'vuex';
-import SliderHome from "./SliderHome.vue"
-import AuthSection from "./Auth.vue"
-import Footer from "./Footer.vue"
-// @ts-ignore
-import logo1 from "@/assets/logo1.png"
-// @ts-ignore
-import logo2 from "@/assets/logo2.png"
-// @ts-ignore
-import logo3 from "@/assets/logo3.png"
-// @ts-ignore
-import logo4 from "@/assets/logo4.png"
-// @ts-ignore
-import logo5 from "@/assets/logo5.png"
-// @ts-ignore
-import logo6 from "@/assets/logo6.png"
-// @ts-ignore
-import vector1 from "@/assets/Vector.png"
-// @ts-ignore
-import vector2 from "@/assets/Vector(1).png"
-// @ts-ignore
-import vector3 from "@/assets/Vector(2).png"
+  import { defineComponent } from "vue"
+  import "@/components/app/scss/Home.scss"
+  import { mapGetters } from 'vuex';
+  import SliderHome from "./SliderHome.vue"
+  import AuthSection from "./Auth.vue"
+  import Footer from "./Footer.vue"
+  import ThemeSwitcher from "./ThemeSwitcher.vue"
+  // @ts-ignore
+  import logo1 from "@/assets/logo1.png"
+  // @ts-ignore
+  import logo2 from "@/assets/logo2.png"
+  // @ts-ignore
+  import logo3 from "@/assets/logo3.png"
+  // @ts-ignore
+  import logo4 from "@/assets/logo4.png"
+  // @ts-ignore
+  import logo5 from "@/assets/logo5.png"
+  // @ts-ignore
+  import logo6 from "@/assets/logo6.png"
+  // @ts-ignore
+  import vector1 from "@/assets/Vector.png"
+  // @ts-ignore
+  import vector2 from "@/assets/Vector(1).png"
+  // @ts-ignore
+  import vector3 from "@/assets/Vector(2).png"
 
-let Component = defineComponent({
-  name: "HomeContent",
-  components: { SliderHome, AuthSection, Footer },
-  data() {
-    return {
-      logoList: [logo1, logo2, logo3, logo4, logo5, logo6],
-      cardsList: [
-        { title: "Личный словарь", link: "/", img: vector1, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
-        { title: "Личный словарь2", link: "/", img: vector2, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
-        { title: "Личный словарь3", link: "/", img: vector3, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" }
-      ]
-    }
-  },
-  methods: {
-    editLogin(isLogin: boolean) {
-      this.$store.commit("setLogin", isLogin);
+  let Component = defineComponent({
+    name: "HomeContent",
+    components: { SliderHome, AuthSection, Footer, ThemeSwitcher },
+    data() {
+      return {
+        logoList: [logo1, logo2, logo3, logo4, logo5, logo6],
+        cardsList: [
+          { title: "Личный словарь", link: "/", img: vector1, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+          { title: "Личный словарь2", link: "/", img: vector2, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+          { title: "Личный словарь3", link: "/", img: vector3, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" }
+        ]
+      }
     },
-    scrollAuth() {
-      // @ts-ignore
-      let info: any = this.$refs.authContent.offsetTop
-      window.scroll({ top: info, behavior: "smooth" })
+    methods: {
+      editLogin(isLogin: boolean) {
+        this.$store.commit("setLogin", isLogin);
+      },
+      scrollAuth() {
+        // @ts-ignore
+        let info: any = this.$refs.authContent.offsetTop
+        window.scroll({ top: info, behavior: "smooth" })
+      }
+    },
+    computed: {
+      ...mapGetters(["loginInfo", "errorsList", "isAuth"])
     }
-  },
-  computed: {
-    ...mapGetters(["loginInfo", "errorsList", "isAuth"])
-  }
-})
+  })
 
-export default Component
+  export default Component
 </script>

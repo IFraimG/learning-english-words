@@ -1,0 +1,32 @@
+$darkbg: rgb(53, 53, 53);
+
+.account {
+  background: $darkbg;
+  color: #fff;
+}
+
+.list {
+  &__info {
+    box-shadow: none;
+    border: 1px solid #fff;
+    background-color: rgb(63, 63, 63);
+  }
+  &__item {
+    &-edit {
+      border-bottom-color: #fff;
+    }
+  }
+  &__title {
+    border-bottom-color: #fff;
+  }
+}
+
+.profile {
+  box-shadow: none;
+  background-color: rgb(94, 94, 94);
+}
+
+.Page {
+  background-color: rgb(37, 37, 37) !important;
+  color: #fff;
+}

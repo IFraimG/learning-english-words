@@ -9,17 +9,20 @@
           Добавить новые слова
         </button>
       </router-link>
+      <ThemeSwitcher style="margin-top: 20px" />
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: "Profile",
-  props: {
-    profile: Object
-  }
-};
+  import ThemeSwitcher from '../app/ThemeSwitcher.vue';
+
+  export default {
+    name: "Profile",
+    components: { ThemeSwitcher },
+    props: {
+      profile: Object
+    }
+  };
 </script>
 
-<style></style>

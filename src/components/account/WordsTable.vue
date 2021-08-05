@@ -81,73 +81,73 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import "@/components/account/scss/Account.scss";
-import AccountWord from "@/components/account/AccountWord.vue";
-import { nextTick } from 'vue';
+  import { mapGetters } from "vuex";
+  import "@/components/account/scss/Account.scss";
+  import AccountWord from "@/components/account/AccountWord.vue";
+  import { nextTick } from 'vue';
 
-export default {
-  name: "WordsTable",
-  components: { AccountWord },
-  props: {
-    wordsArray: Object,
-    index: Number,
-    isOpenPanel: Number
-  },
-  emits: ["setOpenPanel"],
-  data() {
-    return {
-      editMode: false,
-      editList: [],
-      section: null
-    };
-  },
-  computed: {
-    reverseWords() {
-      let newArray = [];
-      for (let i = this.currentWords.length - 1; i >= 0; i--) {
-        newArray.push(this.currentWords[i]);
+  export default {
+    name: "WordsTable",
+    components: { AccountWord },
+    props: {
+      wordsArray: Object,
+      index: Number,
+      isOpenPanel: Number
+    },
+    emits: ["setOpenPanel"],
+    data() {
+      return {
+        editMode: false,
+        editList: [],
+        section: null
+      };
+    },
+    computed: {
+      reverseWords() {
+        let newArray = [];
+        for (let i = this.currentWords.length - 1; i >= 0; i--) {
+          newArray.push(this.currentWords[i]);
+        }
+        return newArray;
+      },
+      ...mapGetters(["userID", "currentWords", "isLoader", "profile"])
+    },
+    methods: {
+      runWords(title) {
+        if (this.editMode != title) {
+          let index = this.currentWords.findIndex(
+            wordsArray => title == wordsArray.title
+          );
+          this.$router.push(`/words/${this.userID}/${index}/?type=start`);
+        }
+      },
+      editWords(words, title) {
+        this.editMode = title;
+        this.editList = [...words];
+      },
+      stopEdit() {
+        this.editList = [];
+        this.editMode = false;
+      },
+      saveWord(data) {
+        this.editList[data.index] = data.word;
+      },
+      async saveEditWords(title, id) {
+        let index = this.currentWords.findIndex(wordList => title == wordList.title);
+        await this.$store.dispatch("sendEditWords", {
+          title,
+          id,
+          editWords: this.editList,
+          userid: this.userID,
+          wordsid: index
+        });
+        this.stopEdit();
+        nextTick(() => window.scrollTo({ top: 0, behavior: "smooth" }))
+      },
+      openModal() {
+        this.$store.commit("SET_MODAL_WORDS", { title: this.wordsArray.title, list: this.wordsArray.words })
+        this.$router.push("/account/words")
       }
-      return newArray;
-    },
-    ...mapGetters(["userID", "currentWords", "isLoader", "profile"])
-  },
-  methods: {
-    runWords(title) {
-      if (this.editMode != title) {
-        let index = this.currentWords.findIndex(
-          wordsArray => title == wordsArray.title
-        );
-        this.$router.push(`/words/${this.userID}/${index}/?type=start`);
-      }
-    },
-    editWords(words, title) {
-      this.editMode = title;
-      this.editList = [...words];
-    },
-    stopEdit() {
-      this.editList = [];
-      this.editMode = false;
-    },
-    saveWord(data) {
-      this.editList[data.index] = data.word;
-    },
-    async saveEditWords(title, id) {
-      let index = this.currentWords.findIndex(wordList => title == wordList.title);
-      await this.$store.dispatch("sendEditWords", {
-        title,
-        id,
-        editWords: this.editList,
-        userid: this.userID,
-        wordsid: index
-      });
-      this.stopEdit();
-      nextTick(() => window.scrollTo({ top: 0, behavior: "smooth" }))
-    },
-    openModal() {
-      this.$store.commit("SET_MODAL_WORDS", { title: this.wordsArray.title, list: this.wordsArray.words })
-      this.$router.push("/account/words")
     }
-  }
-};
+  };
 </script>

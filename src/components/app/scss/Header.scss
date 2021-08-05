@@ -156,3 +156,11 @@ $menu: 724px;
     right: 0px;
   }
 }
+
+body[data-theme="dark"] {
+  @import "./HeaderDark.scss";
+}
+
+@media (prefers-color-scheme: dark) {
+  @import "./HeaderDark.scss";
+}
