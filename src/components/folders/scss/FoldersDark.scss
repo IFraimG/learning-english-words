@@ -1,0 +1,28 @@
+@import "@/configs/vars.scss";
+
+.folders {
+  &__wrapper {
+    background: $darkbg;
+  }
+  h1 {
+    color: #fff;
+  }
+  &__item {
+    background: #7e7e7e;
+    box-shadow:  23px 23px 0px #bebebe, -23px -23px 0px #cccccc;
+    &-wrapper {
+    }
+    h2, p {
+      color: #fff;
+    }
+    &:active {
+      background: #8b8b8b;
+      box-shadow:  23px 23px 0px #707070, -23px -23px 0px #dadada;
+    }
+  }
+  &__list {
+    &-nowords {
+      color: #fff;
+    }
+  }
+}

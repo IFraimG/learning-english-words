@@ -1,0 +1,51 @@
+.english-form {
+  box-shadow: 0 0 30px 0 #474747;
+  &__header {
+    span {
+      color: #f05454;
+    }
+  }
+  &__middle {
+    input {
+      border: none;
+    }
+  }
+  &__success {
+    background: rgba(49, 228, 43, 0.548);
+    color: rgb(60, 223, 55);
+  }
+  &__danger {
+    color: #ffffff;
+    background-color: #c73636;
+  }
+  &__answer {
+    border: 1px solid #fff;
+  }
+}
+
+.finish {
+  &__header {
+    h1 {
+      color: rgb(55, 219, 49);
+    }
+    p {
+      color: #ff3333;
+    }
+  }
+  &__error {
+    border: 1px solid #e94545;
+    &-title {
+      p {
+        &:hover {
+          border-bottom: 1px solid #e94545;
+        }
+      }
+    }
+    &-index {
+      color: #fff;
+    }
+    &-english {
+      color: #fff;
+    }
+  }
+}

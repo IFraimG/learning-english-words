@@ -15,12 +15,14 @@
     "parser": "@typescript-eslint/parser",
   },
   "rules": {
-    "no-unused-vars": "error",
+    "no-unused-vars": "off",
     "prefer-const": "warn",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/member-delimiter-style": "off",
     "@typescript-eslint/class-name-casing": "warn",
     "@typescript-eslint/ban-ts-ignore": "warn",
-    "@typescript-eslint/no-empty-function": "warn"
+    "@typescript-eslint/no-empty-function": "warn",
+    "vue/experimental-script-setup-vars": "off",
+    "vue/script-setup-uses-vars": "off",
   },
 }

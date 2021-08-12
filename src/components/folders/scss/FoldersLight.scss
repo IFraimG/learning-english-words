@@ -1,0 +1,13 @@
+.folders {
+  &__item {
+    background: #e0e0e0;
+    box-shadow:  23px 23px 0px #bebebe, -23px -23px 0px #ffffff;
+    h2, p {
+      color: rgb(20, 20, 20);
+    }
+    &:active {
+      background: #cacaca;
+      box-shadow:  23px 23px 0px #707070, -23px -23px 0px #ffffff;
+    }
+  }
+}

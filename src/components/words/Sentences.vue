@@ -30,57 +30,57 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, onMounted, reactive, ref } from 'vue'
-import "./scss/Sentences.scss"
+  import { defineComponent, inject, nextTick, onMounted, reactive, ref } from 'vue'
+  import "./scss/sentences/Sentences.scss"
 
-export default defineComponent({
-  name: "Sentences",
-  setup() {
-    let currentWords: any = inject("currentWords")
-    let sentences = ref<any[]>([])
-    let doneList = reactive<any>({ value: [] })
+  export default defineComponent({
+    name: "Sentences",
+    setup() {
+      let currentWords: any = inject("currentWords")
+      let sentences = ref<any[]>([])
+      let doneList = reactive<any>({ value: [] })
 
-    currentWords.value.map((item: any) => doneList.value.push({ english: item.english, isDone: -1 }))
+      currentWords.value.map((item: any) => doneList.value.push({ english: item.english, isDone: -1 }))
 
-    onMounted(() => {
-      nextTick(() => window.scrollTo({ top: 0 }))
-    })
+      onMounted(() => {
+        nextTick(() => window.scrollTo({ top: 0 }))
+      })
 
-    const checkItem = (index: number) => {
-      let value = sentences.value[index].value
-      if (value != "") {
-        let wordsList = value.trimStart().trimEnd().split(" ")
-        let len = wordsList.length
-        let original = currentWords.value[index].english.split(" ")
+      const checkItem = (index: number) => {
+        let value = sentences.value[index].value
+        if (value != "") {
+          let wordsList = value.trimStart().trimEnd().split(" ")
+          let len = wordsList.length
+          let original = currentWords.value[index].english.split(" ")
 
-        let indexOrigin = 0
-        let buildWord = []
-        let isWord = 0
+          let indexOrigin = 0
+          let buildWord = []
+          let isWord = 0
 
-        for (let i = 0; i < len; i++) {
-          if (wordsList[i] == original[indexOrigin]) {
-            buildWord.push(wordsList[i])
-            indexOrigin++
-          } else {
-            buildWord = []
-            indexOrigin = 0
+          for (let i = 0; i < len; i++) {
+            if (wordsList[i] == original[indexOrigin]) {
+              buildWord.push(wordsList[i])
+              indexOrigin++
+            } else {
+              buildWord = []
+              indexOrigin = 0
+            }
+
+            if (buildWord.join(' ') == currentWords.value[index].english) {
+              isWord = 1;
+              break;
+            }
           }
 
-          if (buildWord.join(' ') == currentWords.value[index].english) {
-            isWord = 1;
-            break;
+          if (wordsList.length < 4) doneList.value[index].isDone = 2
+          else {
+            doneList.value[index].isDone = isWord
+            if (doneList.value[index].isDone == 1) sentences.value[index].disabled = true
           }
-        }
+        } else doneList.value[index].isDone = 2
+      }
 
-        if (wordsList.length < 4) doneList.value[index].isDone = 2
-        else {
-          doneList.value[index].isDone = isWord
-          if (doneList.value[index].isDone == 1) sentences.value[index].disabled = true
-        }
-      } else doneList.value[index].isDone = 2
+      return { currentWords, sentences, checkItem, doneList }
     }
-
-    return { currentWords, sentences, checkItem, doneList }
-  }
-})
+  })
 </script>

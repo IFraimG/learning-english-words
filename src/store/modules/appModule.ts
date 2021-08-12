@@ -2,20 +2,17 @@ import AppState from "@/models/store";
 import appMutations from "../mutations/appMutations";
 
 const appModule = {
-  state: () => ({
-    isLogin: false,
-    startModalWords: { title: null, words: null }
-  } as AppState),
+  state(): AppState {
+    return {
+      isLogin: false,
+      startModalWords: { title: null, words: null }
+    }
+  },
   mutations: appMutations,
   actions: {
     setTheme(_: any, payload: any) {
-      if (payload) {
-        localStorage.setItem("theme", "dark")
-        document.body.setAttribute("data-theme", "dark")
-      } else {
-        localStorage.setItem("theme", "light")
-        document.body.setAttribute("data-theme", "light")
-      }
+      localStorage.setItem("theme", payload)
+      document.body.setAttribute("data-theme", payload)
     }
   },
   getters: {

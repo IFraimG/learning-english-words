@@ -3,11 +3,11 @@
     <div class="folder-page">
       <div class="folder-page__header">
         <div class="folder-page__header-left">
-        <router-link to="/folders">
-          <p class="folder-page__link">Разделы</p>
-        </router-link>
-        <span>/</span>
-        <p>{{ folderItem.title }}</p>
+          <router-link to="/folders">
+            <p class="folder-page__link">Разделы</p>
+          </router-link>
+          <span>/</span>
+          <p class="folder-page__link-title">{{ folderItem.title }}</p>
         </div>
         <router-link :to="'/folders/' + $route.params.id + '/delete?title=' + folderItem.title">
           <p class="folder-page__header-delete">Удалить</p>

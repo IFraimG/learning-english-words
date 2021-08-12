@@ -1,0 +1,16 @@
+.sentences {
+  &__error {
+    &-null {
+      color: rgb(168, 45, 45);
+      border-color: rgb(168, 45, 45);
+    }
+    &-first {
+      color: rgb(42, 139, 50);
+      border-color: rgb(42, 139, 50);
+    }
+    &-second {
+      color: rgb(185, 183, 29);
+      border-color: rgb(185, 183, 29);
+    }
+  }
+}

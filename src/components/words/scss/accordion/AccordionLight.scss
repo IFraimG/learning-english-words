@@ -1,0 +1,23 @@
+.accordion {
+  &__content {
+    box-shadow: 0 0 30px 0 #dddddd;
+  }
+  &__item {
+    @media (max-width: 431px) {
+      border-bottom: 1px solid rgba(0, 0, 0, .3);
+    }
+    button {
+      color: #fff;
+      &:active {
+        background-color: rgb(55, 157, 52);
+      }
+    }
+  }
+  &__error {
+    color: #f05454;
+  }
+  &__answer {
+    color: #000;
+    border: 1px solid #000;
+  }
+}

@@ -1,5 +1,9 @@
 .folders {
-  margin-top: 50px;
+  padding-top: 50px;
+  &__wrapper {
+    width: 100%;
+    min-height: 100vh;
+  }
   h1 {
     text-align: center;
   }
@@ -16,21 +20,14 @@
     padding: 30px 15px;
     min-height: 200px;
     border-radius: 3px;
-    background: #e0e0e0;
-    box-shadow:  23px 23px 0px #bebebe, -23px -23px 0px #ffffff;
     cursor: pointer;
     &-wrapper {
       min-width: 300px;
       max-width: 23%;
       margin: 30px 50px;
     }
-    h2, p {
-      color: rgb(20, 20, 20);
-    }
     &:active {
       border-radius: 3px;
-      background: #cacaca;
-      box-shadow:  23px 23px 0px #707070, -23px -23px 0px #ffffff;
     }
   }
   &__list {
@@ -46,4 +43,21 @@
   &__title {
     margin: 30px 0;
   }
+}
+
+
+body[data-theme="dark"] {
+  @import "./FoldersDark.scss";
+}
+
+@media (prefers-color-scheme: dark) {
+  @import "./FoldersDark.scss";
+}
+
+body[data-theme="light"] {
+  @import "./FoldersLight.scss";
+}
+
+@media (prefers-color-scheme: light) {
+  @import "./FoldersLight.scss";
 }

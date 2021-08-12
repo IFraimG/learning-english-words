@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Account from "@/views/Account.vue";
-import ModalDeleteWords from "@/components/account/ModalDeleteWords.vue";
-import ModalToFolders from "@/components/account/ModalToFolders.vue";
-import ModalWords from "@/components/account/ModalWords.vue";
-import ModalDelSections from "@/components/account/ModalDelSections.vue";
+import ModalDeleteWords from "@/components/modals/ModalDeleteWords.vue";
+import ModalToFolders from "@/components/modals/ModalToFolders.vue";
+import ModalWords from "@/components/modals/ModalWords.vue";
+import ModalDelSections from "@/components/modals/ModalDelSections.vue";
 import Words from "@/views/Words.vue";
 import NotFound from "@/views/404.vue";
 import Dictionary from "@/views/Dictionary.vue";

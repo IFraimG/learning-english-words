@@ -35,7 +35,7 @@
 
 <script>
 import { reactive, ref } from "vue"
-import "./scss/ModalWords.scss";
+import "@/components/modals/scss/ModalWords.scss";
 import SelectTime from "./SelectTime.vue";
 
 export default {

@@ -66,94 +66,94 @@
 </template>
 
 <script>
-import "./scss/Accordion.scss";
+  import "./scss/accordion/Accordion.scss";
 
-export default {
-  name: "Accordion",
-  data() {
-    return {
-      currentInputWord: "",
-      doneWords: [],
-      errorWords: [],
-      isAnswer: [],
-      checkedAnswers: [],
-      isRotate: false,
-    };
-  },
-  props: {
-    currentWords: Array
-  },
-  computed: {
-    currentSortWords() {
-      let currentWords = [...this.currentWords];
-      if (!this.isRotate) {
-        currentWords.map(word => {
-          let tempRus = word.russian
-          word.russian = word.english
-          word.english = tempRus
-        })
-      } else {
-        currentWords.map(word => {
-          let tempEn = word.english
-          word.english = word.russian
-          word.russian = tempEn
-        })
-      }
-      return currentWords.sort(() => Math.random() - 0.5).reverse();
-    }
-  },
-  methods: {
-    addAnswer(words) {
-      this.isAnswer.push(words);
+  export default {
+    name: "Accordion",
+    data() {
+      return {
+        currentInputWord: "",
+        doneWords: [],
+        errorWords: [],
+        isAnswer: [],
+        checkedAnswers: [],
+        isRotate: false,
+      };
     },
-    deleteAnswer(words) {
-      let isIndex = this.isAnswer.findIndex(item => item == words);
-      if (isIndex != -1) this.isAnswer.splice(isIndex, 1);
+    props: {
+      currentWords: Array
     },
-    checkWord(word, index) {
-      let value = this.$refs["inputInfo" + index.toString()].value;
-      if (word.english.trimStart().trimEnd().toLowerCase() == value.trimStart().trimEnd().toLowerCase()) {
-
-        this.$refs["inputInfo" + index.toString()].disabled = true;
-        let indexError = this.errorWords.indexOf(word.id);
-        if (indexError != -1) this.errorWords.splice(indexError, 1);
-
-        this.deleteAnswer(word.english);
-        this.doneWords.push({ translated: word.english, original: word.russian });
-      } else {
-        let indexError = this.errorWords.indexOf(word.id);
-        if (indexError == -1) this.errorWords.push(word.id);
+    computed: {
+      currentSortWords() {
+        let currentWords = [...this.currentWords];
+        if (!this.isRotate) {
+          currentWords.map(word => {
+            let tempRus = word.russian
+            word.russian = word.english
+            word.english = tempRus
+          })
+        } else {
+          currentWords.map(word => {
+            let tempEn = word.english
+            word.english = word.russian
+            word.russian = tempEn
+          })
+        }
+        return currentWords.sort(() => Math.random() - 0.5).reverse();
       }
     },
-    sendData() {
-      let arrayWords = JSON.parse(window.sessionStorage.getItem("words"));
-      if (arrayWords != null) window.sessionStorage.removeItem("words");
+    methods: {
+      addAnswer(words) {
+        this.isAnswer.push(words);
+      },
+      deleteAnswer(words) {
+        let isIndex = this.isAnswer.findIndex(item => item == words);
+        if (isIndex != -1) this.isAnswer.splice(isIndex, 1);
+      },
+      checkWord(word, index) {
+        let value = this.$refs["inputInfo" + index.toString()].value;
+        if (word.english.trimStart().trimEnd().toLowerCase() == value.trimStart().trimEnd().toLowerCase()) {
 
-      let errorWords = JSON.parse(window.sessionStorage.getItem("wordsMistakes"));
-      if (errorWords != null) window.sessionStorage.removeItem("wordsMistakes");
+          this.$refs["inputInfo" + index.toString()].disabled = true;
+          let indexError = this.errorWords.indexOf(word.id);
+          if (indexError != -1) this.errorWords.splice(indexError, 1);
 
-      let successWords = [];
-      let failedWords = [];
+          this.deleteAnswer(word.english);
+          this.doneWords.push({ translated: word.english, original: word.russian });
+        } else {
+          let indexError = this.errorWords.indexOf(word.id);
+          if (indexError == -1) this.errorWords.push(word.id);
+        }
+      },
+      sendData() {
+        let arrayWords = JSON.parse(window.sessionStorage.getItem("words"));
+        if (arrayWords != null) window.sessionStorage.removeItem("words");
 
-      this.doneWords.map(item => {
-        this.currentWords.map(wordInfo => {
-          if (wordInfo.english == item.translated) successWords.push({ english: wordInfo.russian, id: wordInfo.id });
+        let errorWords = JSON.parse(window.sessionStorage.getItem("wordsMistakes"));
+        if (errorWords != null) window.sessionStorage.removeItem("wordsMistakes");
+
+        let successWords = [];
+        let failedWords = [];
+
+        this.doneWords.map(item => {
+          this.currentWords.map(wordInfo => {
+            if (wordInfo.english == item.translated) successWords.push({ english: wordInfo.russian, id: wordInfo.id });
+          });
         });
-      });
-      this.errorWords.map(item => {
-        this.currentWords.map(wordInfo => {
-          if (wordInfo.english == item) failedWords.push({ english: item, id: wordInfo.id });
+        this.errorWords.map(item => {
+          this.currentWords.map(wordInfo => {
+            if (wordInfo.english == item) failedWords.push({ english: item, id: wordInfo.id });
+          });
         });
-      });
-      window.sessionStorage.setItem("words", JSON.stringify(successWords));
-      window.sessionStorage.setItem("wordsMistakes", JSON.stringify(failedWords));
-    },
-    rotateWords() {
-      this.doneWords = [];
-      this.errorWords = [];
-      this.isAnswer = [];
-      this.isRotate = !this.isRotate;
+        window.sessionStorage.setItem("words", JSON.stringify(successWords));
+        window.sessionStorage.setItem("wordsMistakes", JSON.stringify(failedWords));
+      },
+      rotateWords() {
+        this.doneWords = [];
+        this.errorWords = [];
+        this.isAnswer = [];
+        this.isRotate = !this.isRotate;
+      }
     }
-  }
-};
+  };
 </script>

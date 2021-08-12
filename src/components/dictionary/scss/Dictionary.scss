@@ -22,12 +22,7 @@ table {
     text-align: center;
   }
   th {
-    border-right: 1px solid rgba(0, 0, 0, 0.3);
-    border-top: 1px solid rgba(0, 0, 0, 0.3);
     font-size: 24px;
-    &:first-child {
-      border-left: 1px solid rgba(0, 0, 0, 0.3);
-    }
     @media (max-width: 914px) {
       font-size: 16px;
     }
@@ -60,20 +55,13 @@ table {
   }
   &__add-transcription {
     font-size: 12px;
-    color: rgba(0, 0, 0, 0.6);
     cursor: pointer;
   }
   &__item {
     td {
       padding: 10px 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.3);
-      border-right: 1px solid rgba(0, 0, 0, 0.3);
       &:first-child {
-        border-left: 1px solid rgba(0, 0, 0, 0.3);
         cursor: pointer;
-        &:hover {
-          background: rgba(0, 0, 0, 0.05);
-        }
       }
       input {
         width: 250px;
@@ -81,16 +69,10 @@ table {
         padding-left: 5px;
         font-size: 18px;
         border-radius: 0px;
-        border: 1px solid rgba(0, 0, 0, 0.3);
         &:focus {
           outline: none;
         }
       }
-    }
-    &:last-child {
-      td {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-      } 
     }
   }
 }
@@ -107,4 +89,21 @@ table {
 
 .PaginationControl {
   display: none;
+}
+
+body[data-theme="light"] {
+  @import "./DictionaryLight.scss";
+}
+
+body[data-theme="dark"] {
+  @import "./DictionaryDark.scss";
+}
+
+
+@media (prefers-color-scheme: dark) {
+  @import "./DictionaryDark.scss";
+}
+
+@media (prefers-color-scheme: light) {
+  @import "./DictionaryLight.scss";
 }

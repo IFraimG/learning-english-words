@@ -15,26 +15,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue"
-import { useRouter } from "vue-router"
-import { useStore } from "vuex"
-import "./scss/CreateFolder.scss"
+  import { defineComponent, ref, reactive } from "vue"
+  import { useRouter } from "vue-router"
+  import { useStore } from "vuex"
+  import "./scss/CreateFolder.scss"
 
-export default defineComponent({
-  name: "CreateFolder",
-  setup() {
-    const store = useStore()
-    const router = useRouter()
-    let titleFolder: any = ref(null)
-    let isInput = reactive({value: false})
+  export default defineComponent({
+    name: "CreateFolder",
+    setup() {
+      const store = useStore()
+      const router = useRouter()
+      let titleFolder: any = ref(null)
+      let isInput = reactive({value: false})
 
-    const create = async () => {
-      await store.dispatch("createFolder", titleFolder.value.value)
-      router.push({name: "FolderPage", params: { id: store.getters.folderAfterCreate }})
+      const create = async () => {
+        await store.dispatch("createFolder", titleFolder.value.value)
+        router.push({name: "FolderPage", params: { id: store.getters.folderAfterCreate }})
+      }
+      const editInput = (isTrue: boolean) => isInput.value = isTrue
+
+      return { titleFolder, create, isInput, editInput }
     }
-    const editInput = (isTrue: boolean) => isInput.value = isTrue
-
-    return { titleFolder, create, isInput, editInput }
-  }
-})
+  })
 </script>

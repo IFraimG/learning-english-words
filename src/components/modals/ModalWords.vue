@@ -59,7 +59,7 @@
 <script lang="ts">
   import { useStore } from "vuex";
   import "./scss/ModalWords.scss";
-  import InputWords from "./InputWords.vue";
+  import InputWords from "@/components/account/InputWords.vue";
   import { computed, defineComponent, nextTick, onMounted, onUnmounted, reactive, ref } from 'vue';
 
   export default defineComponent({
@@ -69,7 +69,10 @@
       const store = useStore()
       const modalContent: any = ref(null)
 
-      onMounted(() => nextTick(() => document.documentElement.style.overflow = "hidden"))
+      onMounted(() => nextTick(() => {
+        window.scrollTo({ top: 0 })
+        document.documentElement.style.overflow = "hidden"
+      }))
       onUnmounted(() => document.documentElement.style.overflow = "auto")
 
       const incorrectWord = computed(() => store.getters.incorrectWord)

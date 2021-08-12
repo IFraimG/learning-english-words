@@ -1,0 +1,51 @@
+.english-form {
+  box-shadow: 0 0 30px 0 #dddddd;
+  &__header {
+    span {
+      color: #f05454;
+    }
+  }
+  &__middle {
+    input {
+      border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+  }
+  &__success {
+    background: rgba(61, 175, 58, 0.15);
+    color: rgb(55, 157, 52);
+  }
+  &__danger {
+    color: #500d0d;
+    background-color: #c73636;
+  }
+  &__answer {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+}
+
+.finish {
+  &__header {
+    h1 {
+      color: rgb(55, 157, 52);
+    }
+    p {
+      color: #c73636;
+    }
+  }
+  &__error {
+    border: 1px solid #c73636;
+    &-title {
+      p {
+        &:hover {
+          border-bottom: 1px solid #c73636;
+        }
+      }
+    }
+    &-index {
+      color: #000;
+    }
+    &-english {
+      color: #000;
+    }
+  }
+}

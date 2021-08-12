@@ -1,10 +1,11 @@
-@import "./InputWords.scss";
+@import "../../account/scss/InputWords.scss";
 
 .modal {
   width: 1170px;
   background-color: #fff;
   border-radius: 20px;
   margin: 50px;
+  color: #000;
   &__wrapper {
     position: absolute;
     left: 0;

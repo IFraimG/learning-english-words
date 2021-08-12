@@ -28,25 +28,25 @@
 </template>
 
 <script>
-import "../account/scss/ModalWords.scss";
-import "./scss/Popup.scss";
+  import "./scss/ModalWords.scss";
+  import "./scss/Popup.scss";
 
-export default {
-  name: "Popup",
-  emits: ["onsuccess"],
-  mounted() {
-    window.scrollTo({ top: 0 });
-    document.documentElement.style.overflow = "hidden";
-  },
-  methods: {
-    closeModal() {
-      document.documentElement.style.overflow = "auto";
-      this.sendSuccess(false)
-      history.back()
+  export default {
+    name: "Popup",
+    emits: ["onsuccess"],
+    mounted() {
+      window.scrollTo({ top: 0 });
+      document.documentElement.style.overflow = "hidden";
     },
-    sendSuccess(isTrue) {
-      this.$emit('onsuccess', isTrue)
+    methods: {
+      closeModal() {
+        document.documentElement.style.overflow = "auto";
+        this.sendSuccess(false)
+        history.back()
+      },
+      sendSuccess(isTrue) {
+        this.$emit('onsuccess', isTrue)
+      }
     }
-  }
-};
+  };
 </script>

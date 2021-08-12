@@ -10,9 +10,3 @@ createApp(App)
   .use(store)
   .use(router)
   .mount("#app");
-
-declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {
-    $validate: (data: object, rule: object) => boolean
-  }
-}

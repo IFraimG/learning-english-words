@@ -11,7 +11,7 @@
             <li class="home-header__item" @click="scrollAuth">
               <p>Авторизоваться</p>
             </li>
-            <li class="home-header__item home-header__switch">
+            <li class="home-header__switch">
               <ThemeSwitcher />
             </li>
           </ul>

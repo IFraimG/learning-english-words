@@ -1,0 +1,35 @@
+@import "@/configs/vars.scss";
+
+.folder {
+  &__wrapper {
+    background: $darkbg;
+  }
+  &-page {
+    &__header {
+      &-delete {
+        color: $defaultbtn;
+        &:active {
+          color: $defaultbtn;
+        }
+      }
+    }
+    &__link {
+      color: $defaultbtn;
+      &-title {
+        color: #fff;
+      }
+      &:hover {
+        color: $defaultbtn;
+      }
+    }
+  }
+  &-list {
+    &__item {
+      &-wrapper {
+        color: #fff;
+        background: #5e5e5e;
+        box-shadow: none;
+      }
+    }
+  }
+}

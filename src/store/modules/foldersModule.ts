@@ -3,12 +3,14 @@ import foldersActions from "../actions/foldersActions";
 import foldersMutations from "../mutations/foldersMutations";
 
 const foldersModule = {
-  state: () => ({
-    routeFolder: "",
-    folder: null,
-    isLoaderItem: false,
-    foldersList: null
-  } as FoldersState),
+  state(): FoldersState {
+    return {
+      routeFolder: "",
+      folder: null,
+      isLoaderItem: false,
+      foldersList: null
+    }
+  },
   mutations: foldersMutations,
   actions: foldersActions,
   getters: {
@@ -16,7 +18,7 @@ const foldersModule = {
     folder: (state: FoldersState) => state.folder,
     isLoaderItem: (state: FoldersState) => state.isLoaderItem,
     folders: (state: FoldersState) => state.foldersList,
-    shortFolders: (state: FoldersState): any => {
+    shortFolders: (state: FoldersState) => {
       if (state.foldersList == null) return null
 
       let list: any = []

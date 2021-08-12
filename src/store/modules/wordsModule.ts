@@ -3,17 +3,19 @@ import wordsAction from "../actions/wordsActions";
 import wordsMutations from "../mutations/wordsMutations";
 
 const wordsModule = {
-  state: () => ({
-    currentWords: [],
-    findWords: [],
-    executeWords: [],
-    wordData: null,
-    stateWords: "start",
-    isLoader: false,
-    incorrectWord: null,
-    isRepeatingTitle: false,
-    wordsLength: 0
-  } as WordsInterface),
+  state(): WordsInterface {
+    return {
+      currentWords: [],
+      findWords: [],
+      executeWords: [],
+      wordData: null,
+      stateWords: "start",
+      isLoader: false,
+      incorrectWord: null,
+      isRepeatingTitle: false,
+      wordsLength: 0
+    }
+  },
   mutations: wordsMutations,
   actions: wordsAction,
   getters: {

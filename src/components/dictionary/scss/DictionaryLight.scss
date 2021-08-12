@@ -1,0 +1,50 @@
+@import "../../../configs/vars.scss";
+
+
+.dictionary {
+  background-color: $lightbg;
+}
+
+table {
+  background-color: #fff;
+  caption {
+    color: #000;
+  }
+  tr {
+    text-align: center;
+    color: #000;
+  }
+  th {
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    &:first-child {
+      border-left: 1px solid rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.dictionary {
+  &__add-transcription {
+    color: #000;
+  }
+  &__item {
+    td {
+      border-top: 1px solid rgba(0, 0, 0, 0.3);
+      border-right: 1px solid rgba(0, 0, 0, 0.3);
+      &:first-child {
+        border-left: 1px solid rgba(0, 0, 0, 0.3);
+        &:hover {
+          background: rgba(0, 0, 0, 0.05);
+        }
+      }
+      input {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+      }
+    }
+    &:last-child {
+      td {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+      } 
+    }
+  }
+}

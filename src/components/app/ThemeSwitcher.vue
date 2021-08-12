@@ -15,7 +15,11 @@
     name: "ThemeSwitcher",
     setup() {
       const store = useStore()
-      const setMode = (event: any) => store.dispatch("setTheme", event.target.checked)
+
+      const setMode = (event: any) => {
+        if (event.target.checked) store.dispatch("setTheme", "dark")
+        else store.dispatch("setTheme", "light")
+      }
 
       let theme: any = window.localStorage.getItem("theme")
       if (theme == "dark") theme = true
@@ -81,5 +85,19 @@
   .switcher:checked + .slider::before {
     transform: translateX(45px);
     background: url("../../assets/moon.png") 50%/cover no-repeat;
+  }
+
+  @media (max-width: 369px) {
+    .theme-switcher__wrapper {
+      width: 70px;
+      height: 35px;
+    }
+    .slider::before {
+      height: 26px;
+      width: 26px;
+    }
+    .switcher:checked + .slider::before {
+      transform: translateX(35px);
+    }
   }
 </style>

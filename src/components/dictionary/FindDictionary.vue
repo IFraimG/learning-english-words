@@ -14,7 +14,6 @@
 
 <script>
   import { ref } from "vue"
-  import "./scss/FindWord.scss"
   import { useStore } from "vuex"
 
   export default {

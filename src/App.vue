@@ -9,15 +9,14 @@
 
 <script>
   import Header from "@/components/app/Header.vue";
-  import { onBeforeMount } from 'vue';
+  import { onMounted } from 'vue';
   import { useStore } from 'vuex';
 
   export default {
     components: { Header },
     setup() {
-      onBeforeMount(() => {
+      onMounted(() => {
         const store = useStore()
-
         let theme = "light"
         if (window.localStorage.getItem("theme") != null) theme = window.localStorage.getItem("theme")
         store.dispatch("setTheme", theme)

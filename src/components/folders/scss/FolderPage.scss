@@ -2,7 +2,6 @@
 
 .folder {
   &__wrapper {
-    background: rgb(241, 241, 241);
     height: 100%;
     padding-bottom: 30px;
   }
@@ -26,17 +25,7 @@
       &-delete {
         margin-right: 80px;
         font-size: 24px;
-        color: $defaultbtn;
         cursor: pointer;
-        &:active {
-          color: $defaultbtnactive;
-        }
-      }
-    }
-    &__link {
-      color: $defaultbtn;
-      &:hover {
-        color: $defaultbtnactive;
       }
     }
   }
@@ -50,8 +39,6 @@
       &-wrapper {
         max-width: 300px;
         border-radius: 3px;
-        background: #ffffff;
-        box-shadow:  25px 25px 50px #cccccc, -25px -25px 50px #ffffff;
         padding: 20px;
         transition: .5s linear;
         &:hover {
@@ -66,4 +53,20 @@
       }
     }
   }
+}
+
+body[data-theme="dark"] {
+  @import "./FolderItemDark.scss";
+}
+
+@media (prefers-color-scheme: dark) {
+  @import "./FolderItemDark.scss";
+}
+
+body[data-theme="light"] {
+  @import "./FolderItemLight.scss";
+}
+
+@media (prefers-color-scheme: light) {
+  @import "./FolderItemLight.scss";
 }

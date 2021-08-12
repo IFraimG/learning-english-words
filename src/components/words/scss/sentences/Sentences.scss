@@ -53,22 +53,9 @@
   }
   &__error {
     font-size: 18px;
-    // font-weight: bold;
     padding-bottom: 10px;
     border-bottom: 1px solid transparent;
     font-family: "Montserrat", "Helvetica";
-    &-null {
-      color: rgb(168, 45, 45);
-      border-color: rgb(168, 45, 45);
-    }
-    &-first {
-      color: rgb(42, 139, 50);
-      border-color: rgb(42, 139, 50);
-    }
-    &-second {
-      color: rgb(185, 183, 29);
-      border-color: rgb(185, 183, 29);
-    }
   }
   &__finish {
     margin: 0 20px;
@@ -76,4 +63,21 @@
     width: calc(100% - 50px);
     font-size: 18px;
   }
+}
+
+
+body[data-theme="dark"] {
+  @import "./SentencesDark.scss";
+}
+
+@media (prefers-color-scheme: dark) {
+  @import "./SentencesDark.scss";
+}
+
+body[data-theme="light"] {
+  @import "./SentencesLight.scss";
+}
+
+@media (prefers-color-scheme: light) {
+  @import "./SentencesLight.scss";
 }

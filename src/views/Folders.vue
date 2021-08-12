@@ -28,38 +28,39 @@
 </template>
 
 <script lang="ts">
-import Loader from "@/components/app/Loader.vue";
-import { computed, defineComponent, onMounted } from "vue";
-import { useStore } from "vuex";
-import "@/components/account/scss/Account.scss";
-import "@/components/folders/scss/Folders.scss"
-import CreateFolder from "@/components/folders/CreateFolder.vue";
+  import Loader from "@/components/app/Loader.vue";
+  import { computed, defineComponent, onMounted } from "vue";
+  import { useStore } from "vuex";
+  import "@/components/account/scss/Account.scss";
+  import "@/components/folders/scss/Folders.scss"
+  import CreateFolder from "@/components/folders/CreateFolder.vue";
 
-export default defineComponent({
-  name: "Folders",
-  components: { Loader, CreateFolder },
-  setup() {
-    const store = useStore()
-    const folders = computed(() => store.getters.folders)
-    const isLoader = computed(() => store.getters.isLoaderItem)
+  export default defineComponent({
+    name: "Folders",
+    components: { Loader, CreateFolder },
+    setup() {
+      const store = useStore()
+      const folders = computed(() => store.getters.folders)
+      const isLoader = computed(() => store.getters.isLoaderItem)
 
-    onMounted(() => store.dispatch("getFoldersList"))
-    let foldersList = computed(() => {
-      let arr: any[] = []
-      if (folders.value != null) {
-        let keysArr: string[] = Object.keys(folders.value)
+      onMounted(() => store.dispatch("getFoldersList"))
 
-        keysArr.map((key: string, index: number) => arr[index] = { 
-          title: folders.value[key].title,
-          id: folders.value[key].id,
-          listModules: folders.value[key]?.listModules, key
-        })
-      }
-      
-      return arr
-    })
+      const foldersList = computed(() => {
+        let arr: any[] = []
+        if (folders.value != null) {
+          let keysArr: string[] = Object.keys(folders.value)
 
-    return { folders, isLoader, foldersList }
-  }
-})
+          keysArr.map((key: string, index: number) => arr[index] = { 
+            title: folders.value[key].title,
+            id: folders.value[key].id,
+            listModules: folders.value[key]?.listModules, key
+          })
+        }
+
+        return arr
+      })
+
+      return { folders, isLoader, foldersList }
+    }
+  })
 </script>

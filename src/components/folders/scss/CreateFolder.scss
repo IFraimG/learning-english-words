@@ -36,7 +36,7 @@
   right: 80px;
   top: 25px;
   height: 1px;
-  width: 20px;
+  width: 25px;
   background-color: #fff;
 }
 
@@ -53,6 +53,7 @@ button[data-btn='create'] {
 
 button[data-btn='cancel'] {
   position: relative;
+  width: 150px;
   &::after {
     @include btnFolder;
     right: 10px;
