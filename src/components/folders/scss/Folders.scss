@@ -50,14 +50,6 @@ body[data-theme="dark"] {
   @import "./FoldersDark.scss";
 }
 
-@media (prefers-color-scheme: dark) {
-  @import "./FoldersDark.scss";
-}
-
 body[data-theme="light"] {
-  @import "./FoldersLight.scss";
-}
-
-@media (prefers-color-scheme: light) {
   @import "./FoldersLight.scss";
 }

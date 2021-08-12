@@ -17,9 +17,14 @@
     setup() {
       onMounted(() => {
         const store = useStore()
-        let theme = "light"
-        if (window.localStorage.getItem("theme") != null) theme = window.localStorage.getItem("theme")
-        store.dispatch("setTheme", theme)
+
+        if (window.localStorage.getItem("theme") == null) {
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) store.dispatch("setTheme", "dark")
+          else store.dispatch("setTheme", "light")
+        } else {
+          let theme = window.localStorage.getItem("theme")
+          store.dispatch("setTheme", theme)
+        }
       })
     }
   };

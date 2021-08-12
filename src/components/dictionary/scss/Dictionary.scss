@@ -98,12 +98,3 @@ body[data-theme="light"] {
 body[data-theme="dark"] {
   @import "./DictionaryDark.scss";
 }
-
-
-@media (prefers-color-scheme: dark) {
-  @import "./DictionaryDark.scss";
-}
-
-@media (prefers-color-scheme: light) {
-  @import "./DictionaryLight.scss";
-}
