@@ -27,6 +27,7 @@ const foldersModule = {
         listModules: state.foldersList[item]?.listModules,
         id: state.foldersList[item].id, key: item
       }))
+
       return list
     }
   },

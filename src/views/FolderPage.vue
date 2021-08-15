@@ -14,18 +14,22 @@
         </router-link>
       </div>
       <div class="folder-page__content">
-        <di class="folder-list" v-if="folderItem?.listModules != null">
-          <div 
-            class="folder-list__item-wrapper"
+        <div class="folder-list" v-if="folderItem?.listModules != null && folderItem?.listModules.length > 0">
+          <div class="folder-list__item-wrapper"
             v-for="(item, index) of folderItem.listModules"
-            :key="index"
-            @click="redirectWords(item.title)">
-            <div class="folder-list__item" >
+            :key="index" @contextmenu.prevent
+          >
+            <div class="folder__show-menu folder-list__item">
+              <div class="folder__show-btns">
+                <button @click="redirectWords(item.title)">Изучить</button>
+                <button @click="deleteList(item.title)">Удалить из списка</button>
+              </div>
+            </div>
+            <div class="folder-list__item folder-list__noshow">
               <div class="list__title folder-list__title">
                 <h3>{{ item.title }}</h3>
               </div>
-              <div
-                class="list__words folder-list__item"
+              <div class="list__words folder-list__item"
                 v-for="(words, index) of item.words"
                 :key="index"
               >
@@ -37,8 +41,8 @@
               </div>
             </div>
           </div>
-        </di>
-        <div v-else>
+        </div>
+        <div class="folder-page-notfound" v-else>
           <h2>Вы сюда ничего не добавили</h2>
         </div>
       </div>
@@ -74,7 +78,12 @@
         const index = currentWords.value.findIndex((words: any) => words.title == title)
         if (index != -1) router.push(`/words/${userID.value}/${index}/?type=start`)
       }
-      return { folderItem, isLoader, redirectWords }
+
+      const deleteList = (title: string) => {
+        store.dispatch("deleteWordsFromFolder", { title: title, folder: folderItem.value, key: route.params.id })
+      }
+
+      return { folderItem, isLoader, redirectWords, deleteList }
     }
   })
 </script>

@@ -32,4 +32,21 @@
       }
     }
   }
+  &__show {
+    &-menu {
+      background: rgba(0, 0, 0, 0.6);
+    }
+    &-btns {
+      button {
+        border: 1px solid #fff;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.6);
+        &:hover, &:active {
+          color: #000;
+          border-color: #000;
+          background: #fff;
+        }
+      }
+    }
+  }
 }

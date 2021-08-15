@@ -34,9 +34,9 @@
       const route = useRoute()
 
       const title = readonly({ value: route.query.title })
-      let section = reactive({ value: null })
-      let shortFolders = computed(() => store.getters.shortFolders)
-      let isLoaderItem = computed(() => store.getters.isLoaderItem)
+      const section = reactive({ value: null })
+      const shortFolders = computed(() => store.getters.shortFolders)
+      const isLoaderItem = computed(() => store.getters.isLoaderItem)
 
       onMounted(() => {
         nextTick(() => window.scrollTo({ top: 0 }))
@@ -45,7 +45,11 @@
 
       const foldersList = computed(() => {
         if (shortFolders.value == null) return null
-        return shortFolders.value.filter((folder: any) => !folder.listModules.includes(title.value))
+
+        return shortFolders.value.filter((folder: any) => {
+          if (folder?.listModules == null) return true
+          return !folder.listModules.includes(title.value)
+        })
       })
 
       const saveSection = (item: any) => section.value = item

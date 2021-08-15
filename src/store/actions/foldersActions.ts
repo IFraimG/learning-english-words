@@ -37,17 +37,23 @@ const foldersAction = {
       commit("SET_LOADER_ITEM", false)
     } catch (error) {
       console.log(error);
+      commit("SET_LOADER_ITEM", false)
     }
   },
   async getFoldersList({ commit, rootState}: any) {
-    commit("SET_LOADER_ITEM", true)
+    try {
+      commit("SET_LOADER_ITEM", true)
 
-    let folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
-    commit("SET_FOLDERS", folders)
+      let folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
+      commit("SET_FOLDERS", folders)
 
-    commit("SET_LOADER_ITEM", false)
+      commit("SET_LOADER_ITEM", false) 
+    } catch (error) {
+      console.log(error);
+      commit("SET_LOADER_ITEM", false)
+    }
   },
-  async addWordsToSection({ rootState }: any, payload: {section: FolderShortItfc, title: string}) {
+  async addWordsToSection({ rootState }: any, payload: { section: FolderShortItfc, title: string }) {
     try {
       await foldersAPI.addWordsToFolder(rootState.auth.profile.id, payload.section, payload.title)
     } catch (error) {
@@ -57,6 +63,22 @@ const foldersAction = {
   async deleteFolder({ rootState }: any, payload: { key: string }) {
     try {
       await foldersAPI.deleteFolder(rootState.auth.profile.id, payload.key)
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+  async deleteWordsFromFolder({ rootState }: any, payload: { folder: FolderItfc | any, title: string, key: string }) {
+    try {
+      let folderList: any = []
+
+      payload.folder.listModules.filter((item: FolderShortItfc) => {
+        if (item.title != payload.title) folderList.push(item.title)
+      })
+
+      let folder = { ...payload.folder, listModules: folderList, key: payload.key }
+
+      await foldersAPI.deleteWordsFromFolder(rootState.auth.profile.id, folder)
+      window.location.reload()
     } catch (error) {
       console.log(error.message);
     }

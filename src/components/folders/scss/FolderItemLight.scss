@@ -28,4 +28,21 @@
       }
     }
   }
+  &__show {
+    &-menu {
+      background: rgba(0, 0, 0, 0.3);
+    }
+    &-btns {
+      button {
+        border: 1px solid #000;
+        color: #000;
+        background: #fff;
+        &:hover, &:active {
+          color: #fff;
+          border-color: #fff;
+          background: rgba(0, 0, 0, 0.8);
+        }
+      }
+    }
+  }
 }

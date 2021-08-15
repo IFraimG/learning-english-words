@@ -1,4 +1,4 @@
-import { FolderShortItfc } from './../../models/folders';
+import { FolderShortItfc, KeyFolderItfc } from './../../models/folders';
 import firebase from "firebase/app";
 import "firebase/database"
 
@@ -40,6 +40,11 @@ const foldersAPI = {
   },
   async deleteFolder(userID: string, key: string) {
     return await firebase.database().ref(`users/${userID}/folders/${key}`).remove()
+  },
+  async deleteWordsFromFolder(userID: string, folder: KeyFolderItfc) {
+    return await firebase.database().ref(`users/${userID}/folders/${folder.key}`).set({
+      title: folder.title, id: folder.id, listModules: folder.listModules
+    })
   }
 };
 
