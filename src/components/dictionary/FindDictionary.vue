@@ -1,13 +1,7 @@
 <template>
   <div class="find-word__wrapper">
     <div class="find-word">
-      <input
-        v-model="moduleWords"
-        @input="getWord"
-        @keyup.enter="getWord"
-        type="search"
-        placeholder="Название модуля..."
-      />
+      <input v-model="moduleWords" type="search" placeholder="Название модуля..." @input="getWord" @keyup.enter="getWord" />
     </div>
   </div>
 </template>
@@ -20,10 +14,10 @@
     name: "FindWord",
     setup() {
       const store = useStore()
-      let moduleWords = ref("")
+      const moduleWords = ref("")
 
       const getWord = () => {
-        let word = moduleWords.value
+        const word = moduleWords.value
           .trimLeft()
           .trimRight()
           .toLowerCase()

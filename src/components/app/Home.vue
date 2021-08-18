@@ -18,9 +18,9 @@
         </header>
         <main class="home-main home__main">
           <div class="home-main__particles">
-            <img src="@/assets/Polygon2.png" alt="">
-            <img src="@/assets/Rectangle4.png" alt="">
-            <img src="@/assets/Polygon3.png" alt="">
+            <img src="@/assets/Polygon2.png" alt="" />
+            <img src="@/assets/Rectangle4.png" alt="" />
+            <img src="@/assets/Polygon3.png" alt="" />
           </div>
           <div class="home-main__left">
             <h1>Не обращай & внимания <span>внимания</span> на текст.</h1>
@@ -31,33 +31,33 @@
             </div>
           </div>
           <div class="home-main__right">
-            <img src="@/assets/homefone1.png" alt="">
+            <img src="@/assets/homefone1.png" alt="" />
           </div>
         </main>
       </div>
     </div>
     <section class="home-pictures home__pictures">
       <div v-for="(img, index) of logoList" :key="index">
-        <img :src="img" alt="logo">
+        <img :src="img" alt="logo" />
       </div>
     </section>
     <SliderHome />
     <div class="home__container">
-      <div class="auth home-auth" ref="authContent" id="authContent">
+      <div id="authContent" ref="authContent" class="auth home-auth">
         <div class="auth__left">
           <div class="auth__tabs">
             <h3 @click="editLogin(false)">Регистрация</h3>
             <span> / </span>
             <h3 @click="editLogin(true)">Вход</h3>
           </div>
-          <AuthSection :isLogin="loginInfo" :errorsList="errorsList" />
+          <AuthSection :is-login="loginInfo" :errors-list="errorsList" />
         </div>
         <div class="auth__right">
-          <img src="@/assets/fone9.png" alt="">
+          <img src="@/assets/fone9.png" alt="" />
         </div>
       </div>
       <section class="home-cards home__cards">
-        <div class="home-cards__item" v-for="(item, index) of cardsList" :key="index">
+        <div v-for="(item, index) of cardsList" :key="index" class="home-cards__item">
           <img :src="item.img" alt="free" />
           <div class="home-cards__text">
             <h3>{{ item.title }}</h3>
@@ -74,13 +74,14 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from "vue"
-  import "@/components/app/scss/Home.scss"
-  import { mapGetters } from 'vuex';
+  import { computed, defineComponent, ref } from "vue"
+  import "@/components/app/scss/home/Home.scss"
+  import { useStore } from "vuex"
   import SliderHome from "./SliderHome.vue"
   import AuthSection from "./Auth.vue"
   import Footer from "./Footer.vue"
   import ThemeSwitcher from "./ThemeSwitcher.vue"
+
   // @ts-ignore
   import logo1 from "@/assets/logo1.png"
   // @ts-ignore
@@ -100,33 +101,35 @@
   // @ts-ignore
   import vector3 from "@/assets/Vector(2).png"
 
-  let Component = defineComponent({
+  export default defineComponent({
     name: "HomeContent",
     components: { SliderHome, AuthSection, Footer, ThemeSwitcher },
-    data() {
-      return {
-        logoList: [logo1, logo2, logo3, logo4, logo5, logo6],
-        cardsList: [
-          { title: "Личный словарь", link: "/", img: vector1, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
-          { title: "Личный словарь2", link: "/", img: vector2, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
-          { title: "Личный словарь3", link: "/", img: vector3, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" }
-        ]
-      }
-    },
-    methods: {
-      editLogin(isLogin: boolean) {
-        this.$store.commit("setLogin", isLogin);
-      },
-      scrollAuth() {
+    setup() {
+      const store = useStore()
+
+      const logoList = [logo1, logo2, logo3, logo4, logo5, logo6]
+      const cardsList = [
+        { title: "Личный словарь", link: "/", img: vector1, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+        { title: "Личный словарь2", link: "/", img: vector2, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+        { title: "Личный словарь3", link: "/", img: vector3, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+      ]
+
+      const loginInfo = computed(() => store.getters.loginInfo)
+      const errorsList = computed(() => store.getters.errorsList)
+      const isAuth = computed(() => store.getters.isAuth)
+      const authContent = ref(null)
+
+      const editLogin = (isLogin: boolean) => store.commit("setLogin", isLogin)
+
+      const scrollAuth = () => {
         // @ts-ignore
-        let info: any = this.$refs.authContent.offsetTop
-        window.scroll({ top: info, behavior: "smooth" })
+        window.scroll({ top: authContent.value.offsetTop, behavior: "smooth" })
       }
-    },
-    computed: {
-      ...mapGetters(["loginInfo", "errorsList", "isAuth"])
+
+      return {
+        logoList, cardsList, loginInfo, authContent,
+        errorsList, isAuth, editLogin, scrollAuth
+      }
     }
   })
-
-  export default Component
 </script>

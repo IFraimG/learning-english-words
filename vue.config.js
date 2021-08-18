@@ -8,6 +8,18 @@ module.exports = {
     iconPaths: {
       favicon32: "assets/logo.jpeg",
       appleTouchIcon: "assets/logo.jpeg",
-    }
-  }
+    },
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: "en",
+      fallbackLocale: "ru",
+      localeDir: "locales",
+      enableLegacy: false,
+      runtimeOnly: false,
+      compositionOnly: true,
+      fullInstall: true,
+    },
+  },
 }

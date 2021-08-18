@@ -1,5 +1,5 @@
-import { FolderItfc } from './../../models/folders';
-import FoldersState from '@/models/folders';
+import { FolderItfc } from "./../../models/folders"
+import FoldersState from "@/models/folders"
 
 const foldersMutations = {
   ROUTE_FOLDER: (state: FoldersState, payload: string) => {
@@ -13,7 +13,7 @@ const foldersMutations = {
   },
   SET_FOLDERS: (state: FoldersState, payload: FolderItfc[]) => {
     state.foldersList = payload
-  }
+  },
 }
 
 export default foldersMutations

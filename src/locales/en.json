@@ -1,0 +1,28 @@
+{
+  "header": {
+    "profile": "Profile",
+    "dictionary": "Dictionary",
+    "sections": "Sections",
+    "logout": "Log out"
+  },
+  "translation": "Translations",
+  "account": {
+    "allWords": "All Words",
+    "btnAddWords": "Add new words",
+    "notList": "You haven't made any lists yet!",
+    "wordsTable": {
+      "panel": {
+        "change": "Change",
+        "addToSection": "Add to the section",
+        "newWords": "New words",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save"
+      }
+    }
+  },
+  "notFound": {
+    "title": "The page isn't found",
+    "redirect": "You are being redirected to the homepage very soon"
+  }
+}

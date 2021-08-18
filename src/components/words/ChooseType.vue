@@ -12,22 +12,13 @@
           Определить значение русского слова на английском с вариантами ответов
         </h2>
       </div> -->
-      <div
-        @click="$emit('setCurrentType', 'englishV')"
-        class="panel__center panel__item"
-      >
+      <div class="panel__center panel__item" @click="$emit('setCurrentType', 'englishV')">
         <h2>Написать перевод русского слова на английском вручную</h2>
       </div>
-      <div
-        @click="$emit('setCurrentType', 'accordion')"
-        class="panel__right panel__item"
-      >
+      <div class="panel__right panel__item" @click="$emit('setCurrentType', 'accordion')">
         <h2>Задание "Гормошка"</h2>
       </div>
-      <div
-        @click="$emit('setCurrentType', 'sentences')"
-        class="panel__postright panel__item"
-      >
+      <div class="panel__postright panel__item" @click="$emit('setCurrentType', 'sentences')">
         <h2>Составить предложения со словами</h2>
       </div>
     </div>
@@ -35,9 +26,9 @@
 </template>
 
 <script>
-import "./scss/ChooseType.scss";
+  import "./scss/ChooseType.scss"
 
-export default {
-  name: "ChooseType"
-};
+  export default {
+    name: "ChooseType",
+  }
 </script>

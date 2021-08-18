@@ -1,6 +1,6 @@
-import AuthInterface from "./../../models/auth";
-import authActions from "../actions/authActions";
-import authMutations from "../mutations/authMutations";
+import AuthInterface from "./../../models/auth"
+import authActions from "../actions/authActions"
+import authMutations from "../mutations/authMutations"
 
 const authModule = {
   state(): AuthInterface {
@@ -8,10 +8,10 @@ const authModule = {
       profile: {
         email: "",
         login: "",
-        id: ""
+        id: "",
       },
       isAuth: false,
-      errors: []
+      errors: [],
     }
   },
   mutations: authMutations,
@@ -20,8 +20,8 @@ const authModule = {
     errorsList: (state: AuthInterface) => state.errors,
     isAuth: (state: AuthInterface) => state.isAuth,
     userID: (state: AuthInterface) => state.profile.id,
-    profile: (state: AuthInterface) => state.profile
+    profile: (state: AuthInterface) => state.profile,
   },
-};
+}
 
-export default authModule;
+export default authModule

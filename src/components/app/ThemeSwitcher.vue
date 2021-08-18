@@ -1,15 +1,15 @@
 <template>
   <div class="theme-switcher__wrapper">
     <label class="theme-switcher">
-      <input :checked="theme" @change="setMode" class="switcher" type="checkbox" />
+      <input :checked="theme" class="switcher" type="checkbox" @change="setMode" />
       <span class="slider"></span>
     </label>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from "vue";
-  import { useStore } from "vuex";
+  import { defineComponent } from "vue"
+  import { useStore } from "vuex"
 
   export default defineComponent({
     name: "ThemeSwitcher",
@@ -26,7 +26,7 @@
       else theme = false
 
       return { setMode, theme }
-    }
+    },
   })
 </script>
 
@@ -52,7 +52,7 @@
     right: 0;
     bottom: 0;
     background-color: rgb(238, 215, 82);
-    transition: .4s;
+    transition: 0.4s;
     border-radius: 34px;
   }
 
@@ -64,7 +64,7 @@
     left: 4px;
     bottom: 4px;
     background-color: white;
-    transition: .4s;
+    transition: 0.4s;
     border-radius: 50%;
   }
 
@@ -84,10 +84,10 @@
 
   .switcher:checked + .slider::before {
     transform: translateX(45px);
-    background: url("../../assets/moon.png") 50%/cover no-repeat;
+    background: url("../../assets/moon.png") 50% / cover no-repeat;
   }
 
-  @media (max-width: 369px) {
+  @media (max-width: 421px) {
     .theme-switcher__wrapper {
       width: 70px;
       height: 35px;

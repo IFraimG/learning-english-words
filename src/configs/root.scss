@@ -102,7 +102,22 @@ img {
   }
 }
 
+.input-light {
+  // padding: 10px 15px;
+  border: 1px solid transparent;
+  // border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease-in-out;
+  &:focus {
+    box-shadow: 0 0 30px 0 #dddddd;
+  }
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
 body[data-theme="dark"] {
   background-color: $darkbg;
   color: #fff;
 }
+

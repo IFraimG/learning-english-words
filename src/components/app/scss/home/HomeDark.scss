@@ -32,6 +32,14 @@
       }
     }
   }
+  &-btn {
+    background-color: rgba(242, 88, 34, 1);
+    color: #fff;
+    &:active {
+      background-color: rgb(190, 72, 30);
+      border-bottom: 3px solid rgb(139, 50, 17);
+    }
+  }
   &-cards {
     &__text {
       span {

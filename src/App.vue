@@ -8,9 +8,9 @@
 </template>
 
 <script>
-  import Header from "@/components/app/Header.vue";
-  import { onMounted } from 'vue';
-  import { useStore } from 'vuex';
+  import Header from "@/components/app/Header.vue"
+  import { onMounted } from "vue"
+  import { useStore } from "vuex"
 
   export default {
     components: { Header },
@@ -22,10 +22,10 @@
           if (window.matchMedia("(prefers-color-scheme: dark)").matches) store.dispatch("setTheme", "dark")
           else store.dispatch("setTheme", "light")
         } else {
-          let theme = window.localStorage.getItem("theme")
+          const theme = window.localStorage.getItem("theme")
           store.dispatch("setTheme", theme)
         }
       })
-    }
-  };
+    },
+  }
 </script>

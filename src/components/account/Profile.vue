@@ -6,7 +6,7 @@
       <p>{{ profile.email }}</p>
       <router-link to="/account/words">
         <button class="profile__run">
-          Добавить новые слова
+          {{ Ti18N("account.btnAddWords") }}
         </button>
       </router-link>
       <ThemeSwitcher style="margin-top: 20px" />
@@ -15,14 +15,14 @@
 </template>
 
 <script>
-  import ThemeSwitcher from '../app/ThemeSwitcher.vue';
+  import ThemeSwitcher from "../app/ThemeSwitcher.vue"
 
   export default {
     name: "Profile",
     components: { ThemeSwitcher },
     props: {
-      profile: Object
-    }
-  };
+      profile: Object,
+    },
+    inject: ["Ti18N"]
+  }
 </script>
-

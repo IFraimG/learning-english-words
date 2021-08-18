@@ -4,6 +4,9 @@
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 50px;
+    @media (max-width: 370px) {
+      margin-bottom: 0;
+    }
   }
   &-cards {
     &__item {
@@ -15,6 +18,9 @@
       user-select: none;
       @media (max-width: 370px) {
         margin: 20px 20px;
+      }
+      @media (max-width: 361px) {
+        margin: 0 20px;
       }
       &:hover {
         box-shadow: 15px 25px 56px 6px rgba(0, 0, 0, 0.06);

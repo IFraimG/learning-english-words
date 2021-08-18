@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, nextTick, onMounted, readonly } from 'vue'
-  import Modal from './Modal.vue'
-  import { useRoute, useRouter } from 'vue-router'
-  import { useStore } from 'vuex'
+  import { defineComponent, nextTick, onMounted, readonly } from "vue"
+  import Modal from "./Modal.vue"
+  import { useRoute, useRouter } from "vue-router"
+  import { useStore } from "vuex"
 
   export default defineComponent({
     name: "ModalDeleteWords",
@@ -25,18 +25,18 @@
       const router = useRouter()
 
       onMounted(() => nextTick(() => window.scrollTo({ top: 0 })))
-    
-      let title = readonly({ value: route.query.title })
+
+      const title = readonly({ value: route.query.title })
 
       const deleteItem = async (isTrue: boolean) => {
         if (isTrue) {
-          document.documentElement.style.overflow = "auto";
-          await store.dispatch("deleteFolder", { key: route.params.id });
+          document.documentElement.style.overflow = "auto"
+          await store.dispatch("deleteFolder", { key: route.params.id })
           router.push("/folders")
         }
       }
 
       return { deleteItem, title }
-    }
+    },
   })
 </script>

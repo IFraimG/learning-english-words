@@ -6,16 +6,16 @@
           <h1>Вы написали верно {{ complete == null ? 0 : complete.length }} {{ wordsNum }} из {{ len }} {{ wordsNum }}</h1>
           <span v-if="mistakes?.length > 0 && mistakes != null" class="finish__error-title">
             <p @click="isOpen = !isOpen">Было допущено {{ mistakes.length }} {{ errorsNum }}</p>
-            <img v-show="!isOpen" @click="isOpen = true" src="@/assets/arrow-down.png" alt="" />
-            <img v-show="isOpen" @click="isOpen = false" src="@/assets/arrow-top.png" alt="" />
+            <img v-show="!isOpen" src="@/assets/arrow-down.png" alt="" @click="isOpen = true" />
+            <img v-show="isOpen" src="@/assets/arrow-top.png" alt="" @click="isOpen = false" />
           </span>
           <div v-if="isOpen" class="finish__error">
-            <div class="finish__error-list" v-for="(err, index) of mistakes" :key="index">
+            <div v-for="(err, index) of mistakes" :key="index" class="finish__error-list">
               <p>
                 <span class="finish__error-index">{{ ++index }}. </span>
                 <span class="finish__error-english">{{ err.english }}</span>
                 -
-                <strike class="finish__error-russian" v-if="err.translation != null"> {{ err.translation }}</strike>
+                <strike v-if="err.translation != null" class="finish__error-russian"> {{ err.translation }}</strike>
               </p>
             </div>
           </div>
@@ -23,7 +23,7 @@
             <router-link :to="{ name: 'Account' }">
               <button class="profile__run">Вернуться</button>
             </router-link>
-            <button @click="returnStart" class="profile__run">
+            <button class="profile__run" @click="returnStart">
               Пройти еще раз
             </button>
           </div>
@@ -38,6 +38,9 @@
 
   export default {
     name: "Finish",
+    props: {
+      len: Number,
+    },
     data() {
       return {
         mistakes: [],
@@ -45,9 +48,6 @@
         isOpen: false,
         activeClass: "finish__error-active",
       }
-    },
-    props: {
-      len: Number,
     },
     computed: {
       errorsNum() {
@@ -61,9 +61,9 @@
       },
     },
     created() {
-      let complete = JSON.parse(window.sessionStorage.getItem("words"))
+      const complete = JSON.parse(window.sessionStorage.getItem("words"))
       if (complete != null) this.complete = complete
-      let mistakes = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
+      const mistakes = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
       if (mistakes != null) this.mistakes = mistakes
     },
     methods: {

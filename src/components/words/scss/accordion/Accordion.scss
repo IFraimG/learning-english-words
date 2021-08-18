@@ -102,14 +102,6 @@ body[data-theme="dark"] {
   @import "./AccordionDark.scss";
 }
 
-@media (prefers-color-scheme: dark) {
-  @import "./AccordionDark.scss";
-}
-
 body[data-theme="light"] {
-  @import "./AccordionLight.scss";
-}
-
-@media (prefers-color-scheme: light) {
   @import "./AccordionLight.scss";
 }

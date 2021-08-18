@@ -1,0 +1,120 @@
+.home {
+  &__container {
+    @media (max-width: 401px) {
+      padding: 20px;
+    }
+  }
+  &__header {
+    @media (max-width: 501px) {
+      justify-content: flex-start;
+      margin: 0;
+    }
+  }
+  &-header {
+    &__item {
+      p {
+        @media (max-width: 601px) {
+          display: none;
+        }
+      }
+      button {
+        @media (max-width: 871px) {
+          padding: 10px 20px;
+        }
+      }
+      @media (max-width: 871px) {
+        margin: 0 10px;
+      }
+    }
+    &__logo {
+      @media (max-width: 451px) {
+        img {
+          max-width: 24px;
+          max-height: 24px;
+        }
+      }
+      h3 {
+        @media (max-width: 401px) {
+          font-size: 18px;
+        }
+        @media (max-width: 337px) {
+         font-size: 28px;
+        }
+      }
+    }
+    &__switch {
+      @media (max-width: 501px) {
+        transform: rotate(90deg);
+        margin-top: 20px;
+      }
+      @media (max-width: 351px) {
+        transform: rotate(90deg) translateY(30px);
+      }
+      @media (max-width: 337px) {
+        display: none;
+      }
+    }
+  }
+  &-btn {
+    @media (max-width: 371px) {
+      height: 50px;
+    }
+  }
+  &-main {
+    @media (max-width: 1011px) {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px 0;
+    }
+    &__left {
+      @media (max-width: 1011px) {
+        text-align: center;
+      }
+      h1 {
+        @media (max-width: 811px) {
+          font-size: 32px;
+          text-align: center;
+        }
+      }
+    }
+    &__down {
+      @media (max-width: 1011px) {
+        justify-content: center;
+      }
+      p {
+        @media (max-width: 371px) {
+          display: none;
+        }
+      }
+      button {
+        @media (max-width: 811px) {
+          padding: 0 25px !important;
+        }
+      }
+    }
+    &__right {
+      img {
+        @media (max-width: 1257px) {
+          max-width: 500px;
+        }
+        @media (max-width: 671px) {
+          margin-top: 20px;
+          max-width: 300px;
+        }
+        @media (max-width: 361px) {
+          max-width: 220px;
+        }
+      }
+    }
+    &__particles {
+      @media (max-width: 1011px) {
+        display: none;
+      }
+    }
+  }
+  &__pictures {
+    @media (max-width: 411px) {
+      margin-top: 30px;
+    }
+  }
+}

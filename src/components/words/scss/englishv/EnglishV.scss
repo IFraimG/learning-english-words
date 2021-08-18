@@ -82,14 +82,6 @@ body[data-theme="dark"] {
   @import "./EnglishVDark.scss";
 }
 
-@media (prefers-color-scheme: dark) {
-  @import "./EnglishVDark.scss";
-}
-
 body[data-theme="light"] {
-  @import "./EnglishVLight.scss";
-}
-
-@media (prefers-color-scheme: light) {
   @import "./EnglishVLight.scss";
 }

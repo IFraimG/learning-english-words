@@ -2,43 +2,36 @@
   <div class="sentences__wrapper">
     <div class="sentences">
       <h1>Составьте предложения со словами</h1>
-      <div class="sentences__item" v-for="(item, index) of currentWords" :key="item.russian">
+      <div v-for="(item, index) of currentWords" :key="item.russian" class="sentences__item">
         <h3>{{ item.russian }} -</h3>
-        <textarea
-          rows="1"
-          @keydown.enter.prevent="checkItem(index)"
-          :ref="el => { if (el) sentences[index] = el }"
-        />
-        <div
-          class="sentences__stats"
-          v-if="doneList.value[index].english == item.english && doneList.value[index].isDone != -1"
-        >
-          <div class="sentences__error sentences__error-null" v-if="doneList.value[index].isDone == 0">
+        <textarea :ref="el => { if (el) sentences[index] = el }" rows="1" @keydown.enter.prevent="checkItem(index)" />
+        <div v-if="doneList.value[index].english == item.english && doneList.value[index].isDone != -1" class="sentences__stats">
+          <div v-if="doneList.value[index].isDone == 0" class="sentences__error sentences__error-null">
             <p>Вы допустили ошибку в слове</p>
           </div>
-          <div class="sentences__error sentences__error-first" v-if="doneList.value[index].isDone == 1">
+          <div v-if="doneList.value[index].isDone == 1" class="sentences__error sentences__error-first">
             <p>Все верно !</p>
           </div>
-          <div class="sentences__error sentences__error-second" v-if="doneList.value[index].isDone == 2">
+          <div v-if="doneList.value[index].isDone == 2" class="sentences__error sentences__error-second">
             <p>Слишком маленькое предложение</p>
           </div>
         </div>
       </div>
-      <button @click="$router.push('/account')" class="profile__run sentences__finish">Завершить</button>
+      <button class="profile__run sentences__finish" @click="$router.push('/account')">Завершить</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent, inject, nextTick, onMounted, reactive, ref } from 'vue'
+  import { defineComponent, inject, nextTick, onMounted, reactive, ref } from "vue"
   import "./scss/sentences/Sentences.scss"
 
   export default defineComponent({
     name: "Sentences",
     setup() {
-      let currentWords: any = inject("currentWords")
-      let sentences = ref<any[]>([])
-      let doneList = reactive<any>({ value: [] })
+      const currentWords: any = inject("currentWords")
+      const sentences = ref<any[]>([])
+      const doneList = reactive<any>({ value: [] })
 
       currentWords.value.map((item: any) => doneList.value.push({ english: item.english, isDone: -1 }))
 
@@ -47,11 +40,14 @@
       })
 
       const checkItem = (index: number) => {
-        let value = sentences.value[index].value
+        const value = sentences.value[index].value
         if (value != "") {
-          let wordsList = value.trimStart().trimEnd().split(" ")
-          let len = wordsList.length
-          let original = currentWords.value[index].english.split(" ")
+          const wordsList = value
+            .trimStart()
+            .trimEnd()
+            .split(" ")
+          const len = wordsList.length
+          const original = currentWords.value[index].english.split(" ")
 
           let indexOrigin = 0
           let buildWord = []
@@ -66,9 +62,9 @@
               indexOrigin = 0
             }
 
-            if (buildWord.join(' ') == currentWords.value[index].english) {
-              isWord = 1;
-              break;
+            if (buildWord.join(" ") == currentWords.value[index].english) {
+              isWord = 1
+              break
             }
           }
 
@@ -81,6 +77,6 @@
       }
 
       return { currentWords, sentences, checkItem, doneList }
-    }
+    },
   })
 </script>

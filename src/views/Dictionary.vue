@@ -16,81 +16,71 @@
         transcription: null as string | null,
         newTranscription: "",
         currentColumn: 1,
-      };
+      }
     },
     computed: {
-    ...mapGetters([
-      "userID",
-      "currentWords",
-      "pagesDictionary",
-      "currentDictionary",
-      "dictionaryList",
-      "isLoader",
-    ]),
-    sortedWords(): Array<any> {
-      let words = [...this.currentDictionary.words].sort(
-        (a, b) => a.english.charCodeAt(0) - b.english.charCodeAt(0),
-      );
-      return words;
-    },
+      ...mapGetters(["userID", "currentWords", "pagesDictionary", "currentDictionary", "dictionaryList", "isLoader"]),
+      sortedWords(): Array<any> {
+        const words = [...this.currentDictionary.words].sort((a, b) => a.english.charCodeAt(0) - b.english.charCodeAt(0))
+        return words
+      },
     },
     async created() {
-      this.editPage(1);
-      await this.$store.dispatch("getDictionaryWords", this.userID);
+      this.editPage(1)
+      await this.$store.dispatch("getDictionaryWords", this.userID)
       if (this.pagesDictionary == null) {
         this.$store.dispatch("addDictionaryWords", {
           id: this.userID,
           words: this.currentWords,
-        });
+        })
       }
     },
     methods: {
       editPage(page: number) {
-        this.currentColumn = page;
+        this.currentColumn = page
         this.$store.dispatch("getCurrentDictionaryWords", {
           id: this.userID,
           query: this.currentColumn - 1,
-        });
+        })
       },
       previousPage() {
-        if (this.currentColumn > 1) this.editPage(this.currentColumn - 1);
+        if (this.currentColumn > 1) this.editPage(this.currentColumn - 1)
       },
       nextPage() {
-        if (this.currentColumn < this.pagesDictionary - 1)
-          this.editPage(this.currentColumn + 1);
+        if (this.currentColumn < this.pagesDictionary - 1) this.editPage(this.currentColumn + 1)
       },
       setTranscription(word: string, transcription: string) {
-        this.transcription = word;
-        this.newTranscription = transcription;
+        this.transcription = word
+        this.newTranscription = transcription
       },
       async saveTranscription(wordInfo: any) {
-        let data = { ...wordInfo, transcription: this.newTranscription };
-        let index = this.currentDictionary.words.findIndex((item: any) => item.id == wordInfo.id);
+        const data = { ...wordInfo, transcription: this.newTranscription }
+        const index = this.currentDictionary.words.findIndex((item: any) => item.id == wordInfo.id)
 
         await this.$store.dispatch("saveDitionaryTranscription", {
           userID: this.userID,
           wordData: data,
           wordIndex: index,
           query: this.currentColumn - 1,
-        });
+        })
 
-        this.newTranscription = "";
-        this.transcription = null;
+        this.newTranscription = ""
+        this.transcription = null
       },
       findModule(title: string) {
-        this.$store.commit("FIND_DICTIONARY_TITLE", title);
-      }
-    }
-  });
+        this.$store.commit("FIND_DICTIONARY_TITLE", title)
+      },
+    },
+  })
 
-  export default Component;
+  export default Component
 </script>
 
 <template>
   <div class="dictionary">
     <div v-if="!isLoader && pagesDictionary != null">
-      <FindWord @findItem="findModule" style="margin-top: 50px" />
-      <table>
+      <FindWord style="margin-top: 50px" @findItem="findModule" />
+      <table @click="setTranscription(null, '')">
         <caption>
           {{
             currentDictionary.title
@@ -106,12 +96,12 @@
         <tbody class="dictionary__content">
           <tr v-for="(wordInfo, index) of sortedWords" :key="index" class="dictionary__item">
             <td>{{ wordInfo.english }}</td>
-            <td v-if="transcription != wordInfo.english" @click="setTranscription(wordInfo.english, wordInfo.transcription)" class="dictionary__transcription">
-              <span class="dictionary__add-transcription" v-if="wordInfo?.transcription == null">Добавить транскрипцию</span>
+            <td v-if="transcription != wordInfo.english" class="dictionary__transcription" @click.stop="setTranscription(wordInfo.english, wordInfo.transcription)">
+              <span v-if="wordInfo?.transcription == null" class="dictionary__add-transcription">Добавить транскрипцию</span>
               <span v-else>{{ wordInfo.transcription }}</span>
             </td>
-            <td class="dictionary__transcription" v-else>
-              <input type="text" v-model="newTranscription" @keydown.esc="setTranscription(null, '')" @keydown.enter="saveTranscription(wordInfo)" />
+            <td v-else class="dictionary__transcription" @click.stop>
+              <input v-model="newTranscription" type="text" @keydown.stop.esc="setTranscription(null, '')" @keydown.stop.enter="saveTranscription(wordInfo)" />
             </td>
             <td>{{ wordInfo.russian }}</td>
           </tr>
@@ -123,7 +113,7 @@
         </template>
       </Paginator>
     </div>
-    <div style="margin-top: 50px; font-size: 32px" v-if="pagesDictionary == null && !isLoader">
+    <div v-if="pagesDictionary == null && !isLoader" style="margin-top: 50px; font-size: 32px">
       <h1>Ваш словарь пуст</h1>
     </div>
     <Loader v-if="isLoader" />

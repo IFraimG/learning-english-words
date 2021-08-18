@@ -11,8 +11,7 @@
               </div>
             </li>
             <li>
-              Distinctively exploit optimal alignments for intuitive bandwidth.
-              Quickly coordinate business through revolutionary.
+              Distinctively exploit optimal alignments for intuitive bandwidth. Quickly coordinate business through revolutionary.
             </li>
             <li class="home-footer__socials">
               <router-link to="/">
@@ -64,9 +63,9 @@
 </template>
 
 <script>
-import "@/components/app/scss/Home.scss"
+  import "@/components/app/scss/home/Home.scss"
 
-export default {
-  name: "Footer"
-};
+  export default {
+    name: "Footer",
+  }
 </script>

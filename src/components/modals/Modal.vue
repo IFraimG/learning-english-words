@@ -1,15 +1,10 @@
 <template>
   <div class="modal__wrapper popup__wrapper">
-    <div @click.stop class="modal popup">
+    <div class="modal popup" @click.stop>
       <div class="modal__content popup__content">
         <div class="popup__header">
           <slot name="title"></slot>
-          <img
-            @click="closeModal"
-            class="popup__close"
-            src="@/assets/close.png"
-            alt="close"
-          />
+          <img class="popup__close" src="@/assets/close.png" alt="close" @click="closeModal" />
         </div>
         <div class="popup__content">
           <slot name="content"></slot>
@@ -28,25 +23,25 @@
 </template>
 
 <script>
-  import "./scss/ModalWords.scss";
-  import "./scss/Popup.scss";
+  import "./scss/ModalWords.scss"
+  import "./scss/Popup.scss"
 
   export default {
     name: "Popup",
     emits: ["onsuccess"],
     mounted() {
-      window.scrollTo({ top: 0 });
-      document.documentElement.style.overflow = "hidden";
+      window.scrollTo({ top: 0 })
+      document.documentElement.style.overflow = "hidden"
     },
     methods: {
       closeModal() {
-        document.documentElement.style.overflow = "auto";
+        document.documentElement.style.overflow = "auto"
         this.sendSuccess(false)
         history.back()
       },
       sendSuccess(isTrue) {
-        this.$emit('onsuccess', isTrue)
-      }
-    }
-  };
+        this.$emit("onsuccess", isTrue)
+      },
+    },
+  }
 </script>

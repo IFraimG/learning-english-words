@@ -1,0 +1,27 @@
+.lang {
+  &__title {
+    @media (max-width: 724px) {
+      margin-bottom: 20px !important;
+    }
+  }
+  &__list {
+    @media (max-width: 724px) {
+      display: none;
+    }
+  }
+  &__menu {
+    @media (max-width: 724px) {
+      display: flex;
+    }
+  }
+  &-header-text {
+    @media (max-width: 724px) {
+      display: none;
+    }
+  }
+  &-menu-text {
+    @media (max-width: 724px) {
+      display: flex;
+    }
+  }
+}

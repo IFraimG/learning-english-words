@@ -1,6 +1,6 @@
-import WordsInterface from "./../../models/words";
-import wordsAction from "../actions/wordsActions";
-import wordsMutations from "../mutations/wordsMutations";
+import WordsInterface from "./../../models/words"
+import wordsAction from "../actions/wordsActions"
+import wordsMutations from "../mutations/wordsMutations"
 
 const wordsModule = {
   state(): WordsInterface {
@@ -13,7 +13,7 @@ const wordsModule = {
       isLoader: false,
       incorrectWord: null,
       isRepeatingTitle: false,
-      wordsLength: 0
+      wordsLength: 0,
     }
   },
   mutations: wordsMutations,
@@ -27,8 +27,8 @@ const wordsModule = {
     isLoader: (state: WordsInterface): boolean => state.isLoader,
     incorrectWord: (state: WordsInterface) => state.incorrectWord,
     isRepeatingTitle: (state: WordsInterface) => state.isRepeatingTitle,
-    wordsLength: (state: WordsInterface) => state.wordsLength
+    wordsLength: (state: WordsInterface) => state.wordsLength,
   },
-};
+}
 
-export default wordsModule;
+export default wordsModule

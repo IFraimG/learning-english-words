@@ -1,4 +1,4 @@
-import { DictionaryListInterface } from "./dictionary";
+import { DictionaryListInterface } from "./dictionary"
 
 export default interface FoldersState {
   routeFolder: string

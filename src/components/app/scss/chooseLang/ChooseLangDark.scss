@@ -1,0 +1,22 @@
+@import "@/configs/vars.scss";
+
+.lang {
+  &__list {
+    background-color: rgb(112, 112, 112);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    p {
+      &:not(.lang__active) {
+        color: #fff;
+      }
+      &::before {
+        border-top: 5px solid $defaultbtn;
+      }
+      &:hover {
+        color: $defaultbtn;
+      }
+    }
+  }
+  &__active {
+    color: #d14e4e;
+  }
+}

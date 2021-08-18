@@ -3,9 +3,9 @@
 </template>
 
 <script>
-export default {
-  name: "EnglishT"
-};
+  export default {
+    name: "EnglishT",
+  }
 </script>
 
 <style></style>

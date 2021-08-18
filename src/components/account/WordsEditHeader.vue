@@ -7,10 +7,10 @@
 </template>
 
 <script>
-// не используется !!!
-import { defineComponent } from "vue";
+  // не используется !!!
+  import { defineComponent } from "vue"
 
-export default defineComponent({
-  name: "WordsEditHeader"
-})
+  export default defineComponent({
+    name: "WordsEditHeader",
+  })
 </script>

@@ -5,8 +5,8 @@
     </template>
     <template #content>
       <div v-if="!isLoaderItem">
-        <DropList @setItem="saveSection" v-if="foldersList != null" :list="foldersList" />
-        <div class="profile__nosections" v-else>
+        <DropList v-if="foldersList != null" :list="foldersList" @setItem="saveSection" />
+        <div v-else class="profile__nosections">
           <p>Вы еще не создали ни один раздел, или ваши слова уже есть во всех ваших разделах</p>
           <CreateFolder class="profile__nosections-create" />
         </div>
@@ -21,10 +21,10 @@
   import { computed, defineComponent, nextTick, onMounted, reactive, readonly } from "vue"
   import { useRoute } from "vue-router"
   import { useStore } from "vuex"
-  import Modal from "./Modal.vue";
-  import DropList from '@/components/app/DropList.vue';
-  import CreateFolder from '@/components/folders/CreateFolder.vue';
-  import Loader from '@/components/app/Loader.vue';
+  import Modal from "./Modal.vue"
+  import DropList from "@/components/app/DropList.vue"
+  import CreateFolder from "@/components/folders/CreateFolder.vue"
+  import Loader from "@/components/app/Loader.vue"
 
   export default defineComponent({
     name: "ModalToFolders",
@@ -52,22 +52,25 @@
         })
       })
 
-      const saveSection = (item: any) => section.value = item
+      const saveSection = (item: any) => (section.value = item)
 
       const sendSection = (isTrue: boolean) => {
         if (!isTrue) section.value = null
         if (isTrue && section.value != null) {
-          store.dispatch("addWordsToSection", {section: section.value, title: title.value})
-          document.documentElement.style.overflow = "auto";
+          store.dispatch("addWordsToSection", { section: section.value, title: title.value })
+          document.documentElement.style.overflow = "auto"
           history.back()
         }
       }
 
       return {
-        sendSection, saveSection,
-        section, shortFolders, isLoaderItem,
-        foldersList
+        sendSection,
+        saveSection,
+        section,
+        shortFolders,
+        isLoaderItem,
+        foldersList,
       }
-    }
+    },
   })
 </script>

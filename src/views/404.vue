@@ -2,37 +2,38 @@
   <div class="not-found__wrapper">
     <div class="not-found">
       <div class="not-found__content">
-        <h1>Данной страницы не существует!</h1>
+        <h1>{{ t("notFound.title") }}</h1>
         <img src="@/assets/404.webp" alt="" />
-        <p>
-          Совсем скоро вы перенаправитесь на главную страницу {{ time.value }}
-        </p>
+        <p>{{ t("notFound.redirect") }}: {{ time.value }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted, reactive } from "vue";
-  import { useRouter } from "vue-router";
+  import { defineComponent, onMounted, reactive } from "vue"
+  import { useI18n } from "vue-i18n"
+  import { useRouter } from "vue-router"
 
   const Component = defineComponent({
     name: "NotFound",
     setup() {
-      const router = useRouter();
-      let time = reactive({ value: 5 });
+      const router = useRouter()
+      const { t } = useI18n()
+
+      const time = reactive({ value: 5 })
 
       onMounted(() => {
         setInterval(() => {
-          if (time.value > 0) time.value--;
-          else router.push("/");
-        }, 1000);
-      });
-      return { time };
+          if (time.value > 0) time.value--
+          else router.push("/")
+        }, 1000)
+      })
+      return { time, t }
     },
-  });
+  })
 
-  export default Component;
+  export default Component
 </script>
 
 <style lang="scss" scoped>
@@ -51,6 +52,7 @@
         width: 256px;
         height: 256px;
         object-fit: cover;
+        margin: 30px 0;
       }
       p {
         font-size: 24px;

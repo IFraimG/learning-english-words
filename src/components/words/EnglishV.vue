@@ -8,7 +8,7 @@
           <span v-if="wordData.currentTime != ''" class="english-form-time"> ({{ wordData.currentTime }}) </span>
         </div>
         <div class="english-form__middle">
-          <input v-model="word.value" @keydown.enter="checkInput" type="text" />
+          <input v-model="word.value" type="text" @keydown.enter="checkInput" />
           <button class="profile__run modal-button__run" @click="checkInput">
             Проверить
           </button>
@@ -24,21 +24,21 @@
           </div>
         </div>
         <div class="english-form__footer">
-          <button @click="$emit('previousTask')" class="profile__run" v-if="parseInt(taskNum) > 1">
+          <button v-if="parseInt(taskNum) > 1" class="profile__run" @click="$emit('previousTask')">
             Вернуться
           </button>
-          <button v-if="!isAnswer.value && !isDone.value && isError.value" @click="setAnswer(true)" class="profile__run modal-button__run">
+          <button v-if="!isAnswer.value && !isDone.value && isError.value" class="profile__run modal-button__run" @click="setAnswer(true)">
             Посмотреть ответ
           </button>
-          <button @click="nextTask" v-if="parseInt(taskNum) != len" class="profile__run modal-button__run">
+          <button v-if="parseInt(taskNum) != len" class="profile__run modal-button__run" @click="nextTask">
             Далее
           </button>
-          <button @click="setFinish" v-else class="profile__run modal-button__run">
+          <button v-else class="profile__run modal-button__run" @click="setFinish">
             Завершить
           </button>
-          <span class="english-form__answer" v-if="!isDone.value && isAnswer.value">
+          <span v-if="!isDone.value && isAnswer.value" class="english-form__answer">
             <p>{{ wordData.russian }}</p>
-            <img @click="setAnswer(false)" src="@/assets/close.png" alt="close" />
+            <img src="@/assets/close.png" alt="close" @click="setAnswer(false)" />
           </span>
         </div>
       </div>
@@ -58,21 +58,21 @@
     },
     emits: ["setFinishType", "nextTask", "previousTask"],
     setup(_, { emit }) {
-      let wordData = inject("wordData")
+      const wordData = inject("wordData")
 
-      let isDone = reactive({ value: false })
-      let isError = reactive({ value: false })
-      let errorMessage = reactive({ value: "" })
-      let errorsList = reactive({ value: [] })
-      let word = reactive({ value: "" })
-      let isAnswer = reactive({ value: false })
+      const isDone = reactive({ value: false })
+      const isError = reactive({ value: false })
+      const errorMessage = reactive({ value: "" })
+      const errorsList = reactive({ value: [] })
+      const word = reactive({ value: "" })
+      const isAnswer = reactive({ value: false })
 
       const checkInput = () => {
-        let translation = wordData.value.russian
+        const translation = wordData.value.russian
           .trimLeft()
           .trimRight()
           .toLowerCase()
-        let word2 = word.value
+        const word2 = word.value
           .trimLeft()
           .trimRight()
           .toLowerCase()
@@ -85,9 +85,9 @@
           } else {
             isError.value = true
             if (word2.length > 0) {
-              let arrayErrors = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
-              let newArray = []
-              let errInfo = { translation: word.value, english: wordData.value.english }
+              const arrayErrors = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
+              const newArray = []
+              const errInfo = { translation: word.value, english: wordData.value.english }
               if (arrayErrors != null && arrayErrors != 0) {
                 arrayErrors.map(item => {
                   if (item.english != wordData.english) newArray.push(item)
@@ -96,7 +96,7 @@
               newArray.push(errInfo)
               window.sessionStorage.setItem("wordsMistakes", JSON.stringify(newArray))
 
-              let updateMistakes = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
+              const updateMistakes = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
               errorsList.value = updateMistakes
             } else errorMessage.value = "Вы не ввели слово"
           }
@@ -105,12 +105,12 @@
 
       const addSuccessWord = () => {
         if (isDone.value) {
-          let arrayWords = JSON.parse(window.sessionStorage.getItem("words"))
-          let newSuccessWord = {
+          const arrayWords = JSON.parse(window.sessionStorage.getItem("words"))
+          const newSuccessWord = {
             translation: word.value,
             english: wordData.english,
           }
-          let newArrayWords = []
+          const newArrayWords = []
           if (arrayWords?.length > 0 && arrayWords != null) {
             arrayWords.map(item => {
               if (item.translation != newSuccessWord.translation) newArrayWords.push(item)

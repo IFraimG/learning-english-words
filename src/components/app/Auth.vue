@@ -2,28 +2,15 @@
   <div class="auth__form">
     <form @submit.prevent="sendData">
       <div class="auth__registration">
-        <input
-          v-model="formData.email"
-          type="text"
-          placeholder="Введите ваш email"
-        />
-        <input
-          v-model="formData.login"
-          type="text"
-          v-if="!isLogin"
-          placeholder="Введите ваш логин"
-        />
-        <input
-          v-model="formData.password"
-          type="password"
-          placeholder="Введите ваш пароль"
-        />
+        <input v-model="formData.email" type="text" placeholder="Введите ваш email" />
+        <input v-if="!isLogin" v-model="formData.login" type="text" placeholder="Введите ваш логин" />
+        <input v-model="formData.password" type="password" placeholder="Введите ваш пароль" />
       </div>
       <button v-if="!isLogin" type="submit" class="home-btn auth-btn">
         Зарегистрироваться
       </button>
       <button v-else type="submit" class="home-btn auth-btn">Войти</button>
-      <div class="auth__errors" v-for="err of errorsList" :key="err">
+      <div v-for="err of errorsList" :key="err" class="auth__errors">
         <p>{{ err }}</p>
       </div>
     </form>
@@ -31,7 +18,7 @@
 </template>
 
 <script>
-  import "@/components/app/scss/Home.scss"
+  import "@/components/app/scss/home/Home.scss"
   import { useStore } from "vuex"
   import { ref } from "vue"
 
@@ -43,7 +30,7 @@
     },
     setup(props) {
       const store = useStore()
-      let formData = ref({ email: "", password: "", login: "" })
+      const formData = ref({ email: "", password: "", login: "" })
       // let isPassword = reactive(false)
 
       const sendData = () => {

@@ -1,6 +1,6 @@
-import FoldersState from '@/models/folders';
-import foldersActions from "../actions/foldersActions";
-import foldersMutations from "../mutations/foldersMutations";
+import FoldersState from "@/models/folders"
+import foldersActions from "../actions/foldersActions"
+import foldersMutations from "../mutations/foldersMutations"
 
 const foldersModule = {
   state(): FoldersState {
@@ -8,7 +8,7 @@ const foldersModule = {
       routeFolder: "",
       folder: null,
       isLoaderItem: false,
-      foldersList: null
+      foldersList: null,
     }
   },
   mutations: foldersMutations,
@@ -21,16 +21,19 @@ const foldersModule = {
     shortFolders: (state: FoldersState) => {
       if (state.foldersList == null) return null
 
-      let list: any = []
-      Object.keys(state.foldersList).map(item => list.push({
-        title: state.foldersList[item].title,
-        listModules: state.foldersList[item]?.listModules,
-        id: state.foldersList[item].id, key: item
-      }))
+      const list: any = []
+      Object.keys(state.foldersList).map(item =>
+        list.push({
+          title: state.foldersList[item].title,
+          listModules: state.foldersList[item]?.listModules,
+          id: state.foldersList[item].id,
+          key: item,
+        }),
+      )
 
       return list
-    }
+    },
   },
-};
+}
 
-export default foldersModule;
+export default foldersModule

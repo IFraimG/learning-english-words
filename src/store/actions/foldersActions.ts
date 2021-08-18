@@ -1,29 +1,29 @@
-import { FolderItfc, FolderShortItfc } from './../../models/folders';
+import { FolderItfc, FolderShortItfc } from "./../../models/folders"
 import generateID from "@/utils/generateID"
 import foldersAPI from "../api/foldersAPI"
-import wordsAPI from '../api/wordsAPI';
+import wordsAPI from "../api/wordsAPI"
 
 const foldersAction = {
   async createFolder({ commit, rootState }: any, payload: string) {
     try {
-      let folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
-      let id = generateID(folders)
+      const folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
+      const id = generateID(folders)
 
-      let key = await foldersAPI.create(rootState.auth.profile.id, payload, id)
+      const key = await foldersAPI.create(rootState.auth.profile.id, payload, id)
       commit("ROUTE_FOLDER", key)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   },
   async getFolder({ commit, rootState }: any, payload: string) {
     try {
       commit("SET_LOADER_ITEM", true)
-      let list = []
+      const list = []
 
-      let folderItem: FolderItfc = await foldersAPI.receiveItem(rootState.auth.profile.id, payload)
+      const folderItem: FolderItfc = await foldersAPI.receiveItem(rootState.auth.profile.id, payload)
       if (folderItem?.listModules != null) {
-        let words = await wordsAPI.getListWords(rootState.auth.profile.id)
-        let len =  folderItem.listModules.length
+        const words = await wordsAPI.getListWords(rootState.auth.profile.id)
+        const len = folderItem.listModules.length
         for (let i = 0; i < len; i++) {
           for (let j = 0; j < words.length; j++) {
             if (folderItem.listModules[i] == words[j].title) list.push(words[j])
@@ -36,53 +36,53 @@ const foldersAction = {
 
       commit("SET_LOADER_ITEM", false)
     } catch (error) {
-      console.log(error);
+      console.log(error)
       commit("SET_LOADER_ITEM", false)
     }
   },
-  async getFoldersList({ commit, rootState}: any) {
+  async getFoldersList({ commit, rootState }: any) {
     try {
       commit("SET_LOADER_ITEM", true)
 
-      let folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
+      const folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
       commit("SET_FOLDERS", folders)
 
-      commit("SET_LOADER_ITEM", false) 
+      commit("SET_LOADER_ITEM", false)
     } catch (error) {
-      console.log(error);
+      console.log(error)
       commit("SET_LOADER_ITEM", false)
     }
   },
-  async addWordsToSection({ rootState }: any, payload: { section: FolderShortItfc, title: string }) {
+  async addWordsToSection({ rootState }: any, payload: { section: FolderShortItfc; title: string }) {
     try {
       await foldersAPI.addWordsToFolder(rootState.auth.profile.id, payload.section, payload.title)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   },
   async deleteFolder({ rootState }: any, payload: { key: string }) {
     try {
       await foldersAPI.deleteFolder(rootState.auth.profile.id, payload.key)
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message)
     }
   },
-  async deleteWordsFromFolder({ rootState }: any, payload: { folder: FolderItfc | any, title: string, key: string }) {
+  async deleteWordsFromFolder({ rootState }: any, payload: { folder: FolderItfc | any; title: string; key: string }) {
     try {
-      let folderList: any = []
+      const folderList: any = []
 
       payload.folder.listModules.filter((item: FolderShortItfc) => {
         if (item.title != payload.title) folderList.push(item.title)
       })
 
-      let folder = { ...payload.folder, listModules: folderList, key: payload.key }
+      const folder = { ...payload.folder, listModules: folderList, key: payload.key }
 
       await foldersAPI.deleteWordsFromFolder(rootState.auth.profile.id, folder)
       window.location.reload()
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message)
     }
-  }
+  },
 }
 
 export default foldersAction

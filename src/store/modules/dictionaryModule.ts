@@ -1,12 +1,12 @@
-import { DictionaryState } from '@/models/dictionary';
-import dictionaryActions from "../actions/dictionaryActions";
-import dictionaryMutations from "../mutations/dictionaryMutations";
+import { DictionaryState } from "@/models/dictionary"
+import dictionaryActions from "../actions/dictionaryActions"
+import dictionaryMutations from "../mutations/dictionaryMutations"
 
 export default {
   state(): DictionaryState {
     return {
       dictionaryList: [],
-      currentDictionary: null
+      currentDictionary: null,
     }
   },
   mutations: dictionaryMutations,
@@ -14,6 +14,6 @@ export default {
   getters: {
     currentDictionary: (state: DictionaryState) => state.currentDictionary,
     dictionaryList: (state: DictionaryState) => state.dictionaryList,
-    pagesDictionary: (state: DictionaryState) => state.dictionaryList?.length
-  }
-};
+    pagesDictionary: (state: DictionaryState) => state.dictionaryList?.length,
+  },
+}

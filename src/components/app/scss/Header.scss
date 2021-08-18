@@ -45,6 +45,7 @@ $menu: 724px;
   }
   &__right {
     display: flex;
+    position: relative;
     @media (max-width: $menu) {
       display: none;
     }
@@ -140,7 +141,7 @@ $menu: 724px;
       bottom: 0;
     }
     &-active {
-      span{
+      span {
         background: transparent;
         &::before {
           transform: rotate(45deg);

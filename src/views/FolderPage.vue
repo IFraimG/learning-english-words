@@ -1,5 +1,5 @@
 <template>
-  <div class="folder__wrapper" v-if="!isLoader">
+  <div v-if="!isLoader" class="folder__wrapper">
     <div class="folder-page">
       <div class="folder-page__header">
         <div class="folder-page__header-left">
@@ -14,11 +14,8 @@
         </router-link>
       </div>
       <div class="folder-page__content">
-        <div class="folder-list" v-if="folderItem?.listModules != null && folderItem?.listModules.length > 0">
-          <div class="folder-list__item-wrapper"
-            v-for="(item, index) of folderItem.listModules"
-            :key="index" @contextmenu.prevent
-          >
+        <div v-if="folderItem?.listModules != null && folderItem?.listModules.length > 0" class="folder-list">
+          <div v-for="(item, index) of folderItem.listModules" :key="index" class="folder-list__item-wrapper" @contextmenu.prevent>
             <div class="folder__show-menu folder-list__item">
               <div class="folder__show-btns">
                 <button @click="redirectWords(item.title)">Изучить</button>
@@ -29,10 +26,7 @@
               <div class="list__title folder-list__title">
                 <h3>{{ item.title }}</h3>
               </div>
-              <div class="list__words folder-list__item"
-                v-for="(words, index) of item.words"
-                :key="index"
-              >
+              <div v-for="(words, index) of item.words" :key="index" class="list__words folder-list__item">
                 <p class="list__item folder folder-list__text">
                   <span class="list__english">{{ words.english }}</span>
                   -
@@ -42,7 +36,7 @@
             </div>
           </div>
         </div>
-        <div class="folder-page-notfound" v-else>
+        <div v-else class="folder-page-notfound">
           <h2>Вы сюда ничего не добавили</h2>
         </div>
       </div>
@@ -53,10 +47,11 @@
 </template>
 
 <script lang="ts">
-  import Loader from "@/components/app/Loader.vue";
-  import { computed, defineComponent, onBeforeMount, onMounted } from "vue";
-  import { useRoute, useRouter } from "vue-router";
-  import { useStore } from "vuex";
+  import Loader from "@/components/app/Loader.vue"
+  import { computed, defineComponent, onBeforeMount, onMounted, provide } from "vue"
+  import { useRoute, useRouter } from "vue-router"
+  import { useStore } from "vuex"
+  import { useI18n } from "vue-i18n"
   import "@/components/folders/scss/FolderPage.scss"
 
   export default defineComponent({
@@ -71,6 +66,9 @@
       const userID = computed(() => store.getters.userID)
       const currentWords = computed(() => store.getters.currentWords)
 
+      const { t } = useI18n()
+      provide("Ti18N", t)
+
       onBeforeMount(() => store.dispatch("getFolder", route.params.id))
       onMounted(() => store.dispatch("getWords"))
 
@@ -84,6 +82,6 @@
       }
 
       return { folderItem, isLoader, redirectWords, deleteList }
-    }
+    },
   })
 </script>

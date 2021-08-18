@@ -8,10 +8,19 @@
   @media (max-width: 1171px) {
     justify-content: center;
   }
+  @media (max-width: 361px) {
+    margin-bottom: 0;
+    gap: 0;
+  }
   &__form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
   &-btn {
     margin-top: 20px;
@@ -19,6 +28,9 @@
     font-size: 18px;
     @media (max-width: 651px) {
       max-width: 300px;
+    }
+    @media (max-width: 422px) {
+      max-width: 250px;
     }
   }
   &__registration {
@@ -61,6 +73,9 @@
       &:hover {
         text-decoration: underline;
       }
+      @media (max-width: 401px) {
+        margin: 0 20px;
+      }
     }
     h3, span {
       font-size: 48px;
@@ -72,7 +87,6 @@
       }
     }
   }
-  &__left {}
   &__right {
     img {
       max-width: 500px;
@@ -81,6 +95,9 @@
       }
       @media (max-width: 421px) {
         max-width: 300px;
+      }
+      @media (max-width: 361px) {
+        display: none;
       }
     }
   }
