@@ -27,12 +27,20 @@
           </ul>
         </div>
         <div class="home-footer__item">
-          <h2>Our Company</h2>
+          <h2>Мои ссылки</h2>
           <ul>
-            <li>About Us</li>
-            <li>Our Services</li>
-            <li>Our Plan</li>
-            <li>Our Team</li>
+            <li>
+              <a href="https://github.com/IFraimG/learning-english-words">Репозиторий проекта</a>
+            </li>
+            <li>
+              <a href="https://github.com/IFraimG">Мой Github</a>
+            </li>
+            <li>
+              <a href="https://habr.com/ru/users/IFraim/">Habr аккаунт</a>
+            </li>
+            <li>
+              <a href="https://freelance.habr.com/freelancers/IFramex">Аккаунт на фрилансе</a>
+            </li>
             <li>Latest News</li>
           </ul>
         </div>

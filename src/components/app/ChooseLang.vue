@@ -1,14 +1,14 @@
 <template>
-  <p ref="translateTitle" class="lang__title lang-header-text header-link">{{ t("translation") }}</p>
+  <p ref="translateTitle" class="lang__title lang-header-text root-link header-link">{{ t("translation") }}</p>
   <div ref="langList" class="lang__list">
     <div v-for="(item, index) of listLangs" :key="index">
       <p @click="editLang(item)" :class="item == activeLang ? 'lang__active' : ''">{{ item }}</p>
     </div>
   </div>
-  <p @click="setLangs" class="lang__title lang-menu-text header-link menu-link">{{ t("translation") }}</p>
+  <p @click="setLangs" class="lang__title lang-menu-text root-link menu-link">{{ t("translation") }}</p>
   <div ref="langMenuList" class="lang__menu" v-if="isLang">
     <div class="lang__menu-list" v-for="(item, index) of listLangs" :key="index">
-      <p class="lang__menu-item" @click="editLang(item)" :class="item == activeLang ? 'lang__active' : ''">{{ item }}</p>
+      <p @click="editLang(item)" :class="item == activeLang ? 'lang__menu-item lang__active' : 'lang__menu-item'">{{ item }}</p>
       <p v-if="index != listLangs.length - 1" class="lang__menu-item">/</p>
     </div>
   </div>

@@ -110,8 +110,8 @@
       const logoList = [logo1, logo2, logo3, logo4, logo5, logo6]
       const cardsList = [
         { title: "Личный словарь", link: "/", img: vector1, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
-        { title: "Личный словарь2", link: "/", img: vector2, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
-        { title: "Личный словарь3", link: "/", img: vector3, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+        { title: "Бесплатно", link: "/", img: vector2, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+        { title: "Нет рекламы", link: "/", img: vector3, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
       ]
 
       const loginInfo = computed(() => store.getters.loginInfo)

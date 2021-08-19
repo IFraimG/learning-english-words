@@ -19,4 +19,11 @@
   &__active {
     color: $defaultbtnactive;
   }
+  &__menu {
+    &-item {
+      &:not(.lang__active) {
+        color: #fff;
+      }
+    }
+  }
 }

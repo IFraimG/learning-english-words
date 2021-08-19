@@ -1,68 +1,5 @@
 $menu: 724px;
 
-* {
-  margin: 0;
-  padding: 0;
-}
-.header {
-  height: 60px;
-  width: 100%;
-  position: sticky;
-  background-color: #fff;
-  left: 0;
-  top: 0;
-  z-index: 1;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15),
-    0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
-  &__content {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 0 20px;
-    height: 100%;
-    @media (max-width: 874px) {
-      justify-content: space-between;
-    }
-  }
-  &__left {
-    h1 {
-      font-family: "Helvetica";
-      font-weight: normal;
-      @media (max-width: 1091px) {
-        font-size: 24px;
-      }
-      @media (max-width: 971px) {
-        font-size: 18px;
-      }
-      @media (max-width: 574px) {
-        margin-left: 20px;
-      }
-      @media (max-width: 347px) {
-        margin-left: 0px;
-      }
-    }
-  }
-  &__right {
-    display: flex;
-    position: relative;
-    @media (max-width: $menu) {
-      display: none;
-    }
-  }
-  &-link {
-    color: #000;
-    margin-left: 40px;
-    &::after {
-      background: #000;
-    }
-    @media (max-width: 881px) {
-      font-size: 14px;
-      margin-left: 20px;
-    }
-  }
-}
-
 @mixin MenuLogo {
   position: absolute;
   left: 0;
@@ -95,8 +32,10 @@ $menu: 724px;
   }
   &-link {
     color: #dddddd;
-    margin: 40px 20px;
+    margin: 30px 20px;
     font-size: 24px;
+    white-space: pre-wrap;
+    text-align: center;
     @media (max-width: 501px) {
       font-size: 32px;
     }
@@ -156,8 +95,4 @@ $menu: 724px;
   &__active {
     right: 0px;
   }
-}
-
-body[data-theme="dark"] {
-  @import "./HeaderDark.scss";
 }

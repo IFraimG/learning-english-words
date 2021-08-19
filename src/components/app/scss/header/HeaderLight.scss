@@ -1,0 +1,9 @@
+.header {
+  background-color: #fff;
+  &-link {
+    color: #000;
+    &::after {
+      background: #000;
+    }
+  }
+}

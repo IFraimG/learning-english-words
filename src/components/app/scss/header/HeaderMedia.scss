@@ -1,0 +1,39 @@
+$menu: 724px;
+
+.header {
+  &__content {
+    @media (max-width: 874px) {
+      justify-content: space-between;
+    }
+  }
+  &__left {
+    h1 {
+      @media (max-width: 1091px) {
+        font-size: 24px;
+      }
+      @media (max-width: 971px) {
+        font-size: 18px;
+      }
+      @media (max-width: 574px) {
+        margin-left: 20px;
+      }
+      @media (max-width: 347px) {
+        margin-left: 0px;
+      }
+    }
+  }
+  &__right {
+    @media (max-width: $menu) {
+      display: none;
+    }
+  }
+  &-link {
+    @media (max-width: 901px) {
+      font-size: 14px;
+      margin-left: 20px;
+    }
+    @media (max-width: 791px) {
+      font-size: 12px;
+    }
+  }
+}

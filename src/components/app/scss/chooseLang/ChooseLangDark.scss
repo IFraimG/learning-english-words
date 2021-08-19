@@ -19,4 +19,11 @@
   &__active {
     color: #d14e4e;
   }
+  &__menu {
+    &-item {
+      &:not(.lang__active) {
+        color: #fff;
+      }
+    }
+  }
 }

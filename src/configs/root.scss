@@ -74,14 +74,13 @@ img {
   }
 }
 
-.header {
+.root {
   &-link {
     padding-bottom: 5px;
     letter-spacing: 1px;
     text-decoration: none;
     font-weight: bold;
     font-family: "Helvetica";
-    white-space: nowrap;
     position: relative;
     cursor: pointer;
     &::after {
