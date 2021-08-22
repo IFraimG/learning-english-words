@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "resize-observer-browser"
+      "resize-observer-browser",
+      "jest", "node"
     ],
     "paths": {
       "@/*": [
@@ -34,8 +35,9 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "test/**/*.ts",
+    "test/**/*.tsx",
+    "test/**/*.spec.ts"
   ],
   "exclude": [
     "node_modules"

@@ -43,7 +43,7 @@
         -
         <span class="list__russian">{{ words.russian }}</span>
       </p>
-      <account-word v-else :word-data="editList[index]" :title="wordsArray.title" :index="index" @saveWord="saveWord" />
+      <account-word v-else :word-data="editList.value[index]" :title="wordsArray.title" :index="index" @saveWord="saveWord" />
     </div>
     <div v-if="editMode == wordsArray.title" class="list__footer" @click.stop>
       <button class="profile__run" @click="saveEditWords(wordsArray.title, wordsArray.id)">
@@ -62,10 +62,11 @@
 </template>
 
 <script>
-  import { mapGetters } from "vuex"
+  import { useStore } from "vuex"
   import "@/components/account/scss/Account.scss"
   import AccountWord from "@/components/account/AccountWord.vue"
-  import { nextTick } from "vue"
+  import { nextTick, ref, reactive, computed } from "vue"
+  import { useRouter } from 'vue-router'
 
   export default {
     name: "WordsTable",
@@ -77,57 +78,69 @@
     },
     inject: ["Ti18N"],
     emits: ["setOpenPanel"],
-    data() {
-      return {
-        editMode: false,
-        editList: [],
-        section: null,
+    setup(props) {
+      const store = useStore()
+      const router = useRouter()
+
+      const editMode = ref(false)
+      const section = ref(null)
+      const editList = reactive({ value: [] })
+
+      const userID = computed(() => store.getters.userID)
+      const currentWords = computed(() => store.getters.currentWords)
+      const isLoader = computed(() => store.getters.isLoader)
+      const profile = computed(() => store.getters.profile)
+
+      const runWords = (title) => {
+        if (editMode.value != title) {
+          const index = currentWords.value.findIndex(wordsArray => title == wordsArray.title)
+          router.push(`/words/${userID.value}/${index}/?type=start`)
+        }
       }
-    },
-    computed: {
-      reverseWords() {
-        const newArray = []
-        for (let i = this.currentWords.length - 1; i >= 0; i--) {
-          newArray.push(this.currentWords[i])
-        }
-        return newArray
-      },
-      ...mapGetters(["userID", "currentWords", "isLoader", "profile"]),
-    },
-    methods: {
-      runWords(title) {
-        if (this.editMode != title) {
-          const index = this.currentWords.findIndex(wordsArray => title == wordsArray.title)
-          this.$router.push(`/words/${this.userID}/${index}/?type=start`)
-        }
-      },
-      editWords(words, title) {
-        this.editMode = title
-        this.editList = [...words]
-      },
-      stopEdit() {
-        this.editList = []
-        this.editMode = false
-      },
-      saveWord(data) {
-        this.editList[data.index] = data.word
-      },
-      async saveEditWords(title, id) {
-        const index = this.currentWords.findIndex(wordList => title == wordList.title)
-        await this.$store.dispatch("sendEditWords", {
+
+      const editWords = (words, title) => {
+        editMode.value = title
+        editList.value = [...words]
+      }
+
+      const stopEdit = () => {
+        editList.value = []
+        editMode.value = false
+      }
+
+      const saveWord = (data) => editList.value[data.index] = data.word
+
+      const saveEditWords = async (title, id) => {
+        const index = currentWords.value.findIndex(wordList => title == wordList.title)
+        await store.dispatch("sendEditWords", {
           title,
           id,
-          editWords: this.editList,
-          userid: this.userID,
+          editWords: editList.value,
+          userid: userID.value,
           wordsid: index,
         })
-        this.stopEdit()
+        stopEdit()
         nextTick(() => window.scrollTo({ top: 0, behavior: "smooth" }))
-      },
-      openModal() {
-        this.$store.commit("SET_MODAL_WORDS", { title: this.wordsArray.title, list: this.wordsArray.words })
-        this.$router.push("/account/words")
-      },
-    },
+      }
+
+      const openModal = () => {
+        store.commit("SET_MODAL_WORDS", { title: props.wordsArray.title, list: props.wordsArray.words })
+        router.push("/account/words")
+      }
+
+      const reverseWords = computed(() => {
+        const newArray = []
+        for (let i = currentWords.value.length - 1; i >= 0; i--) {
+          newArray.push(currentWords[i].value)
+        }
+        return newArray
+      })
+
+      return {
+        editMode, editList, section, runWords, saveEditWords,
+        saveWord, openModal, reverseWords, editWords, userID,
+        currentWords, isLoader, profile, stopEdit
+      }
+    }
   }
 </script>

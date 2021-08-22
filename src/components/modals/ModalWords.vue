@@ -1,5 +1,5 @@
 <template>
-  <div class="modal__wrapper" @click="modalClose">
+  <div ref="modalWordsWrap" class="modal__wrapper" @click="modalClose">
     <div ref="modalContent" class="modal" @click.stop>
       <div class="modal__content">
         <div class="modal__header">
@@ -50,11 +50,13 @@
     setup() {
       const store = useStore()
       const modalContent: any = ref(null)
+      const modalWordsWrap: any = ref(null)
 
       onMounted(() =>
         nextTick(() => {
           window.scrollTo({ top: 0 })
           document.documentElement.style.overflow = "hidden"
+          modalWordsWrap.value.style.overflow = "auto"
         }),
       )
       onUnmounted(() => (document.documentElement.style.overflow = "auto"))
@@ -156,6 +158,7 @@
         modalTitle,
         inputTitle,
         startWords,
+        modalWordsWrap,
         modalContent,
       }
     },

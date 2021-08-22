@@ -17,12 +17,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import "@/components/app/scss/home/Home.scss"
   import { useStore } from "vuex"
-  import { ref } from "vue"
+  import { defineComponent, ref } from "vue"
 
-  export default {
+  export default defineComponent({
     name: "AuthSection",
     props: {
       isLogin: Boolean,
@@ -40,5 +40,5 @@
 
       return { sendData, formData }
     },
-  }
+  })
 </script>

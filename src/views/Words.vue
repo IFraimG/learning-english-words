@@ -23,7 +23,7 @@
   import Sentences from "@/components/words/Sentences.vue"
   import { computed, defineComponent, onBeforeMount, onUpdated, provide, reactive } from "vue"
   import { useRoute, useRouter } from "vue-router"
-import { useI18n } from "vue-i18n"
+  import { useI18n } from "vue-i18n"
 
   export default defineComponent({
     name: "Words",

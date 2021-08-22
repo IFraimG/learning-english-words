@@ -1,10 +1,12 @@
 <template>
   <Header v-if="$store.getters.isAuth" />
-  <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <component :is="Component"></component>
-    </transition>
-  </router-view>
+  <div class="root__wrapper">
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
+  </div>
 </template>
 
 <script>
