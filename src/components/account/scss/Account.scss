@@ -1,30 +1,13 @@
 @import "./Profile.scss";
 
 .account {
-  padding: 40px;
+  padding: 40px 20px;
   display: flex;
   gap: 50px;
   justify-content: space-evenly;
   align-items: flex-start;
   flex-wrap: wrap;
   font-family: "Helvetica";
-  &__left {
-    max-width: 100%;
-    width: 400px;
-    gap: 50px;
-    display: flex;
-    flex-wrap: wrap;
-    &-words {
-      font-size: 24px;
-      margin-left: 20px;
-      font-weight: normal;
-      padding-bottom: 10px;
-      text-decoration: underline;
-      text-decoration-thickness: 5px;
-      text-decoration-color: rgba(0, 0, 0, 0.3);
-      color: #000;
-    }
-  }
 }
 
 .list {

@@ -1,0 +1,18 @@
+@import "@/configs/vars.scss";
+
+.account {
+  &__left {
+    background: #5e5e5e;
+    &-words {
+      color: #fff;
+    }
+    &-item {
+      &-wrapper {
+        border-bottom-color: $darkbg;
+      }
+    }
+    &-profile {
+      box-shadow: none;
+    }
+  }
+}

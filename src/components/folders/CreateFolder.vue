@@ -9,7 +9,7 @@
           Отмена
         </button>
       </div>
-      <input v-if="isInput.value" ref="titleFolder" class="input-light" type="text" placeholder="Название раздела..." @keyup.enter="create" />
+      <input v-if="isInput.value" ref="titleFolder" type="text" placeholder="Название раздела..." @keyup.enter="create" />
     </div>
   </div>
 </template>

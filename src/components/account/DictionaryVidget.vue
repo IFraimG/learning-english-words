@@ -1,9 +1,9 @@
 <template>
   <div class="vidget__wrapper">
     <router-link :to="{ name: 'Dictionary' }">
-      <div class="vidget">
+      <button class="vidget">
         <h2>Ведите словарь и заполняйте транскрипции !</h2>
-      </div>
+      </button>
     </router-link>
   </div>
 </template>

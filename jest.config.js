@@ -1,16 +1,11 @@
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: 'jsdom',
+  preset: "@vue/cli-plugin-unit-jest/presets/typescript-and-babel",
+  testEnvironment: "node",
   transform: {
     "^.+\\.vue$": "vue-jest",
-    '^.+\\.(ts|tsx)?$': 'ts-jest',
-    "^.+\\.js$": "babel-jest",
+    // '^.+\\.tsx?$': 'ts-jest',
+    // "^.+\\.js$": "babel-jest",
   },
   moduleFileExtensions: ["js", "ts", "json", "vue"],
-  globals: {
-    "vue-jest": {
-      tsConfig: "./tsconfig.json"
-    }
-  },
-  testRegex: "(/test/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"
+  // testRegex: "(/tests/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"
 };

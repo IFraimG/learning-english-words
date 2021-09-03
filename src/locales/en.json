@@ -24,5 +24,6 @@
   "notFound": {
     "title": "The page isn't found",
     "redirect": "You are being redirected to the homepage very soon"
-  }
+  },
+  "exportWords": "Export all sections to JSON"
 }

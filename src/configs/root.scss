@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+:root {
+  --sizeAnim: 0;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease-in-out;
@@ -13,6 +17,10 @@
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+ul {
+  list-style: none;
 }
 
 input, button, textarea, select {
@@ -33,7 +41,7 @@ img {
   &__run {
     cursor: pointer;
     padding: 10px 20px;
-    border-radius: 3px;
+    border-radius: 16px;
     border: none;
     color: #fff;
     font-weight: 500;
@@ -115,8 +123,30 @@ input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
 }
 
+.clip-anim {
+  cursor: pointer;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: #222831;
+    transition: 0.3s ease-in-out;
+    clip-path: circle(var(--sizeAnim) at top center);
+  }
+  &:hover {
+    &::before {
+      --sizeAnim: 450px;
+    }
+    color: #fff;
+  }
+}
+
 body[data-theme="dark"] {
   background-color: $darkbg;
   color: #fff;
 }
-

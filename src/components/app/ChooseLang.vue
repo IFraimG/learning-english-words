@@ -15,11 +15,11 @@
 </template>
 
 <script lang="ts">
-  import { onMounted, ref } from "vue"
+  import { onMounted, ref, FunctionalComponent, defineComponent } from "vue"
   import { useI18n } from "vue-i18n"
   import "./scss/chooseLang/ChooseLang.scss"
 
-  export default {
+  export default defineComponent({
     name: "ChooseLang",
     setup() {
       const { locale, t } = useI18n({ useScope: "global" })
@@ -67,5 +67,5 @@
         translateTitle, langList, langMenuList, setLangs
       }
     },
-  }
+  })
 </script>

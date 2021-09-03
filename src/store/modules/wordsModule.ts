@@ -28,6 +28,18 @@ const wordsModule = {
     incorrectWord: (state: WordsInterface) => state.incorrectWord,
     isRepeatingTitle: (state: WordsInterface) => state.isRepeatingTitle,
     wordsLength: (state: WordsInterface) => state.wordsLength,
+    reverseWords: (state: WordsInterface) => {
+      const newArray: Array<any> = []
+      let currentWordsCopy = state.currentWords
+      if (state.findWords.length > 0) currentWordsCopy = state.findWords
+
+      for (let i = currentWordsCopy.length - 1; i >= 0; i--) {
+        newArray.push(currentWordsCopy[i])
+      }
+
+      newArray.unshift({})
+      return newArray
+    }
   },
 }
 

@@ -1,0 +1,58 @@
+
+.account {
+  &__left {
+    max-width: 100%;
+    width: 400px;
+    gap: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0px;
+    @media (max-width: 441px) {
+      width: auto;
+    }
+    &-words {
+      font-size: 24px;
+      margin-left: 20px;
+      font-weight: normal;
+      padding-bottom: 10px;
+      text-decoration: underline;
+      text-decoration-thickness: 5px;
+      text-decoration-color: rgba(0, 0, 0, 0.3);
+    }
+    &-list {}
+    &-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px 0;
+      width: 100%;
+      height: 100%;
+      &-wrapper {
+        margin: 30px 0;
+        padding-bottom: 30px;
+        overflow: hidden;
+        box-shadow: none;
+        border-bottom: 1px solid;
+        &:first-child, &:last-child {
+          margin: 0;
+        }
+        &:last-child {
+          border-bottom: none;
+        }
+
+        h3 {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+}
+
+body[data-theme="dark"] {
+  @import "./LeftPanelDark.scss";
+}
+
+body[data-theme="light"] {
+  @import "./LeftPanelLight.scss";
+}

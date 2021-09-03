@@ -9,17 +9,15 @@
           {{ Ti18N("account.btnAddWords") }}
         </button>
       </router-link>
-      <ThemeSwitcher style="margin-top: 20px" />
     </div>
   </div>
 </template>
 
 <script>
-  import ThemeSwitcher from "../app/ThemeSwitcher.vue"
+  import "./scss/Profile.scss"
 
   export default {
     name: "Profile",
-    components: { ThemeSwitcher },
     props: {
       profile: Object,
     },
