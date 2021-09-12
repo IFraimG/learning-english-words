@@ -8,7 +8,7 @@
         <div class="accordion__form">
           <div v-for="(words, index) of currentSortWords" :key="words.english" class="accordion__item">
             <label :for="'inputElement' + index">{{ words.russian }} - </label>
-            <input :id="'inputElement' + index" :ref="'inputInfo' + index" type="text" @keyup.enter="checkWord(words, index)" />
+            <input :id="'inputElement' + index" :ref="el => { if (el) inputsInfo[index] = el }" type="text" @keyup.enter="checkWord(words, index)" />
             <button v-if="!doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" @click="checkWord(words, index)">
               <img src="@/assets/check.png" />
             </button>
@@ -30,7 +30,7 @@
             Перевернуть гармошку
           </button>
           <router-link :to="{ name: 'Account' }">
-            <button class="accordion__send profile__run" @click="rotateWords">
+            <button class="accordion__send profile__run">
               Завершить
             </button>
           </router-link>
@@ -40,103 +40,117 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import "./scss/accordion/Accordion.scss"
+  import { SpeechSythesis } from "@/models/speechSythesis"
+  import { doneWords } from "./types/accordion.types"
+  import { computed, defineComponent, ref } from "vue"
+  import { WordInterface } from "@/models/words"
 
-  export default {
+  // isRotate - true - en | !isRotate - false - ru
+  export default defineComponent({
     name: "Accordion",
     props: {
-      currentWords: Array,
+      currentWords: Array as WordInterface[] | any
     },
-    data() {
-      return {
-        currentInputWord: "",
-        doneWords: [],
-        errorWords: [],
-        isAnswer: [],
-        checkedAnswers: [],
-        isRotate: false,
-      }
-    },
-    computed: {
-      currentSortWords() {
-        const currentWords = [...this.currentWords]
-        if (!this.isRotate) {
-          currentWords.map(word => {
+    setup(props) {
+      const currentInputWord = ref("")
+      const doneWords = ref<doneWords[]>([])
+      const errorWords = ref([])
+      const isAnswer = ref<string[]>([])
+      const checkedAnswers = ref([])
+      const isRotate = ref(false)
+      const inputsInfo = ref([])
+
+      const currentSortWords = computed(() => {
+        const currentWords: WordInterface[] = [...props.currentWords]
+        if (!isRotate.value) {
+          currentWords.map((word: any) => {
             const tempRus = word.russian
             word.russian = word.english
             word.english = tempRus
           })
         } else {
-          currentWords.map(word => {
+          currentWords.map((word: any) => {
             const tempEn = word.english
             word.english = word.russian
             word.russian = tempEn
           })
         }
         return currentWords.sort(() => Math.random() - 0.5).reverse()
-      },
-    },
-    methods: {
-      addAnswer(words) {
-        this.isAnswer.push(words)
-      },
-      deleteAnswer(words) {
-        const isIndex = this.isAnswer.findIndex(item => item == words)
-        if (isIndex != -1) this.isAnswer.splice(isIndex, 1)
-      },
-      checkWord(word, index) {
-        const value = this.$refs["inputInfo" + index.toString()].value
-        if (
-          word.english
-            .trimStart()
-            .trimEnd()
-            .toLowerCase() ==
-          value
-            .trimStart()
-            .trimEnd()
-            .toLowerCase()
-        ) {
-          this.$refs["inputInfo" + index.toString()].disabled = true
-          const indexError = this.errorWords.indexOf(word.id)
-          if (indexError != -1) this.errorWords.splice(indexError, 1)
+      })
 
-          this.deleteAnswer(word.english)
-          this.doneWords.push({ translated: word.english, original: word.russian })
-        } else {
-          const indexError = this.errorWords.indexOf(word.id)
-          if (indexError == -1) this.errorWords.push(word.id)
-        }
-      },
-      sendData() {
-        const arrayWords = JSON.parse(window.sessionStorage.getItem("words"))
+      const addAnswer = (word: string) => isAnswer.value.push(word)
+
+      const deleteAnswer = (word: string) => {
+        const isIndex: number = isAnswer.value.findIndex((item: string) => item == word)
+        if (isIndex != -1) isAnswer.value.splice(isIndex, 1)
+      }
+
+      const sendData = () => {
+        // @ts-ignore
+        const arrayWords: any = JSON.parse(window.sessionStorage.getItem("words"))
         if (arrayWords != null) window.sessionStorage.removeItem("words")
 
-        const errorWords = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
+        // @ts-ignore
+        const errorWords: any = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
         if (errorWords != null) window.sessionStorage.removeItem("wordsMistakes")
 
-        const successWords = []
-        const failedWords = []
+        const successWords: any[] = []
+        const failedWords: any[] = []
 
-        this.doneWords.map(item => {
-          this.currentWords.map(wordInfo => {
+        doneWords.value.map((item: any) => {
+          props.currentWords.map((wordInfo: any) => {
             if (wordInfo.english == item.translated) successWords.push({ english: wordInfo.russian, id: wordInfo.id })
           })
         })
-        this.errorWords.map(item => {
-          this.currentWords.map(wordInfo => {
+        errorWords.map((item: any) => {
+          props.currentWords.map((wordInfo: any) => {
             if (wordInfo.english == item) failedWords.push({ english: item, id: wordInfo.id })
           })
         })
         window.sessionStorage.setItem("words", JSON.stringify(successWords))
         window.sessionStorage.setItem("wordsMistakes", JSON.stringify(failedWords))
-      },
-      rotateWords() {
-        this.doneWords = []
-        this.errorWords = []
-        this.isAnswer = []
-        this.isRotate = !this.isRotate
-      },
-    },
-  }
+      }
+
+      const checkWord = (word: WordInterface, index: number) => {
+        // @ts-ignore
+        const value: any = inputsInfo.value[index.toString()].value
+
+        if (word.english.trimStart().trimEnd().toLowerCase() == value.trimStart().trimEnd().toLowerCase()) {
+          // @ts-ignore
+          inputsInfo.value[index].disabled = true
+          // @ts-ignore
+          const indexError = errorWords.value.indexOf(word.id)
+          if (indexError != -1) errorWords.value.splice(indexError, 1)
+
+          const speechSythesis = new SpeechSythesis(word.english, isRotate.value ? "en-US" : "ru-RU")
+          speechSythesis.render()
+          speechSythesis.shooseSpeaker("Whisper")
+          speechSythesis.speak()
+
+          deleteAnswer(word.english)
+          doneWords.value.push({ translated: word.english, original: word.russian })
+        } else {
+          // @ts-ignore
+          const indexError = errorWords.value.indexOf(word.id)
+          // @ts-ignore
+          if (indexError == -1) errorWords.value.push(word.id)
+        }
+      }
+
+      const rotateWords = () => {
+        doneWords.value = []
+        errorWords.value = []
+        isAnswer.value = []
+        isRotate.value = !isRotate.value
+      }
+
+      return {
+        rotateWords, currentSortWords, currentInputWord, doneWords,
+        errorWords, inputsInfo, isAnswer, checkedAnswers, isRotate,
+        addAnswer, deleteAnswer, sendData, checkWord
+      }
+    }
+  })
 </script>
