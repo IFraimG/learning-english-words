@@ -13,7 +13,7 @@
         </div>
         <div class="modal__form">
           <div v-for="(num, index) of wordsList.value.length + 1" :key="index" class="modal__item">
-            <input-words :word-index="index" @setNumInput="setNumInput" />
+            <input-words :word-index="index" @setValueInput="setValueInput" />
           </div>
         </div>
         <div v-if="incorrectWord != null" class="modal__errors-wrapper">
@@ -25,10 +25,10 @@
           </div>
         </div>
         <div class="modal__footer">
-          <button type="submit" class="profile__run modal-button__run modal__save modal__btn-image" @click="sendData">
+          <button type="submit" ref="sendButton" class="profile__run modal-button__run modal__save modal__btn-image" @click="sendData">
             Сохранить
           </button>
-          <button type="submit" class="profile__run modal__save modal__btn-image" @click="resetData">
+          <button ref="resetButton" type="submit" class="profile__run modal__save modal__btn-image" @click="resetData">
             <span>Очистить</span>
             <img src="@/assets/delete.png" alt="" />
           </button>
@@ -51,14 +51,17 @@
       const store = useStore()
       const modalContent: any = ref(null)
       const modalWordsWrap: any = ref(null)
+      const sendButton: any = ref(null)
+      const resetButton: any = ref(null)
 
-      onMounted(() =>
+      onMounted(() => {
         nextTick(() => {
           window.scrollTo({ top: 0 })
           document.documentElement.style.overflow = "hidden"
           modalWordsWrap.value.style.overflow = "auto"
-        }),
-      )
+        })
+      })
+
       onUnmounted(() => (document.documentElement.style.overflow = "auto"))
 
       const incorrectWord = computed(() => store.getters.incorrectWord)
@@ -99,7 +102,13 @@
               modalTitle.value.style.color = "red"
             } else {
               document.documentElement.style.overflow = "auto"
+              sendButton.value.disabled = true
+              resetButton.value.disabled = true
+
               await store.dispatch("createList", { list: wordsList.value, titleWords: titleWords.value })
+
+              sendButton.value.disabled = false
+              resetButton.value.disabled = false
               resetData()
               modalClose()
             }
@@ -124,7 +133,7 @@
         return isValid
       }
 
-      const setNumInput = (data: any) => {
+      const setValueInput = (data: any) => {
         editData = data.word
         let isValid = false
         let id = ""
@@ -145,21 +154,10 @@
       }
 
       return {
-        wordsList,
-        titleWords,
-        editData,
-        setNumInput,
-        getWordID,
-        checkValidID,
-        resetData,
-        modalClose,
-        sendData,
-        incorrectWord,
-        modalTitle,
-        inputTitle,
-        startWords,
-        modalWordsWrap,
-        modalContent,
+        wordsList, titleWords, editData, setValueInput,
+        getWordID, checkValidID, resetData, modalClose,
+        sendData, incorrectWord, modalTitle, inputTitle,
+        startWords, modalWordsWrap, modalContent, sendButton, resetButton
       }
     },
   })

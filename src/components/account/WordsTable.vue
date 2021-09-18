@@ -1,5 +1,5 @@
 <template>
-  <div ref="listWords" class="list__info" @mousedown="setPanel" @contextmenu.prevent="$emit('setOpenPanel', index)" @click="runWords(wordsArray.title)">
+  <div ref="listWords" class="list__info" @mousedown="setPanel" @contextmenu.prevent="setOpenPanel($event, index)" @click="runWords(wordsArray.title)">
     <div v-if="isOpenPanel == index && !editMode" ref="panel" class="list__panel" @mousedown.stop @click.stop>
       <ul class="list__panel-content">
         <li class="list__panel-item" @click.stop="editWords(wordsArray.words, wordsArray.title)">
@@ -13,12 +13,12 @@
         <li class="list__panel-item" @click="openModal">
           {{ Ti18N("account.wordsTable.panel.newWords") }}
         </li>
-        <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">
+        <li class="list__panel-item" @click="setOpenPanel($event, -1)">
           <router-link :to="'/account/delete?title=' + wordsArray.title">
             {{ Ti18N("account.wordsTable.panel.delete") }}
           </router-link>
         </li>
-        <li class="list__panel-item" @click="$emit('setOpenPanel', -1)">
+        <li class="list__panel-item" @click="setOpenPanel($event, -1)">
           {{ Ti18N("account.wordsTable.panel.cancel") }}
         </li>
       </ul>
@@ -78,12 +78,14 @@
     },
     inject: ["Ti18N"],
     emits: ["setOpenPanel"],
-    setup(props) {
+    setup(props, { emit }) {
       const store = useStore()
       const router = useRouter()
 
       const editMode = ref(false)
       const section = ref(null)
+      const panel = ref(null)
+      const listWords = ref(null)
       const editList = reactive({ value: [] })
 
       const userID = computed(() => store.getters.userID)
@@ -96,6 +98,19 @@
           const index = currentWords.value.findIndex(wordsArray => title == wordsArray.title)
           router.push(`/words/${userID.value}/${index}/?type=start`)
         }
+      }
+
+      const setOpenPanel = async (event, num) => {
+        await emit("setOpenPanel", num)
+        // let widthList = panel.value.getBoundingClientRect().width
+        // let heightList = panel.value.getBoundingClientRect().height
+
+        const posList = listWords.value.getBoundingClientRect()
+        const posPanelX = (event.x - posList.x) / 2
+        const posPanelY = (event.y - posList.y) / 2
+
+        panel.value.style.left = posPanelX + "px"
+        panel.value.style.top = posPanelY + "px"
       }
 
       const editWords = (words, title) => {
@@ -138,8 +153,8 @@
 
       return {
         editMode, editList, section, runWords, saveEditWords,
-        saveWord, openModal, reverseWords, editWords, userID,
-        currentWords, isLoader, profile, stopEdit
+        saveWord, openModal, reverseWords, editWords, userID, listWords,
+        currentWords, isLoader, profile, stopEdit, panel, setOpenPanel
       }
     }
   }

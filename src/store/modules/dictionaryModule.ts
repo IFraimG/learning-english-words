@@ -1,3 +1,4 @@
+import { WordInterface } from '@/models/words';
 import { DictionaryState } from "@/models/dictionary"
 import dictionaryActions from "../actions/dictionaryActions"
 import dictionaryMutations from "../mutations/dictionaryMutations"
@@ -15,5 +16,9 @@ export default {
     currentDictionary: (state: DictionaryState) => state.currentDictionary,
     dictionaryList: (state: DictionaryState) => state.dictionaryList,
     pagesDictionary: (state: DictionaryState) => state.dictionaryList?.length,
+    sortedWords: (state: DictionaryState): WordInterface[] => {
+      if (state.currentDictionary == null) return []
+      return [...state.currentDictionary.words].sort((a, b) => a.english.charCodeAt(0) - b.english.charCodeAt(0))
+    },
   },
 }

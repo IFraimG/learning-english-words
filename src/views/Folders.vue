@@ -2,8 +2,8 @@
   <div v-if="!isLoader" class="folders__wrapper">
     <div class="folders">
       <h1>Полный список разделов</h1>
-      <div v-if="foldersList.length > 0" class="folders__content">
-        <div v-for="(item, index) in foldersList" :key="index" class="folders__item-wrapper">
+      <div v-if="shortFolders.length > 0" class="folders__content">
+        <div v-for="(item, index) in shortFolders" :key="index" class="folders__item-wrapper">
           <router-link :to="{ name: 'FolderPage', params: { id: item.key } }">
             <div class="folders__item">
               <h2>{{ item.title }}</h2>
@@ -44,31 +44,12 @@
       const { t } = useI18n()
       provide("Ti18N", t)
 
-      const folders = computed(() => store.getters.folders)
+      const shortFolders = computed(() => store.getters.shortFolders)
       const isLoader = computed(() => store.getters.isLoaderItem)
 
       onMounted(() => store.dispatch("getFoldersList"))
 
-      const foldersList = computed(() => {
-        const arr: any[] = []
-        if (folders.value != null) {
-          const keysArr: string[] = Object.keys(folders.value)
-
-          keysArr.map(
-            (key: string, index: number) =>
-              (arr[index] = {
-                title: folders.value[key].title,
-                id: folders.value[key].id,
-                listModules: folders.value[key]?.listModules,
-                key,
-              }),
-          )
-        }
-
-        return arr
-      })
-
-      return { folders, isLoader, foldersList }
+      return { isLoader, shortFolders }
     },
   })
 </script>

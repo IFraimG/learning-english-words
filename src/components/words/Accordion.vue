@@ -88,12 +88,10 @@
       }
 
       const sendData = () => {
-        // @ts-ignore
-        const arrayWords: any = JSON.parse(window.sessionStorage.getItem("words"))
+        const arrayWords = JSON.parse(window.sessionStorage.getItem("words") as string)
         if (arrayWords != null) window.sessionStorage.removeItem("words")
 
-        // @ts-ignore
-        const errorWords: any = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
+        const errorWords: any = JSON.parse(window.sessionStorage.getItem("wordsMistakes") as string)
         if (errorWords != null) window.sessionStorage.removeItem("wordsMistakes")
 
         const successWords: any[] = []
@@ -120,8 +118,8 @@
         if (word.english.trimStart().trimEnd().toLowerCase() == value.trimStart().trimEnd().toLowerCase()) {
           // @ts-ignore
           inputsInfo.value[index].disabled = true
-          // @ts-ignore
-          const indexError = errorWords.value.indexOf(word.id)
+
+          const indexError = errorWords.value.indexOf(word.id as never)
           if (indexError != -1) errorWords.value.splice(indexError, 1)
 
           const speechSythesis = new SpeechSythesis(word.english, isRotate.value ? "en-US" : "ru-RU")
@@ -132,10 +130,8 @@
           deleteAnswer(word.english)
           doneWords.value.push({ translated: word.english, original: word.russian })
         } else {
-          // @ts-ignore
-          const indexError = errorWords.value.indexOf(word.id)
-          // @ts-ignore
-          if (indexError == -1) errorWords.value.push(word.id)
+          const indexError = errorWords.value.indexOf(word.id as never)
+          if (indexError == -1) errorWords.value.push(word.id as never)
         }
       }
 

@@ -19,19 +19,19 @@ const foldersModule = {
     isLoaderItem: (state: FoldersState) => state.isLoaderItem,
     folders: (state: FoldersState) => state.foldersList,
     shortFolders: (state: FoldersState) => {
-      if (state.foldersList == null) return null
+      if (state.foldersList == null) return []
 
-      const list: any = []
-      Object.keys(state.foldersList).map(item =>
-        list.push({
-          title: state.foldersList[item].title,
-          listModules: state.foldersList[item]?.listModules,
-          id: state.foldersList[item].id,
-          key: item,
-        }),
-      )
+      const arr: any[] = []
+      if (state.foldersList != null) {
+        const keysArr: string[] = Object.keys(state.foldersList)
 
-      return list
+        keysArr.forEach((key: string, index: number) => arr[index] = {
+          title: state.foldersList[key].title, id: state.foldersList[key].id,
+          listModules: state.foldersList[key]?.listModules, key,
+        })
+      }
+
+      return arr
     },
   },
 }

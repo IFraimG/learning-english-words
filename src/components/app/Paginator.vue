@@ -47,6 +47,7 @@
       }
       &-left {
         margin-bottom: 5px;
+        z-index: 1;
         padding-left: 5px;
         transform: rotate(180deg);
       }

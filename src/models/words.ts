@@ -9,9 +9,11 @@ export interface IncorrectWordInterface {
 export interface WordInterface {
   english: string
   russian: string
-  id: number
+  readonly id: number
   transcription?: string
   currentTime?: string
+  ruValues?: string[]
+  enValues?: string[]
 }
 
 export default interface WordsInterface {

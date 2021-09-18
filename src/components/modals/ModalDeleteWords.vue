@@ -30,9 +30,9 @@
 
       const deleteItem = async (isTrue: boolean) => {
         if (isTrue) {
-          document.documentElement.style.overflow = "auto"
           const index = currentWords.value.findIndex((wordList: any) => title.value == wordList.title)
           if (index != -1) await store.dispatch("deleteWords", { title: title.value, index, wordsFull: currentWords.value })
+          document.documentElement.style.overflow = "auto"
           history.back()
         }
       }
