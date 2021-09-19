@@ -39,9 +39,19 @@
     </div>
     <div v-for="(words, index) of wordsArray.words" :key="index" class="list__words">
       <p v-if="editMode != wordsArray.title" class="list__item">
-        <span class="list__english">{{ words.english }}</span>
+        <span v-if="words?.enValues == null" class="list__english">{{ words.english }}</span>
+        <span v-else>
+          <span class="list__english" v-for="(item, index) of words.enValues" :key="item">
+            {{ item }}<span v-if="index != words.enValues.length - 1">, </span>
+          </span>
+        </span>
         -
-        <span class="list__russian">{{ words.russian }}</span>
+        <span v-if="words?.ruValues == null" class="list__russian">{{ words.russian }}</span>
+        <span v-else>
+          <span class="list__russian" v-for="(item, index) of words.ruValues" :key="item">
+            {{ item }}<span v-if="index != words.ruValues.length - 1">, </span>
+          </span>
+        </span>
       </p>
       <account-word v-else :word-data="editList.value[index]" :title="wordsArray.title" :index="index" @saveWord="saveWord" />
     </div>

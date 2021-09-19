@@ -21,7 +21,7 @@
         :scrollbar="{ draggable: false }"
         @swiper="onSwiperRU"
       >
-        <swiper-slide v-for="(item, index) of newWord.enValues" :key="index" class="modal__slide">
+        <swiper-slide v-for="(item, index) of newWord.ruValues" :key="index" class="modal__slide">
           <input ref="russianWord" v-model="newWord.ruValues[index]" class="modal__input input-light" type="text" pattern="[А-Яа-яЁё]" placeholder="Перевод слова на русском" @input="editDone(false)" />
           <p>{{ index + 1 }} / {{ newWord.ruValues.length }}</p>
         </swiper-slide>
