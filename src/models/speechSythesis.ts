@@ -20,7 +20,7 @@ export class SpeechSythesis {
       this.msg.volume = this.volume
       this.msg.lang = this.wordType
 
-      this.msg.voice = speechSynthesis.getVoices().forEach((voice) => console.log(voice.name, voice.default ? voice.default : ""));
+      this.msg.voice = speechSynthesis.getVoices().forEach((voice) => true);
     }
   }
 

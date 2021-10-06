@@ -153,17 +153,9 @@
         router.push("/account/words")
       }
 
-      const reverseWords = computed(() => {
-        const newArray = []
-        for (let i = currentWords.value.length - 1; i >= 0; i--) {
-          newArray.push(currentWords[i].value)
-        }
-        return newArray
-      })
-
       return {
         editMode, editList, section, runWords, saveEditWords,
-        saveWord, openModal, reverseWords, editWords, userID, listWords,
+        saveWord, openModal, editWords, userID, listWords,
         currentWords, isLoader, profile, stopEdit, panel, setOpenPanel
       }
     }

@@ -81,6 +81,9 @@
           englishWord.value.style.border = "1px solid #00af91"
           russianWord.value.style.border = "1px solid #00af91"
 
+          if (newWord.value.enValues[newWord.value.enValues.length - 1] == "") newWord.value.enValues.pop()
+          if (newWord.value.ruValues[newWord.value.ruValues.length - 1] == "") newWord.value.ruValues.pop()
+
           emit("setValueInput", {
             word: { ...newWord.value, english: newWord.value.enValues[0], russian: newWord.value.ruValues[0]
           }, index: props.wordIndex })
@@ -89,14 +92,13 @@
       }
 
       const makeNewInputRU = () => {
-        newWord.value.ruValues.push("")
+        if (newWord.value.ruValues[newWord.value.ruValues.length - 1] != "") newWord.value.ruValues.push("")
         currentRU.value++
         // controlledSwiperRU.value.slideTo(newWord.value.ruValues.length - 1)
       }
       const makeNewInputEN = () => {
-        newWord.value.enValues.push("")
+        if (newWord.value.enValues[newWord.value.enValues.length - 1] != "") newWord.value.enValues.push("")
         currentEN.value++
-        // controlledSwiperEN.value.slideTo(newWord.value.enValues.length - 1)
       }
 
       const setTime = time => {

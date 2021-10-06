@@ -7,7 +7,12 @@
         </div>
         <div class="accordion__form">
           <div v-for="(words, index) of currentSortWords" :key="words.english" class="accordion__item">
-            <label :for="'inputElement' + index">{{ words.russian }} - </label>
+            <label :for="'inputElement' + index">
+              {{ words.russian }}
+            </label>
+            <label v-if="words?.ruValues != null" :for="'inputElement' + index">
+              <span v-for="(ruWords, index) of words.ruValues" :key="index">, {{ ruWords }}</span>
+            </label>
             <input :id="'inputElement' + index" :ref="el => { if (el) inputsInfo[index] = el }" type="text" @keyup.enter="checkWord(words, index)" />
             <button v-if="!doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" @click="checkWord(words, index)">
               <img src="@/assets/check.png" />
@@ -20,7 +25,16 @@
               ответ
             </p>
             <p v-if="isAnswer.includes(words.english)" class="accordion__answer">
-              {{ words.english }}
+              <span>
+                <span>{{ words.english }}</span>
+                <span v-if="words.enValues.length > 0">, </span>
+              </span>
+              <span v-if="words?.enValues != null">
+                <span v-for="(enWords, index) of words.enValues" :key="index">
+                  <span>{{ enWords }}</span>
+                  <span v-if="index != words.enValues.length - 1">, </span>
+                </span>
+              </span>
               <img src="@/assets/close.png" alt="" @click="deleteAnswer(words.english)" />
             </p>
           </div>
@@ -69,14 +83,35 @@
             const tempRus = word.russian
             word.russian = word.english
             word.english = tempRus
+
+            if (word?.enValues != null && word?.ruValues != null) {
+              // russian = english
+              if (word.enValues[0] == word.russian) word.enValues.shift()
+              if (word.ruValues[0] == word.english) word.ruValues.shift()
+              const tempRuValues = [...word.ruValues]
+
+              word.ruValues = [...word.enValues]
+              word.enValues = [...tempRuValues]
+            }
           })
         } else {
           currentWords.map((word: any) => {
             const tempEn = word.english
             word.english = word.russian
             word.russian = tempEn
+
+            if (word?.enValues != null && word?.ruValues != null) {
+              // english == russian
+              if (word.enValues[0] == word.russian) word.enValues.shift()
+              if (word.ruValues[0] == word.english) word.ruValues.shift()
+              const tempEnValues = [...word.enValues]
+
+              word.enValues = [...word.ruValues]
+              word.ruValues = [...tempEnValues]
+            }
           })
         }
+
         return currentWords.sort(() => Math.random() - 0.5).reverse()
       })
 
@@ -114,19 +149,19 @@
       const checkWord = (word: WordInterface, index: number) => {
         // @ts-ignore
         const value: any = inputsInfo.value[index.toString()].value
-
-        if (word.english.trimStart().trimEnd().toLowerCase() == value.trimStart().trimEnd().toLowerCase()) {
+        if (word.enValues?.includes(value) || word.english == value) {
           // @ts-ignore
           inputsInfo.value[index].disabled = true
 
           const indexError = errorWords.value.indexOf(word.id as never)
           if (indexError != -1) errorWords.value.splice(indexError, 1)
 
-          const speechSythesis = new SpeechSythesis(word.english, isRotate.value ? "en-US" : "ru-RU")
-          speechSythesis.render()
-          speechSythesis.shooseSpeaker("Whisper")
-          speechSythesis.speak()
-
+          if (isRotate.value) {
+            const speechSythesis = new SpeechSythesis(value, "en-US")
+            speechSythesis.render()
+            speechSythesis.shooseSpeaker("Whisper")
+            speechSythesis.speak()
+          }
           deleteAnswer(word.english)
           doneWords.value.push({ translated: word.english, original: word.russian })
         } else {

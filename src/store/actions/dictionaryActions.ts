@@ -26,6 +26,9 @@ const dictionaryActions = {
     await dictionaryAPI.saveTranscripton(payload.userID, payload.query, payload.wordIndex, payload.wordData)
     dispatch("getCurrentDictionaryWords", { id: payload.userID, query: payload.query })
   },
+  async setOwnTranslate({ commit, rootState }: any, payload: { lang: string, word: string }) {
+    
+  }
 }
 
 export default dictionaryActions

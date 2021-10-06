@@ -5,8 +5,16 @@
   padding: 0;
 }
 
+body {
+  top: 0 !important;
+}
+
 :root {
   --sizeAnim: 0;
+}
+
+.skiptranslate {
+  display: none !important;
 }
 
 .fade-enter-active,

@@ -46,7 +46,7 @@
   import ThemeSwitcher from "../app/ThemeSwitcher.vue"
   import ExportWords from "./ExportWords.vue"
   import CreateFolder from "../folders/CreateFolder.vue"
-  import DictionaryVidget from "./DictionaryVidget.vue"
+  import DictionaryVidget from "../dictionary/DictionaryVidget.vue"
   import { useStore } from "vuex"
 
   export default defineComponent({

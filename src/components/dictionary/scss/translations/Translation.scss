@@ -1,0 +1,102 @@
+.translation {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    margin: 20px 0 40px 0;
+  }
+  &__wrapper {
+    margin-top: 50px;
+    width: 100%;
+  }
+  &__radio {
+    margin-bottom: 30px;
+    display: flex;
+  }
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    input {
+      height: 40px;
+      width: 100%;
+      padding: 0 10px;
+      font-size: 24px;
+    }
+    button {
+      font-size: 24px;
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+  &__lang {
+    margin: 0 20px;
+    label {
+      font-weight: bold;
+    }
+  }
+  &__result {}  
+  
+  &__checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+    &::after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+  }
+  
+  &__container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    user-select: none;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    &:hover input ~ .translation__checkmark {
+      background-color: #ccc;
+    }
+
+    input:checked ~ .translation__checkmark:after {
+      display: block;
+    }
+    input:checked ~ .translation__checkmark {
+      background-color: #a33b3b;
+    }
+
+    .translation__checkmark:after {
+      top: 9px;
+      left: 9px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+    }
+  }
+}
+
+body[data-theme="dark"] {
+  @import "./TranslationDark.scss";
+}
+
+body[data-theme="light"] {
+  @import "./TranslationLight.scss";
+}

@@ -30,7 +30,7 @@ const wordsModule = {
     wordsLength: (state: WordsInterface) => state.wordsLength,
     reverseWords: (state: WordsInterface) => {
       const newArray: Array<any> = []
-      let currentWordsCopy = state.currentWords
+      let currentWordsCopy: any = state.currentWords
       if (state.findWords.length > 0) currentWordsCopy = state.findWords
 
       for (let i = currentWordsCopy.length - 1; i >= 0; i--) {
