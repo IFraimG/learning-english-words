@@ -1,6 +1,6 @@
 <template>
-  <div ref="modalWordsWrap" class="modal__wrapper" @click="modalClose">
-    <div ref="modalContent" class="modal" @click.stop>
+  <div ref="modalWordsWrap" class="modal__wrapper">
+    <div ref="modalContent" class="modal">
       <div class="modal__content">
         <div class="modal__header">
           <h2 v-if="startWords.title == null" ref="modalTitle">Создать список слов</h2>

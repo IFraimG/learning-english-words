@@ -81,7 +81,9 @@
         store.dispatch("deleteWordsFromFolder", { title: title, folder: folderItem.value, key: route.params.id })
       }
 
-      return { folderItem, isLoader, redirectWords, deleteList }
+      return {
+        folderItem, isLoader, redirectWords, deleteList
+      }
     },
   })
 </script>
