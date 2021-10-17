@@ -4,6 +4,10 @@
       <div class="accordion__content">
         <div class="accordion__header">
           <h1>Гармошка</h1>
+          <button class="profile__run" @click="setVolume">
+            <img v-if="isVolume" src="@/assets/turnon.png" />
+            <img v-else src="@/assets/turnoff.png" />
+          </button>
         </div>
         <div class="accordion__form">
           <div v-for="(words, index) of currentSortWords" :key="words.english" class="accordion__item">
@@ -26,8 +30,8 @@
             </p>
             <p v-if="isAnswer.includes(words.english)" class="accordion__answer">
               <span>
-                <span>{{ words.english }}</span>
-                <span v-if="words.enValues.length > 0">, </span>
+                <span>{{ words?.english }}</span>
+                <span v-if="words?.enValues != null && words.enValues.length > 0">, </span>
               </span>
               <span v-if="words?.enValues != null">
                 <span v-for="(enWords, index) of words.enValues" :key="index">
@@ -75,6 +79,7 @@
       const checkedAnswers = ref([])
       const isRotate = ref(false)
       const inputsInfo = ref([])
+      const isVolume = ref(true)
 
       const currentSortWords = computed(() => {
         const currentWords: WordInterface[] = [...props.currentWords]
@@ -115,12 +120,14 @@
         return currentWords.sort(() => Math.random() - 0.5).reverse()
       })
 
-      const addAnswer = (word: string) => isAnswer.value.push(word)
+      const addAnswer = (word: string) => isAnswer.value = [...isAnswer.value, word]
 
       const deleteAnswer = (word: string) => {
         const isIndex: number = isAnswer.value.findIndex((item: string) => item == word)
         if (isIndex != -1) isAnswer.value.splice(isIndex, 1)
       }
+
+      const setVolume = () => isVolume.value = !isVolume.value
 
       const sendData = () => {
         const arrayWords = JSON.parse(window.sessionStorage.getItem("words") as string)
@@ -156,7 +163,7 @@
           const indexError = errorWords.value.indexOf(word.id as never)
           if (indexError != -1) errorWords.value.splice(indexError, 1)
 
-          if (isRotate.value) {
+          if (isRotate.value && isVolume.value) {
             const speechSythesis = new SpeechSythesis(value, "en-US")
             speechSythesis.render()
             speechSythesis.shooseSpeaker("Whisper")
@@ -180,7 +187,7 @@
       return {
         rotateWords, currentSortWords, currentInputWord, doneWords,
         errorWords, inputsInfo, isAnswer, checkedAnswers, isRotate,
-        addAnswer, deleteAnswer, sendData, checkWord
+        addAnswer, deleteAnswer, sendData, checkWord, isVolume, setVolume
       }
     }
   })

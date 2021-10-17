@@ -16,9 +16,13 @@
     align-items: center;
   }
   &__header {
+    display: flex;
     text-align: center;
     h1 {
       font-size: 48px;
+    }
+    button {
+      margin-left: 20px;
     }
   }
   &__form {

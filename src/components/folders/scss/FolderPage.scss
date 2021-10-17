@@ -79,6 +79,7 @@
         margin: 0 30px;
         transition: .5s linear;
         position: relative;
+        cursor: pointer;
         &:hover, &:active {
           .folder__show-menu {
             opacity: 1;
@@ -97,7 +98,6 @@
         //   grid-column-end: 4;
         // }
       }
-      cursor: pointer;
     }
     &__title {
       h3 {
@@ -113,15 +113,15 @@
       position: absolute;
       left: 0;
       top: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.8);
       transition: .3s ease-in-out;
     }
     &-btns {
       width: 100%;
       height: 100%;
+      margin-top: 25%;
       display: flex;
       align-items: center;
-      justify-content: center;
       flex-direction: column;
       button {
         width: 250px;
