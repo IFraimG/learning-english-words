@@ -13,12 +13,11 @@
     width: 400px;
     padding: 20px;
     font-size: 24px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    border: 5px solid transparent;
     transition: 0.3s ease-in-out;
     &:focus {
-      border: none;
-      box-shadow: 0 0 30px 0 #dddddd;
+      border-color: #4a6c8d;
+      // box-shadow: 0 0 30px 0 #dddddd;
     }
     &::placeholder {
       @media (max-width: 491px) {

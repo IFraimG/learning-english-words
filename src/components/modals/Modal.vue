@@ -10,7 +10,7 @@
           <slot name="content"></slot>
         </div>
         <div class="popup__footer">
-          <button class="profile__run" @click="sendSuccess(true)">
+          <button class="profile__run" @click="sendSuccess">
             <slot name="acceptButton">Готово</slot>
           </button>
           <button class="profile__run modal-button__run" @click="closeModal">
@@ -39,8 +39,8 @@
         this.sendSuccess(false)
         history.back()
       },
-      sendSuccess(isTrue) {
-        this.$emit("onsuccess", isTrue)
+      sendSuccess() {
+        this.$emit("onsuccess", true)
       },
     },
   }

@@ -79,6 +79,7 @@
   }
   &__panel {
     position: absolute;
+    z-index: 2;
     left: 20px;
     top: 50px;
     width: 150px;
@@ -88,7 +89,7 @@
     font-family: "Helvetica";
     color: rgb(231, 231, 231);
     background: #A19F9A;
-    box-shadow: -20px 30px 16px #616263, -40px 60px 32px #757778, inset -6px 6px 10px #484C55, inset 2px 6px 10px #A1A3A0, inset 20px -20px 22px #DBEAF0, inset 40px -40px 44px #9EA09C;
+    box-shadow: -10px 30px 6px #616263, -20px 30px 16px #757778, inset -6px 6px 10px #484C55, inset 2px 3px 5px #A1A3A0, inset 20px -20px 22px #DBEAF0, inset 40px -40px 44px #9EA09C;
     &-content {
       list-style: none;
     }

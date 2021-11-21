@@ -5,6 +5,7 @@ import ModalDeleteWords from "@/components/modals/ModalDeleteWords.vue"
 import ModalToFolders from "@/components/modals/ModalToFolders.vue"
 import ModalWords from "@/components/modals/ModalWords.vue"
 import ModalDelSections from "@/components/modals/ModalDelSections.vue"
+import ModalWordsClose from "@/components/modals/ModalWordsClose.vue"
 import Words from "@/views/Words.vue"
 import NotFound from "@/views/404.vue"
 import Dictionary from "@/views/Dictionary.vue"
@@ -36,6 +37,12 @@ const routes = [
       {
         path: "words",
         component: ModalWords,
+        children: [
+          {
+            path: "close",
+            component: ModalWordsClose
+          }
+        ]
       },
     ],
   },
@@ -69,7 +76,7 @@ const routes = [
         component: ModalDelSections,
       },
     ],
-  },
+  }
 ]
 
 const router = createRouter({

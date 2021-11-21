@@ -5,7 +5,7 @@
         <div class="modal__header">
           <h2 v-if="startWords.title == null" ref="modalTitle">Создать список слов</h2>
           <h2 v-else ref="modalTitle">Добавить новые слова</h2>
-          <input v-if="startWords.title == null" ref="inputTitle" v-model="titleWords" class="input-light" placeholder="Ваше название словаря..." type="text" />
+          <input v-if="startWords.title == null" ref="inputTitle" v-model="titleWords" placeholder="Ваше название словаря..." type="text" />
           <button class="profile__run modal__btn-image" @click="modalClose">
             <span>Закрыть</span>
             <img src="@/assets/cancel.png" alt="" />
@@ -36,6 +36,7 @@
       </div>
     </div>
   </div>
+  <router-view />
 </template>
 
 <script lang="ts">
@@ -43,26 +44,24 @@
   import "./scss/ModalWords.scss"
   import InputWords from "@/components/account/InputWords.vue"
   import { computed, defineComponent, nextTick, onMounted, onUnmounted, reactive, ref } from "vue"
+  import { useRouter } from "vue-router"
 
   export default defineComponent({
     name: "ModalWords",
     components: { InputWords },
     setup() {
       const store = useStore()
+      const router = useRouter()
       const modalContent: any = ref(null)
       const modalWordsWrap: any = ref(null)
       const sendButton: any = ref(null)
       const resetButton: any = ref(null)
 
       onMounted(() => {
-        nextTick(() => {
-          window.scrollTo({ top: 0 })
-          document.documentElement.style.overflow = "hidden"
-          modalWordsWrap.value.style.overflow = "auto"
-        })
+        nextTick(() => document.body.classList.add("popup__open"))
       })
 
-      onUnmounted(() => (document.documentElement.style.overflow = "auto"))
+      onUnmounted(() => (document.body.classList.remove("popup__open")))
 
       const incorrectWord = computed(() => store.getters.incorrectWord)
       const startWords = computed(() => store.getters.startModalWords)
@@ -81,10 +80,7 @@
         store.commit("CHECK_CORRECT_WORD", null)
       }
 
-      const modalClose = () => {
-        store.commit("SET_MODAL_WORDS", { list: null, title: null })
-        history.back()
-      }
+      const modalClose = () => router.push("/account/words/close")
 
       const sendData = async () => {
         if (wordsList.value.length == 0) {
@@ -110,7 +106,9 @@
               sendButton.value.disabled = false
               resetButton.value.disabled = false
               resetData()
-              modalClose()
+
+              store.commit("SET_MODAL_WORDS", { list: null, title: null })
+              router.push("/account")
             }
           }
         }

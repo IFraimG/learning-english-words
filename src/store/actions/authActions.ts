@@ -14,7 +14,7 @@ const authActions = {
         id: data.user.uid,
       })
       router.push("/account")
-    } catch (error) {
+    } catch (error: any) {
       commit("SET_ERRORS", error.message)
     }
   },
@@ -32,7 +32,7 @@ const authActions = {
         id: data.user.uid,
       })
       router.push("/account")
-    } catch (error) {
+    } catch (error: any) {
       commit("SET_ERRORS", error.message)
     }
   },
@@ -40,7 +40,7 @@ const authActions = {
     try {
       await firebase.auth().signOut()
       window.location.reload()
-    } catch (error) {
+    } catch (error: any) {
       commit("SET_ERRORS", error.message)
     }
   },

@@ -45,6 +45,17 @@ img {
   user-select: none;
 }
 
+body.popup__open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.popup__open {
+  overflow: auto;
+  display: block;
+}
+
 .profile {
   &__run {
     cursor: pointer;
@@ -119,11 +130,12 @@ img {
 
 .input-light {
   // padding: 10px 15px;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   // border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   transition: 0.3s ease-in-out;
   &:focus {
-    box-shadow: 0 0 30px 0 #dddddd;
+    // box-shadow: 0 0 30px 0 #dddddd;
+    border-bottom: 2px solid $dbluebtn;
   }
 }
 

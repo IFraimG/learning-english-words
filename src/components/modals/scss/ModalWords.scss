@@ -34,18 +34,23 @@
     gap: 20px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     padding-bottom: 20px;
-    h2,
-    button {
+    h2, button {
       margin: 0 20px;
+      font-weight: normal;
     }
     input {
       padding: 10px;
       width: 300px;
       margin: 0 20px;
       border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 30px;
       border-radius: 16px;
       font-size: 18px;
-      font-weight: bold;
+      letter-spacing: 1px;
+      transition: .2s ease-in-out;
+      &:focus {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
       @media (max-width: 461px) {
         width: 200px;
         font-size: 16px;
@@ -117,11 +122,12 @@
     height: 35px;
     appearance: none;
     cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     transition: .2s ease-in-out;
     position: relative;
     &:hover {
-      background: rgba(0, 0, 0, 0.1);
+      // background: rgba(0, 0, 0, 0.1);
     }
     option {
       position: absolute;

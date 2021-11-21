@@ -1,27 +1,7 @@
 <template>
   <div ref="listWords" class="list__info" @mousedown="setPanel" @contextmenu.prevent="setOpenPanel($event, index)" @click="runWords(wordsArray.title)">
     <div v-if="isOpenPanel == index && !editMode" ref="panel" class="list__panel" @mousedown.stop @click.stop>
-      <ul class="list__panel-content">
-        <li class="list__panel-item" @click.stop="editWords(wordsArray.words, wordsArray.title)">
-          {{ Ti18N("account.wordsTable.panel.change") }}
-        </li>
-        <li class="list__panel-item">
-          <router-link :to="'/account/setupfolder?title=' + wordsArray.title">
-            {{ Ti18N("account.wordsTable.panel.addToSection") }}
-          </router-link>
-        </li>
-        <li class="list__panel-item" @click="openModal">
-          {{ Ti18N("account.wordsTable.panel.newWords") }}
-        </li>
-        <li class="list__panel-item" @click="setOpenPanel($event, -1)">
-          <router-link :to="'/account/delete?title=' + wordsArray.title">
-            {{ Ti18N("account.wordsTable.panel.delete") }}
-          </router-link>
-        </li>
-        <li class="list__panel-item" @click="setOpenPanel($event, -1)">
-          {{ Ti18N("account.wordsTable.panel.cancel") }}
-        </li>
-      </ul>
+      <Panel :words="wordsArray.words" :title="wordsArray.title" @openModal="openModal" @editWords="editWords" @setOpenPanel="setOpenPanel($event, -1)" />
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
@@ -77,10 +57,11 @@
   import AccountWord from "@/components/account/AccountWord.vue"
   import { nextTick, ref, reactive, computed } from "vue"
   import { useRouter } from 'vue-router'
+  import Panel from './Panel.vue'
 
   export default {
     name: "WordsTable",
-    components: { AccountWord },
+    components: { AccountWord, Panel },
     props: {
       wordsArray: Object,
       index: Number,
