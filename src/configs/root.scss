@@ -45,16 +45,18 @@ img {
   user-select: none;
 }
 
-body.popup__open {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-}
 
-.popup__open {
-  overflow: auto;
-  display: block;
-}
+// body.popup__open {
+  // overflow: hidden;
+  // margin-bottom: 20px;
+  // position: fixed;
+  // width: 100%;
+// }
+
+// .popup__open {
+  // overflow: auto;
+  // display: block;
+// }
 
 .profile {
   &__run {

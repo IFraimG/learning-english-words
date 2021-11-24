@@ -91,8 +91,8 @@
         }
       }
 
-      const setOpenPanel = async (event, num) => {
-        await emit("setOpenPanel", num)
+      const setOpenPanel = (event, num) => {
+        emit("setOpenPanel", num)
         // let widthList = panel.value.getBoundingClientRect().width
         // let heightList = panel.value.getBoundingClientRect().height
 

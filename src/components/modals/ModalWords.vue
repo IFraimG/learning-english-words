@@ -24,7 +24,7 @@
             </p>
           </div>
         </div>
-        <div class="modal__footer">
+        <div ref="footer" class="modal__footer">
           <button type="submit" ref="sendButton" class="profile__run modal-button__run modal__save modal__btn-image" @click="sendData">
             Сохранить
           </button>
@@ -58,7 +58,11 @@
       const resetButton: any = ref(null)
 
       onMounted(() => {
-        nextTick(() => document.body.classList.add("popup__open"))
+        nextTick(() => {
+          window.scrollTo({ top: 0 })
+          document.documentElement.style.overflow = "hidden"
+          document.body.classList.add("popup__open")
+        })
       })
 
       onUnmounted(() => (document.body.classList.remove("popup__open")))
@@ -131,7 +135,7 @@
         return isValid
       }
 
-      const setValueInput = (data: any) => {
+      const setValueInput = async (data: any) => {
         editData = data.word
         let isValid = false
         let id = ""
@@ -142,13 +146,16 @@
         }
 
         editData.id = id
-        store.dispatch("checkCorrectWord", { wordData: editData }).then(() => {
-          if (incorrectWord.value == null) {
-            wordsList.value[data.index] = editData
-            editData = null
-            nextTick(() => (modalContent.value.style.marginBottom = `${20 * wordsList.value.length}px`))
-          }
-        })
+        await store.dispatch("checkCorrectWord", { wordData: editData })
+        if (incorrectWord.value == null) {
+          wordsList.value[data.index] = editData
+          editData = null
+          console.log(wordsList.value.length);
+          
+          // nextTick(() => (modalContent.value.style.marginBottom = `${20 * wordsList.value.length}px`))
+          // nextTick(() => (document.documentElement.style.marginBottom = `${20 * wordsList.value.length}px`))
+          // nextTick(() => (document.documentElement.style.marginBottom = `${20 * wordsList.value.length}px`))
+        }
       }
 
       return {

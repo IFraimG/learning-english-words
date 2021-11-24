@@ -37,10 +37,10 @@
       closeModal() {
         document.documentElement.style.overflow = "auto"
         this.sendSuccess(false)
-        history.back()
+        this.$router.go(-1)
       },
-      sendSuccess() {
-        this.$emit("onsuccess", true)
+      sendSuccess(isTrue) {
+        this.$emit("onsuccess", isTrue)
       },
     },
   }

@@ -8,7 +8,7 @@
         {{ Ti18N("account.wordsTable.panel.addToSection") }}
       </router-link>
     </li>
-    <li class="list__panel-item" @click="$emit('openModal')">
+    <li class="list__panel-item" @click="$emit('openModal'); $emit('setOpenPanel', -1)">
       {{ Ti18N("account.wordsTable.panel.newWords") }}
     </li>
     <li class="list__panel-item" @click="$emit('setOpenPanel')">
@@ -32,6 +32,6 @@
     props: {
       title: String,
       words: Array
-    }
+    },
   })
 </script>

@@ -29,8 +29,10 @@
       const deleteItem = async (isTrue: boolean) => {
         if (isTrue) {
           store.commit("SET_MODAL_WORDS", { list: null, title: null })
-          router.push("/account")
-        }
+          document.documentElement.style.overflow = "auto"
+
+          await router.push("/account")
+        } else document.documentElement.style.overflow = "hidden"
       }
 
       return { deleteItem }
