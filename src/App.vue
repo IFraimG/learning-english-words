@@ -1,7 +1,7 @@
 <template>
   <Header v-if="$store.getters.isAuth" />
   <div class="root__wrapper">
-    <router-view v-slot="{ Component, route }">
+    <router-view v-slot="{ Component, route  }">
       <transition name="fade">
         <div :key="route.name">
           <component :is="Component"></component>
