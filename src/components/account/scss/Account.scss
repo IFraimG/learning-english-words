@@ -8,6 +8,7 @@
   align-items: flex-start;
   flex-wrap: wrap;
   font-family: "Helvetica";
+  overflow: hidden;
 }
 
 .list {
@@ -80,8 +81,8 @@
   &__panel {
     position: absolute;
     z-index: 1;
-    left: 20px;
-    top: 50px;
+    left: 0px;
+    top: 0px;
     width: 150px;
     padding: 0 10px;
     min-height: 100px;

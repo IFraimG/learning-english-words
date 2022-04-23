@@ -1,6 +1,6 @@
 <template>
-  <div ref="listWords" class="list__info" @mousedown="setPanel" @contextmenu.prevent="setOpenPanel($event, index)" @click="runWords(wordsArray.title)">
-    <div v-if="isOpenPanel == index && !editMode" ref="panel" class="list__panel" @mousedown.stop @click.stop>
+  <div ref="listWords" class="list__info" @mousedown.stop.prevent @contextmenu.prevent="setOpenPanel($event, index)" @click.ctrl.stop @click.exact="runWords(wordsArray.title)">
+    <div v-if="!editMode && isOpenPanel == index" ref="panel" class="list__panel" @mousedown.stop.prevent @click.stop.prevent>
       <Panel :words="wordsArray.words" :title="wordsArray.title" @openModal="openModal" @editWords="editWords" @setOpenPanel="setOpenPanel($event, -1)" />
     </div>
     <div class="list__title">
@@ -22,14 +22,16 @@
         <span v-if="words?.enValues == null" class="list__english">{{ words.english }}</span>
         <span v-else>
           <span class="list__english" v-for="(item, index) of words.enValues" :key="item">
-            {{ item }}<span v-if="index != words.enValues.length - 1">, </span>
+            {{ item }}
+            <span v-if="index != words.enValues.length - 1">, </span>
           </span>
         </span>
         -
         <span v-if="words?.ruValues == null" class="list__russian">{{ words.russian }}</span>
         <span v-else>
           <span class="list__russian" v-for="(item, index) of words.ruValues" :key="item">
-            {{ item }}<span v-if="index != words.ruValues.length - 1">, </span>
+            {{ item }}
+            <span v-if="index != words.ruValues.length - 1">, </span>
           </span>
         </span>
       </p>
@@ -84,7 +86,7 @@
       const isLoader = computed(() => store.getters.isLoader)
       const profile = computed(() => store.getters.profile)
 
-      const runWords = (title) => {
+      const runWords = title => {
         if (editMode.value != title) {
           const index = currentWords.value.findIndex(wordsArray => title == wordsArray.title)
           router.push(`/words/${userID.value}/${index}/?type=start`)
@@ -93,15 +95,15 @@
 
       const setOpenPanel = (event, num) => {
         emit("setOpenPanel", num)
-        // let widthList = panel.value.getBoundingClientRect().width
-        // let heightList = panel.value.getBoundingClientRect().height
 
         const posList = listWords.value.getBoundingClientRect()
-        const posPanelX = (event.x - posList.x) / 2
-        const posPanelY = (event.y - posList.y) / 2
+        const posx = event.clientX - posList.x
+        const posy = event.clientY - posList.y
 
-        panel.value.style.left = posPanelX + "px"
-        panel.value.style.top = posPanelY + "px"
+        if (panel.value != null) {
+          panel.value.style.left = posx + "px"
+          panel.value.style.top = posy + "px"
+        }
       }
 
       const editWords = (words, title) => {
@@ -114,7 +116,7 @@
         editMode.value = false
       }
 
-      const saveWord = (data) => editList.value[data.index] = data.word
+      const saveWord = data => editList.value[data.index] = data.word
 
       const saveEditWords = async (title, id) => {
         const index = currentWords.value.findIndex(wordList => title == wordList.title)
