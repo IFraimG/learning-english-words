@@ -4,11 +4,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/_redirects"
   },
   {
-    "revision": "fe0235381fbfdddf3ce7",
-    "url": "/css/app.de3aab6b.css"
+    "revision": "64ff4d7257438f3306d4",
+    "url": "/css/app.861b8765.css"
   },
   {
-    "revision": "edc5b3000760ee09dc1f",
+    "revision": "c82e00d3b9b65117dc98",
     "url": "/css/chunk-vendors.9d215518.css"
   },
   {
@@ -40,8 +40,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fonts/gilroy-semibold.989947b0.woff"
   },
   {
-    "revision": "e8a4dfc413d0957ec9e637cf5b1877e3",
-    "url": "/img/404.e8a4dfc4.jpg"
+    "revision": "1db90f63f08e7ab259dc5bafbfa1b7b7",
+    "url": "/img/404.1db90f63.webp"
   },
   {
     "revision": "5e84ea0c280269dc5f77b335b4ff3f61",
@@ -68,31 +68,27 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/people2.46403227.png"
   },
   {
-    "revision": "0132765d1ece53d93f4525dcf0e7ad8b",
-    "url": "/img/user.0132765d.png"
-  },
-  {
-    "revision": "4c6a52dd9e8e646c18fe5ba1b16ec31d",
+    "revision": "ec96713e27ebecbff958a0b75c2bf228",
     "url": "/index.html"
   },
   {
-    "revision": "fe0235381fbfdddf3ce7",
-    "url": "/js/app.cdb677ea.js"
+    "revision": "64ff4d7257438f3306d4",
+    "url": "/js/app.062d4b93.js"
   },
   {
-    "revision": "edc5b3000760ee09dc1f",
-    "url": "/js/chunk-vendors.1ed424de.js"
+    "revision": "c82e00d3b9b65117dc98",
+    "url": "/js/chunk-vendors.802348c5.js"
   },
   {
-    "revision": "2584e9c58042b89fe3be94111ae2ecf0",
-    "url": "/logo.jpeg"
+    "revision": "f0141da4f17d93e647093970a26b19e3",
+    "url": "/logo.webp"
   },
   {
-    "revision": "d77cd657ee631eaa0773afc3a2760a46",
-    "url": "/logoweb.png"
+    "revision": "88e8b7cde76f7e3da91953723ec1b2e5",
+    "url": "/logo1234.svg"
   },
   {
-    "revision": "a7cc491792d6883bd01044f81aad789a",
+    "revision": "0760994c6c1e7150e6ea7e4aed6956e7",
     "url": "/manifest.json"
   },
   {

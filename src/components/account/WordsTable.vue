@@ -58,7 +58,7 @@
   import "@/components/account/scss/Account.scss"
   import AccountWord from "@/components/account/AccountWord.vue"
   import { nextTick, ref, reactive, computed } from "vue"
-  import { useRouter } from 'vue-router'
+  import { useRouter, Router } from 'vue-router'
   import Panel from './Panel.vue'
 
   export default {
@@ -89,7 +89,9 @@
       const runWords = title => {
         if (editMode.value != title) {
           const index = currentWords.value.findIndex(wordsArray => title == wordsArray.title)
-          router.push(`/words/${userID.value}/${index}/?type=start`)
+          // router.push(`/words/${userID.value}/${index}/?type=start`)
+          const routePath = router.resolve({ name: "Words", params: { userid: userID.value, wordsid: index }, query: { type: "start" }})
+          window.open(routePath.href, "_blank")
         }
       }
 

@@ -39,7 +39,7 @@
 <script lang="ts">
   import { computed, defineComponent, ref } from "vue"
   import { useI18n } from "vue-i18n"
-  import { useRouter } from "vue-router"
+  import { Router, useRouter } from "vue-router"
   import { useStore } from "vuex"
   import ChooseLang from "./ChooseLang.vue"
   import "./scss/header/Header.scss"
@@ -49,7 +49,7 @@
     components: { ChooseLang },
     setup() {
       const store = useStore()
-      const router = useRouter()
+      const router: Router = useRouter()
 
       const { t } = useI18n({ useScope: 'global' })
 

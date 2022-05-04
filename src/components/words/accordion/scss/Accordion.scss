@@ -52,13 +52,15 @@
       font-size: 18px;
       max-width: 200px;
       margin: 0 10px;
+      padding: 0 5px;
       &:focus {
         outline: none;
       }
       &:disabled {
         cursor: pointer;
-        background: rgb(55, 157, 52);
-        color: #fff;
+        background: rgb(71, 201, 66);
+        color: rgb(27, 65, 32);
+        font-weight: bold;
       }
     }
     img {

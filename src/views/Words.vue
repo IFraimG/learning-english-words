@@ -2,7 +2,7 @@
   <div v-if="!isLoader">
     <english-t v-if="stateWords == 'englishT'" :task-num="route.query.task" :word-data="wordData" @previousTask="previousTask" @nextTask="nextTask" @setFinishType="setFinishType" />
     <english-v v-else-if="stateWords == 'englishV'" :len="executeWords.length" :task-num="route.query.task" @previousTask="previousTask" @nextTask="nextTask" @setFinishType="setFinishType" />
-    <accordion v-else-if="stateWords == 'accordion'" :current-words="currentWords" @setFinishType="setFinishType" />
+    <accordion v-else-if="stateWords == 'accordion'" />
     <Sentences v-else-if="stateWords == 'sentences'" />
     <ChooseType v-else-if="stateWords == 'start'" @setCurrentType="setCurrentType" />
     <Finish v-else-if="stateWords == 'finish'" :len="executeWords.length" />
@@ -17,7 +17,7 @@
   import ChooseType from "@/components/words/ChooseType.vue"
   import EnglishT from "@/components/words/EnglishT.vue"
   import EnglishV from "@/components/words/EnglishV.vue"
-  import Accordion from "@/components/words/Accordion.vue"
+  import Accordion from "@/components/words/accordion/AccordionWrapper.vue"
   import Finish from "../components/words/Finish.vue"
   import Loader from "../components/app/Loader.vue"
   import Sentences from "@/components/words/Sentences.vue"
