@@ -3,7 +3,7 @@
     <div class="account" @mousedown="setOpenPanel(-1)">
       <AccountLeft />
       <div v-if="currentWords != null && currentWords?.length > 0" class="list" @click="setOpenPanel(-1)">
-        <FindWord @findItem="findWord" />
+        <FindWord @editPage="editPage" @findItem="findWord" />
         <div class="list__content">
           <WordsTable :words-array="reverseWords[wordsIndex]" :index="wordsIndex" :is-open-panel="isOpenPanel.value" @setOpenPanel="setOpenPanel" />
         </div>
@@ -34,6 +34,7 @@
   import Paginator from "@/components/app/Paginator.vue"
   import { useI18n } from "vue-i18n"
   import AccountLeft from "@/components/account/AccountLeft.vue"
+  import WordsInterface from '@/models/words'
 
   export default {
     name: "Account",
@@ -48,15 +49,15 @@
     setup() {
       const store = useStore()
       const isOpenPanel = reactive({ value: -1 })
-      const wordsIndex = ref(1)
+      const wordsIndex = ref<number>(1)
 
       const { t } = useI18n()
       provide("Ti18N", t)
 
-      const currentWords = computed(() => store.getters.currentWords)
-      const isLoader = computed(() => store.getters.isLoader)
-      const reverseWords = computed(() => store.getters.reverseWords)
-      const findWords = computed(() => store.getters.findWords)
+      const currentWords = computed<WordsInterface[]>(() => store.getters.currentWords)
+      const isLoader = computed<boolean>(() => store.getters.isLoader)
+      const reverseWords = computed<WordsInterface[]>(() => store.getters.reverseWords)
+      const findWords = computed<WordsInterface[]>(() => store.getters.findWords)
 
       onMounted(() => {
         editPage(1)

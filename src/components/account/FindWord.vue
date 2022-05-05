@@ -15,13 +15,9 @@
     emits: ["findItem"],
     setup(_, { emit }) {
       const moduleWords = ref("")
-
       const getWord = () => {
-        const word = moduleWords.value
-          .trimLeft()
-          .trimRight()
-          .toLowerCase()
-        emit("findItem", word)
+        emit("editPage", 1)
+        emit("findItem", moduleWords.value)
       }
 
       return { moduleWords, getWord }

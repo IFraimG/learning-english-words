@@ -28,6 +28,7 @@
   import { computed, defineComponent, onMounted, ref } from "vue"
   import { useStore } from "vuex"
   import DictionaryTable from "@/components/dictionary/DictionaryTable.vue"
+  import WordsInterface from "@/models/words"
 
   export default defineComponent({
     name: "Dictionary",
@@ -35,11 +36,11 @@
     setup() {
       const store = useStore()
 
-      const userID = computed(() => store.getters.userID)
-      const pagesDictionary = computed(() => store.getters.pagesDictionary)
-      const currentWords = computed(() => store.getters.currentWords)
-      const isLoader = computed(() => store.getters.isLoader)
-      const currentColumn = ref(1)
+      const userID = computed<number>(() => store.getters.userID)
+      const pagesDictionary = computed<number>(() => store.getters.pagesDictionary)
+      const currentWords = computed<WordsInterface[]>(() => store.getters.currentWords)
+      const isLoader = computed<boolean>(() => store.getters.isLoader)
+      const currentColumn = ref<number>(1)
 
       const editPage = (page: number) => {
         currentColumn.value = page

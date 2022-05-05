@@ -47,17 +47,23 @@ const wordsMutations = {
     state.incorrectWord = payload
   },
   FIND_TITLE(state: WordsInterface, payload: string) {
-    const title = payload
+    const title = payload.trimStart().trimEnd().toLowerCase()
     const wordsList: any = []
+
     state.currentWords.map(item => {
-      if (
-        item.title
-          .trimLeft()
-          .trimRight()
-          .toLowerCase() == title
-      )
-        wordsList.push(item)
+      let isTrue = true
+      const originalTitle = item.title.trimStart().trimEnd().toLowerCase()
+
+      for (let i = 0; i < title.length; i++) {
+        if (originalTitle[i] !== title[i]) {
+          isTrue = false
+          break
+        }
+      }
+
+      if (isTrue) wordsList.push(item)
     })
+
     if (wordsList.length > 0) state.findWords = wordsList
     else state.findWords = []
   },
