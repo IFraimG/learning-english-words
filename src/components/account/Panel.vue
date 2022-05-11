@@ -24,7 +24,6 @@
 
 <script lang="ts">
   import { defineComponent } from "vue"
-
   export default defineComponent({
     name: "Panel",
     inject: ["Ti18N"],

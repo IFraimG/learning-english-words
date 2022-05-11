@@ -1,24 +1,18 @@
 <template>
-  <div ref="listWords" class="list__info" @mousedown.stop.prevent @contextmenu.prevent="setOpenPanel($event, index)" @click.ctrl.stop @click.exact="runWords(wordsArray.title)">
+  <div ref="listWords" class="list__info" @mousedown.stop @contextmenu.prevent="setOpenPanel($event, index)" @click.ctrl.stop @click.exact="runWords(wordsArray.title)">
     <div v-if="!editMode && isOpenPanel == index" ref="panel" class="list__panel" @mousedown.stop.prevent @click.stop.prevent>
       <Panel :words="wordsArray.words" :title="wordsArray.title" @openModal="openModal" @editWords="editWords" @setOpenPanel="setOpenPanel($event, -1)" />
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
       <button v-if="editMode" class="profile__run">
-        <router-link :to="'/account/delete?title=' + wordsArray.title">
-          {{ Ti18N("account.wordsTable.panel.delete") }}
-        </router-link>
+        <router-link :to="'/account/delete?title=' + wordsArray.title">{{ Ti18N("account.wordsTable.panel.delete") }}</router-link>
       </button>
-      <button v-if="editMode != wordsArray.title" class="profile__run" @click.stop="editWords(wordsArray.words, wordsArray.title)">
-        {{ Ti18N("account.wordsTable.panel.change") }}
-      </button>
-      <button v-else class="profile__run" @click.stop="stopEdit">
-        {{ Ti18N("account.wordsTable.panel.cancel") }}
-      </button>
+      <button v-if="editMode != wordsArray.title" class="profile__run" @click.stop="editWords(wordsArray.words, wordsArray.title)">{{ Ti18N("account.wordsTable.panel.change") }}</button>
+      <button v-else class="profile__run" @click.stop="stopEdit">{{ Ti18N("account.wordsTable.panel.cancel") }}</button>
     </div>
     <div v-for="(words, index) of wordsArray.words" :key="index" class="list__words">
-      <p v-if="editMode != wordsArray.title" class="list__item">
+      <div v-if="editMode != wordsArray.title" class="list__item">
         <span v-if="words?.enValues == null" class="list__english">{{ words.english }}</span>
         <span v-else>
           <span class="list__english" v-for="(item, index) of words.enValues" :key="item">
@@ -26,7 +20,7 @@
             <span v-if="index != words.enValues.length - 1">, </span>
           </span>
         </span>
-        -
+        <div class="list__border"></div>
         <span v-if="words?.ruValues == null" class="list__russian">{{ words.russian }}</span>
         <span v-else>
           <span class="list__russian" v-for="(item, index) of words.ruValues" :key="item">
@@ -34,34 +28,32 @@
             <span v-if="index != words.ruValues.length - 1">, </span>
           </span>
         </span>
-      </p>
+      </div>
       <account-word v-else :word-data="editList.value[index]" :title="wordsArray.title" :index="index" @saveWord="saveWord" />
     </div>
     <div v-if="editMode == wordsArray.title" class="list__footer" @click.stop>
-      <button class="profile__run" @click="saveEditWords(wordsArray.title, wordsArray.id)">
-        {{ Ti18N("account.wordsTable.panel.save") }}
-      </button>
-      <button class="profile__run" @click="openModal">
-        {{ Ti18N("account.wordsTable.panel.newWords") }}
-      </button>
+      <button class="profile__run" @click="saveEditWords(wordsArray.title, wordsArray.id)">{{ Ti18N("account.wordsTable.panel.save") }}</button>
+      <button class="profile__run" @click="openModal">{{ Ti18N("account.wordsTable.panel.newWords") }}</button>
       <button class="profile__run">
-        <router-link :to="'/account/setupfolder?title=' + wordsArray.title">
-          {{ Ti18N("account.wordsTable.panel.addToSection") }}
-        </router-link>
+        <router-link :to="'/account/setupfolder?title=' + wordsArray.title"> {{ Ti18N("account.wordsTable.panel.addToSection") }}</router-link>
       </button>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { useStore } from "vuex"
   import "@/components/account/scss/Account.scss"
   import AccountWord from "@/components/account/AccountWord.vue"
-  import { nextTick, ref, reactive, computed } from "vue"
-  import { useRouter, Router } from 'vue-router'
+  import { nextTick, ref, reactive, computed, defineComponent } from "vue"
+  import { useRouter } from 'vue-router'
   import Panel from './Panel.vue'
 
-  export default {
+  type WordsTableProps = {
+    wordsArray: any
+  }
+
+  export default defineComponent({
     name: "WordsTable",
     components: { AccountWord, Panel },
     props: {
@@ -69,33 +61,33 @@
       index: Number,
       isOpenPanel: Number,
     },
-    inject: ["Ti18N"],
     emits: ["setOpenPanel"],
-    setup(props, { emit }) {
+    inject: ["Ti18N"],
+    setup(props: WordsTableProps, { emit }: any) {
       const store = useStore()
       const router = useRouter()
 
-      const editMode = ref(false)
-      const section = ref(null)
-      const panel = ref(null)
-      const listWords = ref(null)
-      const editList = reactive({ value: [] })
+      const editMode = ref<boolean | string>(false)
+      const section: any = ref(null)
+      const panel: any = ref(null)
+      const listWords: any = ref(null)
+      const editList: any = reactive({ value: [] })
 
       const userID = computed(() => store.getters.userID)
       const currentWords = computed(() => store.getters.currentWords)
       const isLoader = computed(() => store.getters.isLoader)
       const profile = computed(() => store.getters.profile)
 
-      const runWords = title => {
+      const runWords = (title: any) => {
         if (editMode.value != title) {
-          const index = currentWords.value.findIndex(wordsArray => title == wordsArray.title)
+          const index = currentWords.value.findIndex((wordsArray: any) => title == wordsArray.title)
           // router.push(`/words/${userID.value}/${index}/?type=start`)
           const routePath = router.resolve({ name: "Words", params: { userid: userID.value, wordsid: index }, query: { type: "start" }})
           window.open(routePath.href, "_blank")
         }
       }
 
-      const setOpenPanel = (event, num) => {
+      const setOpenPanel = (event: any, num: number) => {
         emit("setOpenPanel", num)
 
         const posList = listWords.value.getBoundingClientRect()
@@ -108,7 +100,7 @@
         }
       }
 
-      const editWords = (words, title) => {
+      const editWords = (words: any, title: string) => {
         editMode.value = title
         editList.value = [...words]
       }
@@ -118,10 +110,10 @@
         editMode.value = false
       }
 
-      const saveWord = data => editList.value[data.index] = data.word
+      const saveWord = (data: any) => editList.value[data.index] = data.word
 
-      const saveEditWords = async (title, id) => {
-        const index = currentWords.value.findIndex(wordList => title == wordList.title)
+      const saveEditWords = async (title: string, id: number) => {
+        const index = currentWords.value.findIndex((wordList: any) => title == wordList.title)
         await store.dispatch("sendEditWords", {
           title,
           id,
@@ -144,5 +136,5 @@
         currentWords, isLoader, profile, stopEdit, panel, setOpenPanel
       }
     }
-  }
+  })
 </script>

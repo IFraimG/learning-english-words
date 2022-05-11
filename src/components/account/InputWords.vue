@@ -1,32 +1,20 @@
 <template>
   <div class="modal__fields">
     <div class="modal__left">
-      <Swiper
-        class="modal__sliders"
-        :slides-per-view="1"
-        :grid="{rows: 1}"
-        :scrollbar="{ draggable: true }"
-        @swiper="onSwiperEN"
-      >
+      <Swiper class="modal__sliders" :slides-per-view="1" :grid="{ rows: 1 }" :scrollbar="{ draggable: true }" @swiper="onSwiperEN">
         <swiper-slide v-for="(item, index) of newWord.enValues" :key="index" class="modal__slide">
           <input ref="englishWord" v-model="newWord.enValues[index]" class="modal__input input-light" type="text" pattern="[A-Za-z]" placeholder="Слово на английском" @input="editDone(false)" />
           <p>{{ index + 1 }} / {{ newWord.enValues.length }}</p>
         </swiper-slide>
       </Swiper>
-      <button @click="makeNewInputEN" class="profile__run modal-btn-plus">+</button>
-      <Swiper
-        class="modal__sliders"
-        :grid="{rows: 1}"
-        :slides-per-view="1"
-        :scrollbar="{ draggable: false }"
-        @swiper="onSwiperRU"
-      >
+      <button @click="makeNewInputEN" class="modal-btn-plus">+</button>
+      <Swiper class="modal__sliders" :grid="{ rows: 1 }" :slides-per-view="1" :scrollbar="{ draggable: false }" @swiper="onSwiperRU">
         <swiper-slide v-for="(item, index) of newWord.ruValues" :key="index" class="modal__slide">
           <input ref="russianWord" v-model="newWord.ruValues[index]" class="modal__input input-light" type="text" pattern="[А-Яа-яЁё]" placeholder="Перевод слова на русском" @input="editDone(false)" />
           <p>{{ index + 1 }} / {{ newWord.ruValues.length }}</p>
         </swiper-slide>
       </Swiper>
-      <button @click="makeNewInputRU" class="profile__run modal-btn-plus">+</button>
+      <button @click="makeNewInputRU" class="modal-btn-plus">+</button>
       <select-time :time-edit="null" @setTime="setTime" />
     </div>
     <div class="modal__right">

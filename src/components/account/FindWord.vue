@@ -6,14 +6,14 @@
   </div>
 </template>
 
-<script>
-  import { ref } from "vue"
+<script lang="ts">
+  import { defineComponent, ref } from "vue"
   import "./scss/FindWord.scss"
 
-  export default {
+  export default defineComponent({
     name: "FindWord",
     emits: ["findItem"],
-    setup(_, { emit }) {
+    setup(_: any, { emit }: any) {
       const moduleWords = ref("")
       const getWord = () => {
         emit("editPage", 1)
@@ -22,5 +22,5 @@
 
       return { moduleWords, getWord }
     },
-  }
+  })
 </script>

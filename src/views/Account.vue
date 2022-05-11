@@ -13,7 +13,7 @@
           </template>
         </Paginator>
       </div>
-      <div v-else class="list__info">
+      <div v-else class="list__info list__noinfo">
         <p>{{ t("account.notList") }}</p>
       </div>
     </div>
@@ -34,7 +34,7 @@
   import Paginator from "@/components/app/Paginator.vue"
   import { useI18n } from "vue-i18n"
   import AccountLeft from "@/components/account/AccountLeft.vue"
-  import WordsInterface from '@/models/words'
+  import WordsInterface, { WordInterface } from '@/models/words'
 
   export default {
     name: "Account",
@@ -56,16 +56,19 @@
 
       const currentWords = computed<WordsInterface[]>(() => store.getters.currentWords)
       const isLoader = computed<boolean>(() => store.getters.isLoader)
-      const reverseWords = computed<WordsInterface[]>(() => store.getters.reverseWords)
-      const findWords = computed<WordsInterface[]>(() => store.getters.findWords)
+      const reverseWords = computed<WordInterface[]>(() => store.getters.reverseWords)
+      const findWords = computed<WordInterface[]>(() => store.getters.findWords)
 
       onMounted(() => {
         editPage(1)
         store.dispatch("getWords")
       })
 
-      const setOpenPanel = (num: number) => (isOpenPanel.value = num)
-      const editPage = (num: number) => (wordsIndex.value = num)
+      const setOpenPanel = (num: number) => {
+        console.log(num);
+        isOpenPanel.value = num
+      }
+      const editPage = (num: number) => wordsIndex.value = num
       const findWord = (word: string) => store.commit("FIND_TITLE", word)
 
       const previousPage = () => {

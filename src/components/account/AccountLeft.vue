@@ -31,6 +31,7 @@
         <li class="account__left-item-wrapper">
           <div class="account__left-item">
             <h3 v-if="wordsLength > 0" class="account__left-words">{{ Ti18N("account.allWords") }}: {{ wordsLength }}</h3>
+            <h3 v-else>{{ Ti18N("account.allWords") }}: 0</h3>
           </div>
         </li>
       </ul>

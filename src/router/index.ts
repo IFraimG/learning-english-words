@@ -98,4 +98,8 @@ router.beforeEach((to, from, next) => {
   })
 })
 
+router.afterEach((to, from, failure) => {
+  if (window != undefined) window.scrollTo({ top: 0 })
+})
+
 export default router

@@ -27,3 +27,10 @@ export default interface WordsInterface {
   executeWords: WordInterface[]
   wordsLength: number
 }
+
+export interface WordEdit {
+  english: string
+  russian: string
+  currentTime: string
+  id: number | null
+}

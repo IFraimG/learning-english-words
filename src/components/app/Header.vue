@@ -2,7 +2,7 @@
   <header v-if="isAuth" class="header">
     <div class="header__content">
       <div class="header__left">
-        <div></div>
+        <img src="@/assets/logo1234.svg" alt="logo">
         <h1>MyOcean English project</h1>
       </div>
       <div class="header__right">

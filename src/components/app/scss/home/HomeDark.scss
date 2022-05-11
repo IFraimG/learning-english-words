@@ -54,6 +54,13 @@
     &__content {
       border-bottom: 1px solid #fff;
     }
+    &__item {
+      li {
+        a {
+          color: #fff;
+        }
+      }
+    }
   }
 }
 

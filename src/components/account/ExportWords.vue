@@ -1,5 +1,5 @@
 <template>
-  <div v-if="reverseWords != null && reverseWords.length > 0">
+  <div style="padding: 10px 0;" v-if="reverseWords != null && reverseWords.length > 0">
     <button class="profile__run" @click="exportHandle">{{ Ti18N("exportWords") }}</button>
   </div>
 </template>
