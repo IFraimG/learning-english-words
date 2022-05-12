@@ -76,7 +76,8 @@ img {
     }
     &:active {
       background-color: $defaultbtnactive;
-      box-shadow: 0 0 0 4px $defaultoutlinebtn;
+      // box-shadow: 0 0 0 4px $defaultoutlinebtn;
+      box-shadow: 0 4px 4px 0 $defaultoutlinebtn;
     }
   }
 }
@@ -86,7 +87,7 @@ img {
     background-color: $dbluebtn !important;
     &:active {
       background-color: $dbluebtnact !important;
-      box-shadow: 0 0 0 4px $blueoutline;
+      box-shadow: 0 4px 0 0 $blueoutline;
     }
   }
 }
@@ -174,6 +175,13 @@ input[type="search"]::-webkit-search-cancel-button {
       --sizeAnim: 450px;
     }
     color: #fff;
+  }
+}
+
+.input-focus {
+  outline: 2px solid transparent;
+  &:focus {
+    outline: 2px solid $dbluebtnact;
   }
 }
 

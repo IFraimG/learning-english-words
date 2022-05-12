@@ -5,7 +5,7 @@
         <div class="modal__header">
           <h2 v-if="startWords.title == null" ref="modalTitle">Создать список слов</h2>
           <h2 v-else ref="modalTitle">Добавить новые слова</h2>
-          <input v-if="startWords.title == null" ref="inputTitle" v-model="titleWords" placeholder="Ваше название словаря..." type="text" />
+          <input class="input-focus" v-if="startWords.title == null" ref="inputTitle" v-model="titleWords" placeholder="Ваше название словаря..." type="text" />
           <button class="profile__run modal__btn-image" @click="modalClose">
             <span>Закрыть</span>
             <img src="@/assets/cancel.png" alt="" />

@@ -12,7 +12,7 @@
 
   export default defineComponent({
     name: "FindWord",
-    emits: ["findItem"],
+    emits: ["findItem", "editPage"],
     setup(_: any, { emit }: any) {
       const moduleWords = ref("")
       const getWord = () => {

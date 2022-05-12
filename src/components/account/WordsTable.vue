@@ -5,37 +5,19 @@
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
-      <button v-if="editMode" class="profile__run">
-        <router-link :to="'/account/delete?title=' + wordsArray.title">{{ Ti18N("account.wordsTable.panel.delete") }}</router-link>
-      </button>
+      <button v-if="editMode" class="profile__run" @click="deleteWords(wordsArray.title)">{{ Ti18N("account.wordsTable.panel.delete") }}</button>
       <button v-if="editMode != wordsArray.title" class="profile__run" @click.stop="editWords(wordsArray.words, wordsArray.title)">{{ Ti18N("account.wordsTable.panel.change") }}</button>
       <button v-else class="profile__run" @click.stop="stopEdit">{{ Ti18N("account.wordsTable.panel.cancel") }}</button>
     </div>
-    <div v-for="(words, index) of wordsArray.words" :key="index" class="list__words">
-      <div v-if="editMode != wordsArray.title" class="list__item">
-        <span v-if="words?.enValues == null" class="list__english">{{ words.english }}</span>
-        <span v-else>
-          <span class="list__english" v-for="(item, index) of words.enValues" :key="item">
-            {{ item }}
-            <span v-if="index != words.enValues.length - 1">, </span>
-          </span>
-        </span>
-        <div class="list__border"></div>
-        <span v-if="words?.ruValues == null" class="list__russian">{{ words.russian }}</span>
-        <span v-else>
-          <span class="list__russian" v-for="(item, index) of words.ruValues" :key="item">
-            {{ item }}
-            <span v-if="index != words.ruValues.length - 1">, </span>
-          </span>
-        </span>
-      </div>
-      <account-word v-else :word-data="editList.value[index]" :title="wordsArray.title" :index="index" @saveWord="saveWord" />
+    <div v-for="(words, index2) of wordsArray.words" :key="words" class="list__words">
+      <words-list v-if="editMode != wordsArray.title" :words="wordsArray.words[index2]" :index="index" />
+      <account-word v-else :word-data="editList.value[index2]" :title="wordsArray.title" :index="index2" @saveWord="saveWord" />
     </div>
     <div v-if="editMode == wordsArray.title" class="list__footer" @click.stop>
       <button class="profile__run" @click="saveEditWords(wordsArray.title, wordsArray.id)">{{ Ti18N("account.wordsTable.panel.save") }}</button>
       <button class="profile__run" @click="openModal">{{ Ti18N("account.wordsTable.panel.newWords") }}</button>
       <button class="profile__run">
-        <router-link :to="'/account/setupfolder?title=' + wordsArray.title"> {{ Ti18N("account.wordsTable.panel.addToSection") }}</router-link>
+        <router-link :to="'/account/setupfolder?title=' + wordsArray.title">{{ Ti18N("account.wordsTable.panel.addToSection") }}</router-link>
       </button>
     </div>
   </div>
@@ -48,22 +30,20 @@
   import { nextTick, ref, reactive, computed, defineComponent } from "vue"
   import { useRouter } from 'vue-router'
   import Panel from './Panel.vue'
+  import WordsList from "./WordsList.vue"
 
-  type WordsTableProps = {
-    wordsArray: any
-  }
 
   export default defineComponent({
     name: "WordsTable",
-    components: { AccountWord, Panel },
+    components: { AccountWord, Panel, WordsList },
     props: {
-      wordsArray: Object,
+      wordsArray: Object as any,
       index: Number,
       isOpenPanel: Number,
     },
     emits: ["setOpenPanel"],
     inject: ["Ti18N"],
-    setup(props: WordsTableProps, { emit }: any) {
+    setup(props, { emit }: any) {
       const store = useStore()
       const router = useRouter()
 
@@ -130,9 +110,11 @@
         router.push("/account/words")
       }
 
+      const deleteWords = (title: string) => router.push(`/account/delete?title=${title}`)
+
       return {
         editMode, editList, section, runWords, saveEditWords,
-        saveWord, openModal, editWords, userID, listWords,
+        saveWord, openModal, editWords, userID, listWords, deleteWords,
         currentWords, isLoader, profile, stopEdit, panel, setOpenPanel
       }
     }

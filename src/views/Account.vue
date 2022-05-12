@@ -64,10 +64,8 @@
         store.dispatch("getWords")
       })
 
-      const setOpenPanel = (num: number) => {
-        console.log(num);
-        isOpenPanel.value = num
-      }
+      const setOpenPanel = (num: number) => isOpenPanel.value = num
+
       const editPage = (num: number) => wordsIndex.value = num
       const findWord = (word: string) => store.commit("FIND_TITLE", word)
 

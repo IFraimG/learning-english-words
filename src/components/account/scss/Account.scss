@@ -20,7 +20,7 @@
     @media (max-width: 685px) {
       flex-wrap: wrap;
       justify-content: center;
-      margin: 30px 0;
+      margin: 10px 0;
       padding: 0 10px;
     }
 
@@ -68,10 +68,6 @@
     user-select: none;
     cursor: pointer;
     position: relative;
-    transition: transform 0.5s ease-in-out, background 0.2s ease-in-out;
-    &:hover {
-      transform: translateY(-20px);
-    }
   }
   &__noinfo {
     padding: 20px;
@@ -87,8 +83,9 @@
     }
   }
   &__words {
-    max-width: 400px;
+    max-width: 500px;
     margin: 20px auto;
+    overflow: hidden;
   }
   &__title {
     display: flex;
@@ -117,8 +114,17 @@
   }
   &__russian {
     white-space: nowrap;
+    &-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      line-height: 20px;
+    }
     @media (max-width: 685px) {
       white-space: wrap;
+    }
+    &-space {
+      white-space: wrap !important;
     }
   }
   &__panel {
