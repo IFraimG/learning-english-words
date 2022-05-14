@@ -8,6 +8,8 @@
   "translation": "Translations",
   "account": {
     "allWords": "All Words",
+    "toggle": "Toggle the theme",
+    "fillUpDictionary": "Use the dictionary and fill up transcriptions",
     "btnAddWords": "Add new words",
     "notList": "You haven't made any lists yet!",
     "wordsTable": {
@@ -19,6 +21,20 @@
         "cancel": "Cancel",
         "save": "Save"
       }
+    },
+    "createFolder": {
+      "createFolder": "Make a folder",
+      "cancel": "Cancel",
+      "nameOfFolder": "A name of your folder..."
+    },
+    "modalWords": {
+      "addNewWords": "Add new words",
+      "makeList": "Make a list of words",
+      "close": "Close",
+      "error": "This word was entered incorrectly!",
+      "correct": "Perhaps, you meant this:",
+      "save": "Save",
+      "clean": "Clean up"
     }
   },
   "notFound": {

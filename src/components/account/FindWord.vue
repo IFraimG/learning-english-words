@@ -12,12 +12,17 @@
 
   export default defineComponent({
     name: "FindWord",
-    emits: ["findItem", "editPage"],
+    emits: {
+      findItem: (word: string) => {
+        return word.trim().length > 0
+      },
+      editPage: (num: number) => num == 1
+    },
     setup(_: any, { emit }: any) {
       const moduleWords = ref("")
       const getWord = () => {
-        emit("editPage", 1)
         emit("findItem", moduleWords.value)
+        emit("editPage", 1)
       }
 
       return { moduleWords, getWord }

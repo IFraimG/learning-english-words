@@ -37,7 +37,7 @@
     "src/**/*.vue",
     // /tests/**/*.ts.ts",
     // /tests/**/*.tsxtsx",
-    // /tests/**/*.spec.ts.ts",
+    "tests/**/*.spec.ts",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

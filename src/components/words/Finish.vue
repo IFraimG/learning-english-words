@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="finish__footer">
-            <router-link :to="{ name: 'Account' }">
+            <router-link :to="{ name: 'Account', params: { id: userID } }">
               <button class="profile__run">Вернуться</button>
             </router-link>
             <button class="profile__run" @click="returnStart">
@@ -47,6 +47,7 @@
         complete: [],
         isOpen: false,
         activeClass: "finish__error-active",
+        userID: null
       }
     },
     computed: {
@@ -65,6 +66,8 @@
       if (complete != null) this.complete = complete
       const mistakes = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
       if (mistakes != null) this.mistakes = mistakes
+
+      this.userID = this.$store.getters.userID
     },
     methods: {
       returnStart() {

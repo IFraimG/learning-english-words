@@ -22,7 +22,7 @@ const routes = [
     component: Home,
   },
   {
-    path: "/account",
+    path: "/account/:id",
     name: "Account",
     component: Account,
     children: [
@@ -92,7 +92,7 @@ router.beforeEach((to, from, next) => {
     } else {
       store.commit("SET_PROFILE", { email: user.email, login: user.displayName, id: user.uid })
       store.commit("SET_AUTH", true)
-      if (to.name === "Home") return next({ name: "Account" })
+      if (to.name === "Home") return next({ name: "Account", params: { id: user.uid } })
     }
     next()
   })

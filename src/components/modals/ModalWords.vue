@@ -3,11 +3,11 @@
     <div ref="modalContent" class="modal">
       <div class="modal__content">
         <div class="modal__header">
-          <h2 v-if="startWords.title == null" ref="modalTitle">Создать список слов</h2>
-          <h2 v-else ref="modalTitle">Добавить новые слова</h2>
+          <h2 v-if="startWords.title == null" ref="modalTitle">{{ t("account.modalWords.makeList") }}</h2>
+          <h2 v-else ref="modalTitle">{{ t("account.modalWords.addNewWords") }}</h2>
           <input class="input-focus" v-if="startWords.title == null" ref="inputTitle" v-model="titleWords" placeholder="Ваше название словаря..." type="text" />
           <button class="profile__run modal__btn-image" @click="modalClose">
-            <span>Закрыть</span>
+            <span>{{ t("account.modalWords.close") }}</span>
             <img src="@/assets/cancel.png" alt="" />
           </button>
         </div>
@@ -18,18 +18,18 @@
         </div>
         <div v-if="incorrectWord != null" class="modal__errors-wrapper">
           <div class="modal__errors">
-            <p class="modal__message">Данное слово введено неправильно!</p>
+            <p class="modal__message">{{ t("account.modalWords.incorrect") }}</p>
             <p v-if="incorrectWord.correct != undefined">
-              Возможно вы имели ввиду: <span>{{ incorrectWord.correct }}</span>
+              {{ t("account.modalWords.correct") }} <span>{{ incorrectWord.correct }}</span>
             </p>
           </div>
         </div>
         <div ref="footer" class="modal__footer">
           <button type="submit" ref="sendButton" class="profile__run modal-button__run modal__save modal__btn-image" @click="sendData">
-            Сохранить
+            {{ t("account.modalWords.save") }}
           </button>
           <button ref="resetButton" type="submit" class="profile__run modal__save modal__btn-image" @click="resetData">
-            <span>Очистить</span>
+            <span>{{ t("account.modalWords.clean") }}</span>
             <img src="@/assets/delete.png" alt="" />
           </button>
         </div>
@@ -43,8 +43,9 @@
   import { useStore } from "vuex"
   import "./scss/ModalWords.scss"
   import InputWords from "@/components/account/InputWords.vue"
-  import { computed, defineComponent, nextTick, onMounted, onUnmounted, reactive, ref } from "vue"
+  import { computed, defineComponent, nextTick, onMounted, onUnmounted, provide, reactive, ref } from "vue"
   import { useRouter } from "vue-router"
+  import { useI18n } from "vue-i18n"
 
   export default defineComponent({
     name: "ModalWords",
@@ -56,6 +57,11 @@
       const modalWordsWrap: any = ref(null)
       const sendButton: any = ref(null)
       const resetButton: any = ref(null)
+
+      const userID = computed(() => store.getters.userID)
+
+      const { t } = useI18n()
+      provide("Ti18N", t)
 
       onMounted(() => {
         nextTick(() => {
@@ -84,7 +90,7 @@
         store.commit("CHECK_CORRECT_WORD", null)
       }
 
-      const modalClose = () => router.push("/account/words/close")
+      const modalClose = () => router.push(`/account/${userID.value}/words/close`)
 
       const sendData = async () => {
         if (wordsList.value.length == 0) {
@@ -112,7 +118,7 @@
               resetData()
 
               store.commit("SET_MODAL_WORDS", { list: null, title: null })
-              router.push("/account")
+              router.push("/account" + userID.value)
             }
           }
         }
@@ -150,8 +156,6 @@
         if (incorrectWord.value == null) {
           wordsList.value[data.index] = editData
           editData = null
-          console.log(wordsList.value.length);
-          
           // nextTick(() => (modalContent.value.style.marginBottom = `${20 * wordsList.value.length}px`))
           // nextTick(() => (document.documentElement.style.marginBottom = `${20 * wordsList.value.length}px`))
           // nextTick(() => (document.documentElement.style.marginBottom = `${20 * wordsList.value.length}px`))
@@ -161,7 +165,7 @@
       return {
         wordsList, titleWords, editData, setValueInput,
         getWordID, checkValidID, resetData, modalClose,
-        sendData, incorrectWord, modalTitle, inputTitle,
+        sendData, incorrectWord, modalTitle, inputTitle, t, userID,
         startWords, modalWordsWrap, modalContent, sendButton, resetButton
       }
     },

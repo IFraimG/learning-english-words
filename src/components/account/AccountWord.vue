@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-  import "@/components/account/scss/Account.scss"
+  import "./scss/Account.scss"
   import { WordEdit } from "@/models/words"
   import { defineComponent, onMounted, onUpdated, reactive, ref } from "@vue/runtime-core"
   import SelectTime from "./SelectTime.vue"
@@ -29,11 +29,7 @@
         id: null,
       })
 
-      onMounted(() => {
-        console.log(props);
-
-        wordEdit = { ...props.wordData }
-      })
+      onMounted(() =>  wordEdit = { ...props.wordData })
 
       onUpdated(() => {
         if (wordEdit.english != "" && wordEdit.russian != "" && wordEdit.id != null) emit("saveWord", { index: props.index, word: wordEdit })

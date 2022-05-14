@@ -2,7 +2,7 @@
   <div class="vidget__wrapper">
     <router-link :to="{ name: 'Dictionary' }">
       <button class="vidget">
-        <h2>Ведите словарь и заполняйте транскрипции !</h2>
+        <h2>{{ Ti18N("account.fillUpDictionary") }}</h2>
       </button>
     </router-link>
   </div>
@@ -13,5 +13,6 @@
 
   export default {
     name: "DictionaryVidget",
+    inject: ["Ti18N"]
   }
 </script>

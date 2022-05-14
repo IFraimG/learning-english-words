@@ -9,7 +9,7 @@
         </li>
         <li class="account__left-item-wrapper">
           <div class="account__left-item">
-            <h3>Переключить тему</h3>
+            <h3>{{ Ti18N("account.toggle") }}</h3>
             <ThemeSwitcher />
           </div>
         </li>

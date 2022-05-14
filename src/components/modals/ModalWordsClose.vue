@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, nextTick, onMounted } from "vue"
+  import { computed, defineComponent, nextTick, onMounted } from "vue"
   import Modal from "./Modal.vue"
   import { useRouter } from "vue-router"
   import { useStore } from "vuex"
@@ -24,6 +24,8 @@
       const store = useStore()
       const router = useRouter()
 
+      const userID = computed(() => store.getters.userID)
+
       onMounted(() => nextTick(() => window.scrollTo({ top: 0 })))
 
       const deleteItem = async (isTrue: boolean) => {
@@ -31,7 +33,7 @@
           store.commit("SET_MODAL_WORDS", { list: null, title: null })
           document.documentElement.style.overflow = "auto"
 
-          await router.push("/account")
+          await router.push("/account/" + userID.value)
         } else document.documentElement.style.overflow = "hidden"
       }
 

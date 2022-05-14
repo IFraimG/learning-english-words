@@ -33,7 +33,6 @@
 
       const setWidthText = () => {
         if (itemsInfo.value.length > 1) {
-          // itemsInfo.value[0].classList.remove("list__russian")
           const len = itemsInfo.value.length - 1
           for (let i = 0; i < len; i++) {
             const text = itemsInfo.value[i].textContent.split("")
@@ -44,8 +43,6 @@
             text.push(",")
             itemsInfo.value[i].textContent = text.join("")
           }
-
-          console.log(itemsInfo.value[0]) 
         }
         if (itemsInfo.value[0]?.offsetWidth != null && enItemsInfo.value[0]?.offsetWidth != null) {
           if (itemsInfo.value[0].offsetWidth + enItemsInfo.value[0].offsetWidth > 430) {

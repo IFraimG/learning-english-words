@@ -1,7 +1,7 @@
 <template>
   <div ref="listWords" class="list__info" @mousedown.stop @contextmenu.prevent="setOpenPanel($event, index)" @click.ctrl.stop @click.exact="runWords(wordsArray.title)">
     <div v-if="!editMode && isOpenPanel == index" ref="panel" class="list__panel" @mousedown.stop.prevent @click.stop.prevent>
-      <Panel :words="wordsArray.words" :title="wordsArray.title" @openModal="openModal" @editWords="editWords" @setOpenPanel="setOpenPanel($event, -1)" />
+      <Panel :words="wordsArray.words" :userID="userID" :title="wordsArray.title" @openModal="openModal" @editWords="editWords" @setOpenPanel="setOpenPanel($event, -1)" />
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
@@ -17,7 +17,7 @@
       <button class="profile__run" @click="saveEditWords(wordsArray.title, wordsArray.id)">{{ Ti18N("account.wordsTable.panel.save") }}</button>
       <button class="profile__run" @click="openModal">{{ Ti18N("account.wordsTable.panel.newWords") }}</button>
       <button class="profile__run">
-        <router-link :to="'/account/setupfolder?title=' + wordsArray.title">{{ Ti18N("account.wordsTable.panel.addToSection") }}</router-link>
+        <router-link :to="`/account/${userID}/setupfolder?title=${wordsArray.title}`">{{ Ti18N("account.wordsTable.panel.addToSection") }}</router-link>
       </button>
     </div>
   </div>
@@ -25,7 +25,7 @@
 
 <script lang="ts">
   import { useStore } from "vuex"
-  import "@/components/account/scss/Account.scss"
+  import "./scss/Account.scss"
   import AccountWord from "@/components/account/AccountWord.vue"
   import { nextTick, ref, reactive, computed, defineComponent } from "vue"
   import { useRouter } from 'vue-router'
@@ -107,10 +107,10 @@
 
       const openModal = () => {
         store.commit("SET_MODAL_WORDS", { title: props.wordsArray.title, list: props.wordsArray.words })
-        router.push("/account/words")
+        router.push(`/account/${userID.value}/words`)
       }
 
-      const deleteWords = (title: string) => router.push(`/account/delete?title=${title}`)
+      const deleteWords = (title: string) => router.push(`/account/${userID.value}/delete?title=${title}`)
 
       return {
         editMode, editList, section, runWords, saveEditWords,

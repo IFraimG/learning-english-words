@@ -13,7 +13,7 @@ const authActions = {
         login: data.user.displayName,
         id: data.user.uid,
       })
-      router.push("/account")
+      router.push("/account/" + data.user.uid)
     } catch (error: any) {
       commit("SET_ERRORS", error.message)
     }
@@ -31,7 +31,7 @@ const authActions = {
         login: data.user.displayName,
         id: data.user.uid,
       })
-      router.push("/account")
+      router.push("/account/" + data.user.uid)
     } catch (error: any) {
       commit("SET_ERRORS", error.message)
     }

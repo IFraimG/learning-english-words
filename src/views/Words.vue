@@ -1,7 +1,6 @@
 <template>
   <div v-if="!isLoader">
-    <english-t v-if="stateWords == 'englishT'" :task-num="route.query.task" :word-data="wordData" @previousTask="previousTask" @nextTask="nextTask" @setFinishType="setFinishType" />
-    <english-v v-else-if="stateWords == 'englishV'" :len="executeWords.length" :task-num="route.query.task" @previousTask="previousTask" @nextTask="nextTask" @setFinishType="setFinishType" />
+    <english-v v-if="stateWords == 'englishV'" :len="executeWords.length" :task-num="route.query.task" @previousTask="previousTask" @nextTask="nextTask" @setFinishType="setFinishType" />
     <accordion v-else-if="stateWords == 'accordion'" />
     <Sentences v-else-if="stateWords == 'sentences'" />
     <ChooseType v-else-if="stateWords == 'start'" @setCurrentType="setCurrentType" />
@@ -15,7 +14,6 @@
 <script lang="ts">
   import { useStore } from "vuex"
   import ChooseType from "@/components/words/ChooseType.vue"
-  import EnglishT from "@/components/words/EnglishT.vue"
   import EnglishV from "@/components/words/EnglishV.vue"
   import Accordion from "@/components/words/accordion/AccordionWrapper.vue"
   import Finish from "../components/words/Finish.vue"
@@ -27,7 +25,7 @@
 
   export default defineComponent({
     name: "Words",
-    components: { ChooseType, EnglishT, EnglishV, Accordion, Finish, Loader, Sentences },
+    components: { ChooseType, EnglishV, Accordion, Finish, Loader, Sentences },
     setup() {
       const route: any = useRoute()
       const router = useRouter()

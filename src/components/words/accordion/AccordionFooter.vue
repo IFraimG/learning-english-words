@@ -3,7 +3,7 @@
     <button class="accordion__send profile__run" @click="rotateWords">
       Перевернуть гармошку
     </button>
-    <router-link :to="{ name: 'Account' }">
+    <router-link :to="{ name: 'Account', params: { id: userID } }">
       <button class="accordion__send profile__run">
         Завершить
       </button>
@@ -12,14 +12,17 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+  import { computed, defineComponent } from 'vue'
+  import { useStore } from 'vuex'
 
   export default defineComponent({
     name: "AccordionFooter",
     setup(_: any, { emit }: any) {
       const rotateWords = () => emit("rotateWords")
+      const store = useStore()
+      const userID = computed(() => store.getters.userID)
 
-      return { rotateWords }
+      return { rotateWords, userID }
     },
   })
 </script>

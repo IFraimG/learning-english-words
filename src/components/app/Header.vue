@@ -6,7 +6,7 @@
         <h1>MyOcean English project</h1>
       </div>
       <div class="header__right">
-        <router-link class="root-link header-link" to="/account">{{ t("header.profile") }}</router-link>
+        <router-link class="root-link header-link" :to="'/account/' + id">{{ t("header.profile") }}</router-link>
         <router-link class="root-link header-link" to="/dictionary">{{ t("header.dictionary") }}</router-link>
         <router-link class="root-link header-link" to="/folders">{{ t("header.sections") }}</router-link>
         <p class="root-link header-link" @click="logout">{{ t("header.logout") }}</p>
@@ -17,7 +17,7 @@
       </div>
       <div ref="menu" class="menu">
         <div class="menu__content">
-          <router-link class="root-link menu-link" to="/account">
+          <router-link class="root-link menu-link" :to="'/account/' + id">
             Профиль
           </router-link>
           <router-link class="root-link menu-link" to="/dictionary">
@@ -51,6 +51,8 @@
       const store = useStore()
       const router: Router = useRouter()
 
+      const id = computed(() => store.getters.userID)
+
       const { t } = useI18n({ useScope: 'global' })
 
       const menu = ref<any>(null)
@@ -68,12 +70,7 @@
       })
 
       return {
-        t,
-        logout,
-        openPanel,
-        menu,
-        panelLogo,
-        isAuth: computed(() => store.getters.isAuth),
+        t, id, logout, openPanel, menu, panelLogo, isAuth: computed(() => store.getters.isAuth),
       }
     },
   })

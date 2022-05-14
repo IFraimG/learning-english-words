@@ -22,6 +22,7 @@
     "@typescript-eslint/class-name-casing": "warn",
     "@typescript-eslint/ban-ts-ignore": "warn",
     "@typescript-eslint/no-empty-function": "warn",
+    "@typescript-eslint/no-var-requires": "warn",
     "vue/experimental-script-setup-vars": "off",
     "vue/script-setup-uses-vars": "off",
   },

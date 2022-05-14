@@ -3,13 +3,13 @@
     <div class="create-folder">
       <div class="create-folder__btns">
         <button v-if="!isInput.value" data-btn="create" class="profile__run create-folder-active" @click="editInput(true)">
-          Создать раздел
+          {{ Ti18N("account.createFolder.createFolder") }}
         </button>
         <button v-else data-btn="cancel" class="profile__run create-folder-cancel" @click="editInput(false)">
-          Отмена
+          {{ Ti18N("account.createFolder.cancel") }}
         </button>
       </div>
-      <input v-if="isInput.value" ref="titleFolder" type="text" placeholder="Название раздела..." @keyup.enter="create" />
+      <input v-if="isInput.value" ref="titleFolder" type="text" :placeholder="Ti18N('account.createFolder.nameOfFolder')" @keyup.enter="create" />
     </div>
   </div>
 </template>
@@ -22,6 +22,7 @@
 
   export default defineComponent({
     name: "CreateFolder",
+    inject: ["Ti18N"],
     setup() {
       const store = useStore()
       const router = useRouter()

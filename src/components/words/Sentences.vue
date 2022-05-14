@@ -4,8 +4,8 @@
       <h1>Составьте предложения со словами</h1>
       <div v-for="(item, index) of currentWords" :key="item.russian" class="sentences__item">
         <h3>{{ item.russian }} -</h3>
-        <textarea :ref="el => { if (el) sentences[index] = el }" rows="1" @keydown.enter.prevent="checkItem(index)" />
-        <div v-if="doneList.value[index].english == item.english && doneList.value[index].isDone != -1" class="sentences__stats">
+        <textarea class="input-focus" :ref="el => { if (el) sentences[index] = el }" rows="1" @keydown.enter.prevent="checkItem(index)" />
+        <div v-if="doneList.value[index].english == item.english" class="sentences__stats">
           <div v-if="doneList.value[index].isDone == 0" class="sentences__error sentences__error-null">
             <p>Вы допустили ошибку в слове</p>
           </div>
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, inject, nextTick, onMounted, reactive, ref } from "vue"
+  import { defineComponent, inject, reactive, ref } from "vue"
   import "./scss/sentences/Sentences.scss"
 
   export default defineComponent({
@@ -34,10 +34,6 @@
       const doneList = reactive<any>({ value: [] })
 
       currentWords.value.map((item: any) => doneList.value.push({ english: item.english, isDone: -1 }))
-
-      onMounted(() => {
-        nextTick(() => window.scrollTo({ top: 0 }))
-      })
 
       const checkItem = (index: number) => {
         const value = sentences.value[index].value
