@@ -7,9 +7,8 @@
     justify-content: center;
   }
   &__content {
-    padding: 20px;
     padding: 20px 0;
-    margin: 0 20px;
+    margin: 0 10px;
     max-width: 100%;
     display: flex;
     flex-direction: column;
@@ -20,9 +19,17 @@
     text-align: center;
     h1 {
       font-size: 48px;
+      @media (max-width: 451px) {
+        font-size: 32px;
+      }
     }
     button {
       margin-left: 20px;
+    }
+  }
+  &__volume {
+    @media (max-width: 451px) {
+      padding: 5px 0 !important;
     }
   }
   &__form {
@@ -30,18 +37,34 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
   }
   &__item {
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px 0;
+    // flex-direction: column;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px 0;
+    &-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px 0;
+    }
     @media (max-width: 431px) {
       flex-direction: column;
       padding-bottom: 20px;
+    }
+    &-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 0;
     }
     label {
       font-size: 18px;
@@ -101,6 +124,13 @@
     margin-left: 20px;
     padding: 5px 10px;
     cursor: pointer;
+  }
+  &__image {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 20px;
   }
 }
 

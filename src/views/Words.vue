@@ -37,9 +37,9 @@
       const wordData = computed(() => store.getters.wordData)
       const currentWords = computed(() => store.getters.currentWords)
 
-      onBeforeMount(() => {
-        store.dispatch("loadWords", route)
-        store.dispatch("getListWords", route)
+      onBeforeMount(async () => {
+        await store.dispatch("loadWords", route)
+        store.dispatch("loadImagesForWords")
       })
 
       provide("wordData", wordData)
@@ -55,7 +55,7 @@
         if (window.sessionStorage.getItem("wordsMistakes") != null) window.sessionStorage.removeItem("wordsMistakes")
         else window.sessionStorage.setItem("wordsMistakes", String(0))
 
-        if (type == "accordion" || type == "sentences") router.push(`${route.path}?type=${currentType}`)
+        if (currentType == "accordion" || currentType == "sentences") router.push(`${route.path}?type=${currentType}`)
         else router.push(`${route.path}?type=${currentType}&task=${1}`)
       }
 

@@ -14,6 +14,7 @@ export interface WordInterface {
   currentTime?: string
   ruValues?: string[]
   enValues?: string[]
+  image?: string
 }
 
 export default interface WordsInterface {
@@ -22,7 +23,7 @@ export default interface WordsInterface {
   isLoader: boolean
   isRepeatingTitle: boolean
   wordData: WordInterface | null
-  currentWords: DictionaryListInterface[]
+  currentWords: WordInterface[] | any
   findWords: DictionaryListInterface[]
   executeWords: WordInterface[]
   wordsLength: number

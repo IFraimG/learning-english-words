@@ -4,8 +4,11 @@
       <div class="nglish-form__content">
         <div class="english-form__header">
           <h2>Напишите перевод слова:</h2>
-          <span>{{ wordData.english }}</span>
-          <span v-if="wordData.currentTime != ''" class="english-form-time"> ({{ wordData.currentTime }}) </span>
+          <div class="english-form-title">
+            <span>{{ wordData.english }}</span>
+            <img v-if="wordData.img != null" :src="wordData.img" alt="img" width="64" height="64" object-fit="cover" />
+          </div>
+          <!-- <span v-if="wordData.currentTime != ''" class="english-form-time"> ({{ wordData.currentTime }}) </span> -->
         </div>
         <div class="english-form__middle">
           <input v-model="word.value" type="text" @keydown.enter="checkInput" />
@@ -13,16 +16,7 @@
             Проверить
           </button>
         </div>
-        <div class="english-form__result">
-          <p v-if="isDone.value && !isError.value" class="english-form__success english-form__status">
-            Молодец! Все верно!
-          </p>
-          <div v-if="isError.value" class="english-form__danger">
-            <p class="english-form__danger english-form__status">
-              Ответ неверный! Возможно перевод этого слова раннее был введен неккоректно.
-            </p>
-          </div>
-        </div>
+        <correct-answer :isDone="isDone.value" :isError="isError.value" />
         <div class="english-form__footer">
           <button v-if="parseInt(taskNum) > 1" class="profile__run" @click="$emit('previousTask')">
             Вернуться
@@ -46,11 +40,13 @@
   </div>
 </template>
 
-<script>
-  import { inject, reactive } from "vue"
+<script lang="ts">
+  import { defineComponent, inject, reactive } from "vue"
   import "./scss/englishv/EnglishV.scss"
+  import CorrectAnswer from './CorrectAnswer.vue'
 
-  export default {
+  export default defineComponent({
+    components: { CorrectAnswer },
     name: "EnglishV",
     props: {
       taskNum: String,
@@ -58,14 +54,13 @@
     },
     emits: ["setFinishType", "nextTask", "previousTask"],
     setup(_, { emit }) {
-      const wordData = inject("wordData")
+      const wordData: any = inject("wordData")
 
-      const isDone = reactive({ value: false })
-      const isError = reactive({ value: false })
-      const errorMessage = reactive({ value: "" })
-      const errorsList = reactive({ value: [] })
-      const word = reactive({ value: "" })
-      const isAnswer = reactive({ value: false })
+      const isDone = reactive < { value: boolean } > ({ value: false })
+      const isError = reactive < { value: boolean } > ({ value: false })
+      const errorMessage = reactive < { value: string } > ({ value: "" })
+      const word = reactive < { value: string } > ({ value: "" })
+      const isAnswer = reactive < { value: boolean } > ({ value: false })
 
       const checkInput = () => {
         const translation = wordData.value.russian
@@ -85,19 +80,17 @@
           } else {
             isError.value = true
             if (word2.length > 0) {
+              // @ts-ignore
               const arrayErrors = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
               const newArray = []
               const errInfo = { translation: word.value, english: wordData.value.english }
               if (arrayErrors != null && arrayErrors != 0) {
-                arrayErrors.map(item => {
+                arrayErrors.map((item: any) => {
                   if (item.english != wordData.english) newArray.push(item)
                 })
               }
               newArray.push(errInfo)
               window.sessionStorage.setItem("wordsMistakes", JSON.stringify(newArray))
-
-              const updateMistakes = JSON.parse(window.sessionStorage.getItem("wordsMistakes"))
-              errorsList.value = updateMistakes
             } else errorMessage.value = "Вы не ввели слово"
           }
         }
@@ -105,17 +98,12 @@
 
       const addSuccessWord = () => {
         if (isDone.value) {
+          // @ts-ignore
           const arrayWords = JSON.parse(window.sessionStorage.getItem("words"))
-          const newSuccessWord = {
-            translation: word.value,
-            english: wordData.english,
-          }
-          const newArrayWords = []
-          if (arrayWords?.length > 0 && arrayWords != null) {
-            arrayWords.map(item => {
-              if (item.translation != newSuccessWord.translation) newArrayWords.push(item)
-            })
-          }
+          const newSuccessWord = { translation: word.value, english: wordData.english }
+          let newArrayWords = []
+
+          if (arrayWords?.length > 0 && arrayWords != null) newArrayWords = arrayWords.filter((item: any) => item.translation != newSuccessWord.translation)
           newArrayWords.push(newSuccessWord)
           window.sessionStorage.setItem("words", JSON.stringify(newArrayWords))
         }
@@ -125,9 +113,10 @@
         isDone.value = false
       }
 
-      const setAnswer = isTrue => (isAnswer.value = isTrue)
+      const setAnswer = (isTrue: boolean) => (isAnswer.value = isTrue)
 
       const nextTask = () => {
+        wordData.img = null
         addSuccessWord()
         emit("nextTask")
       }
@@ -147,10 +136,9 @@
         isDone,
         isError,
         errorMessage,
-        errorsList,
         word,
         isAnswer,
       }
-    },
-  }
+    }
+  })
 </script>

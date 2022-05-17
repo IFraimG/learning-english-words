@@ -64,17 +64,18 @@ const wordsAction = {
       const wordsID = payload.params.wordsid
       const data = await wordsAPI.getWords(userID, wordsID)
 
-      const words = data.words
-      if (words == null) router.go(-1)
+      if (data.words == null) router.go(-1)
       else {
         const reviewWords = []
-        for (const wordItem of words) {
+        for (const wordItem of data.words) {
           wordItem.other = randomWords(3)
           reviewWords.push(wordItem)
         }
         commit("LOAD_WORDS", reviewWords)
         commit("CHECK_STATE_WORDS", payload)
       }
+
+      commit("GET_WORDS", data.words)
       commit("SET_LOADER", false)
     } catch (error) {
       commit("SET_LOADER", false)
@@ -131,20 +132,18 @@ const wordsAction = {
   async checkTitles({ commit, rootState }: any, payload: string) {
     let isRepeat = false
     rootState.words.currentWords.forEach((item: DictionaryListInterface) => {
-      if (
-        item.title
-          .trimStart()
-          .trimEnd()
-          .toLowerCase() ==
-        payload
-          .trimStart()
-          .trimEnd()
-          .toLowerCase()
-      )
-        isRepeat = true
+      if (item.title.trimStart().trimEnd().toLowerCase() == payload.trimStart().trimEnd().toLowerCase()) isRepeat = true
     })
     commit("CHECK_TITLE", isRepeat)
   },
+  loadImagesForWords({ commit, rootState }: any) {
+    if (rootState.words?.currentWords != null && rootState.words.currentWords.length > 0) {
+      rootState.words.currentWords.map(async (wordItem: any) => {
+        const img = await wordsAPI.searchImages(wordItem.english.toLowerCase())
+        commit("SET_IMAGE", { id: wordItem.id, img })
+      })
+    }
+  }
 }
 
 export default wordsAction

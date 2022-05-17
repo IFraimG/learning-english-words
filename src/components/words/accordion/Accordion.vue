@@ -1,29 +1,34 @@
 <template>
   <div class="accordion__form">
     <div v-for="(words, index) of currentSortWords" :key="words.english" class="accordion__item">
-      <label :for="'inputElement' + index">
-        {{ words.russian }}
-      </label>
-      <label v-if="words?.ruValues != null" :for="'inputElement' + index">
-        <span v-for="(ruWords, index) of words.ruValues" :key="index">, {{ ruWords }}</span>
-      </label>
-      <input
-        :id="'inputElement' + index"
-        :ref="el => { if (el) inputsInfo[index] = el }"
-        type="text"
-        @keyup.enter="checkWord(words, index)"
-      />
-      <button v-if="!doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" @click="checkWord(words, index)">
-        <img src="@/assets/check.png" />
-      </button>
-      <img v-if="doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" src="@/assets/success.png" />
-      <p v-if="errorWords.includes(words.id)" class="accordion__error">
-        Неверно!
-      </p>
-      <p v-if="errorWords.includes(words.id) && !isAnswer.includes(words.english)" class="accordion__answer" @click="addAnswer(words.english)">
-        ответ
-      </p>
-      <AccordionAnswer v-if="isAnswer.includes(words.english)" @deleteAnswer="deleteAnswer" :words="words" />
+      <div class="accordion__item-left">
+        <label :for="'inputElement' + index">
+          {{ words.russian }}
+        </label>
+        <label v-if="words?.ruValues != null" :for="'inputElement' + index">
+          <span v-for="(ruWords, index) of words.ruValues" :key="index">, {{ ruWords }}</span>
+        </label>
+        <input
+          :id="'inputElement' + index"
+          :ref="el => { if (el) inputsInfo[index] = el }"
+          type="text"
+          @keyup.enter="checkWord(words, index)"
+        />
+        <img class="accordion__image" v-if="words.img != null" :src="words.img" alt="img">
+        <button v-if="!doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" @click="checkWord(words, index)">
+          <img src="@/assets/check.png" />
+        </button>
+      </div>
+      <div class="accordion__item-right">
+        <img v-if="doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" src="@/assets/success.png" />
+        <p v-if="errorWords.includes(words.id)" class="accordion__error">
+          Неверно!
+        </p>
+        <p v-if="errorWords.includes(words.id) && !isAnswer.includes(words.english)" class="accordion__answer" @click="addAnswer(words.english)">
+          ответ
+        </p>
+        <AccordionAnswer v-if="isAnswer.includes(words.english)" @deleteAnswer="deleteAnswer" :words="words" />
+      </div>
     </div>
   </div>
   <AccordionFooter @rotateWords="rotateWords" />

@@ -1,5 +1,6 @@
 import { FolderItfc } from "@/models/folders"
 import { WordInterface } from "@/models/words"
+import axios from "axios"
 import firebase from "firebase/app"
 import "firebase/database"
 
@@ -52,6 +53,25 @@ const wordsAPI = {
       .ref(`/users/${userID}`)
       .set({ words: words, email: email, login: login, folders })
   },
+  searchImages: async (word: string) => {
+    try {
+      const res = await axios.get("https://api.flickr.com/services/rest", { params: {
+          method: "flickr.photos.search",
+          api_key: process.env.VUE_APP_FLICKR_KEY,
+          tags: word,
+          page: 1,
+          text: word,
+          format: "json",
+          nojsoncallback: 1,
+          per_page: 1
+        }
+      })
+
+      return res.data.photos.photo[0]
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
 }
 
 export default wordsAPI

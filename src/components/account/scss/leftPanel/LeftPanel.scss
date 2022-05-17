@@ -2,10 +2,11 @@
 .account {
   &__left {
     max-width: 100%;
-    width: 400px;
+    // width: 400px;
     gap: 50px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     padding: 10px 0px;
     @media (max-width: 441px) {
       width: auto;

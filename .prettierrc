@@ -4,5 +4,6 @@
   "singleQuote": false,
   "printWidth": 250,
   "tabWidth": 2,
-  "vueIndentScriptAndStyle": true
+  "vueIndentScriptAndStyle": true,
+  "bracketSameLine": false
 }

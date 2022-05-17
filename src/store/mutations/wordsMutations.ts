@@ -7,7 +7,7 @@ const wordsMutations = {
     state.currentWords = payload
     let len = 0
 
-    state.currentWords.map(wordsItem => wordsItem.words.map(() => len++))
+    state.currentWords.map((wordsItem: DictionaryListInterface) => wordsItem.words.map(() => len++))
     state.wordsLength = len
   },
   LOAD_WORDS(state: WordsInterface, payload: WordInterface[]) {
@@ -50,7 +50,7 @@ const wordsMutations = {
     const title = payload.trimStart().trimEnd().toLowerCase()
     const wordsList: any = []
 
-    state.currentWords.map(item => {
+    state.currentWords.map((item: DictionaryListInterface) => {
       let isTrue = true
       const originalTitle = item.title.trimStart().trimEnd().toLowerCase()
 
@@ -70,6 +70,12 @@ const wordsMutations = {
   CHECK_TITLE(state: WordsInterface, payload: boolean) {
     state.isRepeatingTitle = payload
   },
+  SET_IMAGE(state: WordsInterface, payload: { id: string, img: any }) {
+    const index = state.currentWords.findIndex((wordItem: any) => wordItem.id == payload.id)
+    if (index != -1 && payload.img?.server != null && payload.img?.id != null && payload.img?.secret != null) {
+      state.currentWords[index].img = `https://live.staticflickr.com/${payload.img.server}/${payload.img.id}_${payload.img.secret}.jpg`
+    }
+  }
 }
 
 export default wordsMutations
