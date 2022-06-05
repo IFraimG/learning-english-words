@@ -6,6 +6,7 @@ import ModalToFolders from "@/components/modals/ModalToFolders.vue"
 import ModalWords from "@/components/modals/ModalWords.vue"
 import ModalDelSections from "@/components/modals/ModalDelSections.vue"
 import ModalWordsClose from "@/components/modals/ModalWordsClose.vue"
+import ModalForImage from "@/components/modals/ModalForImage.vue"
 import Words from "@/views/Words.vue"
 import NotFound from "@/views/404.vue"
 import Dictionary from "@/views/Dictionary.vue"
@@ -49,7 +50,7 @@ const routes = [
   {
     path: "/words/:userid/:wordsid",
     name: "Words",
-    component: Words,
+    component: Words
   },
   {
     path: "/:catchAll(.*)",

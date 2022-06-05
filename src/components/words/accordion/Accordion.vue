@@ -14,7 +14,7 @@
           type="text"
           @keyup.enter="checkWord(words, index)"
         />
-        <img class="accordion__image" v-if="words.img != null" :src="words.img" alt="img">
+        <WordsImage :img-url="words.img" />
         <button v-if="!doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" @click="checkWord(words, index)">
           <img src="@/assets/check.png" />
         </button>
@@ -42,11 +42,12 @@
   import { WordInterface } from "@/models/words"
   import AccordionFooter from "./AccordionFooter.vue"
   import AccordionAnswer from "./AccordionAnswer.vue"
+  import WordsImage from "../WordsImage.vue"
 
   // isRotate - true - en | !isRotate - false - ru
   export default defineComponent({
     name: "Accordion",
-    components: { AccordionFooter, AccordionAnswer },
+    components: { AccordionFooter, AccordionAnswer, WordsImage },
     props: {
       currentWords: Array as WordInterface[] | any,
       isVolume: Boolean

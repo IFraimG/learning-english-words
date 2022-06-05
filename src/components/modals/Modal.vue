@@ -23,25 +23,37 @@
 </template>
 
 <script>
+  import { nextTick, onMounted } from "vue"
+  import { useRouter } from "vue-router"
   import "./scss/ModalWords.scss"
   import "./scss/Popup.scss"
 
   export default {
     name: "Popup",
     emits: ["onsuccess"],
-    mounted() {
-      window.scrollTo({ top: 0 })
-      document.documentElement.style.overflow = "hidden"
-    },
-    methods: {
-      closeModal() {
+    setup(_, { emit }) {
+      const router = useRouter()
+
+      onMounted(() => {
+        nextTick(() => {
+          window.scrollTo({ top: 0 })
+          document.documentElement.style.overflow = "hidden"
+        })
+      })
+
+      const sendSuccess = isTrue => emit("onsuccess", isTrue)
+
+      document.addEventListener("keydown", event => {
+        if (event.key == "Escape") closeModal()
+      })
+
+      const closeModal = () => {
         document.documentElement.style.overflow = "auto"
-        this.sendSuccess(false)
-        this.$router.go(-1)
-      },
-      sendSuccess(isTrue) {
-        this.$emit("onsuccess", isTrue)
-      },
-    },
+        sendSuccess(false)
+        router.go(-1)
+      }
+
+      return { sendSuccess, closeModal }
+    }
   }
 </script>

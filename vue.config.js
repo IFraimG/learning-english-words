@@ -10,7 +10,6 @@ module.exports = {
       appleTouchIcon: "assets/logo.jpeg",
     },
   },
-
   pluginOptions: {
     i18n: {
       locale: "en",
@@ -22,4 +21,15 @@ module.exports = {
       fullInstall: true,
     },
   },
+  css: {
+    requireModuleExtension: true
+  }
+  // css: {
+  //   loaderOptions: {
+  //     scss: {
+  //       additionalData: `@import "~@/configs/vars.scss";`,
+  //       prependData: `@import "~@/configs/vars.scss";`
+  //     }
+  //   }
+  // }
 }

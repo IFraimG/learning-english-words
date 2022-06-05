@@ -1,17 +1,11 @@
-FROM node:14
-
+FROM node:latest as build-stage
 WORKDIR /app
-
 COPY package*.json ./
-COPY tsconfig.json ./
-COPY .env ./
-
 RUN npm install
-COPY . .
-COPY ./dist .
-
+COPY ./ .
 RUN npm run build
 
-EXPOSE 8080
-
-CMD ["npm", "run", "serve"]
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf

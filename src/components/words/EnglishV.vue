@@ -6,12 +6,12 @@
           <h2>Напишите перевод слова:</h2>
           <div class="english-form-title">
             <span>{{ wordData.english }}</span>
-            <img v-if="wordData.img != null" :src="wordData.img" alt="img" width="64" height="64" object-fit="cover" />
+            <words-image :img-url="wordData.img"  />
           </div>
           <!-- <span v-if="wordData.currentTime != ''" class="english-form-time"> ({{ wordData.currentTime }}) </span> -->
         </div>
         <div class="english-form__middle">
-          <input v-model="word.value" type="text" @keydown.enter="checkInput" />
+          <input ref="inputWord" v-model="word.value" type="text" @keydown.enter="checkInput" />
           <button class="profile__run modal-button__run" @click="checkInput">
             Проверить
           </button>
@@ -41,20 +41,29 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, inject, reactive } from "vue"
+  import { defineComponent, inject, reactive, ref } from "vue"
   import "./scss/englishv/EnglishV.scss"
-  import CorrectAnswer from './CorrectAnswer.vue'
+  import CorrectAnswer from "./CorrectAnswer.vue"
+  import { useRoute, useRouter } from "vue-router"
+  import WordsImage from "./WordsImage.vue"
 
   export default defineComponent({
-    components: { CorrectAnswer },
+    components: { CorrectAnswer, WordsImage },
     name: "EnglishV",
     props: {
-      taskNum: String,
+      taskNum: {
+        type: String,
+        default: ""
+      },
       len: Number,
     },
-    emits: ["setFinishType", "nextTask", "previousTask"],
+    emits: ["setFinishType", "nextTask", "previousTask", "openImage"],
     setup(_, { emit }) {
       const wordData: any = inject("wordData")
+      const inputWord = ref(null)
+
+      const router = useRouter()
+      const route = useRoute()
 
       const isDone = reactive < { value: boolean } > ({ value: false })
       const isError = reactive < { value: boolean } > ({ value: false })
@@ -64,12 +73,12 @@
 
       const checkInput = () => {
         const translation = wordData.value.russian
-          .trimLeft()
-          .trimRight()
+          .trimStart()
+          .trimEnd()
           .toLowerCase()
         const word2 = word.value
-          .trimLeft()
-          .trimRight()
+          .trimStart()
+          .trimEnd()
           .toLowerCase()
 
         if (word2 != "") {
@@ -93,7 +102,11 @@
               window.sessionStorage.setItem("wordsMistakes", JSON.stringify(newArray))
             } else errorMessage.value = "Вы не ввели слово"
           }
-        }
+        } else setAnswer(true)
+
+        document.addEventListener("keydown", event => {
+          if (event.key == "Enter" && isDone.value && !isError.value && inputWord.value != document.activeElement) nextTask()
+        })
       }
 
       const addSuccessWord = () => {
@@ -138,6 +151,7 @@
         errorMessage,
         word,
         isAnswer,
+        inputWord
       }
     }
   })

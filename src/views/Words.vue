@@ -1,6 +1,13 @@
 <template>
   <div v-if="!isLoader">
-    <english-v v-if="stateWords == 'englishV'" :len="executeWords.length" :task-num="route.query.task" @previousTask="previousTask" @nextTask="nextTask" @setFinishType="setFinishType" />
+    <english-v
+      v-if="stateWords == 'englishV'"
+      :len="executeWords.length"
+      :task-num="route.query.task"
+      @previousTask="previousTask"
+      @nextTask="nextTask"
+      @setFinishType="setFinishType"
+    />
     <accordion v-else-if="stateWords == 'accordion'" />
     <Sentences v-else-if="stateWords == 'sentences'" />
     <ChooseType v-else-if="stateWords == 'start'" @setCurrentType="setCurrentType" />
@@ -9,6 +16,7 @@
   <div v-else>
     <Loader />
   </div>
+  <ModalForImage />
 </template>
 
 <script lang="ts">
@@ -22,10 +30,11 @@
   import { computed, defineComponent, onBeforeMount, onUpdated, provide, reactive } from "vue"
   import { useRoute, useRouter } from "vue-router"
   import { useI18n } from "vue-i18n"
+  import ModalForImage from "@/components/modals/ModalForImage.vue"
 
   export default defineComponent({
     name: "Words",
-    components: { ChooseType, EnglishV, Accordion, Finish, Loader, Sentences },
+    components: { ChooseType, EnglishV, Accordion, Finish, Loader, Sentences, ModalForImage },
     setup() {
       const route: any = useRoute()
       const router = useRouter()

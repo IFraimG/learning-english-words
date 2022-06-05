@@ -1,6 +1,6 @@
 <template>
-  <div class="find-word__wrapper">
-    <div class="find-word">
+  <div :class="styles.findWord__wrapper">
+    <div :class="styles.findWord">
       <input v-model="moduleWords" type="search" placeholder="Название модуля..." @input="getWord" @keyup.enter="getWord" />
     </div>
   </div>
@@ -8,7 +8,7 @@
 
 <script lang="ts">
   import { defineComponent, ref } from "vue"
-  import "./scss/FindWord.scss"
+  import styles from "./scss/FindWord.module.scss"
 
   export default defineComponent({
     name: "FindWord",
@@ -25,7 +25,7 @@
         emit("editPage", 1)
       }
 
-      return { moduleWords, getWord }
+      return { moduleWords, getWord, styles }
     },
   })
 </script>
