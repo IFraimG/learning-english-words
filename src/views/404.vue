@@ -4,32 +4,21 @@
       <div class="not-found__content">
         <h1>{{ t("notFound.title") }}</h1>
         <img src="@/assets/404.webp" alt="" />
-        <p>{{ t("notFound.redirect") }}: {{ time.value }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted, reactive } from "vue"
+  import { defineComponent } from "vue"
   import { useI18n } from "vue-i18n"
-  import { useRouter } from "vue-router"
 
   const Component = defineComponent({
     name: "NotFound",
     setup() {
-      const router = useRouter()
       const { t } = useI18n()
 
-      const time = reactive({ value: 5 })
-
-      onMounted(() => {
-        setInterval(() => {
-          if (time.value > 0) time.value--
-          else router.push("/")
-        }, 1000)
-      })
-      return { time, t }
+      return { t }
     },
   })
 

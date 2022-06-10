@@ -41,11 +41,11 @@
         })
       })
 
-      const sendSuccess = isTrue => emit("onsuccess", isTrue)
+        // document.addEventListener("keydown", event => {
+        //   if (event.key == "Escape") closeModal()
+        // })
 
-      document.addEventListener("keydown", event => {
-        if (event.key == "Escape") closeModal()
-      })
+      const sendSuccess = isTrue => emit("onsuccess", isTrue)
 
       const closeModal = () => {
         document.documentElement.style.overflow = "auto"

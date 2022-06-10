@@ -46,6 +46,7 @@
   import { computed, defineComponent, nextTick, onMounted, onUnmounted, provide, reactive, ref } from "vue"
   import { useRouter } from "vue-router"
   import { useI18n } from "vue-i18n"
+  import { uniqueTitle } from "@/utils/uniqueTitle"
 
   export default defineComponent({
     name: "ModalWords",
@@ -102,24 +103,26 @@
             inputTitle.value.placeholder = "Вы не ввели название !"
             inputTitle.value.classList.add("modal__header-error")
           } else {
-            if (startWords.value.title == null) await store.dispatch("checkTitles", titleWords.value)
+            await store.dispatch("checkTitles", titleWords.value)
             if (store.getters.isRepeatingTitle) {
-              modalTitle.value.innerHTML = "Такое название уже существует !"
-              modalTitle.value.style.color = "red"
-            } else {
-              document.documentElement.style.overflow = "auto"
-              sendButton.value.disabled = true
-              resetButton.value.disabled = true
-
-              await store.dispatch("createList", { list: wordsList.value, titleWords: titleWords.value })
-
-              sendButton.value.disabled = false
-              resetButton.value.disabled = false
-              resetData()
-
-              store.commit("SET_MODAL_WORDS", { list: null, title: null })
-              router.push("/account" + userID.value)
+              do {
+                titleWords.value = uniqueTitle(titleWords.value)
+                await store.dispatch("checkTitles", titleWords.value)
+              } while (store.getters.isRepeatingTitle)
             }
+
+            document.documentElement.style.overflow = "auto"
+            sendButton.value.disabled = true
+            resetButton.value.disabled = true
+
+            await store.dispatch("createList", { list: wordsList.value, titleWords: titleWords.value })
+
+            sendButton.value.disabled = false
+            resetButton.value.disabled = false
+            resetData()
+
+            store.commit("SET_MODAL_WORDS", { list: null, title: null })
+            router.push("/account/" + userID.value)
           }
         }
       }

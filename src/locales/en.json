@@ -38,8 +38,7 @@
     }
   },
   "notFound": {
-    "title": "The page isn't found",
-    "redirect": "You are being redirected to the homepage very soon"
+    "title": "The page isn't found"
   },
   "exportWords": "Export all sections to JSON"
 }

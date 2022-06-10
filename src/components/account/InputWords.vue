@@ -3,14 +3,14 @@
     <div class="modal__left">
       <Swiper class="modal__sliders" :slides-per-view="1" :grid="{ rows: 1 }" :scrollbar="{ draggable: true }" @swiper="onSwiperEN">
         <swiper-slide v-for="(item, index) of newWord.enValues" :key="index" class="modal__slide">
-          <input ref="englishWord" v-model="newWord.enValues[index]" class="modal__input input-light" type="text" pattern="[A-Za-z]" placeholder="Слово на английском" @input="editDone(false)" />
+          <input ref="englishWord" v-model="newWord.enValues[index]" class="modal__input input-light" type="text" pattern="[A-Za-z]" placeholder="Слово на английском" @input="editDone(false)" @keyup.enter="setInputEnActive" />
           <p>{{ index + 1 }} / {{ newWord.enValues.length }}</p>
         </swiper-slide>
       </Swiper>
       <button @click="makeNewInputEN" class="modal-btn-plus">+</button>
       <Swiper class="modal__sliders" :grid="{ rows: 1 }" :slides-per-view="1" :scrollbar="{ draggable: false }" @swiper="onSwiperRU">
         <swiper-slide v-for="(item, index) of newWord.ruValues" :key="index" class="modal__slide">
-          <input ref="russianWord" v-model="newWord.ruValues[index]" class="modal__input input-light" type="text" pattern="[А-Яа-яЁё]" placeholder="Перевод слова на русском" @input="editDone(false)" />
+          <input ref="russianWord" v-model="newWord.ruValues[index]" class="modal__input input-light" type="text" pattern="[А-Яа-яЁё]" placeholder="Перевод слова на русском" @input="editDone(false)"  @keyup.enter="setInputRuActive" />
           <p>{{ index + 1 }} / {{ newWord.ruValues.length }}</p>
         </swiper-slide>
       </Swiper>
@@ -58,6 +58,9 @@
 
       const newWord = ref({ english: "", russian: "", id: "", currentTime: "", enValues: [""], ruValues: [""] })
 
+      const setInputEnActive = () => russianWord.value.focus()
+      const setInputRuActive = () => setNumInput()
+
       const setNumInput = () => {
         if (newWord.value.enValues[0].trim() == "") {
           englishWord.value.style.border = "1px solid #f05454"
@@ -103,7 +106,7 @@
         setNumInput, setTime, editDone,
         isDone, newWord, englishWord, russianWord, onSwiperEN, onSwiperRU,
         currentEN, currentRU, makeNewInputEN, makeNewInputRU,
-        controlledSwiperEN, controlledSwiperRU, Controller
+        controlledSwiperEN, controlledSwiperRU, Controller, setInputEnActive, setInputRuActive
       }
     },
   }
