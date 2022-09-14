@@ -30,6 +30,11 @@
         </li>
         <li class="account__left-item-wrapper">
           <div class="account__left-item">
+            <ImportWords />
+          </div>
+        </li>
+        <li class="account__left-item-wrapper">
+          <div class="account__left-item">
             <h3 v-if="wordsLength > 0" class="account__left-words">{{ Ti18N("account.allWords") }}: {{ wordsLength }}</h3>
             <h3 v-else>{{ Ti18N("account.allWords") }}: 0</h3>
           </div>
@@ -49,16 +54,18 @@
   import CreateFolder from "../folders/CreateFolder.vue"
   import DictionaryVidget from "../dictionary/DictionaryVidget.vue"
   import { useStore } from "vuex"
+  import ImportWords from "./ImportWords.vue"
 
   export default defineComponent({
     name: "AccountLeft",
     components: {
-      Profile,
-      DictionaryVidget,
-      CreateFolder,
-      ExportWords,
-      ThemeSwitcher
-    },
+    Profile,
+    DictionaryVidget,
+    CreateFolder,
+    ExportWords,
+    ThemeSwitcher,
+    ImportWords
+},
     inject: ["Ti18N"],
     setup() {
       const store = useStore()

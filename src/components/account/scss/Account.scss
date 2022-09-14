@@ -1,4 +1,5 @@
 @import "./Profile.scss";
+@import "../../../configs/vars.scss";
 
 .account {
   padding: 40px 20px;
@@ -61,7 +62,7 @@
     }
   }
   &__info {
-    box-shadow: 0 0 40px 0 #dddddd;
+    box-shadow: $shadowforwordstable;
     background: #fff;
     margin-bottom: 50px;
     padding-bottom: 10px;
@@ -139,7 +140,7 @@
     font-family: "Helvetica";
     color: rgb(231, 231, 231);
     background: #A19F9A;
-    box-shadow: -10px 30px 6px #616263, -20px 30px 16px #757778, inset -6px 6px 10px #484C55, inset 2px 3px 5px #A1A3A0, inset 20px -20px 22px #DBEAF0, inset 40px -40px 44px #9EA09C;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     &-content {
       list-style: none;
     }

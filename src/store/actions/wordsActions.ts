@@ -143,6 +143,31 @@ const wordsAction = {
         commit("SET_IMAGE", { id: wordItem.id, img })
       })
     }
+  },
+  async loadWordsFromJSON({ commit, rootState }: any, payload: any[]) {
+    const profile = await wordsAPI.getProfile(rootState.auth.profile.id)
+    const folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
+    const oldListWords = await wordsAPI.getListWords(rootState.auth.profile.id)
+
+    const newList = oldListWords?.length != null ? [...oldListWords] : [...payload]
+    if (oldListWords?.length != null) {
+      payload.forEach((item: any) => {
+        oldListWords.forEach((item2: any) => {
+          if (item2.title != item.title) newList.push(item)
+        })
+      })
+    }
+
+    const saveData = {
+      login: profile.login,
+      email: profile.email,
+      id: rootState.auth.profile.id,
+      listWords: newList,
+      folders
+    }
+
+    await wordsAPI.setWords(saveData)
+    commit("GET_WORDS", payload)
   }
 }
 

@@ -27,7 +27,7 @@ const dictionaryActions = {
     dispatch("getCurrentDictionaryWords", { id: payload.userID, query: payload.query })
   },
   async setOwnTranslate({ commit, rootState }: any, payload: { lang: string, word: string }) {
-    
+   
   }
 }
 

@@ -4,7 +4,7 @@
       <div class="home__content">
         <header class="home__header home-header">
           <div class="home-header__item home-header__logo">
-            <img src="@/assets/logofone.png" />
+            <img src="@/assets/logo1234.png" />
             <h3>MyOcean<span>English</span></h3>
           </div>
           <ul class="home-header__list">

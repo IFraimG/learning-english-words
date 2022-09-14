@@ -47,6 +47,24 @@
         }
       }
     }
+    &-import {
+      opacity: 0;
+      display: none;
+      &-err {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+      &-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px 0;
+        p {
+          margin: 10px 0;
+        }
+      }
+    }
   }
 }
 

@@ -53,4 +53,8 @@
       }
     }
   }
+
+  .PaginationControl {
+    display: none;
+  }
 </style>

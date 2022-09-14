@@ -3,7 +3,7 @@
     <div class="header__content">
       <div class="header__left">
         <img src="@/assets/logo1234.svg" alt="logo">
-        <h1>MyOcean English project</h1>
+        <h1>MyOcean project</h1>
       </div>
       <div class="header__right">
         <router-link class="root-link header-link" :to="'/account/' + id">{{ t("header.profile") }}</router-link>

@@ -30,12 +30,11 @@
 
 <script lang="ts">
   import { defineComponent, ref } from "vue"
-import { useStore } from "vuex"
+  import { useStore } from "vuex"
   import "./scss/translations/Translation.scss"
 
   export default defineComponent({
     name: "TranslateWord",
-    components: { },
     setup() {
       const store = useStore()
       const wordTranslation = ref("")

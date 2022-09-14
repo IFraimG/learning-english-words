@@ -1,10 +1,12 @@
+@import "../../../configs/vars.scss";
+
 .account {
   color: #fff;
 }
 
 .list {
   &__info {
-    box-shadow: 0 0 10px 0 #4f4e4e;
+    box-shadow: $shadowforwordstable;
     background-color: #4f4c4c;
   }
   &__item {

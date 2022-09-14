@@ -14,7 +14,6 @@
   "dependencies": {
     "@google-cloud/translate": "^6.3.0",
     "@hennge/vue3-pagination": "^1.0.17",
-    "@vitalets/google-translate-api": "^7.0.0",
     "@vitalets/google-translate-token": "^1.2.0",
     "axios": "^0.27.2",
     "core-js": "^3.6.5",
@@ -27,7 +26,6 @@
     "typo-js": "^1.2.0",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
-    "vue-google-translate": "0.0.10",
     "vue-i18n": "^9.1.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
