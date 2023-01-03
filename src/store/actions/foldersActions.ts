@@ -79,7 +79,7 @@ const foldersAction = {
 
       await foldersAPI.deleteWordsFromFolder(rootState.auth.profile.id, folder)
       window.location.reload()
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message)
     }
   },

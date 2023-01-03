@@ -20,18 +20,22 @@ const authActions = {
   },
   async registration({ commit }: any, payload: loginAuthIT) {
     try {
-      const data: any = await firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-      await data.user.updateProfile({ displayName: payload.login })
-      await firebase
-        .database()
-        .ref(`users/${data.user.uid}`)
-        .set({ dictionary: [], words: [], email: data.user.email, login: data.user.displayName })
-      commit("SET_PROFILE", {
-        email: data.user.email,
-        login: data.user.displayName,
-        id: data.user.uid,
-      })
-      router.push("/account/" + data.user.uid)
+      if (payload.login.length > 40) commit("SET_ERRORS", "Слишком большое количество символов в логине!")
+      else if (payload.password.length < 7) commit("SET_ERRORS", "Слишком маленький пароль!")
+      else {
+        const data: any = await firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+        await data.user.updateProfile({ displayName: payload.login })
+        await firebase
+          .database()
+          .ref(`users/${data.user.uid}`)
+          .set({ dictionary: [], words: [], email: data.user.email, login: data.user.displayName })
+        commit("SET_PROFILE", {
+          email: data.user.email,
+          login: data.user.displayName,
+          id: data.user.uid,
+        })
+        router.push("/account/" + data.user.uid)
+      }
     } catch (error: any) {
       commit("SET_ERRORS", error.message)
     }

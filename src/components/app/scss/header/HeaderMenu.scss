@@ -32,14 +32,14 @@ $menu: 724px;
   }
   &-link {
     color: #dddddd;
-    margin: 30px 20px;
+    margin: 25px 20px;
     font-size: 24px;
     white-space: pre-wrap;
     text-align: center;
     @media (max-width: 501px) {
       font-size: 32px;
     }
-    @media (max-width: 361px) {
+    @media (max-width: 369px) {
       font-size: 26px;
     }
     &::after {

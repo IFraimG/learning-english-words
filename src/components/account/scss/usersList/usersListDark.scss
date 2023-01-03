@@ -1,0 +1,16 @@
+.users {
+    &__wrapper {}
+    &__content {}
+    &__left {}
+    &__list {}
+    &__right {}
+    &_card {
+        background: #eeeeee;
+        box-shadow:  0px 0px 10px #bebebe, 0px 0px 10px #ffffff;
+        color: #000;
+        &__info {}
+        &:active {
+            background: #ffffff;
+        }
+    }
+}

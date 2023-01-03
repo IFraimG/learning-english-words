@@ -1,0 +1,115 @@
+.users {
+    &__wrapper {
+        padding: 10px 20px;
+    }
+    &__content {
+        display: flex;
+        justify-content: space-around;
+        gap: 40px 0;
+        flex-wrap: wrap;
+        max-width: 100%;
+        margin: 20px 0;
+    }
+    &__left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        h2 {
+            font-size: 32px;
+            text-align: center;
+            @media (max-width: 491px) {
+                font-size: 20px;
+            }
+        }
+        input {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            width: 100%;
+            font-size: 18px;
+            height: 50px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 20px;
+            &::placeholder {
+                font-size: 16px;
+            }
+        }
+        button {
+            cursor: pointer;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+        }
+    }
+    &__list {
+        width: 400px;
+        @media (max-width: 491px) {
+            max-width: 320px;
+        }
+        @media (max-width: 369px) {
+            max-width: 270px;
+        }
+    }
+    &__right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            @media (max-width: 491px) {
+                font-size: 20px;
+            }
+        }
+    }
+    &_card {
+        cursor: pointer;
+        line-height: 25px;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        margin: 30px 0;
+        border-radius: 9px;
+        padding: 10px 20px;
+        transition: .2s linear;
+        border-radius: 50px;
+        overflow: hidden;
+        img {
+            width: 64px;
+            height: 64px;
+        }
+        &__info {
+            margin-left: 20px;
+        }
+        @media (max-width: 421px) {
+            h3 {
+                font-size: 16px;
+            }
+            p {
+                font-size: 12px;
+                line-height: 18px;
+            }
+        }
+        @media (max-width: 369px) {
+            h3 {
+                font-size: 16px;
+            }
+            p {
+                display: none;
+            }
+            img {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+}
+
+
+body[data-theme="dark"] {
+    @import "./usersListDark.scss";
+}
+  
+body[data-theme="light"] {
+    @import "./usersListLight.scss";
+}

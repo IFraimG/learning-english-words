@@ -3,7 +3,8 @@
     "profile": "Profile",
     "dictionary": "Dictionary",
     "sections": "Sections",
-    "logout": "Log out"
+    "logout": "Log out",
+    "users": "Users"
   },
   "translation": "Translations",
   "account": {

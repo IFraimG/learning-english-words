@@ -3,7 +3,8 @@
     "profile": "Профиль",
     "dictionary": "Словарь",
     "sections": "Разделы",
-    "logout": "Выйти из аккаунта"
+    "logout": "Выйти из аккаунта",
+    "users": "Пользователи"
   },
   "translation": "Переводы",
   "account": {

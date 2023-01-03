@@ -1,0 +1,55 @@
+<template>
+  <div v-if="!isLoader" class="users__wrapper">
+    <div class="users">
+      <div class="users__content">
+        <div class="users__left">
+          <h2>Список пользователей</h2>
+          <input type="text" placeholder="Найти пользователя по логину" />
+          <div class="users__list" v-if="users.length > 0">
+            <user-card v-for="item of users" :key="item.id" :userData="item" />
+          </div>
+          <button ref="btn" @click="loadMore" v-if="resPosition > 0" class="btn-add modal-button__run">Показать еще</button>
+        </div>
+        <div class="users__right">
+          <h2>Самые активные пользователи</h2>
+          <div class="users__list">
+            <user-card />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <router-view v-if="!isLoader"></router-view>
+  <Loader v-else />
+</template>
+
+<script lang="ts">
+  import UserCard from "@/components/account/UserCard.vue"
+  import Loader from "@/components/app/Loader.vue"
+  import { UserType } from "@/models/users"
+  import { computed, defineComponent, onBeforeMount, onBeforeUnmount, onMounted, ref } from "@vue/runtime-core"
+  import { useStore } from "vuex"
+  import "../components/account/scss/usersList/usersList.scss"
+
+  export default defineComponent({
+    name: "AccountList",
+    components: { UserCard, Loader },
+    setup() {
+      const store = useStore()
+      const isLoader = computed<boolean>(() => store.getters.isLoader)
+      const users = computed<Array<UserType>>(() => store.getters.users)
+      const resPosition = computed<number>(() => store.getters.differencePos)
+      const btn = ref<any>(null)
+
+      onBeforeMount(() => store.dispatch("getUsersList"))
+      onBeforeUnmount(() => store.commit("CLEAR_LIST"))
+
+      const loadMore = async () => {
+        btn.value.disabled = true
+        await store.dispatch("showMoreUsers")
+        btn.value.disabled = false
+      }
+      return { isLoader, users, resPosition, loadMore, btn }
+    }
+  })
+</script>

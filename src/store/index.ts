@@ -4,6 +4,7 @@ import appModule from "./modules/appModule"
 import wordsModule from "./modules/wordsModule"
 import dictionaryModule from "./modules/dictionaryModule"
 import foldersModule from "./modules/foldersModule"
+import usersModule from "./modules/usersModule"
 
 // const vuexPlugin = (store: any) => {
 //   store.subscribe(() => {});
@@ -16,6 +17,7 @@ const store = createStore({
     words: wordsModule,
     dictionary: dictionaryModule,
     folders: foldersModule,
+    users: usersModule,
   },
 })
 

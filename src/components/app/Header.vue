@@ -9,6 +9,7 @@
         <router-link class="root-link header-link" :to="'/account/' + id">{{ t("header.profile") }}</router-link>
         <router-link class="root-link header-link" to="/dictionary">{{ t("header.dictionary") }}</router-link>
         <router-link class="root-link header-link" to="/folders">{{ t("header.sections") }}</router-link>
+        <router-link class="root-link header-link" to="/accounts">{{ t("header.users") }}</router-link>
         <p class="root-link header-link" @click="logout">{{ t("header.logout") }}</p>
         <ChooseLang />
       </div>
@@ -18,16 +19,19 @@
       <div ref="menu" class="menu">
         <div class="menu__content">
           <router-link class="root-link menu-link" :to="'/account/' + id">
-            Профиль
+            {{ t("header.profile") }}
           </router-link>
           <router-link class="root-link menu-link" to="/dictionary">
-            Словарь
+            {{ t("header.dictionary") }}
           </router-link>
           <router-link class="root-link menu-link" to="/folders">
-            Разделы
+            {{ t("header.sections") }}
+          </router-link>
+          <router-link class="root-link menu-link" to="/accounts">
+            {{ t("header.sections") }}
           </router-link>
           <p v-if="isAuth" class="root-link menu-link" @click="logout">
-            Выйти из аккаунта
+            {{ t("header.logout") }}
           </p>
           <ChooseLang />
         </div>

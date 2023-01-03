@@ -193,3 +193,8 @@ body[data-theme="dark"] {
 body[data-theme="light"] {
   background-color: #e3e7eb;
 }
+
+button:disabled {
+  opacity: .5;
+  cursor: wait;
+}

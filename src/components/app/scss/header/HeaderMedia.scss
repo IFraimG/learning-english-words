@@ -7,18 +7,21 @@ $menu: 724px;
     }
   }
   &__left {
+    @media (max-width: 921px) {
+      gap: 0 10px;
+    }
     h1 {
       @media (max-width: 1091px) {
         font-size: 24px;
       }
-      @media (max-width: 971px) {
+      @media (max-width: 921px) {
         font-size: 18px;
       }
-      @media (max-width: 574px) {
-        margin-left: 20px;
+      @media (max-width: $menu) {
+        font-size: 24px;
       }
-      @media (max-width: 347px) {
-        margin-left: 0px;
+      @media (max-width: 341px) {
+        margin-right: 20px;
       }
     }
   }
@@ -28,7 +31,7 @@ $menu: 724px;
     }
   }
   &-link {
-    @media (max-width: 901px) {
+    @media (max-width: 991px) {
       font-size: 14px;
       margin-left: 20px;
     }

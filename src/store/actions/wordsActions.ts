@@ -46,11 +46,12 @@ const wordsAction = {
       console.log(err)
     }
   },
-  async getWords({ commit, rootState }: any) {
+  async getWords({ commit, rootState }: any, userID: string) {
     try {
       commit("SET_LOADER", true)
-      const data = await wordsAPI.getProfile(rootState.auth.profile.id)
-      if (data?.words != null) commit("GET_WORDS", data.words)
+      const data = await wordsAPI.getProfile(userID)
+      if (data == null) router.push("/")
+      else if (data?.words != null) commit("GET_WORDS", data.words)
       commit("SET_LOADER", false)
     } catch (error) {
       commit("SET_LOADER", false)

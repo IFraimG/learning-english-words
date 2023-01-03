@@ -16,6 +16,7 @@
   },
   "rules": {
     "no-unused-vars": "off",
+    "no-debugger":"off",
     "prefer-const": "warn",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/member-delimiter-style": "off",

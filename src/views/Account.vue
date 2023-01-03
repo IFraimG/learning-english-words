@@ -35,6 +35,7 @@
   import { useI18n } from "vue-i18n"
   import AccountLeft from "@/components/account/AccountLeft.vue"
   import WordsInterface, { WordInterface } from '@/models/words'
+  import { useRoute } from 'vue-router'
 
   export default {
     name: "Account",
@@ -48,6 +49,7 @@
     },
     setup() {
       const store = useStore()
+      const route = useRoute()
       const isOpenPanel = reactive({ value: -1 })
       const wordsIndex = ref<number>(1)
 
@@ -61,7 +63,7 @@
 
       onMounted(() => {
         editPage(1)
-        store.dispatch("getWords")
+        store.dispatch("getWords", route.params.id);
       })
 
       const setOpenPanel = (num: number) => isOpenPanel.value = num
