@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory, isNavigationFailure } from "vue-router"
 import Home from "@/views/Home.vue"
 import Account from "@/views/Account.vue"
 import AccountList from "@/views/AccountList.vue"

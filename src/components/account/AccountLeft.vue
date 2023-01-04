@@ -1,7 +1,7 @@
 <template>
   <div class="account__left-wrapper">
     <div class="account__left">
-      <ul class="account__left-list">
+      <ul v-if="isMyUser" class="account__left-list">
         <li class="account__left-item-wrapper">
           <div class="account__left-item clip-anim account__left-profile">
             <Profile :profile="profile" />
@@ -40,12 +40,15 @@
           </div>
         </li>
       </ul>
+      <div v-else class="account__left-item clip-anim account__left-profile">
+        <Profile :profile="profile" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { computed, defineComponent } from "vue"
+  import { computed, defineComponent, provide } from "vue"
   import "./scss/leftPanel/LeftPanel.scss"
 
   import Profile from "./Profile.vue"
@@ -59,20 +62,23 @@
   export default defineComponent({
     name: "AccountLeft",
     components: {
-    Profile,
-    DictionaryVidget,
-    CreateFolder,
-    ExportWords,
-    ThemeSwitcher,
-    ImportWords
-},
+      Profile,
+      DictionaryVidget,
+      CreateFolder,
+      ExportWords,
+      ThemeSwitcher,
+      ImportWords
+    },
     inject: ["Ti18N"],
     setup() {
       const store = useStore()
-      const profile = computed(() => store.getters.profile)
+      const profile = computed(() => store.getters.profileOtherUser)
       const wordsLength = computed(() => store.getters.wordsLength)
+      const isMyUser = computed(() => store.getters.isMyUser)
 
-      return { profile, wordsLength }
+      provide("isMyUser", isMyUser.value)
+
+      return { profile, wordsLength, isMyUser }
     }
   })
 </script>

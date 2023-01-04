@@ -12,6 +12,12 @@ const authModule = {
       },
       isAuth: false,
       errors: [],
+      isMyUser: false,
+      profileOtherUser: {
+        email: "",
+        login: "",
+        id: "",
+      }
     }
   },
   mutations: authMutations,
@@ -21,6 +27,8 @@ const authModule = {
     isAuth: (state: AuthInterface) => state.isAuth,
     userID: (state: AuthInterface) => state.profile.id,
     profile: (state: AuthInterface) => state.profile,
+    isMyUser: (state: AuthInterface) => state.isMyUser,
+    profileOtherUser: (state: AuthInterface) => state.profileOtherUser,
   },
 }
 

@@ -27,6 +27,7 @@ export default interface WordsInterface {
   findWords: DictionaryListInterface[]
   executeWords: WordInterface[]
   wordsLength: number
+  translatedWords: { en: string, ru: string }
 }
 
 export interface WordEdit {

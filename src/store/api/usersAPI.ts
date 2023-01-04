@@ -21,7 +21,16 @@ const usersAPI = {
       console.log(error);
       
     }
-  }
+  },
+  getProfile: async (userID: string) => {
+    const profile = await firebase
+      .database()
+      .ref()
+      .child("users")
+      .child(userID)
+      .get()
+    return profile.val()
+  },
 }
 
 export default usersAPI

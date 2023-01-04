@@ -25,7 +25,7 @@
   import VPagination from "@hennge/vue3-pagination"
   import "@hennge/vue3-pagination/dist/vue3-pagination.css"
   import "@/components/account/scss/Account.scss"
-  import { computed, onMounted, provide, reactive, ref } from "vue"
+  import { computed, getCurrentInstance, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, provide, reactive, ref, watch } from "vue"
   import { useStore } from "vuex"
 
   import Loader from "@/components/app/Loader.vue"
@@ -61,8 +61,9 @@
       const reverseWords = computed<WordInterface[]>(() => store.getters.reverseWords)
       const findWords = computed<WordInterface[]>(() => store.getters.findWords)
 
-      onMounted(() => {
+      onBeforeMount(() => {
         editPage(1)
+        store.dispatch("defineUser", route.params.id)
         store.dispatch("getWords", route.params.id);
       })
 

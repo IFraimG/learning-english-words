@@ -75,6 +75,10 @@ const wordsMutations = {
     if (index != -1 && payload.img?.server != null && payload.img?.id != null && payload.img?.secret != null) {
       state.currentWords[index].img = `https://live.staticflickr.com/${payload.img.server}/${payload.img.id}_${payload.img.secret}.jpg`
     }
+  },
+  SET_TRANSLATION_WORD(state: WordsInterface, payload: { en: string, ru: string }) {
+    state.translatedWords.en = payload.en
+    state.translatedWords.ru = payload.ru
   }
 }
 

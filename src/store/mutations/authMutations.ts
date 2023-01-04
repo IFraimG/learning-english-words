@@ -12,6 +12,10 @@ const authMutations = {
   SET_AUTH(state: AuthInterface, payload: boolean) {
     state.isAuth = payload
   },
+  DEFINE_USER(state: AuthInterface, profile: profileAuth) {
+    state.isMyUser = profile.id == state.profile.id && state.isAuth
+    state.profileOtherUser = { ...profile }
+  },
 }
 
 export default authMutations

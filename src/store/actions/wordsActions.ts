@@ -5,11 +5,12 @@ import router from "@/router/index"
 import randomWords from "random-words"
 import wordsAPI from "../api/wordsAPI"
 import foldersAPI from "../api/foldersAPI"
+import usersAPI from "../api/usersAPI"
 
 const wordsAction = {
   async createList({ commit, rootState }: any, payload: { titleWords: string; list: WordsInterface[] }) {
     try {
-      const profile = await wordsAPI.getProfile(rootState.auth.profile.id)
+      const profile = await usersAPI.getProfile(rootState.auth.profile.id)
       const oldListWords = await wordsAPI.getListWords(rootState.auth.profile.id)
       const folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
       let listWords = null
@@ -49,9 +50,10 @@ const wordsAction = {
   async getWords({ commit, rootState }: any, userID: string) {
     try {
       commit("SET_LOADER", true)
-      const data = await wordsAPI.getProfile(userID)
+      const data = await usersAPI.getProfile(userID)
       if (data == null) router.push("/")
       else if (data?.words != null) commit("GET_WORDS", data.words)
+      else commit("GET_WORDS", [])
       commit("SET_LOADER", false)
     } catch (error) {
       commit("SET_LOADER", false)
@@ -124,7 +126,7 @@ const wordsAction = {
   async sendEditWords({ commit }: any, payload: { userid: string; wordsid: string; editWords: WordInterface[]; title: string }) {
     try {
       await wordsAPI.setEditWords(payload.userid, payload.wordsid, payload.editWords, payload.title)
-      const data = await wordsAPI.getProfile(payload.userid)
+      const data = await usersAPI.getProfile(payload.userid)
       commit("GET_WORDS", data.words)
     } catch (error) {
       console.log(error)
@@ -146,7 +148,7 @@ const wordsAction = {
     }
   },
   async loadWordsFromJSON({ commit, rootState }: any, payload: any[]) {
-    const profile = await wordsAPI.getProfile(rootState.auth.profile.id)
+    const profile = await usersAPI.getProfile(rootState.auth.profile.id)
     const folders = await foldersAPI.receiveAll(rootState.auth.profile.id)
     const oldListWords = await wordsAPI.getListWords(rootState.auth.profile.id)
 
@@ -169,6 +171,11 @@ const wordsAction = {
 
     await wordsAPI.setWords(saveData)
     commit("GET_WORDS", payload)
+  },
+  async translateWord({ commit }: any, payload: string) {
+    const enWord = await wordsAPI.translateWord("en", payload)
+    console.log(enWord)
+    if (enWord != null) commit("SET_TRANSLATION_WORD", { ru: payload, en: enWord })
   }
 }
 

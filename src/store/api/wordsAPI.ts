@@ -32,15 +32,6 @@ const wordsAPI = {
         folders: profileData.folders,
       })
   },
-  getProfile: async (userID: string) => {
-    const profile = await firebase
-      .database()
-      .ref()
-      .child("users")
-      .child(userID)
-      .get()
-    return profile.val()
-  },
   setEditWords: async (userID: string, wordsID: string, editWords: Array<WordInterface>, title: string) => {
     return await firebase
       .database()
@@ -70,6 +61,25 @@ const wordsAPI = {
       return res.data.photos.photo[0]
     } catch (error: any) {
       console.log(error.message);
+    }
+  },
+  translateWord: async (toLang: string, word: string) => {
+    try {
+      const options = {
+        method: 'POST',
+        url: 'https://deep-translate1.p.rapidapi.com/language/translate/v2',
+        headers: {
+          'content-type': 'application/json',
+          'X-RapidAPI-Key': process.env.VUE_APP_RapidAPI_Key,
+          'X-RapidAPI-Host': 'deep-translate1.p.rapidapi.com'
+        },
+        data: `{"q":"${word}","source":"ru","target":"${toLang}"}`
+      }
+
+      let res = await axios.request(options)
+      return res.data.data?.translations?.translatedText
+    } catch (error: any) {
+      console.log(error.message)
     }
   }
 }

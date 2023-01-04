@@ -31,10 +31,11 @@
   import "swiper/components/pagination/pagination.min.css"
   import "swiper/swiper.scss"
 
-  import { reactive, ref } from "vue"
+  import { computed, reactive, ref, watchEffect } from "vue"
   import "@/components/modals/scss/ModalWords.scss"
   import "@/components/account/scss/InputWords.scss"
   import SelectTime from "./SelectTime.vue"
+import { useStore } from 'vuex';
 
   export default {
     name: "InputWords",
@@ -46,6 +47,7 @@
     },
     emits: ["setValueInput", "currentTime"],
     setup(props, { emit }) {
+      const store = useStore()
       const isDone = reactive({ value: false })
       const englishWord = ref(null)
       const russianWord = ref(null)
@@ -56,7 +58,18 @@
       const controlledSwiperEN = ref(null)
       const controlledSwiperRU = ref(null)
 
+      const translatedWord = computed(() => store.getters.translatedWords)
+
       const newWord = ref({ english: "", russian: "", id: "", currentTime: "", enValues: [""], ruValues: [""] })
+
+      watchEffect(() => {
+        if (translatedWord.value.en != "" && translatedWord.value.ru != "" && newWord.value.english == "" && newWord.value.russian == "") {
+          newWord.value.english = translatedWord.value.en
+          newWord.value.russian = translatedWord.value.ru
+          newWord.value.enValues[0] = translatedWord.value.en
+          newWord.value.ruValues[0] = translatedWord.value.ru
+        }
+      })
 
       const setInputEnActive = () => russianWord.value.focus()
       const setInputRuActive = () => setNumInput()

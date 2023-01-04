@@ -14,4 +14,6 @@ export default interface AuthInterface {
   profile: profileAuth
   isAuth: boolean
   errors: string[]
+  isMyUser: boolean
+  profileOtherUser: profileAuth
 }

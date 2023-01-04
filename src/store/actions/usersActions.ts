@@ -51,6 +51,10 @@ const usersActions = {
 
     commit("SET_POSITION", pos + 3)
     commit("UPDATE_LIST_PROFILES", arrProfiles)
+  },
+  async defineUser({ commit, rootState }: any, userID: string) {
+    const res = await usersAPI.getProfile(userID)
+    commit("DEFINE_USER", { ...res, id: userID })
   }
 }
 

@@ -14,6 +14,7 @@ const wordsModule = {
       incorrectWord: null,
       isRepeatingTitle: false,
       wordsLength: 0,
+      translatedWords: { en: "", ru: "" }
     }
   },
   mutations: wordsMutations,
@@ -28,6 +29,7 @@ const wordsModule = {
     incorrectWord: (state: WordsInterface) => state.incorrectWord,
     isRepeatingTitle: (state: WordsInterface) => state.isRepeatingTitle,
     wordsLength: (state: WordsInterface) => state.wordsLength,
+    translatedWords: (state: WordsInterface) => state.translatedWords,
     reverseWords: (state: WordsInterface) => {
       const newArray: Array<any> = []
       let currentWordsCopy: any = state.currentWords

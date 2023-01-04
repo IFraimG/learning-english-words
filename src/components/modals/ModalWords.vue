@@ -35,6 +35,8 @@
         </div>
       </div>
     </div>
+    <button class="modal__button-speech profile__run" v-if="!isRecording" @click="startRecording">Записать слово через диктофон</button>
+    <button class="modal__button-speech profile__run" v-else @click="stopRecording">Остановить запись</button>
   </div>
   <router-view />
 </template>
@@ -47,6 +49,7 @@
   import { useRouter } from "vue-router"
   import { useI18n } from "vue-i18n"
   import { uniqueTitle } from "@/utils/uniqueTitle"
+  import Recognizer from "@/utils/Recognizer"
 
   export default defineComponent({
     name: "ModalWords",
@@ -60,6 +63,9 @@
       const resetButton: any = ref(null)
 
       const userID = computed(() => store.getters.userID)
+      const recognizer = new Recognizer(window)
+      const isRecording = ref<boolean>(recognizer.isRecognizing)
+      const txtInterim = ref<string>("")
 
       const { t } = useI18n()
       provide("Ti18N", t)
@@ -165,11 +171,26 @@
         }
       }
 
+      const showText = (text: string) => txtInterim.value = text
+
+      const startRecording = () => {
+        recognizer.start(showText)
+        isRecording.value = recognizer.isRecognizing
+      }
+      const stopRecording = () => {
+        recognizer.stop()
+        isRecording.value = recognizer.isRecognizing
+        console.log(txtInterim.value);
+        if (txtInterim.value.trim().length != 0) {
+          store.dispatch("translateWord", txtInterim.value).then(() => wordsList.value.push({}))
+        }
+      }
+
       return {
         wordsList, titleWords, editData, setValueInput,
         getWordID, checkValidID, resetData, modalClose,
-        sendData, incorrectWord, modalTitle, inputTitle, t, userID,
-        startWords, modalWordsWrap, modalContent, sendButton, resetButton
+        sendData, incorrectWord, modalTitle, inputTitle, t, userID, startRecording, stopRecording,
+        startWords, modalWordsWrap, modalContent, sendButton, resetButton, isRecording
       }
     },
   })

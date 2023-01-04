@@ -1,5 +1,5 @@
 .profile {
-  min-height: 240px;
+  min-height: 200px;
   padding: 10px 0;
   overflow: hidden;
   border-radius: 3px;
@@ -36,5 +36,8 @@
     &-create {
       max-width: 400px;
     }
+  }
+  &-short {
+    width: 500px;
   }
 }
