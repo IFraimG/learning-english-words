@@ -141,15 +141,6 @@
       padding: 10px 10px !important;
     }
   }
-  &__button-speech {
-    position: absolute;
-    font-size: 24px !important;
-    margin: 20px;
-    font-weight: bold !important;
-    @media (max-width: 491px) {
-      font-size: 18px !important;
-    }
-  }
 }
 
 .modalWords-enter-active,

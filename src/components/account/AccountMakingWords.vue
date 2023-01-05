@@ -1,9 +1,8 @@
-<!-- DEPRECATED !!!! -->
 <template>
-  <div ref="modalWordsWrap" class="modal__wrapper">
-    <div ref="modalContent" class="modal">
-      <div class="modal__content">
-        <div class="modal__header">
+  <div ref="modalWordsWrap" class="list__info make-words__wrapper">
+    <div ref="modalContent" class="make-words">
+      <div class="make-words__content">
+        <div class="make-words__header">
           <h2 v-if="startWords.title == null" ref="modalTitle">{{ t("account.modalWords.makeList") }}</h2>
           <h2 v-else ref="modalTitle">{{ t("account.modalWords.addNewWords") }}</h2>
           <input class="input-focus" v-if="startWords.title == null" ref="inputTitle" v-model="titleWords" placeholder="Ваше название словаря..." type="text" />
@@ -12,7 +11,9 @@
             <img src="@/assets/cancel.png" alt="" />
           </button>
         </div>
-        <div class="modal__form">
+        <button class="make-words__button-speech profile__run" v-if="!isRecording" @click="startRecording">Записать слово через диктофон</button>
+        <button class="make-words__button-speech_ profile__run" v-else @click="stopRecording">Остановить запись</button>
+        <div class="">
           <div v-for="(num, index) of wordsList.value.length + 1" :key="index" class="modal__item">
             <input-words :word-index="index" @setValueInput="setValueInput" :len="wordsList.value.length" />
           </div>
@@ -25,7 +26,7 @@
             </p>
           </div>
         </div>
-        <div ref="footer" class="modal__footer">
+        <div ref="footer" class="make-words__footer">
           <button type="submit" ref="sendButton" class="profile__run modal-button__run modal__save modal__btn-image" @click="sendData">
             {{ t("account.modalWords.save") }}
           </button>
@@ -36,24 +37,21 @@
         </div>
       </div>
     </div>
-    <button class="modal__button-speech profile__run" v-if="!isRecording" @click="startRecording">Записать слово через диктофон</button>
-    <button class="modal__button-speech profile__run" v-else @click="stopRecording">Остановить запись</button>
   </div>
-  <router-view />
 </template>
 
 <script lang="ts">
   import { useStore } from "vuex"
-  import "./scss/ModalWords.scss"
-  import InputWords from "@/components/account/InputWords.vue"
+  import InputWords from "./InputWords.vue"
   import { computed, defineComponent, nextTick, onMounted, onUnmounted, provide, reactive, ref } from "vue"
   import { useRouter } from "vue-router"
   import { useI18n } from "vue-i18n"
   import { uniqueTitle } from "@/utils/uniqueTitle"
   import Recognizer from "@/utils/Recognizer"
+  import "./scss/AccountMakingWords.scss"
 
   export default defineComponent({
-    name: "ModalWords",
+    name: "AccountMakingWords",
     components: { InputWords },
     setup() {
       const store = useStore()
@@ -73,13 +71,13 @@
 
       onMounted(() => {
         nextTick(() => {
-          window.scrollTo({ top: 0 })
-          document.documentElement.style.overflow = "hidden"
-          document.body.classList.add("popup__open")
+          // window.scrollTo({ top: 0 })
+          // document.documentElement.style.overflow = "hidden"
+          // document.body.classList.add("popup__open")
         })
       })
 
-      onUnmounted(() => (document.body.classList.remove("popup__open")))
+      // onUnmounted(() => (document.body.classList.remove("popup__open")))
 
       const incorrectWord = computed(() => store.getters.incorrectWord)
       const startWords = computed(() => store.getters.startModalWords)
@@ -98,7 +96,7 @@
         store.commit("CHECK_CORRECT_WORD", null)
       }
 
-      const modalClose = () => router.push(`/account/${userID.value}/words/close`)
+      const modalClose = () => router.push(`/account/${userID.value}/close`)
 
       const sendData = async () => {
         if (wordsList.value.length == 0) {
@@ -129,7 +127,7 @@
             resetData()
 
             store.commit("SET_MODAL_WORDS", { list: null, title: null })
-            router.push("/account/" + userID.value)
+            store.commit("SET_PUSHING_WORD", false)
           }
         }
       }

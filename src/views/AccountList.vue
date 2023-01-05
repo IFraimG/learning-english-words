@@ -27,7 +27,7 @@
   import UserCard from "@/components/account/UserCard.vue"
   import Loader from "@/components/app/Loader.vue"
   import { UserType } from "@/models/users"
-  import { computed, defineComponent, onBeforeMount, onBeforeUnmount, onMounted, ref } from "@vue/runtime-core"
+  import { computed, defineComponent, onBeforeMount, onBeforeUnmount, ref } from "@vue/runtime-core"
   import { useStore } from "vuex"
   import "../components/account/scss/usersList/usersList.scss"
 

@@ -7,6 +7,7 @@ const appModule = {
     return {
       isLogin: false,
       startModalWords: { title: null, words: null },
+      isPushingWord: false
     }
   },
   mutations: appMutations,
@@ -14,6 +15,7 @@ const appModule = {
   getters: {
     loginInfo: (state: AppState): boolean => state.isLogin,
     startModalWords: (state: AppState) => state.startModalWords,
+    isPushingWord: (state: AppState) => state.isPushingWord
   },
 }
 

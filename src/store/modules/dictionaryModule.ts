@@ -8,6 +8,7 @@ export default {
     return {
       dictionaryList: [],
       currentDictionary: null,
+      translatedWords: { enWord: "", ruWord: "" }
     }
   },
   mutations: dictionaryMutations,
@@ -16,6 +17,7 @@ export default {
     currentDictionary: (state: DictionaryState) => state.currentDictionary,
     dictionaryList: (state: DictionaryState) => state.dictionaryList,
     pagesDictionary: (state: DictionaryState) => state.dictionaryList?.length,
+    translatedDictResults: (state: DictionaryState) => state.translatedWords,
     sortedWords: (state: DictionaryState): WordInterface[] => {
       if (state.currentDictionary == null) return []
       return [...state.currentDictionary.words].sort((a, b) => a.english.charCodeAt(0) - b.english.charCodeAt(0))

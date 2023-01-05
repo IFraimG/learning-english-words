@@ -5,7 +5,8 @@
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
-      <div v-if="isMyUser">
+      <div v-if="isMyUser"> 
+        <!-- fix button -->
         <button v-if="editMode" class="profile__run" @click="deleteWords(wordsArray.title)">{{ Ti18N("account.wordsTable.panel.delete") }}</button>
         <button v-if="editMode != wordsArray.title" class="profile__run" @click.stop="editWords(wordsArray.words, wordsArray.title)">{{ Ti18N("account.wordsTable.panel.change") }}</button>
         <button v-else class="profile__run" @click.stop="stopEdit">{{ Ti18N("account.wordsTable.panel.cancel") }}</button>

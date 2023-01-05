@@ -23,6 +23,10 @@ const dictionaryMutations = {
 
     if (wordsData != null) state.currentDictionary = wordsData
   },
+  SET_TRANSLATED_DICT_WORDS(state: DictionaryState, payload: { enWord: string, ruWord: string }) {
+    state.translatedWords.enWord = payload.enWord
+    state.translatedWords.ruWord = payload.ruWord
+  }
 }
 
 export default dictionaryMutations

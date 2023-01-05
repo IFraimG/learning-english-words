@@ -8,6 +8,9 @@ const appMutations = {
   SET_MODAL_WORDS(state: AppState, payload: { title: string; list: WordInterface[] }) {
     state.startModalWords = { title: payload?.title, words: payload?.list }
   },
+  SET_PUSHING_WORD(state: AppState, payload: boolean) {
+    state.isPushingWord = payload
+  }
 }
 
 export default appMutations

@@ -15,7 +15,7 @@
         </swiper-slide>
       </Swiper>
       <button @click="makeNewInputRU" class="modal-btn-plus">+</button>
-      <select-time :time-edit="null" @setTime="setTime" />
+      <!-- <select-time :time-edit="null" @setTime="setTime" /> -->
     </div>
     <div class="modal__right">
       <button v-if="!isDone.value" class="profile__run modal-button__run btn-add" @click="setNumInput">
@@ -35,14 +35,15 @@
   import "@/components/modals/scss/ModalWords.scss"
   import "@/components/account/scss/InputWords.scss"
   import SelectTime from "./SelectTime.vue"
-import { useStore } from 'vuex';
+  import { useStore } from 'vuex';
 
   export default {
     name: "InputWords",
-    components: { SelectTime, Swiper, SwiperSlide },
+    components: { Swiper, SwiperSlide },
     props: {
       wordIndex: Number,
       isStartValue: Boolean,
+      len: Number,
       startValue: Object || null,
     },
     emits: ["setValueInput", "currentTime"],
@@ -63,7 +64,8 @@ import { useStore } from 'vuex';
       const newWord = ref({ english: "", russian: "", id: "", currentTime: "", enValues: [""], ruValues: [""] })
 
       watchEffect(() => {
-        if (translatedWord.value.en != "" && translatedWord.value.ru != "" && newWord.value.english == "" && newWord.value.russian == "") {
+        console.log(props);
+        if (translatedWord.value.en != "" && translatedWord.value.ru != "" && newWord.value.english == "" && newWord.value.russian == "" && props.wordIndex == props.len) {
           newWord.value.english = translatedWord.value.en
           newWord.value.russian = translatedWord.value.ru
           newWord.value.enValues[0] = translatedWord.value.en

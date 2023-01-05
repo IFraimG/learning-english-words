@@ -3,6 +3,7 @@ import { WordInterface } from "@/models/words"
 export interface DictionaryState {
   dictionaryList: WordInterface[]
   currentDictionary: DictionaryListInterface | null
+  translatedWords: { enWord: string, ruWord: string }
 }
 
 export interface CurrentDictionaryPayload {

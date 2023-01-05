@@ -63,7 +63,7 @@ const wordsAPI = {
       console.log(error.message);
     }
   },
-  translateWord: async (toLang: string, word: string) => {
+  translateWord: async (toLang: string, word: string, secondLang = "ru" as string) => {
     try {
       const options = {
         method: 'POST',
@@ -73,7 +73,7 @@ const wordsAPI = {
           'X-RapidAPI-Key': process.env.VUE_APP_RapidAPI_Key,
           'X-RapidAPI-Host': 'deep-translate1.p.rapidapi.com'
         },
-        data: `{"q":"${word}","source":"ru","target":"${toLang}"}`
+        data: `{"q":"${word}","source":"${secondLang}","target":"${toLang}"}`
       }
 
       let res = await axios.request(options)

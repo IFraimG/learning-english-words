@@ -1,5 +1,6 @@
 import { CurrentDictionaryPayload, UpdateDictionaryIT, SaveTranscriptionIT } from "@/models/dictionary"
 import dictionaryAPI from "../api/dictionaryAPI"
+import wordsAPI from "../api/wordsAPI"
 
 const dictionaryActions = {
   async getDictionaryWords({ commit }: any, payload: string) {
@@ -26,8 +27,15 @@ const dictionaryActions = {
     await dictionaryAPI.saveTranscripton(payload.userID, payload.query, payload.wordIndex, payload.wordData)
     dispatch("getCurrentDictionaryWords", { id: payload.userID, query: payload.query })
   },
-  async setOwnTranslate({ commit, rootState }: any, payload: { lang: string, word: string }) {
-   
+  async setOwnTranslate({ commit, rootState }: any, payload: { fromLang: string, toLang: string, word: string }) {
+    try {
+      let result = await wordsAPI.translateWord(payload.fromLang, payload.word, payload.toLang)
+      if (result != null) {
+        commit("SET_TRANSLATED_DICT_WORDS", payload.fromLang == "ru" ? { enWord: result, ruWord: payload.word } : { ruWord: result, enWord: payload.word })
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 }
 

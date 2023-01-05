@@ -36,16 +36,16 @@ const routes = [
         path: "setupfolder",
         component: ModalToFolders,
       },
-      {
-        path: "words",
-        component: ModalWords,
-        children: [
+      // {
+      //   path: "words",
+      //   component: ModalWords,
+        // children: [
           {
             path: "close",
             component: ModalWordsClose
           }
-        ]
-      },
+        // ]
+      // },
     ],
   },
   {

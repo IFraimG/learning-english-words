@@ -1,3 +1,4 @@
+<!-- НЕ ИСПОЛЬЗУЕТСЯ !!! -->
 <template>
   <select v-model="time" class="modal__select" @change="setTime">
     <option :value="-1" selected>

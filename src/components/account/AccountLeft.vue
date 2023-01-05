@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { computed, defineComponent, provide } from "vue"
   import "./scss/leftPanel/LeftPanel.scss"
 
