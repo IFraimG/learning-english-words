@@ -4,9 +4,9 @@ import Account from "@/views/Account.vue"
 import AccountList from "@/views/AccountList.vue"
 import ModalDeleteWords from "@/components/modals/ModalDeleteWords.vue"
 import ModalToFolders from "@/components/modals/ModalToFolders.vue"
-import ModalWords from "@/components/modals/ModalWords.vue"
 import ModalDelSections from "@/components/modals/ModalDelSections.vue"
 import ModalWordsClose from "@/components/modals/ModalWordsClose.vue"
+import ModalScanner from "@/components/modals/ModalScanner.vue"
 // import ModalForImage from "@/components/modals/ModalForImage.vue"
 import Words from "@/views/Words.vue"
 import NotFound from "@/views/404.vue"
@@ -40,12 +40,16 @@ const routes = [
       //   path: "words",
       //   component: ModalWords,
         // children: [
-          {
-            path: "close",
-            component: ModalWordsClose
-          }
+      {
+        path: "close",
+        component: ModalWordsClose
+      },
         // ]
       // },
+      {
+        path: "scanner",
+        component: ModalScanner
+      }
     ],
   },
   {

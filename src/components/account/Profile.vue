@@ -4,11 +4,9 @@
       <img loading="lazy" src="@/assets/user.webp" />
       <h2>{{ props.profile.login }}</h2>
       <p>{{ props.profile.email }}</p>
-      <!-- <router-link v-if="isMyUser" :to="`/account/${props.profile.id}/words`"> -->
-        <button v-if="!isPushingWord" class="profile__run" @click="$store.commit('SET_PUSHING_WORD', true)">
-          {{ Ti18N("account.btnAddWords") }}
-        </button>
-      <!-- </router-link> -->
+      <button v-if="!isPushingWord && isMyUser" class="profile__run" @click="$store.commit('SET_PUSHING_WORD', true)">
+        {{ Ti18N("account.btnAddWords") }}
+      </button>
     </div>
   </div>
 </template>

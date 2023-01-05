@@ -1,3 +1,4 @@
+<!-- НЕ ИСПОЛЬЗУЕТСЯ!!! -->
 <template>
   <div class="vidget__wrapper">
     <router-link :to="{ name: 'Dictionary' }">

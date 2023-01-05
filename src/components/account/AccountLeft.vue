@@ -15,7 +15,7 @@
         </li>
         <li class="account__left-item-wrapper">
           <div class="account__left-item">
-            <DictionaryVidget />
+            <scanner-words />
           </div>
         </li>
         <li class="account__left-item-wrapper">
@@ -55,19 +55,19 @@
   import ThemeSwitcher from "../app/ThemeSwitcher.vue"
   import ExportWords from "./ExportWords.vue"
   import CreateFolder from "../folders/CreateFolder.vue"
-  import DictionaryVidget from "../dictionary/DictionaryVidget.vue"
   import { useStore } from "vuex"
   import ImportWords from "./ImportWords.vue"
+  import ScannerWords from "../app/ScannerWords.vue"
 
   export default defineComponent({
     name: "AccountLeft",
     components: {
       Profile,
-      DictionaryVidget,
       CreateFolder,
       ExportWords,
       ThemeSwitcher,
-      ImportWords
+      ImportWords,
+      ScannerWords
     },
     inject: ["Ti18N"],
     setup() {

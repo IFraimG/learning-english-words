@@ -1,0 +1,87 @@
+.display-cover {
+    display: flex;
+    align-items: flex-start;
+    max-width: 100%;
+    max-height: 250px;
+    margin: 20px;
+  }
+
+  canvas {
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+  }
+  
+  video {
+    max-width: 500px;
+    max-height: 500px;
+  }
+  
+  .controls {
+    display: flex;
+    margin-left: 40px;
+  }
+  
+  .btn {
+    cursor: pointer;
+  }
+  
+  @media (min-width: 300px) and (max-width: 400px) {
+    .controls {
+      flex-direction: column;
+    }
+  }
+  
+  .controls button:nth-child(1) {
+    border: 2px solid #D2002E;
+    transition: .2s linear;
+    &:hover {
+        border-color: transparent;
+        background-color: #D2002E;
+        color: #fff;
+    }
+    &:active {
+        background-color: #a70125;
+        color: #fff;
+    }
+  }
+  
+  .controls button:nth-child(2) {
+    border: 2px solid #008496;
+    transition: .2s linear;
+    &:hover {
+        border-color: transparent;
+        background-color: #008496;
+        color: #fff;
+    }
+    &:active {
+        background-color: #015a65;
+        color: #fff;
+    }
+  }
+  
+  .controls button:nth-child(3) {
+    border: 2px solid #00B541;
+    transition: .2s linear;
+    &:hover {
+        border-color: transparent;
+        background-color: #00B541;
+        color: #fff;
+    }
+    &:active {
+        background-color: #017a2d;
+        color: #fff;
+    }
+  }
+
+  .controls > button {
+    font-size: 18px;
+    padding:  10px;
+    text-align: center;
+    margin: 0 10px;
+    background: transparent;
+  }
+
+  .d-none {
+    display: none;
+  }
