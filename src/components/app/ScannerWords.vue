@@ -22,10 +22,19 @@
     &__btn {
       font-size: 18px;
       color: #fff;
-      padding: 10px 10px;
+      padding: 10px;
       cursor: pointer;
       border-radius: 9px;
       font-weight: bold;
+      @media (max-width: 521px) {
+        font-size: 14px;
+      }
+      @media (max-width: 421px) {
+        font-size: 12px;
+      }
+      @media (max-width: 379px) {
+        font-size: 10px;
+      }
     }
   }
 </style>

@@ -79,6 +79,9 @@ const wordsMutations = {
   SET_TRANSLATION_WORD(state: WordsInterface, payload: { en: string, ru: string }) {
     state.translatedWords.en = payload.en
     state.translatedWords.ru = payload.ru
+  },
+  SET_IMAGE_WORDS_TO_LIST(state: WordsInterface, payload: { en: string, ru: string }) {
+    console.log(payload)
   }
 }
 

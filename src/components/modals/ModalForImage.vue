@@ -5,7 +5,7 @@
     </template>
     <template #content>
       <div style="display: flex; justify-content: center">
-        <img style="object-fit: cover; max-width: 100%" :src="url" alt="image">
+        <img style="object-fit: cover; max-width: 100%; max-height: 400px" :src="url" alt="image">
       </div>
     </template>
   </Modal>

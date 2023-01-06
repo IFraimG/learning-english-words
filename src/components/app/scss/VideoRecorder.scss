@@ -4,6 +4,11 @@
     max-width: 100%;
     max-height: 250px;
     margin: 20px;
+    @media (max-width: 921px) {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 0;
+    }
   }
 
   canvas {
@@ -15,6 +20,10 @@
   video {
     max-width: 500px;
     max-height: 500px;
+    @media (max-width: 921px) {
+      max-width: 350px;
+      max-height: 350px;
+    }
   }
   
   .controls {

@@ -22,12 +22,15 @@
 <script lang="ts">
   import "@/components/app/scss/VideoRecorder.scss"
   import { useStore } from "vuex"
-  import { defineComponent, onBeforeUnmount, onMounted, ref } from "vue"
+  import { defineComponent, onBeforeUnmount, onMounted, ref, watchEffect } from "vue"
   import Loader from "./Loader.vue"
 
   export default defineComponent({
     components: { Loader },
-    name: "AuthSection",
+    name: "VideoRecorded",
+    props: {
+      isOpenVideo: Boolean
+    },
     setup(props, { emit }) {
       const play = ref<any>(null)
       const pause = ref<any>(null)
@@ -56,13 +59,17 @@
       onMounted(() => getCameraSelection())
       onBeforeUnmount(() => stopPlayVideo())
 
+      watchEffect(() => {
+        if (!props.isOpenVideo) stopPlayVideo()
+      })
+
       const cameraOptionsChange = () => startStream({ ...constraints, deviceId: { exact: cameraOptions.value }})
       const stopPlayVideo = () => {
         videoDevices.value = []
         play.value.classList.add("d-none")
         pause.value.classList.add("d-none")
         screenshot.value.classList.add("d-none")
-        video.value.srcObject.getTracks().forEach((element: any) => element.stop())
+        video.value.srcObject?.getTracks().forEach((element: any) => element.stop())
         video.value.classList.add("d-none")
       }
 
@@ -89,7 +96,7 @@
           pause.value.classList.remove("d-none")
           screenshot.value.classList.remove("d-none")
         } catch (error: any) {
-          if (error.name == "NotAllowedError") console.log("iiii");
+          if (error.name == "NotAllowedError") emit("setErrors", "Разрешите доступ к камере")
         }
       }
 
