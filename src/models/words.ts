@@ -27,6 +27,7 @@ export default interface WordsInterface {
   findWords: DictionaryListInterface[]
   executeWords: WordInterface[]
   wordsLength: number
+  fieldWords: { en: string, ru: string }
   translatedWords: { en: string, ru: string }
 }
 

@@ -13,7 +13,7 @@
             <li>
               Distinctively exploit optimal alignments for intuitive bandwidth. Quickly coordinate business through revolutionary.
             </li>
-            <li class="home-footer__socials">
+            <!-- <li class="home-footer__socials">
               <router-link to="/">
                 <img class="home-footer__socials-fc" src="@/assets/facebook.png" alt="facebook" />
               </router-link>
@@ -23,7 +23,7 @@
               <router-link to="/">
                 <img src="@/assets/google.png" alt="google" />
               </router-link>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="home-footer__item">
@@ -44,7 +44,7 @@
             <li>Latest News</li>
           </ul>
         </div>
-        <div class="home-footer__item">
+        <!-- <div class="home-footer__item">
           <h2>Our Services</h2>
           <ul>
             <li>About Us</li>
@@ -63,9 +63,9 @@
             <li>Our Team</li>
             <li>Latest News</li>
           </ul>
-        </div>
+        </div> -->
       </div>
-      <p class="home-footer__copyright">Copyright © GrowBe 2021. All Rights Reserved.</p>
+      <p class="home-footer__copyright">Copyright © IFraimTeam 2021. All Rights Reserved.</p>
     </div>
   </footer>
 </template>

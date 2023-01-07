@@ -28,7 +28,7 @@
             {{ t("header.sections") }}
           </router-link>
           <router-link class="root-link menu-link" to="/accounts">
-            {{ t("header.sections") }}
+            {{ t("header.users") }}
           </router-link>
           <p v-if="isAuth" class="root-link menu-link" @click="logout">
             {{ t("header.logout") }}

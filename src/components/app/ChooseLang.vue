@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-  import { onMounted, ref, FunctionalComponent, defineComponent } from "vue"
+  import { onMounted, ref, defineComponent } from "vue"
   import { useI18n } from "vue-i18n"
   import "./scss/chooseLang/ChooseLang.scss"
 
@@ -29,7 +29,7 @@
       const langMenuList: any = ref(null)
       const isLang = ref(false)
 
-      const listLangs = ["en", "ru", "fr"]
+      const listLangs = ["en", "ru"]
 
       // Не используется !!!
       // const observer = new ResizeObserver((entries: any) => {

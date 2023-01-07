@@ -14,6 +14,9 @@ const usersMutations = {
     state.users = []
     state.length = 0
     state.position = 0
+  },
+  SET_FOUND_USER_BY_LOGIN(state: UsersIT, payload: UserType) {
+    state.foundUser = payload
   }
 }
 

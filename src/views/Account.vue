@@ -58,7 +58,7 @@
       const isOpenPanel = reactive({ value: -1 })
       const wordsIndex = ref<number>(1)
       const isPushingWord = computed(() => store.getters.isPushingWord)
-      
+
       const { t } = useI18n()
       provide("Ti18N", t)
 

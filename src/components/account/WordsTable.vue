@@ -1,16 +1,18 @@
 <template>
   <div ref="listWords" class="list__info" @mousedown.stop @contextmenu.prevent="setOpenPanel($event, index)" @click.ctrl.stop @click.exact="runWords(wordsArray.title)">
     <div v-if="!editMode && isOpenPanel == index" ref="panel" class="list__panel" @mousedown.stop.prevent @click.stop.prevent>
+      <!-- попробовать настроить vissibility hidden -->
       <Panel :words="wordsArray.words" :userID="$route.params.id" :title="wordsArray.title" @openModal="openModal" @editWords="editWords" @setOpenPanel="setOpenPanel($event, -1)" />
     </div>
     <div class="list__title">
       <h3>{{ wordsArray.title }}</h3>
-      <div v-if="isMyUser"> 
-        <!-- fix button -->
+      <div v-if="isMyUser" class="list__buttons">
         <button v-if="editMode" class="profile__run" @click="deleteWords(wordsArray.title)">{{ Ti18N("account.wordsTable.panel.delete") }}</button>
         <button v-if="editMode != wordsArray.title" class="profile__run" @click.stop="editWords(wordsArray.words, wordsArray.title)">{{ Ti18N("account.wordsTable.panel.change") }}</button>
         <button v-else class="profile__run" @click.stop="stopEdit">{{ Ti18N("account.wordsTable.panel.cancel") }}</button>
       </div>
+      <button ref="btnAddToList" v-if="!isMyUser && isAddedToMyDictionaryList != index && index != -1" @click.stop="saveDictionary" class="profile__run">Добавить в свой словарь</button>
+      <p v-else-if="!isMyUser && isAddedToMyDictionaryList == index">Успешно добавлено</p>
     </div>
     <div v-for="(words, index2) of wordsArray.words" :key="words" class="list__words">
       <words-list v-if="editMode != wordsArray.title" :words="wordsArray.words[index2]" :index="index" />
@@ -54,7 +56,9 @@
       const section: any = ref(null)
       const panel: any = ref(null)
       const listWords: any = ref(null)
+      const isAddedToMyDictionaryList = ref<number | any>(-1)
       const editList: any = reactive({ value: [] })
+      const btnAddToList = ref<any>(null)
 
       const userID = route.params.id
       const currentWords = computed(() => store.getters.currentWords)
@@ -112,15 +116,24 @@
 
       const openModal = () => {
         store.commit("SET_MODAL_WORDS", { title: props.wordsArray.title, list: props.wordsArray.words })
-        router.push(`/account/${userID}/words`)
+        stopEdit()
+        nextTick(() => window.scrollTo({ top: 0, behavior: "smooth" }))
+        store.commit("SET_PUSHING_WORD", true)
       }
 
       const deleteWords = (title: string) => router.push(`/account/${userID}/delete?title=${title}`)
 
+      const saveDictionary = async () => {
+        btnAddToList.value.disabled = true
+        await store.dispatch("createList", { titleWords: props.wordsArray.title, list: props.wordsArray.words })
+        isAddedToMyDictionaryList.value = props.index
+        btnAddToList.value.disabled = false
+      }
+
       return {
         editMode, editList, section, runWords, saveEditWords,
-        saveWord, openModal, editWords, userID, listWords, deleteWords,
-        currentWords, isLoader, profile, stopEdit, panel, setOpenPanel, isMyUser
+        saveWord, openModal, editWords, userID, listWords, deleteWords, saveDictionary, btnAddToList,
+        currentWords, isLoader, profile, stopEdit, panel, setOpenPanel, isMyUser, isAddedToMyDictionaryList
       }
     }
   })

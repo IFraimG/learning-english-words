@@ -26,7 +26,12 @@
 
       const userID = computed(() => store.getters.userID)
 
-      onMounted(() => nextTick(() => window.scrollTo({ top: 0 })))
+      onMounted(() => {
+        nextTick(() => {
+          window.scrollTo({ top: 0 })
+          document.documentElement.style.overflow = "hidden"
+        })
+      })
 
       const deleteItem = async (isTrue: boolean) => {
         if (isTrue) {

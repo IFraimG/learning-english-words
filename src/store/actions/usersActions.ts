@@ -25,8 +25,6 @@ const usersActions = {
     let arrProfiles: UserType[] = []
     let index = 0
 
-    console.log(list);
-
     for (let i in list) {
       if (index < 3) index++
       else break
@@ -55,6 +53,25 @@ const usersActions = {
   async defineUser({ commit, rootState }: any, userID: string) {
     const res = await usersAPI.getProfile(userID)
     commit("DEFINE_USER", { ...res, id: userID })
+  },
+  async getProfileByLogin({ commit, rootState }: any, login: string) {
+    const res = await usersAPI.getProfileByLogin(login)
+    if (res == null) commit("SET_FOUND_USER_BY_LOGIN", null)
+    else {
+      let userID = ""
+
+      for (let Z in res) userID = Z
+      let lenWords = 0
+      let lenFolders = 0
+      let titleOfList = ""
+
+      if (res[userID].words != null) {
+        lenWords = res[userID].words.length
+        titleOfList = res[userID].words[res[userID].words.length - 1].title
+      }
+      if (res[userID].folders != null) for (let j in res[userID].folders) lenFolders++
+      commit("SET_FOUND_USER_BY_LOGIN", { id: userID, login: login, words: lenWords, folders: lenFolders, title: titleOfList })
+    }
   }
 }
 

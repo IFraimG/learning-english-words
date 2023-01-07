@@ -63,7 +63,7 @@ const foldersAction = {
   async deleteFolder({ rootState }: any, payload: { key: string }) {
     try {
       await foldersAPI.deleteFolder(rootState.auth.profile.id, payload.key)
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message)
     }
   },

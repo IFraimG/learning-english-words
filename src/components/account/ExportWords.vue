@@ -17,8 +17,6 @@
 
       const exportHandle = () => {
         const wordsReady = reverseWords.value.filter((words: any) => words?.words != null)
-        console.log(wordsReady);
-        
 
         const link = document.createElement("a")
         const fileBLOB = new Blob([JSON.stringify(wordsReady)], { type: "application/json" })

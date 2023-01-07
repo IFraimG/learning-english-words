@@ -1,9 +1,14 @@
 .translation {
   background: #858585;
-  &__wrapper {
+  &:hover input ~ .translation__checkmark {
+    background-color: #ccc;
   }
-  &__inputs {
-    
+
+  input:checked ~ .translation__checkmark {
+    background-color: #a33b3b;
   }
-  &__result {}
+  .translation__checkmark:after {
+    background: white;
+  }
+
 }

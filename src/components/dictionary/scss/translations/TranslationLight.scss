@@ -1,0 +1,17 @@
+.translation {
+    border-radius: 51px;
+    background: #f5f5f5;
+    box-shadow:  23px 23px 46px #c2c2c2, -23px -23px 46px #ffffff;
+
+    &:hover input ~ .translation__checkmark {
+        background-color: rgb(228, 228, 228);
+    }
+    
+    input:checked ~ .translation__checkmark {
+        background-color: #d43939;
+    }
+
+    .translation__checkmark:after {
+        background: rgb(228, 228, 228);
+    }
+  }

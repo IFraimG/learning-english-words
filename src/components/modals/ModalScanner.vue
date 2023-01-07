@@ -1,7 +1,7 @@
 <template>
   <Modal @onsuccess="saveWords">
     <template #title>
-      <p>Загрузка внешнего списка слов</p>
+      <p class="modal-scanner__title">Загрузка внешнего списка слов</p>
       <div class="modal-scanner__buttons-panel">
         <input type="file" id="inputFile" hidden @change="loadFile" />
         <button сlass="modal-scanner__btn">
@@ -30,6 +30,7 @@
                   <button v-if="!isEdit" class="profile__run" @click="sendImage('rus')">Загрузить в качестве русских слов</button>
                 </div>
                 <div class="modal-scanner__fields">
+                  <progress :value="progress" max="1" v-if="progress < 1"></progress>
                   <div v-if="listWords.ru.length > 0" class="modal-scanner__fields-ru">
                     <p>Русские символы</p>
                     <textarea v-model="listWords.ru"></textarea>
@@ -54,7 +55,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, nextTick, onMounted, reactive, readonly, ref } from "vue"
+  import { defineComponent, onMounted, reactive, readonly, ref } from "vue"
   import Modal from "./Modal.vue"
   import { useRoute, useRouter } from "vue-router"
   import { useStore } from "vuex"
@@ -88,8 +89,9 @@
       const isEdit = ref<boolean>(false)
       const cropperElement = ref<any>(null)
       const editInfoImage = reactive<any>({})
+      const progress = ref<number>(1)
 
-      onMounted(() => nextTick(() => window.scrollTo({ top: 0 })))
+      onMounted(() => document.documentElement.style.overflowY = "auto")
 
       const cameraOn = async () => {
         deleteImage()
@@ -97,13 +99,12 @@
       }
       const sendImage = async (lang: string) => {
         errorsList.value = []
-        const data: any = await Tesseract.recognize(fileSrc.value, lang, { logger: (m) => console.log(m) })
+        const data: any = await Tesseract.recognize(fileSrc.value, lang, { logger: (message: any) => progress.value = message.progress })
 
         if (data.data.text == undefined) setErrors("Слова не были обнаружены")
         else {
           const result = data.data.text
           let arr: any = result.split("\n")
-          console.log(arr)
           arr.map((word: string, index: number) => {
             let newStr = ""
             for (let i = 0; i < word.length; i++) {
@@ -143,6 +144,7 @@
         listWords.en = ""
         listWords.ru = ""
 
+        store.commit("SET_PUSHING_WORD", true)
         router.push("/")
       }
 
@@ -184,6 +186,7 @@
         editImage,
         isEdit,
         listWords,
+        progress
       }
     },
   })

@@ -8,6 +8,7 @@ const usersModule = {
       users: [],
       length: 0,
       position: 0,
+      foundUser: null
     }
   },
   mutations: usersMutations,
@@ -17,6 +18,7 @@ const usersModule = {
     position: (state: UsersIT) => state.position,
     differencePos: (state: UsersIT) => state.length - state.position,
     users: (state: UsersIT) => state.users,
+    foundUser: (state: UsersIT) => state.foundUser,
   },
 }
 

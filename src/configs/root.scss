@@ -199,3 +199,20 @@ button:disabled {
   opacity: .5;
   cursor: wait;
 }
+
+progress {
+  background-color: rgb(53, 53, 53);
+  border-radius: 9px;
+  height: 40px;
+  width: 250px;
+}
+
+progress::-webkit-progress-bar {
+  background-color: rgb(53, 53, 53);
+  border-radius: 9px;
+}
+progress::-webkit-progress-value {
+  background-color: $greenbtnact;
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
+}

@@ -19,7 +19,6 @@ const usersAPI = {
       return data.val()
     } catch (error) {
       console.log(error);
-      
     }
   },
   getProfile: async (userID: string) => {
@@ -31,6 +30,14 @@ const usersAPI = {
       .get()
     return profile.val()
   },
+  getProfileByLogin: async (login: string) => {
+    try {
+      const res = await firebase.database().ref().child('users').orderByChild('login').equalTo(login).once("value")
+      return res.val()
+    } catch (error: any) {
+      console.log(error.message)
+    }
+  }
 }
 
 export default usersAPI

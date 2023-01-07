@@ -25,7 +25,12 @@
       const route = useRoute()
       const isLoading = ref(false)
 
-      onMounted(() => nextTick(() => window.scrollTo({ top: 0 })))
+      onMounted(() => {
+        nextTick(() => {
+          window.scrollTo({ top: 0 })
+          document.documentElement.style.overflow = "hidden"
+        })
+      })
       const currentWords = computed(() => store.getters.currentWords)
       const title = readonly({ value: route.query.title })
 

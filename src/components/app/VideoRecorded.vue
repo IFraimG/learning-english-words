@@ -10,7 +10,6 @@
       </div>
     </div>
     <canvas ref="canvas" class="d-none"></canvas>
-
     <div class="controls">
       <button ref="play" @click="cameraOptionsChange" class="btn btn-play">Включить камеру</button>
       <button ref="pause" @click="pauseStream" class="btn btn-info pause d-none">Остановить</button>
@@ -21,7 +20,6 @@
 
 <script lang="ts">
   import "@/components/app/scss/VideoRecorder.scss"
-  import { useStore } from "vuex"
   import { defineComponent, onBeforeUnmount, onMounted, ref, watchEffect } from "vue"
   import Loader from "./Loader.vue"
 

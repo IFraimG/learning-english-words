@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import { nextTick, onMounted } from "vue"
+  import { nextTick, onBeforeUnmount, onMounted } from "vue"
   import { useRouter } from "vue-router"
   import "./scss/ModalWords.scss"
   import "./scss/Popup.scss"
@@ -37,9 +37,10 @@
       onMounted(() => {
         nextTick(() => {
           window.scrollTo({ top: 0 })
-          document.documentElement.style.overflow = "hidden"
         })
       })
+
+      onBeforeUnmount(() => document.documentElement.style.overflow = "auto")
 
         // document.addEventListener("keydown", event => {
         //   if (event.key == "Escape") closeModal()

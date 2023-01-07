@@ -64,7 +64,6 @@
       const newWord = ref({ english: "", russian: "", id: "", currentTime: "", enValues: [""], ruValues: [""] })
 
       watchEffect(() => {
-        console.log(props);
         if (translatedWord.value.en != "" && translatedWord.value.ru != "" && newWord.value.english == "" && newWord.value.russian == "" && props.wordIndex == props.len) {
           newWord.value.english = translatedWord.value.en
           newWord.value.russian = translatedWord.value.ru

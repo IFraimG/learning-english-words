@@ -174,7 +174,6 @@ const wordsAction = {
   },
   async translateWord({ commit }: any, payload: string) {
     const enWord = await wordsAPI.translateWord("en", payload)
-    console.log(enWord)
     if (enWord != null) commit("SET_TRANSLATION_WORD", { ru: payload, en: enWord })
   }
 }

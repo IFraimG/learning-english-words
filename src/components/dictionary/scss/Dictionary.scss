@@ -34,6 +34,10 @@ table {
 
 .dictionary {
   width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
   &__header {
     th {
       padding: 10px 80px;

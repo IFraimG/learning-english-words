@@ -1,7 +1,7 @@
 <template>
   <Modal v-if="isImage" @onsuccess="null">
     <template #title>
-      <p>sss</p>
+      <p>Изображение</p>
     </template>
     <template #content>
       <div style="display: flex; justify-content: center">
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, watchEffect } from "vue"
+  import { defineComponent, onMounted, ref, watchEffect } from "vue"
   import Modal from "./Modal.vue"
   import { useRoute } from "vue-router"
 
@@ -22,6 +22,9 @@
     setup() {
       const route = useRoute()
 
+      onMounted(() => {
+        document.documentElement.style.overflow = "hidden"
+      })
       const isImage = ref<boolean>(false)
       const url = ref<any>(null)
 

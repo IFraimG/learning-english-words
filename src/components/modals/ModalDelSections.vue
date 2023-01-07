@@ -24,7 +24,12 @@
       const route = useRoute()
       const router = useRouter()
 
-      onMounted(() => nextTick(() => window.scrollTo({ top: 0 })))
+      onMounted(() => {
+        nextTick(() => {
+          window.scrollTo({ top: 0 })
+          document.documentElement.style.overflow = "hidden"
+        })
+      })
 
       const title = readonly({ value: route.query.title })
 

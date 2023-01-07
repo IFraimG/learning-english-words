@@ -1,3 +1,4 @@
+import { UserType } from './../../models/users';
 import { IncorrectWordInterface } from "./../../models/words"
 import WordsInterface, { WordInterface } from "@/models/words"
 import { DictionaryListInterface } from "@/models/dictionary"
@@ -81,7 +82,8 @@ const wordsMutations = {
     state.translatedWords.ru = payload.ru
   },
   SET_IMAGE_WORDS_TO_LIST(state: WordsInterface, payload: { en: string, ru: string }) {
-    console.log(payload)
+    state.fieldWords.ru = payload.ru
+    state.fieldWords.en = payload.en
   }
 }
 

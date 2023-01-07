@@ -2,6 +2,7 @@ export interface UsersIT {
   users: Array<UserType>
   length: number
   position: number
+  foundUser: UserType | null
 }
 
 export interface UserType {
