@@ -6,6 +6,7 @@
     "logout": "Log out",
     "users": "Users"
   },
+  "logout": "Leave",
   "translation": "Translations",
   "account": {
     "allWords": "All Words",
@@ -20,9 +21,13 @@
         "newWords": "New words",
         "delete": "Delete",
         "cancel": "Cancel",
-        "save": "Save"
+        "save": "Save",
+        "addToOwnDictionary": "Append to my dictionary",
+        "successAdding": "Successfully!"
       }
     },
+    "findModule": "The name of module...",
+    "scannerButton": "Load the outside list of words",
     "createFolder": {
       "createFolder": "Make a folder",
       "cancel": "Cancel",
@@ -35,11 +40,59 @@
       "error": "This word was entered incorrectly!",
       "correct": "Perhaps, you meant this:",
       "save": "Save",
-      "clean": "Clean up"
+      "clean": "Clean up",
+      "nameOfDictionary": "The name of the dictionary...",
+      "recordMicro": "Record a word with a dictaphone",
+      "stopMicro": "Stop recording",
+      "wordInEnglish": "The word is in english",
+      "wordInRussian": "Word's translation is in russian",
+      "addWord": "Append",
+      "warning": "Are you sure to leave? The progress will clean...",
+      "clearWords": "Cleaning new words"
     }
   },
   "notFound": {
     "title": "The page isn't found"
   },
-  "exportWords": "Export all sections to JSON"
+  "exportWords": "Export all sections to JSON",
+  "dictionary": {
+    "empty": "Your dictionary is empty",
+    "transcription": "Transcription",
+    "word": "Word",
+    "translate": "Translation",
+    "addTranscription": "Append transcription",
+    "getTranslate": "Get to know the translation",
+    "search": "Search",
+    "addToDictionary": "Append to this dictionary"
+  },
+  "folders": {
+    "fullList": "Full list of folders",
+    "noAdded": "There isn't nothing here",
+    "learn": "Study",
+    "removeFromList": "Remove from the list"
+  },
+  "users": {
+    "list": "List of users",
+    "findUser": "Look up user by login (enter)",
+    "showMore": "Show more",
+    "lenOfList": "Length of lists",
+    "latest": "The last topic",
+    "lenOfFolders": "Length of folders"
+  },
+  "scanner": {
+    "loadInnerList": "Load outside list of words",
+    "loadWithCamera": "Take a photo",
+    "loadFile": "Load file",
+    "loadSecondFile": "Load the second file",
+    "loadWithWeb": "Load with web-camera",
+    "removeImg": "Remove image",
+    "ready": "Ready!",
+    "en": "Load as english words",
+    "rus": "Load as russian words",
+    "ruSymbols": "Russian symbols",
+    "enSymbols": "English symbols",
+    "cameraOn": "Camera on",
+    "stop": "Stop",
+    "makePhoto": "Make screenshot"
+  }
 }

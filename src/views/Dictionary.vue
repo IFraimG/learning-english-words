@@ -11,7 +11,7 @@
       </Paginator>
     </div>
     <div v-if="pagesDictionary == null && !isLoader" style="margin-top: 50px; font-size: 32px">
-      <h1>Ваш словарь пуст</h1>
+      <h1>{{ t("dictionary.empty") }}</h1>
     </div>
     <Loader v-if="isLoader" />
   </div>
@@ -25,16 +25,19 @@
   import Paginator from "../components/app/Paginator.vue"
   import FindWord from "../components/account/FindWord.vue"
   import TranslateWord from "../components/dictionary/TranslateWord.vue"
-  import { computed, defineComponent, onMounted, ref } from "vue"
+  import { computed, defineComponent, onMounted, provide, ref } from "vue"
   import { useStore } from "vuex"
   import DictionaryTable from "@/components/dictionary/DictionaryTable.vue"
   import WordsInterface from "@/models/words"
+  import { useI18n } from "vue-i18n"
 
   export default defineComponent({
     name: "Dictionary",
     components: { Loader, VPagination, Paginator, FindWord, TranslateWord, DictionaryTable },
     setup() {
       const store = useStore()
+      const { t } = useI18n()
+      provide("Ti18N", t)
 
       const userID = computed<number>(() => store.getters.userID)
       const pagesDictionary = computed<number>(() => store.getters.pagesDictionary)
@@ -66,7 +69,7 @@
 
       return {
         currentColumn, editPage, previousPage, nextPage,
-        findModule, isLoader, pagesDictionary
+        findModule, isLoader, pagesDictionary, t
       }
     }
   })

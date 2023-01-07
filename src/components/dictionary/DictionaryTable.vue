@@ -5,16 +5,16 @@
     </caption>
     <thead class="dictionary__header">
       <tr>
-        <th>Word</th>
-        <th class="dictionary__transcription">Transcription</th>
-        <th>Перевод</th>
+        <th>{{ Ti18N("dictionary.word") }}</th>
+        <th class="dictionary__transcription">{{ Ti18N("dictionary.transcription") }}</th>
+        <th>{{ Ti18N("dictionary.translate") }}</th>
       </tr>
     </thead>
     <tbody class="dictionary__content">
       <tr v-for="(wordInfo, index) of sortedWords" :key="index" class="dictionary__item">
         <td>{{ wordInfo.english }}</td>
         <td v-if="transcription != wordInfo.english" class="dictionary__transcription" @click.stop="setTranscription(wordInfo.english, wordInfo.transcription)">
-          <span v-if="wordInfo?.transcription == null" class="dictionary__add-transcription">Добавить транскрипцию</span>
+          <span v-if="wordInfo?.transcription == null" class="dictionary__add-transcription">{{ Ti18N("dictionary.addTranscription") }}</span>
           <span v-else>{{ wordInfo.transcription }}</span>
         </td>
         <td v-else class="dictionary__transcription" @click.stop>
@@ -36,6 +36,7 @@
     props: {
       currentPage: Number
     },
+    inject: ["Ti18N"],
     setup(props: any) {
       const store = useStore()
       const userID = computed(() => store.getters.userID)

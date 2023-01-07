@@ -1,7 +1,7 @@
 <template>
   <div :class="styles.findWord__wrapper">
     <div :class="styles.findWord">
-      <input v-model="moduleWords" type="search" placeholder="Название модуля..." @input="getWord" @keyup.enter="getWord" />
+      <input v-model="moduleWords" type="search" :placeholder="Ti18N('account.findModule')" @input="getWord" @keyup.enter="getWord" />
     </div>
   </div>
 </template>
@@ -12,6 +12,7 @@
 
   export default defineComponent({
     name: "FindWord",
+    inject: ["Ti18N"],
     emits: {
       findItem: (word: string) => {
         return word.trim().length > 0

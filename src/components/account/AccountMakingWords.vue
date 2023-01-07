@@ -5,14 +5,14 @@
         <div class="make-words__header">
           <h2 v-if="startWords.title == null" ref="modalTitle">{{ t("account.modalWords.makeList") }}</h2>
           <h2 v-else ref="modalTitle">{{ t("account.modalWords.addNewWords") }}</h2>
-          <input class="input-focus" v-if="startWords.title == null" ref="inputTitle" v-model="titleWords" placeholder="Ваше название словаря..." type="text" />
+          <input class="input-focus" v-if="startWords.title == null" ref="inputTitle" v-model="titleWords" :placeholder="t('account.modalWords.nameOfDictionary')" type="text" />
           <button class="profile__run modal__btn-image" @click="modalClose">
             <span>{{ t("account.modalWords.close") }}</span>
             <img src="@/assets/cancel.png" alt="" />
           </button>
         </div>
-        <button class="make-words__button-speech profile__run" v-if="!isRecording" @click="startRecording">Записать слово через диктофон</button>
-        <button class="make-words__button-speech profile__run" v-else @click="stopRecording">Остановить запись</button>
+        <button class="make-words__button-speech profile__run" v-if="!isRecording" @click="startRecording">{{ t('account.modalWords.recordMicro') }}</button>
+        <button class="make-words__button-speech profile__run" v-else @click="stopRecording">{{ t('account.modalWords.stopMicro') }}</button>
         <div class="make-words__areas">
           <textarea v-if="fieldWords.ru.length > 0" :value="fieldWords.ru"></textarea>
           <textarea v-if="fieldWords.en.length > 0" :value="fieldWords.en"></textarea>

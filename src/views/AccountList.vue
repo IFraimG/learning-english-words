@@ -3,12 +3,12 @@
     <div class="users">
       <div class="users__content">
         <div class="users__left">
-          <h2>Список пользователей</h2>
-          <input @keydown.enter="findUser" type="text" v-model="userValue" placeholder="Найти пользователя по логину (enter)" />
+          <h2>{{ t("users.list") }}</h2>
+          <input @keydown.enter="findUser" type="text" v-model="userValue" :placeholder="t('users.findUser')" />
           <div class="users__list" v-if="users.length > 0 && userValue.length == 0">
             <user-card v-for="item of users" :key="item.id" :userData="item" />
           </div>
-          <button ref="btn" @click="loadMore" v-if="resPosition > 0 && userValue.length == 0" class="btn-add modal-button__run">Показать еще</button>
+          <button ref="btn" @click="loadMore" v-if="resPosition > 0 && userValue.length == 0" class="btn-add modal-button__run">{{ t("users.showMore") }}</button>
           <div v-if="foundUser != null">
             <user-card :userData="foundUser" />
           </div>
@@ -31,7 +31,8 @@
   import UserCard from "@/components/account/UserCard.vue"
   import Loader from "@/components/app/Loader.vue"
   import { UserType } from "@/models/users"
-  import { computed, defineComponent, onBeforeMount, onBeforeUnmount, ref, watch } from "@vue/runtime-core"
+  import { computed, defineComponent, onBeforeMount, onBeforeUnmount, provide, ref, watch } from "@vue/runtime-core"
+  import { useI18n } from "vue-i18n"
   import { useStore } from "vuex"
   import "../components/account/scss/usersList/usersList.scss"
 
@@ -46,6 +47,9 @@
       const foundUser = computed<UserType | null>(() => store.getters.foundUser)
       const btn = ref<any>(null)
       const userValue = ref("")
+
+      const { t } = useI18n()
+      provide("Ti18N", t)
 
       onBeforeMount(() => store.dispatch("getUsersList"))
       onBeforeUnmount(() => {
@@ -65,7 +69,7 @@
         await store.dispatch("showMoreUsers")
         btn.value.disabled = false
       }
-      return { isLoader, users, resPosition, loadMore, btn, userValue, findUser, foundUser }
+      return { isLoader, users, resPosition, loadMore, btn, userValue, findUser, foundUser, t }
     }
   })
 </script>

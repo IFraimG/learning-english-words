@@ -1,12 +1,12 @@
 <template>
   <Modal @onsuccess="deleteItem">
     <template #title>
-      <p>Очистка новых слов</p>
+      <p>{{ Ti18N("account.modalWords.clearWords") }}</p>
     </template>
     <template #content>
-      <h2 class="popup__logout-text">Вы уверены, что хотите выйти? Изменения не сохранятся...</h2>
+      <h2 class="popup__logout-text">{{ Ti18N("account.modalWords.warning") }}</h2>
     </template>
-    <template #acceptButton>Выйти</template>
+    <template #acceptButton>{{ Ti18N("logout") }}</template>
   </Modal>
 </template>
 
@@ -19,6 +19,7 @@
   export default defineComponent({
     name: "ModalWordsClose",
     components: { Modal },
+    inject: ["Ti18N"],
     emits: ["succeed"],
     setup() {
       const store = useStore()

@@ -3,14 +3,14 @@
     <div class="modal__left">
       <Swiper class="modal__sliders" :slides-per-view="1" :grid="{ rows: 1 }" :scrollbar="{ draggable: true }" @swiper="onSwiperEN">
         <swiper-slide v-for="(item, index) of newWord.enValues" :key="index" class="modal__slide">
-          <input ref="englishWord" v-model="newWord.enValues[index]" class="modal__input input-light" type="text" pattern="[A-Za-z]" placeholder="Слово на английском" @input="editDone(false)" @keyup.enter="setInputEnActive" />
+          <input ref="englishWord" v-model="newWord.enValues[index]" class="modal__input input-light" type="text" pattern="[A-Za-z]" :placeholder="Ti18N('account.modalWords.wordInEnglish')" @input="editDone(false)" @keyup.enter="setInputEnActive" />
           <p>{{ index + 1 }} / {{ newWord.enValues.length }}</p>
         </swiper-slide>
       </Swiper>
       <button @click="makeNewInputEN" class="modal-btn-plus">+</button>
       <Swiper class="modal__sliders" :grid="{ rows: 1 }" :slides-per-view="1" :scrollbar="{ draggable: false }" @swiper="onSwiperRU">
         <swiper-slide v-for="(item, index) of newWord.ruValues" :key="index" class="modal__slide">
-          <input ref="russianWord" v-model="newWord.ruValues[index]" class="modal__input input-light" type="text" pattern="[А-Яа-яЁё]" placeholder="Перевод слова на русском" @input="editDone(false)"  @keyup.enter="setInputRuActive" />
+          <input ref="russianWord" v-model="newWord.ruValues[index]" class="modal__input input-light" type="text" pattern="[А-Яа-яЁё]" :placeholder="Ti18N('account.modalWords.wordInRussian')" @input="editDone(false)"  @keyup.enter="setInputRuActive" />
           <p>{{ index + 1 }} / {{ newWord.ruValues.length }}</p>
         </swiper-slide>
       </Swiper>
@@ -19,7 +19,7 @@
     </div>
     <div class="modal__right">
       <button v-if="!isDone.value" class="profile__run modal-button__run btn-add" @click="setNumInput">
-        Добавить
+        {{ Ti18N('account.modalWords.addWord') }}
       </button>
     </div>
   </div>
@@ -47,6 +47,7 @@
       startValue: Object || null,
     },
     emits: ["setValueInput", "currentTime"],
+    inject: ["Ti18N"],
     setup(props, { emit }) {
       const store = useStore()
       const isDone = reactive({ value: false })

@@ -11,8 +11,8 @@
         <button v-if="editMode != wordsArray.title" class="profile__run" @click.stop="editWords(wordsArray.words, wordsArray.title)">{{ Ti18N("account.wordsTable.panel.change") }}</button>
         <button v-else class="profile__run" @click.stop="stopEdit">{{ Ti18N("account.wordsTable.panel.cancel") }}</button>
       </div>
-      <button ref="btnAddToList" v-if="!isMyUser && isAddedToMyDictionaryList != index && index != -1" @click.stop="saveDictionary" class="profile__run">Добавить в свой словарь</button>
-      <p v-else-if="!isMyUser && isAddedToMyDictionaryList == index">Успешно добавлено</p>
+      <button ref="btnAddToList" v-if="!isMyUser && isAddedToMyDictionaryList != index && index != -1" @click.stop="saveDictionary" class="profile__run">{{ Ti18N("account.wordsTable.panel.addToOwnDictionary") }}</button>
+      <p v-else-if="!isMyUser && isAddedToMyDictionaryList == index">{{ Ti18N("account.wordsTable.panel.successAdding") }}</p>
     </div>
     <div v-for="(words, index2) of wordsArray.words" :key="words" class="list__words">
       <words-list v-if="editMode != wordsArray.title" :words="wordsArray.words[index2]" :index="index" />

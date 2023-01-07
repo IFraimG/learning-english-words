@@ -1,6 +1,6 @@
 <template>
   <div class="scanner-words">
-    <router-link :to="$route.fullPath + '/scanner'" tag="button" class="modal-button__run scanner-words__btn">Загрузите сфотографированный список слов</router-link>
+    <router-link :to="$route.fullPath + '/scanner'" tag="button" class="modal-button__run scanner-words__btn">{{ Ti18N("account.scannerButton") }}</router-link>
   </div>
 </template>
 
@@ -9,6 +9,7 @@
 
   export default defineComponent({
     name: "ScannerWords",
+    inject: ["Ti18N"],
     setup(_: any, { emit }: any) {
       
       return {}

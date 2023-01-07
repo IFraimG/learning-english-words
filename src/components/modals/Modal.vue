@@ -11,10 +11,10 @@
         </div>
         <div class="popup__footer">
           <button class="profile__run" @click="sendSuccess">
-            <slot name="acceptButton">Готово</slot>
+            <slot name="acceptButton">{{ t("account.wordsTable.panel.save") }}</slot>
           </button>
           <button class="profile__run modal-button__run" @click="closeModal">
-            Отмена
+            {{ t("account.createFolder.cancel") }}
           </button>
         </div>
       </div>
@@ -23,16 +23,20 @@
 </template>
 
 <script>
-  import { nextTick, onBeforeUnmount, onMounted } from "vue"
+  import { nextTick, onBeforeUnmount, onMounted, provide } from "vue"
   import { useRouter } from "vue-router"
   import "./scss/ModalWords.scss"
   import "./scss/Popup.scss"
+  import { useI18n } from 'vue-i18n'
 
   export default {
     name: "Popup",
     emits: ["onsuccess"],
     setup(_, { emit }) {
       const router = useRouter()
+
+      const { t } = useI18n()
+      provide("Ti18N", t)
 
       onMounted(() => {
         nextTick(() => {
@@ -54,7 +58,7 @@
         router.go(-1)
       }
 
-      return { sendSuccess, closeModal }
+      return { sendSuccess, closeModal, t }
     }
   }
 </script>

@@ -11,9 +11,9 @@
     </div>
     <canvas ref="canvas" class="d-none"></canvas>
     <div class="controls">
-      <button ref="play" @click="cameraOptionsChange" class="btn btn-play">Включить камеру</button>
-      <button ref="pause" @click="pauseStream" class="btn btn-info pause d-none">Остановить</button>
-      <button ref="screenshot" @click="doScreenshot" class="btn btn-outline-success screenshot d-none">Сделать скриншот</button>
+      <button ref="play" @click="cameraOptionsChange" class="btn btn-play">{{ Ti18N('scanner.cameraOn') }}</button>
+      <button ref="pause" @click="pauseStream" class="btn btn-info pause d-none">{{ Ti18N('scanner.stop') }}</button>
+      <button ref="screenshot" @click="doScreenshot" class="btn btn-outline-success screenshot d-none">{{ Ti18N('scanner.makePhoto') }}</button>
     </div>
   </div>
 </template>
@@ -29,6 +29,7 @@
     props: {
       isOpenVideo: Boolean
     },
+    inject: ["Ti18N"],
     setup(props, { emit }) {
       const play = ref<any>(null)
       const pause = ref<any>(null)

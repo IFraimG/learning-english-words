@@ -4,13 +4,13 @@
       <div class="folder-page__header">
         <div class="folder-page__header-left">
           <router-link to="/folders">
-            <p class="folder-page__link">Разделы</p>
+            <p class="folder-page__link">{{ t("header.sections") }}</p>
           </router-link>
           <span>/</span>
           <p class="folder-page__link-title">{{ folderItem.title }}</p>
         </div>
         <router-link :to="'/folders/' + $route.params.id + '/delete?title=' + folderItem.title">
-          <p class="folder-page__header-delete">Удалить</p>
+          <p class="folder-page__header-delete">{{ t("account.wordsTable.panel.delete") }}</p>
         </router-link>
       </div>
       <div class="folder-page__content">
@@ -18,8 +18,8 @@
           <div v-for="(item, index) of folderItem.listModules" :key="index" class="folder-list__item-wrapper" @contextmenu.prevent>
             <div class="folder__show-menu folder-list__item">
               <div class="folder__show-btns">
-                <button @click="redirectWords(item.title)">Изучить</button>
-                <button @click="deleteList(item.title)">Удалить из списка</button>
+                <button @click="redirectWords(item.title)">{{ t("folders.learn") }}</button>
+                <button @click="deleteList(item.title)">{{ t("folders.removeFromList") }}</button>
               </div>
             </div>
             <div class="folder-list__item folder-list__noshow">
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div v-else class="folder-page-notfound">
-          <h2>Вы сюда ничего не добавили</h2>
+          <h2>{{ t("folders.noAdded") }}</h2>
         </div>
       </div>
     </div>
@@ -82,7 +82,7 @@
       }
 
       return {
-        folderItem, isLoader, redirectWords, deleteList
+        folderItem, isLoader, redirectWords, deleteList, t
       }
     },
   })

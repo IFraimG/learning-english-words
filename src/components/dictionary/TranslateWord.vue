@@ -2,7 +2,7 @@
   <div class="translation__wrapper">
     <div class="translation">
       <div class="translation__left">
-        <h1>Узнать перевод слова</h1>
+        <h1>{{ Ti18N("dictionary.getTranslate") }}</h1>
         <div class="translation__radio">
           <div class="translation__lang">
             <label class="translation__container">RU
@@ -19,12 +19,12 @@
         </div>
         <div class="translation__inputs">
           <input @keydown.enter="findTanslate" v-model="wordTranslation" class="input-light" type="text" />
-          <button class="profile__run" @click="findTanslate">Искать</button>
+          <button class="profile__run" @click="findTanslate">{{ Ti18N("dictionary.search") }}</button>
         </div>
       </div>
       <div class="translation__result" :style="result?.ruWord != '' && result?.enWord != '' ? '' : 'visibility: hidden'">
         <p v-if="result?.ruWord != '' && result?.enWord != ''">{{ result.enWord }} - {{ result.ruWord }}</p>
-        <button ref="btn" class="profile__run modal-button__run" @click="addToDictionary">Добавить в данный словарь</button>
+        <button ref="btn" class="profile__run modal-button__run" @click="addToDictionary">{{ Ti18N("dictionary.addToDictionary") }}</button>
       </div>
     </div>
   </div>
@@ -42,6 +42,7 @@
     props: {
       index: Number
     },
+    inject: ["Ti18N"],
     setup(props: any) {
       const store = useStore()
       const wordTranslation = ref("")

@@ -1,17 +1,17 @@
 <template>
   <Modal @onsuccess="saveWords">
     <template #title>
-      <p class="modal-scanner__title">Загрузка внешнего списка слов</p>
+      <p class="modal-scanner__title">{{ Ti18N('scanner.loadInnerList') }}</p>
       <div class="modal-scanner__buttons-panel">
         <input type="file" id="inputFile" hidden @change="loadFile" />
         <button сlass="modal-scanner__btn">
-          <label v-if="listWords.ru.length > 0 !== listWords.en.length > 0" сlass="modal-scanner__btn" for="inputFile" style="width: 100%; height: 100%"> Загрузить второй файл </label>
-          <label v-else сlass="modal-scanner__btn" for="inputFile" style="width: 100%; height: 100%"> Загрузить файл </label>
+          <label v-if="listWords.ru.length > 0 !== listWords.en.length > 0" сlass="modal-scanner__btn" for="inputFile" style="width: 100%; height: 100%">{{  Ti18N('scanner.loadSecondFile') }}</label>
+          <label v-else сlass="modal-scanner__btn" for="inputFile" style="width: 100%; height: 100%">{{ Ti18N('scanner.loadFile') }}</label>
         </button>
-        <button v-if="!isMobilePhone" сlass="modal-scanner__btn" @click="cameraOn">Загрузить через веб-камеру</button>
+        <button v-if="!isMobilePhone" сlass="modal-scanner__btn" @click="cameraOn">{{ Ti18N('scanner.loadWithWeb') }}</button>
         <input type="file" accept="image/*" id="inputCameraFile" capture hidden @change="loadFile" />
         <button v-if="isMobilePhone" сlass="modal-scanner__btn">
-          <label for="inputCameraFile">Загрузить через камеру смартфона</label>
+          <label for="inputCameraFile">{{ Ti18N('scanner.loadWithCamera') }}</label>
         </button>
       </div>
     </template>
@@ -24,19 +24,19 @@
               <Cropper v-if="isEdit" @keyup.enter="editImage" class="modal-scanner__img" ref="cropperElement" :src="fileSrc" @change="changeCrooperElement" />
               <div class="modal-scanner__right">
                 <div v-if="fileSrc != null" class="modal-scanner__buttons-actions">
-                  <button v-if="isEdit" class="profile__run" @click="editImage">Готово</button>
-                  <button class="profile__run" @click="deleteImage">Убрать снимок</button>
-                  <button v-if="!isEdit" class="profile__run" @click="sendImage('eng')">Загрузить в качестве английских слов</button>
-                  <button v-if="!isEdit" class="profile__run" @click="sendImage('rus')">Загрузить в качестве русских слов</button>
+                  <button v-if="isEdit" class="profile__run" @click="editImage">{{ Ti18N('scanner.ready') }}</button>
+                  <button class="profile__run" @click="deleteImage">{{ Ti18N('scanner.removeImg') }}</button>
+                  <button v-if="!isEdit" class="profile__run" @click="sendImage('eng')">{{ Ti18N('scanner.en') }}</button>
+                  <button v-if="!isEdit" class="profile__run" @click="sendImage('rus')">{{ Ti18N('scanner.rus') }}</button>
                 </div>
                 <div class="modal-scanner__fields">
                   <progress :value="progress" max="1" v-if="progress < 1"></progress>
                   <div v-if="listWords.ru.length > 0" class="modal-scanner__fields-ru">
-                    <p>Русские символы</p>
+                    <p>{{ Ti18N('scanner.ruSymbols') }}</p>
                     <textarea v-model="listWords.ru"></textarea>
                   </div>
                   <div v-if="listWords.en.length > 0" class="modal-scanner__fields-en">
-                    <p>Английские символы</p>
+                    <p>{{ Ti18N('scanner.enSymbols') }}</p>
                     <textarea v-model="listWords.en"></textarea>
                   </div>
                 </div>
@@ -50,7 +50,7 @@
         </div>
       </div>
     </template>
-    <template #acceptButton>Сохранить</template>
+    <template #acceptButton>{{ Ti18N('account.wordsTable.panel.save') }}</template>
   </Modal>
 </template>
 
@@ -69,6 +69,7 @@
     name: "ModalScanner",
     components: { Modal, VideoRecorded, Cropper },
     emits: ["succeed"],
+    inject: ["Ti18N"],
     setup() {
       const arr_en = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
       const arr_EN = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]

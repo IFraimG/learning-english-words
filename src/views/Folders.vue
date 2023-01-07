@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isLoader" class="folders__wrapper">
     <div class="folders">
-      <h1>Полный список разделов</h1>
+      <h1>{{ t("folders.fullList") }}</h1>
       <div v-if="shortFolders.length > 0" class="folders__content">
         <div v-for="(item, index) in shortFolders" :key="index" class="folders__item-wrapper">
           <router-link :to="{ name: 'FolderPage', params: { id: item.key } }">
@@ -13,7 +13,7 @@
                 </div>
               </div>
               <div v-else class="folders__list-nowords">
-                <p>Вы сюда ничего не добавили</p>
+                <p>{{ t("folders.noAdded") }}</p>
               </div>
             </div>
           </router-link>
@@ -49,7 +49,7 @@
 
       onMounted(() => store.dispatch("getFoldersList"))
 
-      return { isLoader, shortFolders }
+      return { isLoader, shortFolders, t }
     },
   })
 </script>
