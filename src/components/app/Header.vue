@@ -3,7 +3,7 @@
     <div class="header__content">
       <div class="header__left">
         <img src="@/assets/logo1234.svg" alt="logo">
-        <h1>MyOcean project</h1>
+        <h1>Океан слов</h1>
       </div>
       <div class="header__right">
         <div @click="handleLink" class="root-link header-link">{{ t("header.profile") }}</div>

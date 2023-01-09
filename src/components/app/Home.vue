@@ -5,7 +5,7 @@
         <header class="home__header home-header">
           <div class="home-header__item home-header__logo">
             <img src="@/assets/logo1234.png" />
-            <h3>MyOcean<span>English</span></h3>
+            <h3>Океан<span>Слов</span></h3>
           </div>
           <ul class="home-header__list">
             <li class="home-header__item" @click="scrollAuth">
