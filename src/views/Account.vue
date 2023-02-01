@@ -16,7 +16,7 @@
       <div v-else-if="(currentWords == null || currentWords?.length > 0) && !isPushingWord" class="list__info list__noinfo">
         <p>{{ t("account.notList") }}</p>
       </div>
-      <div v-else-if="isPushingWord">
+      <div v-else-if="isPushingWord && isMyUser">
         <account-making-words />
       </div>
     </div>
@@ -28,9 +28,8 @@
   import VPagination from "@hennge/vue3-pagination"
   import "@hennge/vue3-pagination/dist/vue3-pagination.css"
   import "@/components/account/scss/Account.scss"
-  import { computed, onBeforeMount, provide, reactive, ref } from "vue"
+  import { computed, onBeforeMount, onBeforeUnmount, provide, reactive, ref } from "vue"
   import { useStore } from "vuex"
-
   import Loader from "@/components/app/Loader.vue"
   import FindWord from "@/components/account/FindWord.vue"
   import WordsTable from "@/components/account/WordsTable.vue"
@@ -40,7 +39,6 @@
   import WordsInterface, { WordInterface } from '@/models/words'
   import { useRoute } from 'vue-router'
   import AccountMakingWords from '@/components/account/AccountMakingWords.vue'
-
   export default {
     name: "Account",
     components: {
@@ -58,10 +56,9 @@
       const isOpenPanel = reactive({ value: -1 })
       const wordsIndex = ref<number>(1)
       const isPushingWord = computed(() => store.getters.isPushingWord)
-
+      const isMyUser = computed(() => store.getters.isMyUser)
       const { t } = useI18n()
       provide("Ti18N", t)
-
       const currentWords = computed<WordsInterface[]>(() => store.getters.currentWords)
       const isLoader = computed<boolean>(() => store.getters.isLoader)
       const reverseWords = computed<WordInterface[]>(() => store.getters.reverseWords)
@@ -73,19 +70,19 @@
         store.dispatch("getWords", route.params.id);
       })
 
+      onBeforeUnmount(() => {
+        store.commit("SET_IMAGE_WORDS_TO_LIST", { ru: "", en: "" })
+        store.commit("SET_PUSHING_WORD", false)
+      })
       const setOpenPanel = (num: number) => isOpenPanel.value = num
-
       const editPage = (num: number) => wordsIndex.value = num
       const findWord = (word: string) => store.commit("FIND_TITLE", word)
-
       const previousPage = () => {
         if (wordsIndex.value > 1) editPage(wordsIndex.value - 1)
       }
-
       const nextPage = () => {
         if (wordsIndex.value < reverseWords.value.length - 1) editPage(wordsIndex.value + 1)
       }
-
       return {
         t,
         setOpenPanel,
@@ -99,7 +96,8 @@
         isLoader,
         findWords,
         wordsIndex,
-        isPushingWord
+        isPushingWord,
+        isMyUser
       }
     },
   }

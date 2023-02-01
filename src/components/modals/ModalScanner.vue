@@ -3,7 +3,7 @@
     <template #title>
       <p class="modal-scanner__title">{{ Ti18N('scanner.loadInnerList') }}</p>
       <div class="modal-scanner__buttons-panel">
-        <input type="file" id="inputFile" hidden @change="loadFile" />
+        <input type="file" id="inputFile" hidden @change="loadFile" ref="file1" />
         <button сlass="modal-scanner__btn">
           <label v-if="listWords.ru.length > 0 !== listWords.en.length > 0" сlass="modal-scanner__btn" for="inputFile" style="width: 100%; height: 100%">{{  Ti18N('scanner.loadSecondFile') }}</label>
           <label v-else сlass="modal-scanner__btn" for="inputFile" style="width: 100%; height: 100%">{{ Ti18N('scanner.loadFile') }}</label>
@@ -64,7 +64,6 @@
   import Tesseract from "tesseract.js"
   import { Cropper } from "vue-advanced-cropper"
   import "vue-advanced-cropper/dist/style.css"
-
   export default defineComponent({
     name: "ModalScanner",
     components: { Modal, VideoRecorded, Cropper },
@@ -77,7 +76,6 @@
       const arr_RU = ["А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ь", "Ы", "Ъ", "Э", "Ю", "Я"]
       const arr_num = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
       const arr_symb = ["!", "@", "#", "$", "%", "&", "?", "-", "+", "=", "~"]
-
       const store = useStore()
       const route = useRoute()
       const router = useRouter()
@@ -91,9 +89,9 @@
       const cropperElement = ref<any>(null)
       const editInfoImage = reactive<any>({})
       const progress = ref<number>(1)
-
+      const file1 = ref<any>(null)
       onMounted(() => document.documentElement.style.overflowY = "auto")
-
+      
       const cameraOn = async () => {
         deleteImage()
         isOpenVideo.value = true
@@ -101,7 +99,6 @@
       const sendImage = async (lang: string) => {
         errorsList.value = []
         const data: any = await Tesseract.recognize(fileSrc.value, lang, { logger: (message: any) => progress.value = message.progress })
-
         if (data.data.text == undefined) setErrors("Слова не были обнаружены")
         else {
           const result = data.data.text
@@ -123,52 +120,45 @@
           else if (lang == "rus") listWords.ru = Array.from(result).join("")
         }
       }
-
       const setImageURL = (src: any) => {
         fileSrc.value = src
         isEdit.value = true
         isOpenVideo.value = false
       }
-
       const setErrors = (msg: string) => errorsList.value.push({ msg })
-
       const deleteImage = () => {
         errorsList.value = []
-        fileSrc.value = null
+        // fileSrc.value = null
       }
-
       const saveWords = () => {
         if (listWords.en.length == 0 && listWords.ru.length == 0) return
         store.commit("SET_IMAGE_WORDS_TO_LIST", listWords)
-
         deleteImage()
         listWords.en = ""
         listWords.ru = ""
-
         store.commit("SET_PUSHING_WORD", true)
         router.push("/")
       }
-
       const loadFile = (event: any) => {
         isOpenVideo.value = false
         deleteImage()
         const file = event.target.files["0"]
-
         if (!file.type.match("image.*")) setErrors("Некорректный формат")
         else {
           const reader = new FileReader()
           reader.readAsDataURL(file)
-          reader.onload = () => setImageURL(reader.result)
+          reader.onload = () => {
+            setImageURL(reader.result)
+            file1.value.value = null
+          }
         }
       }
-
       const editImage = () => {
         isEdit.value = false
         fileSrc.value = cropperElement.value.getResult().canvas.toDataURL()
         editInfoImage.value = {}
       }
       const changeCrooperElement = (infoImage: any) => (editInfoImage.value = infoImage)
-
       return {
         sendImage,
         title,
@@ -187,7 +177,8 @@
         editImage,
         isEdit,
         listWords,
-        progress
+        progress,
+        file1
       }
     },
   })

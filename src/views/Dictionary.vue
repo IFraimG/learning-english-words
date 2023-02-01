@@ -1,6 +1,6 @@
 <template>
   <div class="dictionary">
-    <TranslateWord v-if="!isLoader" :index="currentColumn - 1"  />
+    <TranslateWord v-if="!isLoader" :isPagesNull="pagesDictionary == null" :index="currentColumn - 1"  />
     <div v-if="!isLoader && pagesDictionary != null">
       <FindWord style="margin-top: 50px" @findItem="findModule" />
       <DictionaryTable :currentPage="currentColumn" />

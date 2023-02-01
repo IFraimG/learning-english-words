@@ -24,7 +24,7 @@
       </div>
       <div class="translation__result" :style="result?.ruWord != '' && result?.enWord != '' ? '' : 'visibility: hidden'">
         <p v-if="result?.ruWord != '' && result?.enWord != ''">{{ result.enWord }} - {{ result.ruWord }}</p>
-        <button ref="btn" class="profile__run modal-button__run" @click="addToDictionary">{{ Ti18N("dictionary.addToDictionary") }}</button>
+        <button v-if="!isPagesNull" ref="btn" class="profile__run modal-button__run" @click="addToDictionary">{{ Ti18N("dictionary.addToDictionary") }}</button>
       </div>
     </div>
   </div>
@@ -40,7 +40,8 @@
   export default defineComponent({
     name: "TranslateWord",
     props: {
-      index: Number
+      index: Number,
+      isPagesNull: Boolean
     },
     inject: ["Ti18N"],
     setup(props: any) {
