@@ -27,7 +27,7 @@
   import Finish from "../components/words/Finish.vue"
   import Loader from "../components/app/Loader.vue"
   import Sentences from "@/components/words/Sentences.vue"
-  import { computed, defineComponent, onBeforeMount, onUpdated, provide, reactive } from "vue"
+  import { computed, defineComponent, onBeforeMount, onMounted, onUpdated, provide, reactive } from "vue"
   import { useRoute, useRouter } from "vue-router"
   import { useI18n } from "vue-i18n"
   import ModalForImage from "@/components/modals/ModalForImage.vue"
@@ -41,15 +41,19 @@
       const store = useStore()
       const { t } = useI18n()
 
-      let currentType = reactive<any>(null)
-
-      const wordData = computed(() => store.getters.wordData)
-      const currentWords = computed(() => store.getters.currentWords)
-
       onBeforeMount(async () => {
         await store.dispatch("loadWords", route)
         store.dispatch("loadImagesForWords")
       })
+
+      onMounted(() => {
+        if (document.documentElement.style.overflow == "hidden") document.documentElement.style.overflow = "auto" 
+      })
+
+      let currentType = reactive<any>(null)
+
+      const wordData = computed(() => store.getters.wordData)
+      const currentWords = computed(() => store.getters.currentWords)
 
       provide("wordData", wordData)
       provide("currentWords", currentWords)

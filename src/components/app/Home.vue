@@ -5,7 +5,7 @@
         <header class="home__header home-header">
           <div class="home-header__item home-header__logo">
             <img src="@/assets/logo1234.png" />
-            <h3>Океан<span>Слов</span></h3>
+            <h3>Океан<span> Слов</span></h3>
           </div>
           <ul class="home-header__list">
             <li class="home-header__item" @click="scrollAuth">
@@ -23,11 +23,11 @@
             <img src="@/assets/Polygon3.png" alt="" />
           </div>
           <div class="home-main__left">
-            <h1>Не обращай & внимания <span>внимания</span> на текст.</h1>
-            <p>Он здесь для красоты... И логотипы тоже......</p>
+            <h1>Изучай <span>иностранные слова</span> легко!</h1>
+            <p>Особенно, когда ваш телефон всегда у вас под рукой..</p>
             <div class="home-main__down">
-              <button class="home-btn" @click="scrollAuth">Get started</button>
-              <p>Watch video</p>
+              <button class="home-btn" @click="scrollAuth">Авторизация</button>
+              <!-- <p>Watch video</p> -->
             </div>
           </div>
           <div class="home-main__right">
@@ -36,13 +36,25 @@
         </main>
       </div>
     </div>
-    <section class="home-pictures home__pictures">
+    <!-- <section class="home-pictures home__pictures">
       <div v-for="(img, index) of logoList" :key="index">
         <img :src="img" alt="logo" />
       </div>
-    </section>
-    <SliderHome />
+    </section> -->
+    <!-- <SliderHome /> -->
     <div class="home__container">
+      <section class="home-cards home__cards">
+        <div v-for="(item, index) of cardsList" :key="index" class="home-cards__item">
+          <img :src="item.img" alt="free" />
+          <div class="home-cards__text">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.text }}</p>
+            <!-- <router-link :to="item.link">
+              <span>Read more....</span>
+            </router-link> -->
+          </div>
+        </div>
+      </section>
       <div id="authContent" ref="authContent" class="auth home-auth">
         <div class="auth__left">
           <div class="auth__tabs">
@@ -52,22 +64,10 @@
           </div>
           <AuthSection :is-login="loginInfo" :errors-list="errorsList" />
         </div>
-        <div class="auth__right">
-          <img src="@/assets/fone9.png" alt="" />
-        </div>
+        <!-- <div class="auth__right"> -->
+          <!-- <img src="@/assets/fone9.png" alt="" /> -->
+        <!-- </div> -->
       </div>
-      <section class="home-cards home__cards">
-        <div v-for="(item, index) of cardsList" :key="index" class="home-cards__item">
-          <img :src="item.img" alt="free" />
-          <div class="home-cards__text">
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.text }}</p>
-            <router-link :to="item.link">
-              <span>Read more....</span>
-            </router-link>
-          </div>
-        </div>
-      </section>
     </div>
     <Footer />
   </div>
@@ -77,7 +77,7 @@
   import { computed, defineComponent, ref } from "vue"
   import "@/components/app/scss/home/Home.scss"
   import { useStore } from "vuex"
-  import SliderHome from "./SliderHome.vue"
+  // import SliderHome from "./SliderHome.vue"
   import AuthSection from "./Auth.vue"
   import Footer from "./Footer.vue"
   import ThemeSwitcher from "./ThemeSwitcher.vue"
@@ -103,15 +103,17 @@
 
   export default defineComponent({
     name: "HomeContent",
-    components: { SliderHome, AuthSection, Footer, ThemeSwitcher },
+    components: { AuthSection, Footer, ThemeSwitcher },
     setup() {
       const store = useStore()
 
       const logoList = [logo1, logo2, logo3, logo4, logo5, logo6]
       const cardsList = [
-        { title: "Личный словарь", link: "/", img: vector1, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
-        { title: "Бесплатно", link: "/", img: vector2, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
-        { title: "Нет рекламы", link: "/", img: vector3, text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat dolor sapiente, facilis exercitationem blanditiis iste?" },
+        { title: "Личный словарь", link: "/", img: vector1, text: "Храните слова с цифровом виде и добавляйте по желанию транскрипции" },
+        { title: "Бесплатно", link: "/", img: vector2, text: "Забудьте о подписках и ограничениях. Начните учить слова сразу после регистрации" },
+        { title: "Локализация", link: "/", img: vector2, text: "Переведите интерфейс на английский, погружаясь в англоязычную среду" },
+        { title: "Нет рекламы", link: "/", img: vector3, text: "Фокусируйтесь на важном и не отвлекайтесь на посторонние рекомендации" },
+        { title: "Технологии машинного зрения", link: "/", img: vector1, text: "Сканируйте список слов и переносите его прямо в приложение" },
       ]
 
       const loginInfo = computed(() => store.getters.loginInfo)

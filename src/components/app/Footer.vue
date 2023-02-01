@@ -1,18 +1,15 @@
 <template>
   <footer class="home-footer home__footer">
-    <div class="home__container">
-      <div class="home-footer__content">
-        <div class="home-footer__item home-footer__first">
-          <ul>
+    <div class="home-footer__container">
+      <!-- <div class="home-footer__content"> -->
+        <!-- <div class="home-footer__item home-footer__first"> -->
+          <!-- <ul>
             <li>
               <div class="home-header__item home-header__logo">
                 <img src="@/assets/logofone.png" />
-                <h3>MyOcean<span>English</span></h3>
+                <h3>Океан<span> Слов</span></h3>
               </div>
-            </li>
-            <li>
-              Distinctively exploit optimal alignments for intuitive bandwidth. Quickly coordinate business through revolutionary.
-            </li>
+            </li> -->
             <!-- <li class="home-footer__socials">
               <router-link to="/">
                 <img class="home-footer__socials-fc" src="@/assets/facebook.png" alt="facebook" />
@@ -24,9 +21,9 @@
                 <img src="@/assets/google.png" alt="google" />
               </router-link>
             </li> -->
-          </ul>
-        </div>
-        <div class="home-footer__item">
+          <!-- </ul>
+        </div> -->
+        <!-- <div class="home-footer__item">
           <h2>Мои ссылки</h2>
           <ul>
             <li>
@@ -38,12 +35,8 @@
             <li>
               <a href="https://habr.com/ru/users/IFraim/">Habr аккаунт</a>
             </li>
-            <li>
-              <a href="https://freelance.habr.com/freelancers/IFramex">Аккаунт на фрилансе</a>
-            </li>
-            <li>Latest News</li>
           </ul>
-        </div>
+        </div> -->
         <!-- <div class="home-footer__item">
           <h2>Our Services</h2>
           <ul>
@@ -64,8 +57,12 @@
             <li>Latest News</li>
           </ul>
         </div> -->
-      </div>
-      <p class="home-footer__copyright">Copyright © IFraimTeam 2021. All Rights Reserved.</p>
+      <!-- </div> -->
+      <div class="home-header__item home-header__logo">
+        <img src="@/assets/logofone.png" />
+        <h3>Океан<span> Слов</span></h3>
+        </div>
+      <p class="home-footer__copyright">Copyright © IFraimTeam 2021-2023. All Rights Reserved.</p>
     </div>
   </footer>
 </template>

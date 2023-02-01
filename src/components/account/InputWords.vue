@@ -18,7 +18,7 @@
       <!-- <select-time :time-edit="null" @setTime="setTime" /> -->
     </div>
     <div class="modal__right">
-      <button v-if="!isDone.value" class="profile__run modal-button__run btn-add" @click="setNumInput">
+      <button v-if="!isDone" class="profile__run modal-button__run btn-add" @click="setNumInput">
         {{ Ti18N('account.modalWords.addWord') }}
       </button>
     </div>
@@ -31,10 +31,9 @@
   import "swiper/components/pagination/pagination.min.css"
   import "swiper/swiper.scss"
 
-  import { computed, reactive, ref, watchEffect } from "vue"
+  import { computed, ref, watchEffect } from "vue"
   import "@/components/modals/scss/ModalWords.scss"
   import "@/components/account/scss/InputWords.scss"
-  import SelectTime from "./SelectTime.vue"
   import { useStore } from 'vuex';
 
   export default {
@@ -50,7 +49,7 @@
     inject: ["Ti18N"],
     setup(props, { emit }) {
       const store = useStore()
-      const isDone = reactive({ value: false })
+      const isDone = ref(false)
       const englishWord = ref(null)
       const russianWord = ref(null)
 
@@ -77,15 +76,18 @@
       const setInputRuActive = () => setNumInput()
 
       const setNumInput = () => {
-        if (newWord.value.enValues[0].trim() == "") {
+        const isWordStyle = englishWord.value == null || russianWord.value == null
+        if (newWord.value.enValues[0].trim() == "" && !isWordStyle) {
           englishWord.value.style.border = "1px solid #f05454"
           russianWord.value.style.border = "1px solid transparent"
-        } else if (newWord.value.ruValues[0].trim() == "") {
+        } else if (newWord.value.ruValues[0].trim() == "" && !isWordStyle) {
           russianWord.value.style.border = "1px solid #f05454"
           englishWord.value.style.border = "1px solid transparent"
         } else {
-          englishWord.value.style.border = "1px solid #00af91"
-          russianWord.value.style.border = "1px solid #00af91"
+          if (!isWordStyle) {
+            englishWord.value.style.border = "1px solid #00af91"
+            russianWord.value.style.border = "1px solid #00af91"
+          }
 
           if (newWord.value.enValues[newWord.value.enValues.length - 1] == "") newWord.value.enValues.pop()
           if (newWord.value.ruValues[newWord.value.ruValues.length - 1] == "") newWord.value.ruValues.pop()

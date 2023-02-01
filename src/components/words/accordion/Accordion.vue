@@ -14,7 +14,7 @@
           type="text"
           @keyup.enter="checkWord(words, index)"
         />
-        <WordsImage :img-url="words.img" />
+        <!-- <WordsImage :img-url="words.img" /> -->
         <button v-if="!doneWords.some(wordItem => wordItem.translated == words.english && wordItem.original == words.russian)" @click="checkWord(words, index)">
           <img src="@/assets/check.png" />
         </button>
@@ -38,21 +38,22 @@
   import "./scss/Accordion.scss"
   import { SpeechSythesis } from "@/models/speechSythesis"
   import { doneWords, successAndFailedWords } from "./types/accordion.types"
-  import { computed, defineComponent, Ref, ref } from "vue"
+  import { computed, defineComponent, onMounted, Ref, ref } from "vue"
   import { WordInterface } from "@/models/words"
   import AccordionFooter from "./AccordionFooter.vue"
   import AccordionAnswer from "./AccordionAnswer.vue"
-  import WordsImage from "../WordsImage.vue"
+  // import WordsImage from "../WordsImage.vue"
 
   // isRotate - true - en | !isRotate - false - ru
   export default defineComponent({
     name: "Accordion",
-    components: { AccordionFooter, AccordionAnswer, WordsImage },
+    components: { AccordionFooter, AccordionAnswer },
     props: {
       currentWords: Array as WordInterface[] | any,
       isVolume: Boolean
     },
     setup(props) {
+
       const currentInputWord: Ref<string> = ref("")
       const doneWords: Ref<doneWords[]> = ref([])
       const errorWords: Ref<number[]> = ref([])

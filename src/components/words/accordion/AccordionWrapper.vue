@@ -4,10 +4,10 @@
       <div class="accordion__content">
         <div class="accordion__header">
           <h1>Гармошка</h1>
-          <button class="profile__run accordion__volume" @click="setVolume">
+          <!-- <button class="profile__run accordion__volume" @click="setVolume">
             <img v-if="isVolume" src="@/assets/turnon.png" />
             <img v-else src="@/assets/turnoff.png" />
-          </button>
+          </button> -->
         </div>
         <Accordion :currentWords="currentWords" :isVolume="isVolume" />
       </div>
