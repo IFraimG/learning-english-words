@@ -84,10 +84,10 @@
           russianWord.value.style.border = "1px solid #f05454"
           englishWord.value.style.border = "1px solid transparent"
         } else {
-          if (!isWordStyle) {
-            englishWord.value.style.border = "1px solid #00af91"
-            russianWord.value.style.border = "1px solid #00af91"
-          }
+          // if (!isWordStyle) {
+          //   englishWord.value.style.border = "1px solid #00af91"
+          //   russianWord.value.style.border = "1px solid #00af91"
+          // }
 
           if (newWord.value.enValues[newWord.value.enValues.length - 1] == "") newWord.value.enValues.pop()
           if (newWord.value.ruValues[newWord.value.ruValues.length - 1] == "") newWord.value.ruValues.pop()
